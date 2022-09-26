@@ -1,3 +1,3 @@
 <?php
 
-echo "Hello Politeknik Negeri Jember";
+require_once("app/bootstrap.php");
