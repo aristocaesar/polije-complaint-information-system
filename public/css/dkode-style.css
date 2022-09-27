@@ -1,0 +1,35 @@
+.hero {
+    background-image: url("../images/politeknik-negeri-jember.png");
+    background-repeat: no-repeat;
+    height: 100vh;
+    background-position: center;
+    background-size: cover;
+}
+
+.card {
+    border-radius: 0;
+}
+
+.form-lapor {
+    margin-top: -410px;
+}
+.form-lapor h1 {
+    font-size: 40px;
+    font-weight: bold;
+    color: white;
+    max-width: 900px;
+    text-align: center;
+    letter-spacing: 1px;
+}
+.form-lapor p {
+    font-size: 20px;
+    color: white;
+    margin-top: 30px;
+    font-weight: 300;
+}
+.form-lapor hr {
+    width: 100px;
+    border: 2px solid white;
+    margin-top : 30px;
+    margin-bottom: 60px;
+}
