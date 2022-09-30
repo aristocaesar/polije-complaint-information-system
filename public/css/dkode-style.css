@@ -10,26 +10,106 @@
     border-radius: 0;
 }
 
+.btn {
+    width: 100%;
+}
+
+.btn-blue {
+    color: white;
+    background-color: #0F4C75;
+}
+
+.bg-blue {
+    background-color: #0F4C75;
+}
+
+.btn-white-outline {
+    border: 1px solid white;
+    color:white;
+}
+.btn-white-outline:hover {
+    color:rgb(228, 228, 228);
+}
+
+.btn-dark-outline {
+    border: 1px solid #5a5c69;
+    color:#5a5c69;
+}
+.btn-dark-outline:hover {
+    color:#5a5c69;
+}
+
+.transition-ease-in-out {
+    transition: ease-in-out 0.3s;
+}
+
 .form-lapor {
-    margin-top: -410px;
+    margin-top: -430px;
+    margin-bottom: 50px;
 }
 .form-lapor h1 {
-    font-size: 40px;
+    font-size: 30px;
     font-weight: bold;
     color: white;
-    max-width: 900px;
+    max-width: 700px;
     text-align: center;
     letter-spacing: 1px;
+    line-height: 45px;
 }
 .form-lapor p {
     font-size: 20px;
     color: white;
     margin-top: 30px;
     font-weight: 300;
+    text-align: center;
 }
 .form-lapor hr {
     width: 100px;
     border: 2px solid white;
     margin-top : 30px;
     margin-bottom: 60px;
+}
+.form-lapor .card h5 {
+    font-size: 25px;
+    font-weight: bold;
+    color: #0F4C75;
+    line-height: 38px;
+    margin-bottom: 70px;
+}
+.form-lapor .card .card-body form .form-group {
+    margin-bottom: 30px;
+}
+.form-lapor .card .card-body form .form-group label {
+    font-weight: 400;
+    line-height: 27px;
+    color: #1E1E1E;
+    font-size: 18px;
+}
+.form-lapor .card .card-body form .form-group input {
+    padding: 25px 20px 25px 20px;
+}
+.form-lapor .card .card-body form .form-group textarea {
+    padding: 20px 20px 20px 20px;
+}
+
+.wizard-prosess {
+    margin-top: 150px;
+    margin-bottom: 150px;
+}
+
+.tracking-laporan .container {
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+/* .tracking-laporan .container input {
+    margin-top: 30px;
+    max-width: 500px;
+} */
+
+.tracking-laporan .container input{
+    height: 55px;
+    width: 602px;
+    left: 340px;
+    top: 127px;
+    border-radius: 5px;
 }

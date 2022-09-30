@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg fixed-top navbar-light">
+<nav class="navbar navbar-expand-lg fixed-top transition-ease-in-out">
     <div class="container d-flex justify-content-between">
         <div class="d-flex flex-row align-self-center">
             <a class="navbar-brand" href="#">
@@ -18,9 +18,9 @@
                 </ul>
             </div>
         </div>
-        <div class="d-flex flex-row">
-            <button type="button" class="btn text-white">Masuk</button>
-            <button type="button" class="btn btn-light">Daftar</button>
+        <div class="d-flex btn-auth flex-row">
+            <button type="button" class="btn text-white mr-4">Masuk</button>
+            <button type="button" class="btn btn-white-outline px-4">Daftar</button>
         </div>
     </div>
 </nav>
