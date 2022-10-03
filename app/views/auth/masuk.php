@@ -25,11 +25,11 @@
                                 <input type="password" class="form-control" name="password" id="password" aria-describedby="Password" placeholder="Ketikkan Password" required>
                             </div>
                             <div class="form-group d-flex justify-content-between">
-                                <a href="<?= BaseURL() ?>/auth/recovery" class="">Lupa Password ?</a>
+                                <a href="<?= BaseURL() ?>/auth/recovery" class="text-new-blue">Lupa Password ?</a>
                             </div>
                             <button type="submit" name="submit" class="btn btn-blue p-3 mr-3 font-weight-bold">MASUK</button>
                             <div class="form-group mt-5">
-                                Belum Punya Akun ? <a href="<?= BaseURL() ?>/auth/daftar" class="">Daftar Disini.</a>
+                                Belum Punya Akun ? <a href="<?= BaseURL() ?>/auth/daftar" class="text-new-blue">Daftar Disini.</a>
                             </div>
                         </form>
                     </div>

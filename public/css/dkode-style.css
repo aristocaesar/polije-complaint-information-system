@@ -19,6 +19,13 @@ html {
     width: 100%;
 }
 
+.text-new-blue {
+    color: #0F4C75;
+}
+.text-new-blue:hover {
+    color: #104467;
+}
+
 .btn-blue {
     color: white;
     background-color: #0F4C75;
