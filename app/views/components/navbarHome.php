@@ -10,10 +10,10 @@
                         <a class="nav-link text-white" href="<?= BaseURL(); ?>">Home</a>
                     </li>
                     <li class="nav-item mr-4">
-                        <a class="nav-link text-white" href="#">Laporan</a>
+                        <a class="nav-link text-white" href="<?= BaseURL(); ?>/laporan">Laporan</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Tentang</a>
+                        <a class="nav-link text-white" href="<?= BaseURL(); ?>/tentang">Tentang</a>
                     </li>
                 </ul>
             </div>

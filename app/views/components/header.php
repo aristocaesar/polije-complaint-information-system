@@ -23,6 +23,9 @@
     <link href="<?= BaseURL(); ?>/public/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="<?= BaseURL(); ?>/public/css/dkode-style.css" rel="stylesheet">
 
+    <!-- Custom styles for this page -->
+    <link href="<?= BaseURL(); ?>/public/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
 </head>
 
 <body id="<?= isset($data["bodyId"]) ? $data["bodyId"] : "#" ?>" class="<?= isset($data["bodyLayout"]) ? $data["bodyLayout"] : "dkode-creative" ?>">
