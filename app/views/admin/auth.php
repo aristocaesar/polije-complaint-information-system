@@ -12,20 +12,20 @@
                         <div class="col-lg-12">
                             <div class="p-5">
                                 <div class="text-center">
-                                    <img src="<?= BaseURL() ?>/images/logo-politeknik-negeri-jember.png" alt="logo-politeknik-negeri-jember" width="150" />
+                                    <img src="<?= BaseURL() ?>/public/images/logo-politeknik-negeri-jember.png" alt="logo-politeknik-negeri-jember" width="150" />
                                     <h1 class="h5 font-weight-bold text-bold text-gray-900 mt-4">Layanan Aspirasi dan Pengaduan Online</h1>
                                     <p class="mb-4">Politeknik Negeri Jember</p>
                                 </div>
-                                <form action="/" class="user">
+                                <form action="" class="user">
                                     <div class="form-group">
                                         <input type="email" class="form-control form-control-user" aria-describedby="emailHelp" placeholder="Ketikkan Email">
                                     </div>
                                     <div class="form-group">
                                         <input type="password" class="form-control form-control-user" placeholder="Password">
                                     </div>
-                                    <a href="index.html" class="btn btn-primary btn-user btn-block font-weight-bold">
+                                    <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold">
                                         MASUK
-                                    </a>
+                                    </button>
                                     <!-- <hr>
                                     <a href="index.html" class="btn btn-google btn-user btn-block">
                                         <i class="fab fa-google fa-fw"></i> Login with Google

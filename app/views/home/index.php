@@ -11,7 +11,7 @@
     <hr>
     <div class="container">
         <div class="row d-flex justify-content-center">
-            <div class="col-lg-9 col-md-6 col-12">
+            <div class="col-lg-9 col-12">
                 <div class="card shadow border-0 p-5" style="width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title text-center"><i data-feather="message-circle" style="width:35px;height: 35px;left: 140px;top: 17px;"></i> Sampaikan Laporan Anda</h5>
