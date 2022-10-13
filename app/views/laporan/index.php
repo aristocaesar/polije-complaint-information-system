@@ -6,7 +6,7 @@
 <section class="form-lapor ">
     <div class="container d-flex flex-column align-items-center">
         <h1>Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember</h1>
-        <p>Sampaikan laporan Anda langsung kepada divisi yang berwenang</p>
+        <p class="text-white h5 mt-5">Sampaikan laporan Anda langsung kepada divisi yang berwenang</p>
     </div>
     <hr>
     <div class="container">
@@ -14,7 +14,7 @@
             <div class="col-12">
                 <div class="card shadow border-0 p-5" style="width: 100%;">
                     <div class="card-body">
-                        <h5 class="card-title text-center"><i data-feather="layers" style="width:35px;height: 35px;left: 140px;top: 17px; margin-right: 10px;"></i> Laporan</h5>
+                        <h5 class="card-title text-center text-new-blue font-weight-bold h3 mb-5"><i data-feather="layers" style="width:35px;height: 35px;left: 140px;top: 17px; margin-right:10px"></i> Laporan</h5>
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>

@@ -1,6 +1,6 @@
 // Navbar
 $(window).scroll(function () {
-  if ($(this).scrollTop() > 100) {
+  if ($(this).scrollTop() > 50) {
     $("nav").addClass("bg-white shadow");
     $(".nav-link").removeClass("text-white");
     $(".nav-link").addClass("text-dark");
@@ -37,6 +37,9 @@ function defaultKlafisikasiLaporan() {
       klafisikasi = "pengaduan";
     }
   }
+  $("#form-content #form-pengaduan").show();
+  $("#form-content #form-aspirasi").hide();
+  $("#form-content #form-informasi").hide();
 }
 
 function klafisikasiLaporan(e) {
@@ -75,6 +78,9 @@ function klafisikasiPengaduan() {
     "Perhatikan Cara Menyampaikan Pengaduan Yang Baik dan Benar",
     "ini deskripsi panduan pengaduan"
   );
+  $("#form-content #form-pengaduan").show();
+  $("#form-content #form-aspirasi").hide();
+  $("#form-content #form-informasi").hide();
 }
 
 function klafisikasiAspirasi() {
@@ -84,6 +90,9 @@ function klafisikasiAspirasi() {
     "Perhatikan Cara Menyampaikan Aspirasi Yang Baik dan Benar",
     "ini deskripsi panduan aspirasi"
   );
+  $("#form-content #form-pengaduan").hide();
+  $("#form-content #form-aspirasi").show();
+  $("#form-content #form-informasi").hide();
 }
 
 function klafisikasiInformasi() {
@@ -93,4 +102,40 @@ function klafisikasiInformasi() {
     "Perhatikan Cara Mendapatkan Informasi Yang Baik dan Benar",
     "ini deskripsi panduan informasi"
   );
+  $("#form-content #form-pengaduan").hide();
+  $("#form-content #form-aspirasi").hide();
+  $("#form-content #form-informasi").show();
+}
+
+// USER MENU
+
+// Default menu selected
+formSelected("laporan");
+userMenuSelected($("#card-menu-user .card-body #user-menu").children()[0]);
+
+function userMenuSelected(e) {
+  const userMenuItems = $("#card-menu-user .card-body #user-menu").children();
+  for (let i = 0; i < userMenuItems.length; i++) {
+    if (e.id == userMenuItems[i].id) {
+      userMenuItems[i].classList.remove("btn-white");
+      userMenuItems[i].classList.add("btn-blue-active");
+      formSelected(e.id);
+    } else {
+      userMenuItems[i].classList.add("btn-white");
+      userMenuItems[i].classList.remove("btn-blue-active");
+      formSelected(e.id);
+    }
+  }
+}
+
+function formSelected(e) {
+  if (e == "laporan") {
+    $("#card-user-laporan").show();
+    $("#card-user-setting").hide();
+    $("#btn-create-new-laporan").show();
+  } else {
+    $("#card-user-laporan").hide();
+    $("#card-user-setting").show();
+    $("#btn-create-new-laporan").hide();
+  }
 }
