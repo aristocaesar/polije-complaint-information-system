@@ -53,7 +53,7 @@
                                             </div>
                                             <div class="mt-3">
                                                 <h5 class="text-new-blue font-weight-bold">Verifikasi</h5>
-                                                <p class="text-dark">Akun belum terverifikasi <a href="#" class="ml-2 text-new-blue underline"><u>Verifikasi Sekarang</u></a></p>
+                                                <p class="text-dark">Akun belum terverifikasi <a href="#" data-toggle="modal" data-target="#verifikasiAkun" class="ml-2 text-new-blue underline"><u>Verifikasi Sekarang</u></a></p>
                                             </div>
                                             <div class="mt-3">
                                                 <h5 class="text-new-blue font-weight-bold">Aktifitas Terakhir</h5>
@@ -161,6 +161,47 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" name="gantiPassword" class="btn btn-blue font-weight-bold py-3">Ya, Konfirmasi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Modal Verifikasi Keaslian Akun -->
+<div class="modal fade" id="verifikasiAkun" tabindex="-1" role="dialog" aria-labelledby="verifikasiAkun" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-bold">Verifikasi Keaslian Akun</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputStatus">Verifikasi Status Sebagai</label>
+                        <div class="input-group mb-3">
+                            <select class="custom-select" id="inputStatus" name="status" onchange="userVerifikasiSelected(this)">
+                                <option value="mahasiswa">Mahasiswa / Mahasiswi</option>
+                                <option value="dosen">Dosen</option>
+                                <option value="staf">Staf</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="form-verifikasi">
+                        <div id="form-verifikasi-mahasiswa">
+                            <p>Form mahasiswa</p>
+                        </div>
+                        <div id="form-verifikasi-dosen">
+                            <p>Form dosen</p>
+                        </div>
+                        <div id="form-verifikasi-staf">
+                            <p>Form staf</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" name="verifikasiAkun" class="btn btn-blue font-weight-bold py-3">Verifikasi</button>
+                    </div>
                 </div>
             </form>
         </div>

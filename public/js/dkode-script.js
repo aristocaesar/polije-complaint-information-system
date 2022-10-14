@@ -26,7 +26,6 @@ $(window).scroll(function () {
 // Form
 let klafisikasi = "pengaduan";
 defaultKlafisikasiLaporan();
-
 function defaultKlafisikasiLaporan() {
   let items = $(".klafisikasi .klafisikasi-items").children();
   for (let index = 0; index < items.length; index++) {
@@ -41,7 +40,6 @@ function defaultKlafisikasiLaporan() {
   $("#form-content #form-aspirasi").hide();
   $("#form-content #form-informasi").hide();
 }
-
 function klafisikasiLaporan(e) {
   let items = $(".klafisikasi .klafisikasi-items").children();
   for (let index = 0; index < items.length; index++) {
@@ -59,7 +57,6 @@ function klafisikasiLaporan(e) {
     }
   }
 }
-
 function setInfoKlafisikasi(namaKlafisikasi, judulPanduan, deskripsiPanduan) {
   // Get Element
   let elementPanduan = $("#panduan-klafisikasi");
@@ -70,7 +67,6 @@ function setInfoKlafisikasi(namaKlafisikasi, judulPanduan, deskripsiPanduan) {
     namaKlafisikasi.toUpperCase();
   modalPanduan[0].children[1].textContent = deskripsiPanduan;
 }
-
 function klafisikasiPengaduan() {
   klafisikasi = "pengaduan";
   setInfoKlafisikasi(
@@ -82,7 +78,6 @@ function klafisikasiPengaduan() {
   $("#form-content #form-aspirasi").hide();
   $("#form-content #form-informasi").hide();
 }
-
 function klafisikasiAspirasi() {
   klafisikasi = "aspirasi";
   setInfoKlafisikasi(
@@ -94,7 +89,6 @@ function klafisikasiAspirasi() {
   $("#form-content #form-aspirasi").show();
   $("#form-content #form-informasi").hide();
 }
-
 function klafisikasiInformasi() {
   klafisikasi = "informasi";
   setInfoKlafisikasi(
@@ -108,11 +102,9 @@ function klafisikasiInformasi() {
 }
 
 // USER MENU
-
 // Default menu selected
 formSelected("laporan");
 userMenuSelected($("#card-menu-user .card-body #user-menu").children()[0]);
-
 function userMenuSelected(e) {
   const userMenuItems = $("#card-menu-user .card-body #user-menu").children();
   for (let i = 0; i < userMenuItems.length; i++) {
@@ -127,7 +119,6 @@ function userMenuSelected(e) {
     }
   }
 }
-
 function formSelected(e) {
   if (e == "laporan") {
     $("#card-user-laporan").show();
@@ -137,5 +128,27 @@ function formSelected(e) {
     $("#card-user-laporan").hide();
     $("#card-user-setting").show();
     $("#btn-create-new-laporan").hide();
+  }
+}
+
+// USER MENU VERIFIKASI
+// Default menu selected
+userVerifikasiSelected($("#inputStatus")[0]);
+function userVerifikasiSelected(e) {
+  let menuSelected = e.selectedOptions[0].value;
+  let form = $("#form-verifikasi")[0];
+  for (let index = 0; index < form.children.length; index++) {
+    let selected = form.children[index].id;
+    if (selected.includes(menuSelected)) {
+      // Set Form Selected
+      let allForm = $("#form-verifikasi")[0].children;
+      for (let i = 0; i < allForm.length; i++) {
+        if (allForm[i].id.includes(selected)) {
+          allForm[i].style.display = "block";
+        } else {
+          allForm[i].style.display = "none";
+        }
+      }
+    }
   }
 }
