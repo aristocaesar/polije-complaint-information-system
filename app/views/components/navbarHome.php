@@ -1,27 +1,34 @@
-<nav class="navbar navbar-expand-lg fixed-top transition-ease-in-out">
-    <div class="container d-flex justify-content-between">
-        <div class="d-flex flex-row align-self-center">
-            <a class="navbar-brand" href="#">
+<!-- <nav class="">
+    <div class="flex">
+        <div class="">
+            <a class="" href="#">
                 <img src="<?= BaseURL(); ?>/public/images/logo-politeknik-negeri-jember.png" width="80" alt="logo-politeknik-negeri-jember">
             </a>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item mr-4">
-                        <a class="nav-link text-white" href="<?= BaseURL(); ?>">Home</a>
+            <div class="">
+                <ul class="">
+                    <li class="">
+                        <a class="" href="<?= BaseURL(); ?>">Home</a>
                     </li>
-                    <li class="nav-item mr-4">
-                        <a class="nav-link text-white" href="<?= BaseURL(); ?>/laporan">Laporan</a>
+                    <li class="">
+                        <a class="" href="<?= BaseURL(); ?>/laporan">Laporan</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="<?= BaseURL(); ?>/tentang">Tentang</a>
+                    <li class="">
+                        <a class="" href="<?= BaseURL(); ?>/tentang">Tentang</a>
                     </li>
                 </ul>
             </div>
         </div>
-        <div class="d-flex btn-auth flex-row">
-            <a href="<?= BaseURL() ?>/auth" class="btn
-             text-white mr-4">Masuk</a>
-            <a href="<?= BaseURL() ?>/auth/daftar" class="btn btn-white-outline px-4">Daftar</a>
+        <div class="">
+            <a href="<?= BaseURL() ?>/auth" class="">Masuk</a>
+            <a href="<?= BaseURL() ?>/auth/daftar" class="">Daftar</a>
         </div>
     </div>
-</nav>
+</nav> -->
+<!-- Hero -->
+<section class="h-[100vh] bg-polije bg-no-repeat bg-center bg-cover flex flex-row justify-center items-center">
+    <div class="flex flex-col items-center text-center text-white max-w-[950px]">
+        <h1 class="text-4xl font-bold tracking-wide">Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember</h1>
+        <p class="text-2xl mt-8 font-light">Sampaikan laporan Anda langsung kepada divisi yang berwenang</p>
+        <hr class="w-[200px] mt-[100px] border-t-4 ">
+    </div>
+</section>

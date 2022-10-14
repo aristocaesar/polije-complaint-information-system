@@ -3,7 +3,7 @@
 // BASEURL
 function BaseURL()
 {
-    return "http://192.168.1.92/polije-complaint";
+    return "http://localhost/polije-complaint-information-system";
 }
 function getNavbarHome()
 {
