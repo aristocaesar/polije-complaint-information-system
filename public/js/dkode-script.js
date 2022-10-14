@@ -133,20 +133,22 @@ function formSelected(e) {
 
 // USER MENU VERIFIKASI
 // Default menu selected
-userVerifikasiSelected($("#inputStatus")[0]);
+userVerifikasiSelected($("#inputStatus")[0] ?? null);
 function userVerifikasiSelected(e) {
-  let menuSelected = e.selectedOptions[0].value;
-  let form = $("#form-verifikasi")[0];
-  for (let index = 0; index < form.children.length; index++) {
-    let selected = form.children[index].id;
-    if (selected.includes(menuSelected)) {
-      // Set Form Selected
-      let allForm = $("#form-verifikasi")[0].children;
-      for (let i = 0; i < allForm.length; i++) {
-        if (allForm[i].id.includes(selected)) {
-          allForm[i].style.display = "block";
-        } else {
-          allForm[i].style.display = "none";
+  if (e != null) {
+    let menuSelected = e.selectedOptions[0].value;
+    let form = $("#form-verifikasi")[0];
+    for (let index = 0; index < form.children.length; index++) {
+      let selected = form.children[index].id;
+      if (selected.includes(menuSelected)) {
+        // Set Form Selected
+        let allForm = $("#form-verifikasi")[0].children;
+        for (let i = 0; i < allForm.length; i++) {
+          if (allForm[i].id.includes(selected)) {
+            allForm[i].style.display = "block";
+          } else {
+            allForm[i].style.display = "none";
+          }
         }
       }
     }

@@ -80,7 +80,7 @@ html {
 
 /* FORM LAPOR */
 .form-lapor {
-    margin-top: -430px;
+    margin-top: -530px;
     margin-bottom: 50px;
 }
 .form-lapor h1 {
@@ -167,13 +167,29 @@ html {
 No media query since this is the default in Bootstrap */
 
 /*  Small devices (landscape phones, 576px and up) */
-@media (min-width: 576px) { }
+@media (min-width: 576px) { 
+    .form-lapor {
+        margin-top: -630px;
+    }
+}
 
 /* Medium devices (tablets, 768px and up) */
-@media (min-width: 768px) {  }
+@media (min-width: 768px) { 
+    .form-lapor {
+        margin-top: -530px;
+    }
+}
 
 /*  Large devices (desktops, 992px and up) */
-@media (min-width: 992px) {  }
+@media (min-width: 992px) { 
+    .form-lapor {
+        margin-top: -530px;
+    }
+ }
 
 /* Extra large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) {  }
+@media (min-width: 1200px) { 
+    .form-lapor {
+        margin-top: -500px;
+    }
+ }

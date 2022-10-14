@@ -6,7 +6,7 @@
 <section class="form-lapor ">
     <div class="container d-flex flex-column align-items-center">
         <h1>Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember</h1>
-        <p class="text-white h5 mt-5">Sampaikan laporan Anda langsung kepada divisi yang berwenang</p>
+        <p class="text-white h5 mt-5 text-center">Sampaikan laporan Anda langsung kepada divisi yang berwenang</p>
     </div>
     <hr>
     <div class="container">
@@ -14,14 +14,14 @@
             <div class="col-lg-9 col-12">
                 <div class="card shadow border-0 p-5" style="width: 100%;">
                     <div class="card-body">
-                        <h5 class="card-title text-center text-new-blue font-weight-bold h3 mb-7"><i data-feather="message-circle" style="width:35px;height: 35px;left: 140px;top: 17px; margin-right:10px"></i> Sampaikan Laporan Anda</h5>
+                        <h5 class="text-blue-800 font-bold"><i data-feather="message-circle" style="width:35px;height: 35px;left: 140px;top: 17px; margin-right:10px"></i> Sampaikan Laporan Anda</h5>
                         <div class="form-group">
                             <div class="klafisikasi d-flex flex-column">
                                 <label for="klafisikasi">Pilih Klafisikasi Laporan</label>
                                 <div class="klafisikasi-items d-flex flex-row justify-content-between">
-                                    <button type="button" id="pengaduan" class="btn btn-blue p-3 mr-3" onclick="klafisikasiLaporan(this)"><input type="radio" name="pengaduan" class="mr-3">Pengaduan</button>
-                                    <button type="button" id="aspirasi" class="btn btn-blue p-3 mr-3" onclick="klafisikasiLaporan(this)"><input type="radio" name="aspirasi" class="mr-3">Aspirasi</button>
-                                    <button type="button" id="informasi" class="btn btn-blue p-3 mr-3" onclick="klafisikasiLaporan(this)"><input type="radio" name="informasi" class="mr-3">Informasi</button>
+                                    <button type="button" id="pengaduan" class="btn text-white bg-blue-800 p-3 mr-3" onclick="klafisikasiLaporan(this)"><input type="radio" name="pengaduan" class="mr-3">Pengaduan</button>
+                                    <button type="button" id="aspirasi" class="btn text-white bg-blue-800 p-3 mr-3" onclick="klafisikasiLaporan(this)"><input type="radio" name="aspirasi" class="mr-3">Aspirasi</button>
+                                    <button type="button" id="informasi" class="btn text-white bg-blue-800 p-3 mr-3" onclick="klafisikasiLaporan(this)"><input type="radio" name="informasi" class="mr-3">Informasi</button>
                                 </div>
                             </div>
                         </div>
