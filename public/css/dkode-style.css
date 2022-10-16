@@ -190,6 +190,6 @@ No media query since this is the default in Bootstrap */
 /* Extra large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) { 
     .form-lapor {
-        margin-top: -500px;
+        margin-top: -50e0px;
     }
  }

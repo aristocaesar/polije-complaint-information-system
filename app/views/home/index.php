@@ -1,19 +1,19 @@
 <?php getNavbarHome(); ?>
 <!-- Form -->
-<section id="form-lapor" class="mt-[-180px]">
+<section id="form-lapor" class="mt-[-100px]">
     <div class="flex justify-center">
-        <div class="bg-white w-[900px] drop-shadow-xl">
-            <div class="container">
-                <div class="flex text-blue-800 font-bold justify-center my-11">
+        <div class="w-[900px] drop-shadow-xl">
+            <div class="container bg-white py-11">
+                <div class="flex text-blue-800 font-bold justify-center mb-11">
                     <i data-feather="message-circle" style="width:35px;height: 35px;left: 140px;top: 17px; margin-right:10px"></i>
                     <h5 class="text-3xl"> Sampaikan Laporan Anda</h5>
                 </div>
                 <div>
                     <label for="klafisikasi" class="text-gray-700">Pilih Klafisikasi Laporan</label>
                     <div id="klafisikasi" class="flex mt-3 gap-x-4">
-                        <button type="button" id="pengaduan" class="text-white w-full rounded bg-blue-800 p-3 hover:bg-blue-900 hover:drop-shadow-lg" onclick="klafisikasiLaporan(this)"><input type="radio" name="pengaduan" class="mr-3">Pengaduan</button>
-                        <button type="button" id="aspirasi" class="text-white w-full rounded bg-blue-800 p-3 hover:bg-blue-900 hover:drop-shadow-lg" onclick="klafisikasiLaporan(this)"><input type="radio" name="aspirasi" class="mr-3">Aspirasi</button>
-                        <button type="button" id="informasi" class="text-white w-full rounded bg-blue-800 p-3 hover:bg-blue-900 hover:drop-shadow-lg" onclick="klafisikasiLaporan(this)"><input type="radio" name="informasi" class="mr-3">Informasi</button>
+                        <button type="button" id="pengaduan" class="text-white w-full rounded bg-blue-800 p-4 hover:bg-blue-900 hover:drop-shadow-lg" onclick="klafisikasiLaporan(this)"><input type="radio" name="pengaduan" class="mr-3">Pengaduan</button>
+                        <button type="button" id="aspirasi" class="text-white w-full rounded bg-blue-800 p-4 hover:bg-blue-900 hover:drop-shadow-lg" onclick="klafisikasiLaporan(this)"><input type="radio" name="aspirasi" class="mr-3">Aspirasi</button>
+                        <button type="button" id="informasi" class="text-white w-full rounded bg-blue-800 p-4 hover:bg-blue-900 hover:drop-shadow-lg" onclick="klafisikasiLaporan(this)"><input type="radio" name="informasi" class="mr-3">Informasi</button>
                     </div>
                 </div>
                 <div class="text-center mt-10">
@@ -72,7 +72,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" name="submit" class="text-white w-full rounded bg-blue-800 p-4 font-bold tracking-wide hover:bg-blue-900 hover:drop-shadow-lg">LAPOR!</button>
+                        <button type="submit" name="submit" class="text-xl text-white w-full rounded bg-blue-800 p-4 font-bold tracking-wide hover:bg-blue-900 hover:drop-shadow-lg">LAPOR!</button>
                     </form>
 
                     <!-- <form id="form-informasi" action="" method="POST">
@@ -177,7 +177,7 @@
 <?php getSupportSosialMedia(); ?>
 <!-- Modal Panduan -->
 <!-- Modal -->
-<div class="modal fade" id="modalPanduan" tabindex="-1" role="dialog" aria-labelledby="modalPengaduan" aria-hidden="true">
+<!-- <div class="modal fade" id="modalPanduan" tabindex="-1" role="dialog" aria-labelledby="modalPengaduan" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -191,5 +191,5 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <?php getFooterCopyright(); ?>
