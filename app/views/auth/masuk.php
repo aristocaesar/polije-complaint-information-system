@@ -3,38 +3,37 @@
     <?php getNavbarHome(); ?>
 </section>
 <!-- Form -->
-<section class="form-lapor ">
-    <div class="container d-flex flex-column align-items-center">
-        <h1>Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember</h1>
-        <p class="text-white h5 mt-5">Sampaikan laporan Anda langsung kepada divisi yang berwenang</p>
+<!-- Tentang -->
+<section id="form-lapor" class="mt-[-570px] lg:mt-[-550px]">
+    <div class="container flex flex-col items-center text-center text-white max-w-[950px] mt-36">
+        <h1 class="md:text-4xl text-3xl font-bold tracking-wide">Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember</h1>
+        <p class="md:text-xl text-lg mt-8 font-light">Sampaikan laporan Anda langsung kepada divisi yang berwenang</p>
+        <hr class="w-[200px] my-[50px] border-t-4 ">
     </div>
-    <hr>
-    <div class="container">
-        <div class="row d-flex justify-content-center">
-            <div class="col-lg-9 col-12">
-                <div class="card shadow border-0 p-5" style="width: 100%;">
-                    <div class="card-body">
-                        <h5 class="card-title text-center text-new-blue font-weight-bold h3 mb-5"><i data-feather="log-in" style="width:35px;height: 35px;left: 140px;top: 17px; margin-right:10px"></i> Masuk</h5>
-                        <form action="" method="POST">
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="text" class="form-control" id="emiail" aria-describedby="email" name="email" placeholder="Ketikkan Email" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="password">Password</label>
-                                <input type="password" class="form-control" name="password" id="password" aria-describedby="Password" placeholder="Ketikkan Password" required>
-                            </div>
-                            <div class="form-group d-flex justify-content-between">
-                                <a href="<?= BaseURL() ?>/auth/recovery" class="text-new-blue">Lupa Password ?</a>
-                            </div>
-                            <button type="submit" name="submit" class="btn btn-blue p-3 mr-3 font-weight-bold">MASUK</button>
-                            <div class="form-group mt-5">
-                                Belum Punya Akun ? <a href="<?= BaseURL() ?>/auth/daftar" class="text-new-blue">Daftar.</a>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+    <div class="container drop-shadow-xl max-w-3xl">
+        <div class="bg-white py-11 px-10">
+            <div class="flex text-blue-800 font-bold justify-center mb-11">
+                <i data-feather="log-in" style="width:35px;height: 35px;left: 140px;top: 17px; margin-right:10px"></i>
+                <h5 class="md:text-3xl text-xl"> Masuk</h5>
             </div>
+            <form action="" method="">
+                <div class="flex flex-col mb-5">
+                    <label for="email" class="text-gray-700">Email</label>
+                    <input type="email" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="email" aria-describedby="email" name="email" placeholder="Masukkan Email" required>
+                </div>
+                <div class="flex flex-col mb-5">
+                    <label for="password" class="text-gray-700">Password</label>
+                    <input type="password" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password" aria-describedby="password" name="password" placeholder="Ketikkan Password" required>
+                </div>
+                <div class="mb-5">
+                    <a href="<?= BaseURL() ?>/auth/recovery" class="text-blue-800 font-ligth">Lupa Password ?</a>
+                </div>
+                <button type="submit" name="login" class="text-xl text-white w-full rounded bg-blue-800 py-4 font-bold tracking-wide hover:bg-blue-900 hover:drop-shadow-lg">MASUK</button>
+                <div class="flex space-x-3 mt-5">
+                    <p>Belum punya akun ?</p>
+                    <a href="<?= BaseURL() ?>/auth/daftar" class="text-blue-800 font-ligth">Daftar</a>
+                </div>
+            </form>
         </div>
     </div>
 </section>

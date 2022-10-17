@@ -1,6 +1,6 @@
 <!-- Informasi Laporan -->
 <section id="informasi-laporan" class="container py-32 text-center">
-    <div class="flex gap-5">
+    <div class="grid md:grid-cols-2 grid-cols-1 gap-10">
         <div class="text-left">
             <h3 class="font-bold text-2xl text-gray-800">Jumlah Laporan Sekarang</h3>
             <h3 class="font-bold text-2xl my-4 text-gray-600">9.065</h3>
@@ -9,7 +9,7 @@
                 Kabupaten Tegal. Kapan sosialisasinya?
                 Terima kasih... </p>
         </div>
-        <div class="text-right">
+        <div class="md:text-right text-left">
             <h3 class="font-bold text-2xl text-gray-800">Divisi Yang Terhubung</h3>
             <h3 class="font-bold text-2xl my-4 text-gray-600">90</h3>
             <p class="font-light text-gray-800">Selamat siang, mau tanya tentang kelanjutan

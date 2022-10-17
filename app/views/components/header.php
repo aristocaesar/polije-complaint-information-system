@@ -22,8 +22,8 @@
     <!-- Tailwind -->
     <link href="<?= BaseURL(); ?>/public/css/tw-dkode-style.css" rel="stylesheet">
 
-    <!-- Custom styles for this page -->
-    <link href="<?= BaseURL(); ?>/public/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <!-- Datatables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
 
 </head>
 

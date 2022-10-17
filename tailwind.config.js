@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 
-const BaseUrl = "http://localhost/polije-complaint";
+const BaseUrl = "http://192.168.8.100/polije-complaint";
 
 module.exports = {
   content: ["./app/**/*.{html,js,php}"],

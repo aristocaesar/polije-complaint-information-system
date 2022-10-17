@@ -1,18 +1,34 @@
 <?php getNavbarHome(); ?>
 <!-- Form -->
-<section id="form-lapor" class="mt-[-100px]">
+<section id="form-lapor" class="mt-[-570px] lg:mt-[-550px]">
+    <div class="container flex flex-col items-center text-center text-white max-w-[950px] mt-36">
+        <h1 class="md:text-4xl text-3xl font-bold tracking-wide">Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember</h1>
+        <p class="md:text-xl text-lg mt-8 font-light">Sampaikan laporan Anda langsung kepada divisi yang berwenang</p>
+        <hr class="w-[200px] my-[50px] border-t-4 ">
+    </div>
     <div class="container drop-shadow-xl max-w-5xl">
         <div class="bg-white py-11 px-10">
             <div class="flex text-blue-800 font-bold justify-center mb-11">
                 <i data-feather="message-circle" style="width:35px;height: 35px;left: 140px;top: 17px; margin-right:10px"></i>
-                <h5 class="text-3xl"> Sampaikan Laporan Anda</h5>
+                <h5 class="md:text-3xl text-xl"> Sampaikan Laporan Anda</h5>
             </div>
             <div>
-                <label for="klafisikasi" class="text-gray-700">Pilih Klafisikasi Laporan</label>
-                <div id="klafisikasi" class="flex mt-3 gap-x-4">
-                    <button type="button" id="pengaduan" class="text-white w-full rounded bg-blue-800 p-4 hover:bg-blue-900 hover:drop-shadow-lg" onclick="klafisikasiLaporan(this)"><input type="radio" name="pengaduan" class="mr-3">Pengaduan</button>
-                    <button type="button" id="aspirasi" class="text-white w-full rounded bg-blue-800 p-4 hover:bg-blue-900 hover:drop-shadow-lg" onclick="klafisikasiLaporan(this)"><input type="radio" name="aspirasi" class="mr-3">Aspirasi</button>
-                    <button type="button" id="informasi" class="text-white w-full rounded bg-blue-800 p-4 hover:bg-blue-900 hover:drop-shadow-lg" onclick="klafisikasiLaporan(this)"><input type="radio" name="informasi" class="mr-3">Informasi</button>
+                <label class="text-gray-700">Pilih Klafisikasi Laporan</label>
+                <div class="block lg:hidden">
+                    <div class="flex flex-col mb-5">
+                        <select class="mt-3 bg-blue-800 text-white  py-4 px-2 rounded" name="pelapor" id="pelapor">
+                            <option value="pengaduan">Pengaduan</option>
+                            <option value="aspirasi">Aspirasi</option>
+                            <option value="informasi">Informasi</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="hidden lg:block">
+                    <div class="flex md:flex-row flex-col gap-y-3 mt-3 gap-x-4 ">
+                        <button type="button" id="pengaduan" class="text-white w-full rounded bg-blue-800 p-4 hover:bg-blue-900 hover:drop-shadow-lg" onclick="klafisikasiLaporan(this)"><input type="radio" name="pengaduan" class="mr-3">Pengaduan</button>
+                        <button type="button" id="aspirasi" class="text-white w-full rounded bg-blue-800 p-4 hover:bg-blue-900 hover:drop-shadow-lg" onclick="klafisikasiLaporan(this)"><input type="radio" name="aspirasi" class="mr-3">Aspirasi</button>
+                        <button type="button" id="informasi" class="text-white w-full rounded bg-blue-800 p-4 hover:bg-blue-900 hover:drop-shadow-lg" onclick="klafisikasiLaporan(this)"><input type="radio" name="informasi" class="mr-3">Informasi</button>
+                    </div>
                 </div>
             </div>
             <div class="text-center mt-10">
@@ -22,15 +38,15 @@
                 <form id="form-pengaduan" class="my-11" action="" method="POST">
                     <div class="flex flex-col mb-5">
                         <label for="judul" class="text-gray-700">Judul Laporan Anda*</label>
-                        <input type="text" class="mt-3 border border-gray-400 py-2 px-2 rounded" id="judul" aria-describedby="judul" name="judul" placeholder="Ketikkan Judul Laporan" required>
+                        <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="judul" aria-describedby="judul" name="judul" placeholder="Ketikkan Judul Laporan" required>
                     </div>
                     <div class="flex flex-col mb-5">
                         <label for="deskripsi" class="text-gray-700">Deskripsikan Laporan Anda*</label>
-                        <textarea class="mt-3 border border-gray-400 py-2 px-2 rounded" name="deskripsi" id="deskripsi" placeholder="Deskripsikan Laporan Anda" rows="3" required></textarea>
+                        <textarea class="mt-3 border border-gray-400 py-3 px-2 rounded" name="deskripsi" id="deskripsi" placeholder="Deskripsikan Laporan Anda" rows="3" required></textarea>
                     </div>
                     <div class="flex flex-col mb-5">
                         <label for="kategori" class="text-gray-700">Kategori</label>
-                        <select class="mt-3 border border-gray-400 py-2 px-2 rounded" name="kategori" id="kategori">
+                        <select class="mt-3 border border-gray-400 py-3 px-2 rounded" name="kategori" id="kategori">
                             <option value="umum">Umum</option>
                             <option value="infrastruktur">Infrastruktur</option>
                             <option value="keamanan">Keamanan</option>
@@ -41,7 +57,7 @@
                     </div>
                     <div class="flex flex-col mb-5">
                         <label for="pelapor" class="text-gray-700">Kirim Sebagai</label>
-                        <select class="mt-3 border border-gray-400 py-2 px-2 rounded" name="pelapor" id="pelapor">
+                        <select class="mt-3 border border-gray-400 py-3 px-2 rounded" name="pelapor" id="pelapor">
                             <option value="rahasia">Rahasia</option>
                             <option value="masyarakat-umum">Masyarakat Umum</option>
                             <option value="mahasiswa">Mahasiswa</option>
@@ -51,11 +67,11 @@
                     </div>
                     <div class="flex flex-col mb-5">
                         <label for="kontak" class="text-gray-700">No Telp / Whatapps / Email*</label>
-                        <input type="text" class="mt-3 border border-gray-400 py-2 px-2 rounded" name="kontak" id="kontak" aria-describedby="kontak" placeholder="Ketikkan No Telp / Whatapps / Email" required>
+                        <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" name="kontak" id="kontak" aria-describedby="kontak" placeholder="Ketikkan No Telp / Whatapps / Email" required>
                     </div>
                     <div class="flex flex-col mb-5">
                         <label for="divisi-tujuan" class="text-gray-700">Divisi Tujuan</label>
-                        <select class="mt-3 border border-gray-400 py-2 px-2 rounded" name="divisi" id="divisi-tujuan">
+                        <select class="mt-3 border border-gray-400 py-3 px-2 rounded" name="divisi" id="divisi-tujuan">
                             <option>Dosen</option>
                             <option>2</option>
                             <option>3</option>
@@ -65,13 +81,13 @@
                     </div>
                     <div class="flex flex-col mb-10">
                         <label for="input-file" class="text-gray-700">Lampiran</label>
-                        <div class="mt-3 border border-gray-400 py-2 px-2 rounded">
+                        <div class="mt-3 border border-gray-400 py-3 px-2 rounded">
                             <div class="flex">
                                 <input type="file" name="lampiran">
                             </div>
                         </div>
                     </div>
-                    <button type="submit" name="submit" class="text-xl text-white w-full rounded bg-blue-800 p-4 font-bold tracking-wide hover:bg-blue-900 hover:drop-shadow-lg">LAPOR!</button>
+                    <button type="submit" name="submit" class="text-xl text-white w-full rounded bg-blue-800 py-4 font-bold tracking-wide hover:bg-blue-900 hover:drop-shadow-lg">LAPOR!</button>
                 </form>
 
                 <!-- <form id="form-informasi" action="" method="POST">
@@ -190,4 +206,5 @@
         </div>
     </div>
 </div> -->
+<!-- Footer -->
 <?php getFooterCopyright(); ?>

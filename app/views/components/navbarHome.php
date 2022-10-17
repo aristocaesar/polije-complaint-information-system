@@ -1,34 +1,31 @@
-<!-- <nav class="">
-    <div class="flex">
-        <div class="">
-            <a class="" href="#">
-                <img src="<?= BaseURL(); ?>/public/images/logo-politeknik-negeri-jember.png" width="80" alt="logo-politeknik-negeri-jember">
-            </a>
-            <div class="">
-                <ul class="">
-                    <li class="">
-                        <a class="" href="<?= BaseURL(); ?>">Home</a>
-                    </li>
-                    <li class="">
-                        <a class="" href="<?= BaseURL(); ?>/laporan">Laporan</a>
-                    </li>
-                    <li class="">
-                        <a class="" href="<?= BaseURL(); ?>/tentang">Tentang</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="">
-            <a href="<?= BaseURL() ?>/auth" class="">Masuk</a>
-            <a href="<?= BaseURL() ?>/auth/daftar" class="">Daftar</a>
+<!-- Navbar -->
+<nav class="navbar-user transition duration-300 ease-in-out w-full bg-transparent flex py-5 justify-between items-center px-[2rem] md:px-[5rem] lg:px-[12rem] fixed z-10">
+    <div class="flex items-center">
+        <a class="mr-10 drop-shadow-lg" href="#">
+            <img src="<?= BaseURL(); ?>/public/images/logo-politeknik-negeri-jember.png" width="80" alt="logo-politeknik-negeri-jember">
+        </a>
+        <div class="items-center hidden md:block">
+            <ul class="flex space-x-8">
+                <li class="">
+                    <a class="text-white hover:text-gray-200" href="<?= BaseURL(); ?>">Home</a>
+                </li>
+                <li class="">
+                    <a class="text-white hover:text-gray-200" href="<?= BaseURL(); ?>/laporan">Laporan</a>
+                </li>
+                <li class="">
+                    <a class="text-white hover:text-gray-200" href="<?= BaseURL(); ?>/tentang">Tentang</a>
+                </li>
+            </ul>
         </div>
     </div>
-</nav> -->
+    <div class="text-white space-x-8 hidden md:block">
+        <a href="<?= BaseURL() ?>/auth" class="">Masuk</a>
+        <a href="<?= BaseURL() ?>/auth/daftar" class="border border-white py-2 px-4 rounded">Daftar</a>
+    </div>
+    <div class="block md:hidden text-white cursor-pointer">
+        <i data-feather="menu" style="width:35px;height: 35px;left: 140px;top: 17px; margin-right:10px"></i>
+    </div>
+</nav>
 <!-- Hero -->
-<section class="h-[100vh] bg-polije bg-no-repeat bg-center bg-cover flex flex-row justify-center items-center">
-    <div class="flex flex-col items-center text-center text-white max-w-[950px]">
-        <h1 class="text-4xl font-bold tracking-wide">Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember</h1>
-        <p class="text-2xl mt-8 font-light">Sampaikan laporan Anda langsung kepada divisi yang berwenang</p>
-        <hr class="w-[200px] mt-[100px] border-t-4 ">
-    </div>
+<section class="h-[700px] bg-polije bg-no-repeat bg-center bg-cover flex flex-row items-center">
 </section>
