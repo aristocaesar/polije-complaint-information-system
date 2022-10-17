@@ -6,14 +6,14 @@
         </a>
         <div class="items-center hidden md:block">
             <ul class="flex space-x-8">
-                <li class="">
-                    <a class="text-white hover:text-gray-200" href="<?= BaseURL(); ?>">Home</a>
+                <li>
+                    <a class="nav-items-horizontal text-white hover:text-gray-200" href="<?= BaseURL(); ?>">Home</a>
                 </li>
-                <li class="">
-                    <a class="text-white hover:text-gray-200" href="<?= BaseURL(); ?>/laporan">Laporan</a>
+                <li>
+                    <a class="nav-items-horizontal text-white hover:text-gray-200" href="<?= BaseURL(); ?>/laporan">Laporan</a>
                 </li>
-                <li class="">
-                    <a class="text-white hover:text-gray-200" href="<?= BaseURL(); ?>/tentang">Tentang</a>
+                <li>
+                    <a class="nav-items-horizontal text-white hover:text-gray-200" href="<?= BaseURL(); ?>/tentang">Tentang</a>
                 </li>
             </ul>
         </div>

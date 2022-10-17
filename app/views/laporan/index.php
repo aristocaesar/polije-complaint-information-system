@@ -12,8 +12,8 @@
     <div class="container drop-shadow-xl max-w-5xl">
         <div class="bg-white py-11 px-10">
             <div class="flex text-blue-800 font-bold justify-center mb-11">
-                <i data-feather="info" style="width:35px;height: 35px;left: 140px;top: 17px; margin-right:10px"></i>
-                <h5 class="md:text-3xl text-xl"> Tentang</h5>
+                <i data-feather="layers" style="width:35px;height: 35px;left: 140px;top: 17px; margin-right:10px"></i>
+                <h5 class="md:text-3xl text-xl"> Laporan</h5>
             </div>
             <div class="mt-16">
                 <table class="table table-bordered " id="dataTableLaporan" width="100%" cellspacing="0">

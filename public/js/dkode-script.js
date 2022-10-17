@@ -6,9 +6,23 @@ $(document).ready(function () {
     if ($(this).scrollTop() > 100) {
       $(".navbar-user").removeClass("bg-transparent");
       $(".navbar-user").addClass("bg-white drop-shadow-lg");
+      let navHorizontal = $(".nav-items-horizontal");
+      for (let i = 0; i < navHorizontal.length; i++) {
+        navHorizontal[i].classList.remove("text-white");
+        navHorizontal[i].classList.remove("hover:text-gray-200");
+        navHorizontal[i].classList.add("text-gray-800");
+        navHorizontal[i].classList.add("hover:text-gray-800");
+      }
     } else {
       $(".navbar-user").removeClass("bg-white drop-shadow-lg");
       $(".navbar-user").addClass("bg-transparent");
+      let navHorizontal = $(".nav-items-horizontal");
+      for (let i = 0; i < navHorizontal.length; i++) {
+        navHorizontal[i].classList.add("text-white");
+        navHorizontal[i].classList.add("hover:text-gray-200");
+        navHorizontal[i].classList.remove("text-gray-800");
+        navHorizontal[i].classList.remove("hover:text-gray-800");
+      }
     }
   });
 
