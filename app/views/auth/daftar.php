@@ -15,7 +15,7 @@
                 <i data-feather="log-in" style="width:35px;height: 35px;left: 140px;top: 17px; margin-right:10px"></i>
                 <h5 class="md:text-3xl text-xl"> Daftar</h5>
             </div>
-            <form action="" method="">
+            <form action="" method="POST">
                 <div class="flex flex-col mb-5">
                     <label for="nama_lengkap" class="text-gray-700">Nama Lengkap</label>
                     <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="nama_lengkap" aria-describedby="nama_lengkap" name="nama_lengkap" placeholder="Ketikkan Nama Lengkap" required>

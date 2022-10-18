@@ -13,6 +13,8 @@ class Controller
     {
         // Load Config
         require_once("config/config.php");
+        // Load Lib
+        require_once("lib/sweeatalert.php");
     }
     // Show view where controllers
     protected function view($file, $data = [])

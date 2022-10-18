@@ -1,4 +1,6 @@
 $(document).ready(function () {
+  // ASK TO GET CURRENT LOCATION
+  // DATA TABLES
   $("#dataTableLaporan").DataTable();
 
   // Navbar
@@ -25,6 +27,21 @@ $(document).ready(function () {
       }
     }
   });
+
+  // Navbar toogle menu
+  $("#nav-menu-open").show();
+  $("#nav-menu-close").hide();
+
+  function toogleMenu(e) {
+    console.log(e);
+    // if (e.includes("open")) {
+    //   $("#nav-menu-open").show();
+    //   $("#nav-menu-close").hide();
+    // } else {
+    //   $("#nav-menu-open").hide();
+    //   $("#nav-menu-close").show();
+    // }
+  }
 
   // Form
   let klafisikasi = "pengaduan";

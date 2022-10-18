@@ -19,11 +19,12 @@
         </div>
     </div>
     <div class="text-white space-x-8 hidden md:block">
-        <a href="<?= BaseURL() ?>/auth" class="">Masuk</a>
+        <a href="<?= BaseURL() ?>/auth" class="nav-items-btn-horizontal text-white hover:text-gray-200">Masuk</a>
         <a href="<?= BaseURL() ?>/auth/daftar" class="border border-white py-2 px-4 rounded">Daftar</a>
     </div>
     <div class="block md:hidden text-white cursor-pointer">
-        <i data-feather="menu" style="width:35px;height: 35px;left: 140px;top: 17px; margin-right:10px"></i>
+        <i id="nav-menu-open" data-feather="menu" style="width:35px;height: 35px;left: 140px;top: 17px; margin-right:10px"></i>
+        <i id="nav-menu-close" data-feather="x" style="width:35px;height: 35px;left: 140px;top: 17px; margin-right:10px"></i>
     </div>
 </nav>
 <!-- Hero -->

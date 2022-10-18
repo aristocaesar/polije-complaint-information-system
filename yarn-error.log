@@ -1,0 +1,43 @@
+Arguments: 
+  /home/aristocaesar/.nvm/versions/node/v16.16.0/bin/node /home/aristocaesar/.nvm/versions/node/v16.16.0/bin/yarn add sweatalert2
+
+PATH: 
+  /home/aristocaesar/.nvm/versions/node/v16.16.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/aristocaesar/Application/SDK-Flutter/flutter/bin:/home/aristocaesar/Documents/Kuliah/3.SEMESTER_3/polije-complaint-information-system/Application/SDK-Flutter/flutter/bin
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  16.16.0
+
+Platform: 
+  linux x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/sweatalert2: An error occurred.
+      at Request.params.callback [as _callback] (/home/aristocaesar/.nvm/versions/node/v16.16.0/lib/node_modules/yarn/lib/cli.js:66145:18)
+      at Request.self.callback (/home/aristocaesar/.nvm/versions/node/v16.16.0/lib/node_modules/yarn/lib/cli.js:140890:22)
+      at Request.emit (node:events:527:28)
+      at Request.<anonymous> (/home/aristocaesar/.nvm/versions/node/v16.16.0/lib/node_modules/yarn/lib/cli.js:141862:10)
+      at Request.emit (node:events:527:28)
+      at IncomingMessage.<anonymous> (/home/aristocaesar/.nvm/versions/node/v16.16.0/lib/node_modules/yarn/lib/cli.js:141784:12)
+      at Object.onceWrapper (node:events:641:28)
+      at IncomingMessage.emit (node:events:539:35)
+      at endReadableNT (node:internal/streams/readable:1345:12)
+      at processTicksAndRejections (node:internal/process/task_queues:83:21)
+
+npm manifest: 
+  {
+    "dependencies": {
+      "yarn": "^1.22.19"
+    },
+    "devDependencies": {
+      "tailwindcss": "^3.1.8"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

@@ -17,6 +17,7 @@
             </div>
             <div class="mt-16">
                 <p>Laboris non occaecat do minim qui laboris duis ad occaecat officia exercitation ex reprehenderit qui. Culpa reprehenderit minim adipisicing veniam ullamco eiusmod aliqua esse et. Cillum fugiat deserunt et excepteur irure eu cillum. Non consequat ex ullamco do. Sint do consectetur eiusmod mollit tempor et non Lorem et consectetur.</p>
+                <?= $_SERVER["HTTP_USER_AGENT"] ?>
             </div>
         </div>
     </div>

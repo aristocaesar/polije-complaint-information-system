@@ -15,7 +15,7 @@
                 <i data-feather="refresh-cw" style="width:35px;height: 35px;left: 140px;top: 17px; margin-right:10px"></i>
                 <h5 class="md:text-3xl text-xl"> Lupa Password</h5>
             </div>
-            <form action="" method="">
+            <form action="" method="POST">
                 <div class="flex flex-col mb-5">
                     <label for="email" class="text-gray-700">Email</label>
                     <input type="email" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="email" aria-describedby="email" name="email" placeholder="Masukkan Email" required>

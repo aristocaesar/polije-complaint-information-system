@@ -11,6 +11,12 @@ class Auth extends Controller
         ];
 
         $this->view("auth/masuk", $data);
+
+        // JIKA TERDAPAT AKSI LOGIN
+        if (isset($_POST["login"])) {
+            // Cek Login
+            Alert::Error("Email atau Password Salah!");
+        }
     }
 
     public function daftar()

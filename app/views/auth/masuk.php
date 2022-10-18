@@ -2,8 +2,7 @@
 <section class="hero">
     <?php getNavbarHome(); ?>
 </section>
-<!-- Form -->
-<!-- Tentang -->
+<!-- Login -->
 <section id="form-lapor" class="mt-[-570px] lg:mt-[-550px]">
     <div class="container flex flex-col items-center text-center text-white max-w-[950px] mt-36">
         <h1 class="md:text-4xl text-3xl font-bold tracking-wide">Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember</h1>
@@ -16,7 +15,7 @@
                 <i data-feather="log-in" style="width:35px;height: 35px;left: 140px;top: 17px; margin-right:10px"></i>
                 <h5 class="md:text-3xl text-xl"> Masuk</h5>
             </div>
-            <form action="" method="">
+            <form action="" method="POST">
                 <div class="flex flex-col mb-5">
                     <label for="email" class="text-gray-700">Email</label>
                     <input type="email" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="email" aria-describedby="email" name="email" placeholder="Masukkan Email" required>
