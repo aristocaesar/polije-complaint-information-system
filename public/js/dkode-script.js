@@ -1,7 +1,8 @@
 $(document).ready(function () {
   // ASK TO GET CURRENT LOCATION
+
   // DATA TABLES
-  $("#dataTableLaporan").DataTable();
+  // $("#dataTableLaporan").DataTable();
 
   // Navbar
   $(window).scroll(function () {
@@ -15,6 +16,18 @@ $(document).ready(function () {
         navHorizontal[i].classList.add("text-gray-800");
         navHorizontal[i].classList.add("hover:text-gray-800");
       }
+      // BTN MASUK
+      $("#nav-items-btn-masuk-hor").removeClass(
+        "text-white hover:text-gray-200"
+      );
+      $("#nav-items-btn-masuk-hor").addClass(
+        "text-gray-800 hover:text-gray-900"
+      );
+      // BTN DAFTAR
+      $("#nav-items-btn-daftar-hor").removeClass("border");
+      $("#nav-items-btn-daftar-hor").addClass("bg-blue-800 hover:bg-blue-900");
+      // BTN VERTIKAL
+      $("#nav-menu-open").addClass("text-gray-800");
     } else {
       $(".navbar-user").removeClass("bg-white drop-shadow-lg");
       $(".navbar-user").addClass("bg-transparent");
@@ -25,24 +38,31 @@ $(document).ready(function () {
         navHorizontal[i].classList.remove("text-gray-800");
         navHorizontal[i].classList.remove("hover:text-gray-800");
       }
+      // BTN MASUK
+      $("#nav-items-btn-masuk-hor").removeClass(
+        "text-gray-800 hover:text-gray-900"
+      );
+      $("#nav-items-btn-masuk-hor").addClass("text-white hover:text-gray-200");
+      // BTN DAFTAR
+      $("#nav-items-btn-daftar-hor").removeClass(
+        "bg-blue-800 hover:bg-blue-900"
+      );
+      $("#nav-items-btn-daftar-hor").addClass("border");
+      // BTN VERTIKAL
+      $("#nav-menu-open").removeClass("text-gray-800");
     }
   });
 
   // Navbar toogle menu
-  $("#nav-menu-open").show();
-  $("#nav-menu-close").hide();
+  $("#nav-menu-open").click(() => {
+    $("#navVertikal").removeClass("-right-full");
+    $("#navVertikal").addClass("right-0");
+  });
 
-  function toogleMenu(e) {
-    console.log(e);
-    // if (e.includes("open")) {
-    //   $("#nav-menu-open").show();
-    //   $("#nav-menu-close").hide();
-    // } else {
-    //   $("#nav-menu-open").hide();
-    //   $("#nav-menu-close").show();
-    // }
-  }
-
+  $("#nav-menu-close").click(() => {
+    $("#navVertikal").removeClass("right-0");
+    $("#navVertikal").addClass("-right-full");
+  });
   // Form
   let klafisikasi = "pengaduan";
   defaultKlafisikasiLaporan();
@@ -124,30 +144,28 @@ $(document).ready(function () {
   // USER MENU
   // Default menu selected
   formSelected("laporan");
-  userMenuSelected($("#card-menu-user .card-body #user-menu").children()[0]);
-  function userMenuSelected(e) {
-    const userMenuItems = $("#card-menu-user .card-body #user-menu").children();
+  $(".user-menu-items").click((e) => {
+    const target = e.currentTarget.id;
+    const userMenuItems = $("#user-menu").children();
     for (let i = 0; i < userMenuItems.length; i++) {
-      if (e.id == userMenuItems[i].id) {
-        userMenuItems[i].classList.remove("btn-white");
-        userMenuItems[i].classList.add("btn-blue-active");
-        formSelected(e.id);
+      // Set style on menu items
+      if (target == userMenuItems[i].id) {
+        userMenuItems[i].classList.add("text-white", "bg-blue-800");
+        userMenuItems[i].classList.remove("text-blue-800", "bg-white");
       } else {
-        userMenuItems[i].classList.add("btn-white");
-        userMenuItems[i].classList.remove("btn-blue-active");
-        formSelected(e.id);
+        userMenuItems[i].classList.remove("text-white", "bg-blue-800");
+        userMenuItems[i].classList.add("text-blue-800", "bg-white");
       }
     }
-  }
+    formSelected(target);
+  });
   function formSelected(e) {
     if (e == "laporan") {
-      $("#card-user-laporan").show();
-      $("#card-user-setting").hide();
-      $("#btn-create-new-laporan").show();
-    } else {
-      $("#card-user-laporan").hide();
-      $("#card-user-setting").show();
-      $("#btn-create-new-laporan").hide();
+      $("#content-user-laporan").show();
+      $("#content-user-setting").hide();
+    } else if (e == "pengaturan") {
+      $("#content-user-laporan").hide();
+      $("#content-user-setting").show();
     }
   }
 

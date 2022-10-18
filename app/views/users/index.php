@@ -17,17 +17,17 @@
             </div>
             <div class="mt-16">
                 <div id="user-menu" class="grid grid-cols-3 gap-x-5">
-                    <button type="button" id="laporan" class="py-4 hover:bg-blue-900 hover:drop-shadow-lg font-bold bg-blue-800 text-white flex items-center justify-center text-xl"><i data-feather="edit-3" style="width:35px;height: 35px;left: 140px;top: 17px; margin-right:10px"></i> LAPORAN</button>
-                    <button type="button" id="pengaturan" class="py-4 hover:bg-blue-900 hover:drop-shadow-lg font-bold bg-blue-800 text-white flex items-center justify-center text-xl"><i data-feather="settings" style="width:35px;height: 35px;left: 140px;top: 17px; margin-right:10px"></i> AKUN</button>
-                    <button type="button" id="keluar" class="py-4 hover:bg-blue-900 hover:drop-shadow-lg font-bold bg-blue-800 text-white flex items-center justify-center text-xl"><i data-feather="log-in" style="width:35px;height: 35px;left: 140px;top: 17px; margin-right:10px"></i> KELUAR</button>
+                    <button type="button" id="laporan" class="user-menu-items py-4 hover:bg-blue-900 hover:drop-shadow-lg font-bold bg-blue-800 text-white flex items-center justify-center text-xl"><i data-feather="edit-3" style="width:35px;height: 35px;left: 140px;top: 17px;" class="md:pr-3"></i> <span class="hidden md:block">LAPORAN</span></button>
+                    <button type="button" id="pengaturan" class="user-menu-items py-4 hover:bg-blue-900 hover:drop-shadow-lg font-bold bg-blue-800 text-white flex items-center justify-center text-xl"><i data-feather="settings" style="width:35px;height: 35px;left: 140px;top: 17px;" class="md:pr-3"></i> <span class="hidden md:block">AKUN</span></button>
+                    <button type="button" id="keluar" class="user-menu-items py-4 hover:bg-blue-900 hover:drop-shadow-lg font-bold bg-blue-800 text-white flex items-center justify-center text-xl"><i data-feather="log-in" style="width:35px;height: 35px;left: 140px;top: 17px;" class="md:pr-3"></i> <span class="hidden md:block">KELUAR</span></button>
                 </div>
 
                 <div class="user-content">
-                    <div class="my-11 text-center">
-                        <a href="<?= BaseURL(); ?>" class="text-blue-800 hover:text-blue-900 hover:underline">Buat Laporan Baru</a>
-                    </div>
                     <div id="content-user-laporan" class="grid grid-cols-1 gap-y-5">
-                        <div class="flex border py-5 px-5 items-center">
+                        <div class="my-11 text-center">
+                            <a href="<?= BaseURL(); ?>" class="text-blue-800 hover:text-blue-900 hover:underline">Buat Laporan Baru</a>
+                        </div>
+                        <div class="flex flex-col md:flex-row border py-5 px-5 items-center">
                             <div>
                                 <h6 class="font-bold text-gray-800 mb-3">UKT saya tinggi</h6>
                                 <h6 class="text-gray-500 font-light">Labore consequat commodo dolor dolore sit excepteur culpa. Aliquip ad ad ut labore nostrud Lorem in tempor in ut reprehenderit. Pariatur occaecat magna mollit sunt duis aute cillum aliqua consectetur.</h6>
@@ -36,11 +36,12 @@
                                     <small class="text-blue-800">Proses Tindak Lanjut</small>
                                 </div>
                             </div>
-                            <div>
-                                <i data-feather="more-vertical" class="cursor-pointer" style="width:35px;height: 35px;left: 140px;top: 17px; margin-right:10px"></i>
+                            <div class="m-5">
+                                <i data-feather="more-vertical" class="cursor-pointer hidden md:block" style="width:35px;height: 35px;left: 140px;top: 17px;"></i>
+                                <i data-feather="more-horizontal" class="cursor-pointer block md:hidden" style="width:35px;height: 35px;left: 140px;top: 17px;"></i>
                             </div>
                         </div>
-                        <div class="flex border py-5 px-5 items-center">
+                        <div class="flex flex-col md:flex-row border py-5 px-5 items-center">
                             <div>
                                 <h6 class="font-bold text-gray-800 mb-3">UKT saya tinggi</h6>
                                 <h6 class="text-gray-500 font-light">Labore consequat commodo dolor dolore sit excepteur culpa. Aliquip ad ad ut labore nostrud Lorem in tempor in ut reprehenderit. Pariatur occaecat magna mollit sunt duis aute cillum aliqua consectetur.</h6>
@@ -49,14 +50,15 @@
                                     <small class="text-blue-800">Proses Tindak Lanjut</small>
                                 </div>
                             </div>
-                            <div>
-                                <i data-feather="more-vertical" class="cursor-pointer" style="width:35px;height: 35px;left: 140px;top: 17px; margin-right:10px"></i>
+                            <div class="m-5">
+                                <i data-feather="more-vertical" class="cursor-pointer hidden md:block" style="width:35px;height: 35px;left: 140px;top: 17px;"></i>
+                                <i data-feather="more-horizontal" class="cursor-pointer block md:hidden" style="width:35px;height: 35px;left: 140px;top: 17px;"></i>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div id="content-user-setting">
-                    <div class="flex flex-col text-grey-800 space-y-8 mt-5">
+                    <div class="flex flex-col text-grey-800 space-y-8 mt-11">
                         <div>
                             <h5 class="text-blue-800 font-bold text-2xl mb-2">Email</h5>
                             <p class="">hi@aristoc.space - <span class="text-green-500 italic">Terverifikasi</span> <a href="#" class="ml-2 text-blue-800 underline"><u>Ganti Email</u></a></p>

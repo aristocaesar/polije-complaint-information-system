@@ -28,8 +28,8 @@
                     <a href="<?= BaseURL() ?>/auth/recovery" class="text-blue-800 font-ligth">Lupa Password ?</a>
                 </div>
                 <button type="submit" name="login" class="text-xl text-white w-full rounded bg-blue-800 py-4 font-bold tracking-wide hover:bg-blue-900 hover:drop-shadow-lg">MASUK</button>
-                <div class="flex space-x-3 mt-5">
-                    <p>Belum punya akun ?</p>
+                <div class="flex space-x-3 mt-8">
+                    <p class="text-gray-800">Belum punya akun ?</p>
                     <a href="<?= BaseURL() ?>/auth/daftar" class="text-blue-800 font-ligth">Daftar</a>
                 </div>
             </form>
