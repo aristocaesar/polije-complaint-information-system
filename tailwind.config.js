@@ -1,9 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 
-const BaseUrl = "http://192.168.8.100/polije-complaint";
+const BaseUrl = "http://localhost/polije-complaint";
 
 module.exports = {
-  content: ["./app/**/*.{html,js,php}"],
+  content: ["./app/**/*.{html,js,php}", "./node_modules/flowbite/**/*.js"],
   theme: {
     container: {
       center: true,
@@ -47,5 +47,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("flowbite/plugin")],
 };

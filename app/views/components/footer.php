@@ -1,6 +1,6 @@
 </body>
 
-<!-- Bootstrap core JavaScript-->
+<!-- Jquery-->
 <script type="text/javascript" src="<?= BaseURL(); ?>/public/vendor/jquery/jquery.min.js"></script>
 
 <!-- Feather Icon -->
