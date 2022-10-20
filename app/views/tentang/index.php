@@ -1,7 +1,4 @@
-<!-- Hero -->
-<section class="hero">
-    <?php getNavbarHome(); ?>
-</section>
+<?php getNavbarHome(); ?>
 <!-- Tentang -->
 <section id="form-lapor" class="mt-[-570px] lg:mt-[-550px]">
     <div class="container flex flex-col items-center text-center text-white max-w-[950px] mt-36">

@@ -65,11 +65,11 @@
                         </div>
                         <div>
                             <h5 class="text-blue-800 font-bold text-2xl mb-2">Password</h5>
-                            <p class="text-dark">Terakhir diperbarui - Senin, 26 September 2022 - 16:26:09<a href="#" class="ml-2 text-blue-800 underline"><u>Ganti Password</u></a></p>
+                            <p class="text-dark">Terakhir diperbarui - Senin, 26 September 2022 - 16:26:09<button type="button" class="ml-2 text-blue-800 underline" onclick="Modal('ganti-password')"><u>Ganti Password</u></button></p>
                         </div>
                         <div>
                             <h5 class="text-blue-800 font-bold text-2xl mb-2">Verifikasi</h5>
-                            <p class="text-dark">Akun belum terverifikasi <a href="#" class="ml-2 text-blue-800 underline"><u>Verifikasi Sekarang</u></a></p>
+                            <p class="text-dark">Akun belum terverifikasi <button type="button" class="ml-2 text-blue-800 underline" onclick="Modal('verifikasi')"><u>Verifikasi Sekarang</u></button></p>
                         </div>
                         <div>
                             <h5 class="text-blue-800 font-bold text-2xl mb-2">Aktifitas Terakhir</h5>
@@ -129,18 +129,28 @@
                     </svg>
                 </button>
             </div>
-            <form action="" method="">
-                <!-- Modal body -->
-                <div class="p-6 space-y-6">
-                    <p>Perhatikan</p>
-                    <ul>
-                        <li>Email harus aktif.</li>
-                        <li>Jika link verifikasi tidak tersedia, harap cek pada bagian spam.</li>
-                        <li>Setelah anda mengklik konfirmasi, anda akan otomatis keluar.</li>
-                    </ul>
+            <!-- Modal body -->
+            <form action="" method="" class="px-10 py-5 text-grey-800">
+                <div class="flex flex-col mb-5">
+                    <label for="email" class="text-gray-700">Email</label>
+                    <input type="email" class="mt-3 border border-gray-400 py-3 px-2 rounded" name="email" placeholder="Ketikkan Email" required>
                 </div>
+                <div class="flex flex-col mb-5">
+                    <label for="email" class="text-gray-700">Konfirmasi Email</label>
+                    <input type="email" class="mt-3 border border-gray-400 py-3 px-2 rounded" name="email2" placeholder="Ketikkan Email" required>
+                </div>
+                <div class="flex flex-col mb-5">
+                    <label for="password" class="text-gray-700">Password</label>
+                    <input type="password" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password" name="password" placeholder="Ketikkan Password" required>
+                </div>
+                <p class="font-bold mb-4">Perhatikan</p>
+                <ul class="pl-5 list-disc font-light mb-5">
+                    <li>Email harus aktif.</li>
+                    <li>Jika link verifikasi tidak tersedia, harap cek pada bagian spam.</li>
+                    <li>Setelah anda mengklik konfirmasi, anda akan otomatis keluar.</li>
+                </ul>
                 <!-- Modal footer -->
-                <div class="flex justify-end items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+                <div class="flex justify-end items-center pt-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
                     <button type="submit" class="text-white bg-blue-800 hover:bg-blue-900 hover:drop-shadow-md font-medium rounded-lg text-sm px-5 py-2.5 text-cente">Ya, Ganti Email</button>
                     <button type="button" class="text-gray-800 border border-gray-800 hover:drop-shadow-md font-medium rounded-lg text-sm px-5 py-2.5 text-center" onclick="ModalClose()">Batal</button>
                 </div>
@@ -148,84 +158,80 @@
         </div>
     </div>
 </div>
-<!-- <div class="modal fade" id="gantiEmail" tabindex="-1" role="dialog" aria-labelledby="gantiEmail" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title font-weight-bold">Ganti Email</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Email</label>
-                        <input type="email" name="email1" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan email baru">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Konfirmasi Email</label>
-                        <input type="email" name="email2" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Konfirmasi email baru">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
-                        <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                    </div>
-                    <div class="form-group">
-                        <p>Perhatikan</p>
-                        <ul>
-                            <li>Email harus aktif.</li>
-                            <li>Jika link verifikasi tidak tersedia, harap cek pada bagian spam.</li>
-                            <li>Setelah anda mengklik konfirmasi, anda akan otomatis keluar.</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" name="gantiEmail" class="btn btn-blue font-weight-bold py-2">Ya, Konfirmasi</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div> -->
 <!-- Modal Ganti Password -->
-<!-- <div class="modal fade" id="gantiPassword" tabindex="-1" role="dialog" aria-labelledby="gantiPassword" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title font-weight-bold">Ganti Password</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+<div id="modal-ganti-password" class="modal hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center bg-black bg-opacity-50">
+    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+            <div class="flex justify-between items-start p-4 rounded-t border-b">
+                <h3 class="text-xl font-semibold text-gray-800 ">
+                    Ganti Password
+                </h3>
+                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" onclick="ModalClose()">
+                    <svg aria-hidden=" true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
                 </button>
             </div>
-            <form>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="exampleFormControlInput1">Password Lama</label>
-                        <input type="text" name="passwordlama" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan password lama">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleFormControlInput1">Password Baru</label>
-                        <input type="text" name="password1" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan password baru">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleFormControlInput1">Konfirmasi Password Baru</label>
-                        <input type="text" name="password2" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan kembali password baru">
-                    </div>
-                    <div class="form-group">
-                        <p>Perhatikan</p>
-                        <ul>
-                            <li>Setelah anda mengklik konfirmasi, anda akan otomatis keluar.</li>
-                        </ul>
-                    </div>
+            <!-- Modal body -->
+            <form action="" method="" class="px-10 py-5 text-grey-800">
+                <div class="flex flex-col mb-5">
+                    <label for="password" class="text-gray-700">Password Sekarang</label>
+                    <input type="password" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password" name="password" placeholder="Ketikkan Password" required>
                 </div>
-                <div class="modal-footer">
-                    <button type="submit" name="gantiPassword" class="btn btn-blue font-weight-bold py-3">Ya, Konfirmasi</button>
+                <div class="flex flex-col mb-5">
+                    <label for="password" class="text-gray-700">Password Baru</label>
+                    <input type="password" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password1" name="password1" placeholder="Ketikkan Password" required>
+                </div>
+                <div class="flex flex-col mb-5">
+                    <label for="password" class="text-gray-700">Konfirmasi Password Baru</label>
+                    <input type="password" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password2" name="password2" placeholder="Ketikkan Password" required>
+                </div>
+                <p class="font-bold mb-4">Perhatikan</p>
+                <ul class="pl-5 list-disc font-light mb-5">
+                    <li>Setelah anda mengklik konfirmasi, anda akan otomatis keluar.</li>
+                </ul>
+                <!-- Modal footer -->
+                <div class="flex justify-end items-center pt-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+                    <button type="submit" class="text-white bg-blue-800 hover:bg-blue-900 hover:drop-shadow-md font-medium rounded-lg text-sm px-5 py-2.5 text-cente">Ya, Ganti Password</button>
+                    <button type="button" class="text-gray-800 border border-gray-800 hover:drop-shadow-md font-medium rounded-lg text-sm px-5 py-2.5 text-center" onclick="ModalClose()">Batal</button>
                 </div>
             </form>
         </div>
     </div>
-</div> -->
+</div>
 <!-- Modal Verifikasi Keaslian Akun -->
+<div id="modal-verifikasi" class="modal hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center bg-black bg-opacity-50">
+    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+            <div class="flex justify-between items-start p-4 rounded-t border-b">
+                <h3 class="text-xl font-semibold text-gray-800 ">
+                    Verifikasi Akun
+                </h3>
+                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" onclick="ModalClose()">
+                    <svg aria-hidden=" true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <form action="" method="" class="px-10 py-5 text-grey-800">
+                <div class="flex flex-col mb-5">
+                    <label for="password" class="text-gray-700">Password Sekarang</label>
+                    <input type="password" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password" name="password" placeholder="Ketikkan Password" required>
+                </div>
+                <!-- Modal footer -->
+                <div class="flex justify-end items-center pt-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+                    <button type="submit" class="text-white bg-blue-800 hover:bg-blue-900 hover:drop-shadow-md font-medium rounded-lg text-sm px-5 py-2.5 text-cente">Kirim Verifikasi</button>
+                    <button type="button" class="text-gray-800 border border-gray-800 hover:drop-shadow-md font-medium rounded-lg text-sm px-5 py-2.5 text-center" onclick="ModalClose()">Batal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <!-- <div class="modal fade" id="verifikasiAkun" tabindex="-1" role="dialog" aria-labelledby="verifikasiAkun" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">

@@ -21,9 +21,11 @@ class App
             if (file_exists('app/controllers/' . $nameFile . ".php")) {
                 // Replace default controller
                 $this->controller = $nameFile;
-                // Hapus controller pada baris index url
-                unset($url[0]);
+            } else {
+                $this->controller = "Notfound";
             }
+            // Hapus controller pada baris index url
+            unset($url[0]);
         }
 
         // Panggil controller berdasarkan result controller
