@@ -8,11 +8,22 @@
 <script src="<?= BaseURL() ?>/public/js/stisla.js"></script>
 
 <!-- JS Libraies -->
+<script src="<?= BaseURL() ?>/public/vendor/datatables/js/jquery.dataTables.min.js"></script>
+<script src="<?= BaseURL() ?>/public/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
 
 <!-- Template JS File -->
 <script src="<?= BaseURL() ?>/public/js/stisla-script.js"></script>
 
 <!-- Page Specific JS File -->
+<script>
+    $(document).ready(function() {
+        $('.table').DataTable({
+            language: {
+                url: '<?= BaseURL(); ?>/public/vendor/datatables/indonesia.json'
+            }
+        });
+    });
+</script>
 </body>
 
 </html>

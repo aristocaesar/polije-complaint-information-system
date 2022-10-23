@@ -29,7 +29,7 @@
     <script type="text/javascript" src="<?= BaseURL(); ?>/public/js/sweetalert2.all.min.js"></script>
 
     <!-- Jquery -->
-    <script type="text/javascript" src="<?= BaseURL(); ?>/public/vendor/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="<?= BaseURL(); ?>/public/js/jquery.js"></script>
 </head>
 
 <body>

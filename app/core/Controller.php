@@ -37,4 +37,9 @@ class Controller
             require_once("app/views/components/footer.php");
         }
     }
+
+    // protected function model($table)
+    // {
+    //     # code...
+    // }
 }

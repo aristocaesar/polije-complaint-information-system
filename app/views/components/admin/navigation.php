@@ -10,22 +10,21 @@
 
             <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
                     <img alt="image" src="https://media-exp1.licdn.com/dms/image/C5603AQED8L0BQbsIdw/profile-displayphoto-shrink_200_200/0/1654088905112?e=2147483647&v=beta&t=l683DweslHzwVt376iZoViKr9i9uG0GzhcDREE6eAHg" class="rounded-circle mr-1">
-                    <div class="d-sm-none d-lg-inline-block">Hi, Ujang Maman</div>
+                    <div class="d-sm-none d-lg-inline-block">Hallo, Aristo Caesar Pratama</div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <div class="dropdown-title">Logged in 5 min ago</div>
                     <a href="features-profile.html" class="dropdown-item has-icon">
-                        <i class="far fa-user"></i> Profile
+                        <i class="far fa-user"></i> Profil
                     </a>
                     <a href="features-activities.html" class="dropdown-item has-icon">
-                        <i class="fas fa-bolt"></i> Activities
+                        <i class="fas fa-bolt"></i> Aktifitas
                     </a>
                     <a href="features-settings.html" class="dropdown-item has-icon">
-                        <i class="fas fa-cog"></i> Settings
+                        <i class="fas fa-cog"></i> Pengaturan
                     </a>
                     <div class="dropdown-divider"></div>
                     <a href="#" class="dropdown-item has-icon text-danger">
-                        <i class="fas fa-sign-out-alt"></i> Logout
+                        <i class="fas fa-sign-out-alt"></i> Keluar
                     </a>
                 </div>
             </li>

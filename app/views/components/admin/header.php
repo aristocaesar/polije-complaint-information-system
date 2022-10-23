@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
     <!-- CSS Libraries -->
+    <link rel="stylesheet" href="<?= BaseURL() ?>/public/vendor/datatables/css/datatables.bootstrap4.min.css">
 
     <!-- Template CSS -->
     <link rel="stylesheet" href="<?= BaseURL() ?>/public/css/stisla.css">
