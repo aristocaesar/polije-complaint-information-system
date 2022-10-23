@@ -28,6 +28,8 @@
     <!-- Sweeatalert -->
     <script type="text/javascript" src="<?= BaseURL(); ?>/public/js/sweetalert2.all.min.js"></script>
 
+    <!-- Jquery -->
+    <script type="text/javascript" src="<?= BaseURL(); ?>/public/vendor/jquery/jquery.min.js"></script>
 </head>
 
 <body>

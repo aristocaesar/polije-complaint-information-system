@@ -17,12 +17,11 @@
             </div>
             <div class="mt-16">
                 <div id="user-menu" class="grid grid-cols-3 gap-x-5">
-                    <button type="button" id="laporan" class="user-menu-items py-4 hover:bg-blue-900 hover:drop-shadow-lg font-bold bg-blue-800 text-white flex items-center justify-center text-xl"><i data-feather="edit-3" style="width:35px;height: 35px;left: 140px;top: 17px;" class="md:pr-3"></i> <span class="hidden md:block">LAPORAN</span></button>
-                    <button type="button" id="pengaturan" class="user-menu-items py-4 hover:bg-blue-900 hover:drop-shadow-lg font-bold bg-blue-800 text-white flex items-center justify-center text-xl"><i data-feather="settings" style="width:35px;height: 35px;left: 140px;top: 17px;" class="md:pr-3"></i> <span class="hidden md:block">AKUN</span></button>
-                    <button type="button" id="keluar" onclick="Modal(this.id)" class="user-menu-items py-4 hover:bg-blue-900 hover:drop-shadow-lg font-bold bg-blue-800 text-white flex items-center justify-center text-xl"><i data-feather="log-in" style="width:35px;height: 35px;left: 140px;top: 17px;" class="md:pr-3"></i> <span class="hidden md:block">KELUAR</span></button>
+                    <button type="button" id="laporan" onclick="userFormSelect(this.id)" class="py-4 text-xl font-bold text-white bg-blue-800 hover:bg-blue-900 hover:drop-shadow-lg flex items-center justify-center"><i data-feather="edit-3" style="width:35px;height: 35px;left: 140px;top: 17px;" class="md:pr-3"></i> <span class="hidden md:block">LAPORAN</span></button>
+                    <button type="button" id="pengaturan" onclick="userFormSelect(this.id)" class="py-4 text-xl font-bold text-white bg-blue-800 hover:bg-blue-900 hover:drop-shadow-lg flex items-center justify-center"><i data-feather="settings" style="width:35px;height: 35px;left: 140px;top: 17px;" class="md:pr-3"></i> <span class="hidden md:block">AKUN</span></button>
+                    <button type="button" id="keluar" onclick="Modal(this.id)" class="py-4 text-xl font-bold text-white bg-blue-800 hover:bg-blue-900 hover:drop-shadow-lg flex items-center justify-center"><i data-feather="log-in" style="width:35px;height: 35px;left: 140px;top: 17px;" class="md:pr-3"></i> <span class="hidden md:block">KELUAR</span></button>
                 </div>
-
-                <div class="user-content">
+                <div id="user-form-content">
                     <div id="content-user-laporan" class="grid grid-cols-1 gap-y-5">
                         <div class="my-11 text-center">
                             <a href="<?= BaseURL(); ?>" class="text-blue-800 hover:text-blue-900 hover:underline">Buat Laporan Baru</a>
@@ -56,24 +55,24 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div id="content-user-setting">
-                    <div class="flex flex-col text-grey-800 space-y-8 mt-11">
-                        <div>
-                            <h5 class="text-blue-800 font-bold text-2xl mb-2">Email</h5>
-                            <p class="">hi@aristoc.space - <span class="text-green-500 italic">Terverifikasi</span> <button type="button" class="ml-2 text-blue-800 underline" onclick="Modal('ganti-email')"><u>Ganti Email</u></button></p>
-                        </div>
-                        <div>
-                            <h5 class="text-blue-800 font-bold text-2xl mb-2">Password</h5>
-                            <p class="text-dark">Terakhir diperbarui - Senin, 26 September 2022 - 16:26:09<button type="button" class="ml-2 text-blue-800 underline" onclick="Modal('ganti-password')"><u>Ganti Password</u></button></p>
-                        </div>
-                        <div>
-                            <h5 class="text-blue-800 font-bold text-2xl mb-2">Verifikasi</h5>
-                            <p class="text-dark">Akun belum terverifikasi <button type="button" class="ml-2 text-blue-800 underline" onclick="Modal('verifikasi')"><u>Verifikasi Sekarang</u></button></p>
-                        </div>
-                        <div>
-                            <h5 class="text-blue-800 font-bold text-2xl mb-2">Aktifitas Terakhir</h5>
-                            <p class="text-dark">Senin, 26 September 2022 - 16:29:25</p>
+                    <div id="content-user-pengaturan">
+                        <div class="flex flex-col text-grey-800 space-y-8 mt-11">
+                            <div>
+                                <h5 class="text-blue-800 font-bold text-2xl mb-2">Email</h5>
+                                <p class="">hi@aristoc.space - <span class="text-green-500 italic">Terverifikasi</span> <button type="button" class="ml-2 text-blue-800 underline" onclick="Modal('ganti-email')"><u>Ganti Email</u></button></p>
+                            </div>
+                            <div>
+                                <h5 class="text-blue-800 font-bold text-2xl mb-2">Password</h5>
+                                <p class="text-dark">Terakhir diperbarui - Senin, 26 September 2022 - 16:26:09<button type="button" class="ml-2 text-blue-800 underline" onclick="Modal('ganti-password')"><u>Ganti Password</u></button></p>
+                            </div>
+                            <div>
+                                <h5 class="text-blue-800 font-bold text-2xl mb-2">Verifikasi</h5>
+                                <p class="text-dark">Akun belum terverifikasi <button type="button" class="ml-2 text-blue-800 underline" onclick="Modal('verifikasi')"><u>Verifikasi Sekarang</u></button></p>
+                            </div>
+                            <div>
+                                <h5 class="text-blue-800 font-bold text-2xl mb-2">Aktifitas Terakhir</h5>
+                                <p class="text-dark">Senin, 26 September 2022 - 16:29:25</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -272,4 +271,41 @@
         </div>
     </div>
 </div> -->
+<script>
+    // USER MENU
+    // Default menu selected
+    userFormSelect("laporan");
+
+    function userFormSelect(id) {
+        const userMenu = $("#user-menu")[0].children;
+        for (let i = 0; i < userMenu.length; i++) {
+            if (userMenu[i].id == id) {
+                userMenu[i].classList.add(
+                    "text-white",
+                    "bg-blue-800",
+                    "hover:bg-blue-900"
+                );
+                userMenu[i].classList.remove("text-blue-800", "bg-white");
+            } else {
+                userMenu[i].classList.remove(
+                    "text-white",
+                    "bg-blue-800",
+                    "hover:bg-blue-900"
+                );
+                userMenu[i].classList.add("text-blue-800", "bg-white");
+            }
+        }
+        formSelected(id);
+    }
+
+    function formSelected(e) {
+        if (e == "laporan") {
+            $("#content-user-laporan").show();
+            $("#content-user-pengaturan").hide();
+        } else if (e == "pengaturan") {
+            $("#content-user-laporan").hide();
+            $("#content-user-pengaturan").show();
+        }
+    }
+</script>
 <?php getFooterCopyright(); ?>

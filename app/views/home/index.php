@@ -31,12 +31,12 @@
                     </div>
                 </div>
             </div>
-            <div class="text-center mt-10">
-                <small id="panduan-klafisikasi" class="font-light text-gray-700 hover:cursor-pointer hover:underline">Perhatikan Cara Menyampaikan Pengaduan Yang Baik dan Benar</small>
-            </div>
             <div id="form-pai">
                 <!-- FORM PENGADUAN -->
-                <form id="form-pengaduan" class="my-11" action="" method="POST">
+                <form id="form-pengaduan" class="mt-11 mb-5" action="" method="POST">
+                    <div class="text-center mb-10">
+                        <small id="panduan-pengaduan" class="font-light text-gray-700 hover:cursor-pointer hover:underline" onclick="Panduan(this.id)">Perhatikan Cara Menyampaikan Pengaduan Yang Baik dan Benar</small>
+                    </div>
                     <div class="flex flex-col mb-5">
                         <label for="judul" class="text-gray-700">Judul Laporan Anda*</label>
                         <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="judul" aria-describedby="judul" name="judul" placeholder="Ketikkan Judul Laporan" required>
@@ -91,7 +91,10 @@
                     <button type="submit" name="submit" class="text-xl text-white w-full rounded bg-blue-800 py-4 font-bold tracking-wide hover:bg-blue-900 hover:drop-shadow-lg">LAPOR!</button>
                 </form>
                 <!-- FORM ASPIRASI -->
-                <form id="form-aspirasi" class="my-11" action="" method="POST">
+                <form id="form-aspirasi" class="mt-11 mb-5" action="" method="POST">
+                    <div class="text-center mb-10">
+                        <small id="panduan-aspirasi" class="font-light text-gray-700 hover:cursor-pointer hover:underline" onclick="Panduan(this.id)">Perhatikan Cara Menyampaikan Aspirasi Yang Baik dan Benar</small>
+                    </div>
                     <div class="flex flex-col mb-5">
                         <label for="judul" class="text-gray-700">Judul Aspirasi Anda*</label>
                         <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="judul" aria-describedby="judul" name="judul" placeholder="Ketikkan Judul Aspirasi" required>
@@ -146,7 +149,10 @@
                     <button type="submit" name="submit" class="text-xl text-white w-full rounded bg-blue-800 py-4 font-bold tracking-wide hover:bg-blue-900 hover:drop-shadow-lg">KIRIM ASPIRASI</button>
                 </form>
                 <!-- FORM INFORMASI -->
-                <form id="form-informasi" class="my-11" action="" method="POST">
+                <form id="form-informasi" class="mt-11 mb-5" action="" method="POST">
+                    <div class="text-center mb-10">
+                        <small id="panduan-informasi" class="font-light text-gray-700 hover:cursor-pointer hover:underline" onclick="Panduan(this.id)">Perhatikan Cara Menanyakan Informasi Yang Baik dan Benar</small>
+                    </div>
                     <div class="flex flex-col mb-5">
                         <label for="judul" class="text-gray-700">Judul Aspirasi Anda*</label>
                         <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="judul" aria-describedby="judul" name="judul" placeholder="Ketikkan Judul Aspirasi" required>
@@ -156,27 +162,78 @@
             </div>
         </div>
     </div>
-</section>
+</section>`
 <?php getWizardLaporan(); ?>
 <?php getTrackingLaporan(); ?>
 <?php getInformasiLaporan(); ?>
 <?php getSupportSosialMedia(); ?>
 <!-- Modal Panduan -->
-<!-- Modal -->
-<!-- <div class="modal fade" id="modalPanduan" tabindex="-1" role="dialog" aria-labelledby="modalPengaduan" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title font-weight-bold" id="modalPengaduan">Pengaduan</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+<div id="modal-panduan" class="modal hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center bg-black bg-opacity-50">
+    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+            <div class="flex justify-between items-start p-4 rounded-t border-b">
+                <h3 class="text-xl font-semibold text-gray-800 ">
+                    Panduan
+                </h3>
+                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" onclick="ModalClose()">
+                    <svg aria-hidden=" true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
                 </button>
             </div>
-            <div class="modal-body">
-                When modals become too long for the user’s viewport or device, they scroll independent of the page itself. Try the demo below to see what we mean.
-            </div>
+            <!-- Modal body -->
+            <form id="modal-panduan-content" action="" method="" class="px-10 py-5 text-grey-800">
+                <div id="panduan-pengaduan" class="flex flex-col mb-5">
+                    <p>Pengaduan</p>
+                </div>
+                <div id="panduan-aspirasi" class="flex flex-col mb-5">
+                    <p>Aspirasi</p>
+                </div>
+                <div id="panduan-informasi" class="flex flex-col mb-5">
+                    <p>Informasi</p>
+                </div>
+            </form>
         </div>
     </div>
-</div> -->
+</div>
+<script>
+    // Modal Panduan
+    function Panduan(id) {
+        Modal("panduan");
+        const panduan = $("#modal-panduan-content")[0].children;
+        for (let i = 0; i < panduan.length; i++) {
+            if (panduan[i].id == id) {
+                panduan[i].classList.add("block");
+                panduan[i].classList.remove("hidden");
+            } else {
+                panduan[i].classList.add("hidden");
+                panduan[i].classList.remove("block");
+            }
+        }
+    }
+
+    // KLASIFIKASI MENU
+    Klasifikasi($("#btn-select-klasifikasi")[0].children[0]);
+
+    function Klasifikasi(e) {
+        const btn = $("#btn-select-klasifikasi");
+        const btnAll = btn.children();
+        const form = $("#form-pai").children();
+        for (let i = 0; i < form.length; i++) {
+            if (btnAll[i].id == e.id) {
+                btnAll[i].children[0].checked = true;
+            } else {
+                btnAll[i].children[0].checked = false;
+            }
+            if (form[i].id.includes(e.id)) {
+                $(`#${form[i].id}`).show();
+            } else {
+                $(`#${form[i].id}`).hide();
+            }
+        }
+    }
+</script>
 <!-- Footer -->
 <?php getFooterCopyright(); ?>

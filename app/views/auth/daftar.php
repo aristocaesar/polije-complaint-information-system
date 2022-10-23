@@ -16,7 +16,7 @@
                 <h5 class="md:text-3xl text-xl"> Daftar</h5>
             </div>
             <form action="" method="POST">
-                <div class="flex flex-col mb-5">e
+                <div class="flex flex-col mb-5">
                     <label for="nama_lengkap" class="text-gray-700">Nama Lengkap</label>
                     <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="nama_lengkap" aria-describedby="nama_lengkap" name="nama_lengkap" placeholder="Ketikkan Nama Lengkap" required>
                 </div>
@@ -48,7 +48,7 @@
                 <button type="submit" name="login" class="text-xl text-white w-full rounded bg-blue-800 py-4 font-bold tracking-wide hover:bg-blue-900 hover:drop-shadow-lg">DAFTAR</button>
                 <div class="flex space-x-3 mt-5">
                     <p>Sudah punya akun ?</p>
-                    <a href="<?= BaseURL() ?>/auth" class="text-blue-800 font-ligth">Login</a>
+                    <a href="<?= BaseURL() ?>/auth" class="text-blue-800 font-ligth">Masuk</a>
                 </div>
             </form>
         </div>

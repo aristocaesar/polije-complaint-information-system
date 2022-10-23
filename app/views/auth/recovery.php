@@ -21,6 +21,11 @@
                     <input type="email" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="email" aria-describedby="email" name="email" placeholder="Masukkan Email" required>
                 </div>
                 <button type="submit" name="login" class="text-xl text-white w-full rounded bg-blue-800 py-4 font-bold tracking-wide hover:bg-blue-900 hover:drop-shadow-lg">KIRIM</button>
+                <div class="flex justify-center space-x-3 mt-5">
+                    <a href="<?= BaseURL() ?>/auth" class="text-blue-800 font-ligth">Masuk</a>
+                    <span class="text-gray-300">|</span>
+                    <a href="<?= BaseURL() ?>/auth/daftar" class="text-blue-800 font-ligth">Daftar</a>
+                </div>
             </form>
         </div>
     </div>
