@@ -15,12 +15,10 @@ class Controller
         require_once("lib/sweeatalert.php");
     }
     // Show view where controllers
-    protected function view($file, $data = [
-        "layout" => "user"
-    ])
+    protected function view($file, $data)
     {
         // Load header
-        if ($data["layout"] == "admin") {
+        if (isset($data["layout_admin"]) && $data["layout_admin"] == true) {
             // Layout for admin
             require_once("app/views/components/admin/header.php");
         } else {
@@ -32,7 +30,7 @@ class Controller
             require_once("app/views/" . $file . ".php");
         }
         // Load Footer
-        if ($data["layout"] == "admin") {
+        if (isset($data["layout_admin"]) && $data["layout_admin"] == true) {
             // Layout for admin
             require_once("app/views/components/admin/footer.php");
         } else {

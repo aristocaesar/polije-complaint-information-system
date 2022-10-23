@@ -7,7 +7,7 @@ class Admin extends Controller
     {
         $this->view("admin/auth", $data = [
             "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Login",
-            "layout" => "admin"
+            "layout_admin" => true
         ]);
     }
 
@@ -15,7 +15,7 @@ class Admin extends Controller
     {
         $this->view("admin/dashboard", $data = [
             "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Dashboard",
-            "bodyId" => "page-top"
+            "layout_admin" => true
         ]);
     }
 }
