@@ -16,7 +16,7 @@
                 <h5 class="md:text-3xl text-xl"> Daftar</h5>
             </div>
             <form action="" method="POST">
-                <div class="flex flex-col mb-5">
+                <div class="flex flex-col mb-5">e
                     <label for="nama_lengkap" class="text-gray-700">Nama Lengkap</label>
                     <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="nama_lengkap" aria-describedby="nama_lengkap" name="nama_lengkap" placeholder="Ketikkan Nama Lengkap" required>
                 </div>

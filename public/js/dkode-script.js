@@ -51,11 +51,29 @@ $("#nav-menu-open").click(() => {
   $("#navVertikal").removeClass("-right-full");
   $("#navVertikal").addClass("right-0");
 });
-
 $("#nav-menu-close").click(() => {
   $("#navVertikal").removeClass("right-0");
   $("#navVertikal").addClass("-right-full");
 });
+
+// KLASIFIKASI MENU
+function Klasifikasi(e) {
+  const btn = $("#btn-select-klasifikasi");
+  const btnAll = btn.children();
+  const form = $("#form-pai").children();
+  for (let i = 0; i < form.length; i++) {
+    if (btnAll[i].id == e.id) {
+      btnAll[i].children[0].checked = true;
+    } else {
+      btnAll[i].children[0].checked = false;
+    }
+    if (form[i].id.includes(e.id)) {
+      $(`#${form[i].id}`).show();
+    } else {
+      $(`#${form[i].id}`).hide();
+    }
+  }
+}
 
 // USER MENU
 // Default menu selected

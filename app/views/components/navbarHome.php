@@ -24,7 +24,7 @@
 <nav class="navbar-user transition duration-300 ease-in-out w-full bg-transparent flex py-5 justify-between items-center px-[2rem] md:px-[5rem] lg:px-[12rem] fixed z-10">
     <div class="flex items-center">
         <a class="mr-10 drop-shadow-lg" href="#">
-            <img src="<?= BaseURL(); ?>/public/images/logo-politeknik-negeri-jember.png" width="80" alt="logo-politeknik-negeri-jember">
+            <img src="<?= BaseURL() ?>/public/images/logo-politeknik-negeri-jember.png" width="80" alt="logo-politeknik-negeri-jember">
         </a>
         <div class="items-center hidden md:block">
             <ul class="flex space-x-8">
@@ -49,5 +49,5 @@
     </div>
 </nav>
 <!-- Hero -->
-<section class="h-[700px] bg-polije bg-no-repeat bg-center bg-cover flex flex-row items-center">
+<section class="xl:h-[100vh] h-[700px] bg-polije bg-no-repeat bg-center bg-cover flex flex-row items-center">
 </section>
