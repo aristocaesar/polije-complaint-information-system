@@ -6,8 +6,6 @@
  */
 class Controller
 {
-    // Default 
-    private $file = "home/index";
     // Constructor
     public function __construct()
     {
@@ -17,17 +15,28 @@ class Controller
         require_once("lib/sweeatalert.php");
     }
     // Show view where controllers
-    protected function view($file, $data = [])
+    protected function view($file, $data = [
+        "layout" => "user"
+    ])
     {
         // Load header
-        require_once("app/views/components/header.php");
+        if ($data["layout"] == "admin") {
+            // Layout for admin
+            require_once("app/views/components/admin/header.php");
+        } else {
+            // Layout for user
+            require_once("app/views/components/header.php");
+        }
         // Load view
         if (file_exists("app/views/" . $file . ".php")) {
             require_once("app/views/" . $file . ".php");
-        } else {
-            require_once("app/views/" . $this->file . ".php");
         }
         // Load Footer
-        require_once("app/views/components/footer.php");
+        if ($data["layout"] == "admin") {
+            // Layout for admin
+            require_once("app/views/components/admin/footer.php");
+        } else {
+            require_once("app/views/components/footer.php");
+        }
     }
 }

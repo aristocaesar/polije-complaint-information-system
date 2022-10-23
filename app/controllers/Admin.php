@@ -7,7 +7,7 @@ class Admin extends Controller
     {
         $this->view("admin/auth", $data = [
             "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Login",
-            "bodyLayout" => "bg-gradient-primary"
+            "layout" => "admin"
         ]);
     }
 
