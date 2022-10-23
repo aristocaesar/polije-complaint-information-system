@@ -29,3 +29,17 @@ function getFooterCopyright()
 {
     require_once("app/views/components/footerCopyright.php");
 }
+
+// Admin
+function getNavbarAdmin()
+{
+    require_once("app/views/components/admin/navigation.php");
+}
+function getSidebarAdmin()
+{
+    require_once("app/views/components/admin/sidebar.php");
+}
+function getFooterDashboard()
+{
+    require_once("app/views/components/admin/footerDashboard.php");
+}

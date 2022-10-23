@@ -3,19 +3,48 @@ require_once "app/core/Controller.php";
 
 class Admin extends Controller
 {
+    // Login
     public function index()
     {
         $this->view("admin/auth", $data = [
             "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Login",
-            "bodyLayout" => "bg-gradient-primary"
+            "layout_admin" => true
         ]);
     }
 
+    // Dasboard
     public function dashboard()
     {
         $this->view("admin/dashboard", $data = [
             "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Dashboard",
-            "bodyId" => "page-top"
+            "layout_admin" => true
+        ]);
+    }
+
+    // Pengaduan
+    public function pengaduan()
+    {
+        $this->view("admin/dashboard", $data = [
+            "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Dashboard",
+            "layout_admin" => true
+        ]);
+    }
+
+    // Kategori
+    public function kategori()
+    {
+        $this->view("admin/kategori", $data = [
+            "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Kategori",
+            "layout_admin" => true
+        ]);
+    }
+
+    // Divisi
+    public function divisi()
+    {
+        $this->view("admin/divisi", $data = [
+            "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Kategori",
+            "layout_admin" => true
         ]);
     }
 }

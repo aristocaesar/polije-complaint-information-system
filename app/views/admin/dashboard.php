@@ -1,361 +1,229 @@
- <!-- Page Wrapper -->
- <div id="wrapper">
+<?php getNavbarAdmin(); ?>
+<?php getSidebarAdmin() ?>
+<!-- Main Content -->
+<div class="main-content">
+    <section class="section">
+        <div class="section-header">
+            <h1>Dashboard </h1>
+        </div>
+        <div class="section-body">
+            <!-- HEADLINE BOX -->
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1">
+                        <div class="card-icon bg-primary">
+                            <i class="far fa-file"></i>
+                        </div>
+                        <div class="card-wrap">
+                            <div class="card-header">
+                                <h4>Pengaduan</h4>
+                            </div>
+                            <div class="card-body">
+                                2408
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1">
+                        <div class="card-icon bg-danger">
+                            <i class="far fa-paper-plane"></i>
+                        </div>
+                        <div class="card-wrap">
+                            <div class="card-header">
+                                <h4>Aspirasi</h4>
+                            </div>
+                            <div class="card-body">
+                                425
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1">
+                        <div class="card-icon bg-warning">
+                            <i class="fas fa-info"></i>
+                        </div>
+                        <div class="card-wrap">
+                            <div class="card-header">
+                                <h4>Informasi</h4>
+                            </div>
+                            <div class="card-body">
+                                124
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1">
+                        <div class="card-icon bg-success">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="card-wrap">
+                            <div class="card-header">
+                                <h4>Pengguna</h4>
+                            </div>
+                            <div class="card-body">
+                                2344
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Statistik Data Pengaduan, Aspirasi dan Informasi & Aktiftas Terbaru -->
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Statistik Laporan</h4>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="myChart" height="158"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 col-12 col-sm-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Aktifitas Terbaru</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled list-unstyled-border">
+                                <li class="media">
+                                    <img class="mr-3 rounded-circle" width="50" src="https://media-exp1.licdn.com/dms/image/C5603AQED8L0BQbsIdw/profile-displayphoto-shrink_200_200/0/1654088905112?e=2147483647&v=beta&t=l683DweslHzwVt376iZoViKr9i9uG0GzhcDREE6eAHg" alt="avatar">
+                                    <div class="media-body">
+                                        <div class="float-right text-primary">Sekarang</div>
+                                        <div class="media-title">Aristo Caesar</div>
+                                        <span class="text-small text-muted">Baru saja melakukan sebuah laporan. #4982342</span>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="text-center pt-1 pb-1">
+                                <a href="#" class="btn btn-primary btn-lg btn-round">
+                                    Selengkapnya
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Statistik Pengguna -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Pengguna</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="text-title mb-2">July</div>
+                                    <ul class="list-unstyled list-unstyled-border list-unstyled-noborder mb-0">
+                                        <li class="media">
+                                            <img class="img-fluid mt-1 img-shadow" src="../node_modules/flag-icon-css/flags/4x3/id.svg" alt="image" width="40">
+                                            <div class="media-body ml-3">
+                                                <div class="media-title">Indonesia</div>
+                                                <div class="text-small text-muted">3,282 <i class="fas fa-caret-down text-danger"></i></div>
+                                            </div>
+                                        </li>
+                                        <li class="media">
+                                            <img class="img-fluid mt-1 img-shadow" src="../node_modules/flag-icon-css/flags/4x3/my.svg" alt="image" width="40">
+                                            <div class="media-body ml-3">
+                                                <div class="media-title">Malaysia</div>
+                                                <div class="text-small text-muted">2,976 <i class="fas fa-caret-down text-danger"></i></div>
+                                            </div>
+                                        </li>
+                                        <li class="media">
+                                            <img class="img-fluid mt-1 img-shadow" src="../node_modules/flag-icon-css/flags/4x3/us.svg" alt="image" width="40">
+                                            <div class="media-body ml-3">
+                                                <div class="media-title">United States</div>
+                                                <div class="text-small text-muted">1,576 <i class="fas fa-caret-up text-success"></i></div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-sm-6 mt-sm-0 mt-4">
+                                    <div class="text-title mb-2">August</div>
+                                    <ul class="list-unstyled list-unstyled-border list-unstyled-noborder mb-0">
+                                        <li class="media">
+                                            <img class="img-fluid mt-1 img-shadow" src="../node_modules/flag-icon-css/flags/4x3/id.svg" alt="image" width="40">
+                                            <div class="media-body ml-3">
+                                                <div class="media-title">Indonesia</div>
+                                                <div class="text-small text-muted">3,486 <i class="fas fa-caret-up text-success"></i></div>
+                                            </div>
+                                        </li>
+                                        <li class="media">
+                                            <img class="img-fluid mt-1 img-shadow" src="../node_modules/flag-icon-css/flags/4x3/ps.svg" alt="image" width="40">
+                                            <div class="media-body ml-3">
+                                                <div class="media-title">Palestine</div>
+                                                <div class="text-small text-muted">3,182 <i class="fas fa-caret-up text-success"></i></div>
+                                            </div>
+                                        </li>
+                                        <li class="media">
+                                            <img class="img-fluid mt-1 img-shadow" src="../node_modules/flag-icon-css/flags/4x3/de.svg" alt="image" width="40">
+                                            <div class="media-body ml-3">
+                                                <div class="media-title">Germany</div>
+                                                <div class="text-small text-muted">2,317 <i class="fas fa-caret-down text-danger"></i></div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const labels = [
+        'Januari',
+        'Februari',
+        'Maret',
+        'April',
+        'Mei',
+        'Juni',
+        'Juli',
+        'Agustus',
+        'September',
+        'Oktober',
+        'November',
+        'Desember',
+    ];
 
-     <!-- Sidebar -->
-     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    const data = {
+        labels: labels,
+        datasets: [{
+                label: 'Pengaduan',
+                backgroundColor: 'rgb(103, 119, 239)',
+                borderColor: 'rgb(103, 119, 239)',
+                data: [0, 20, 35, 42, 67, 10, 45, 90, 67, 98, 67, 32, 45],
+            },
+            {
+                label: 'Aspirasi',
+                backgroundColor: 'rgb(252, 84, 75)',
+                borderColor: 'rgb(252, 84, 75)',
+                data: [0, 5, 2, 4, 10, 23, 39],
+            },
+            {
+                label: 'Informasi',
+                backgroundColor: 'rgb(255, 164, 38)',
+                borderColor: 'rgb(255, 164, 38)',
+                data: [0, 5, 5, 7, 20, 54, 33],
+            }
+        ]
+    };
 
-         <!-- Sidebar - Brand -->
-         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-             <div class="sidebar-brand-icon rotate-n-15">
-                 <i class="fas fa-laugh-wink"></i>
-             </div>
-             <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
-         </a>
-
-         <!-- Divider -->
-         <hr class="sidebar-divider my-0">
-
-         <!-- Nav Item - Dashboard -->
-         <li class="nav-item">
-             <a class="nav-link" href="index.html">
-                 <i class="fas fa-fw fa-tachometer-alt"></i>
-                 <span>Dashboard</span></a>
-         </li>
-
-         <!-- Divider -->
-         <hr class="sidebar-divider">
-
-         <!-- Heading -->
-         <div class="sidebar-heading">
-             Interface
-         </div>
-
-         <!-- Nav Item - Pages Collapse Menu -->
-         <li class="nav-item">
-             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                 <i class="fas fa-fw fa-cog"></i>
-                 <span>Components</span>
-             </a>
-             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                 <div class="bg-white py-2 collapse-inner rounded">
-                     <h6 class="collapse-header">Custom Components:</h6>
-                     <a class="collapse-item" href="buttons.html">Buttons</a>
-                     <a class="collapse-item" href="cards.html">Cards</a>
-                 </div>
-             </div>
-         </li>
-
-         <!-- Nav Item - Utilities Collapse Menu -->
-         <li class="nav-item">
-             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-                 <i class="fas fa-fw fa-wrench"></i>
-                 <span>Utilities</span>
-             </a>
-             <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-                 <div class="bg-white py-2 collapse-inner rounded">
-                     <h6 class="collapse-header">Custom Utilities:</h6>
-                     <a class="collapse-item" href="utilities-color.html">Colors</a>
-                     <a class="collapse-item" href="utilities-border.html">Borders</a>
-                     <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                     <a class="collapse-item" href="utilities-other.html">Other</a>
-                 </div>
-             </div>
-         </li>
-
-         <!-- Divider -->
-         <hr class="sidebar-divider">
-
-         <!-- Heading -->
-         <div class="sidebar-heading">
-             Addons
-         </div>
-
-         <!-- Nav Item - Pages Collapse Menu -->
-         <li class="nav-item active">
-             <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-                 <i class="fas fa-fw fa-folder"></i>
-                 <span>Pages</span>
-             </a>
-             <div id="collapsePages" class="collapse show" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                 <div class="bg-white py-2 collapse-inner rounded">
-                     <h6 class="collapse-header">Login Screens:</h6>
-                     <a class="collapse-item" href="login.html">Login</a>
-                     <a class="collapse-item" href="register.html">Register</a>
-                     <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-                     <div class="collapse-divider"></div>
-                     <h6 class="collapse-header">Other Pages:</h6>
-                     <a class="collapse-item" href="404.html">404 Page</a>
-                     <a class="collapse-item active" href="blank.html">Blank Page</a>
-                 </div>
-             </div>
-         </li>
-
-         <!-- Nav Item - Charts -->
-         <li class="nav-item">
-             <a class="nav-link" href="charts.html">
-                 <i class="fas fa-fw fa-chart-area"></i>
-                 <span>Charts</span></a>
-         </li>
-
-         <!-- Nav Item - Tables -->
-         <li class="nav-item">
-             <a class="nav-link" href="tables.html">
-                 <i class="fas fa-fw fa-table"></i>
-                 <span>Tables</span></a>
-         </li>
-
-         <!-- Divider -->
-         <hr class="sidebar-divider d-none d-md-block">
-
-         <!-- Sidebar Toggler (Sidebar) -->
-         <div class="text-center d-none d-md-inline">
-             <button class="rounded-circle border-0" id="sidebarToggle"></button>
-         </div>
-
-     </ul>
-     <!-- End of Sidebar -->
-
-     <!-- Content Wrapper -->
-     <div id="content-wrapper" class="d-flex flex-column">
-
-         <!-- Main Content -->
-         <div id="content">
-
-             <!-- Topbar -->
-             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                 <!-- Sidebar Toggle (Topbar) -->
-                 <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                     <i class="fa fa-bars"></i>
-                 </button>
-
-                 <!-- Topbar Search -->
-                 <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                     <div class="input-group">
-                         <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                         <div class="input-group-append">
-                             <button class="btn btn-primary" type="button">
-                                 <i class="fas fa-search fa-sm"></i>
-                             </button>
-                         </div>
-                     </div>
-                 </form>
-
-                 <!-- Topbar Navbar -->
-                 <ul class="navbar-nav ml-auto">
-
-                     <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                     <li class="nav-item dropdown no-arrow d-sm-none">
-                         <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                             <i class="fas fa-search fa-fw"></i>
-                         </a>
-                         <!-- Dropdown - Messages -->
-                         <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-                             <form class="form-inline mr-auto w-100 navbar-search">
-                                 <div class="input-group">
-                                     <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                                     <div class="input-group-append">
-                                         <button class="btn btn-primary" type="button">
-                                             <i class="fas fa-search fa-sm"></i>
-                                         </button>
-                                     </div>
-                                 </div>
-                             </form>
-                         </div>
-                     </li>
-
-                     <!-- Nav Item - Alerts -->
-                     <li class="nav-item dropdown no-arrow mx-1">
-                         <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                             <i class="fas fa-bell fa-fw"></i>
-                             <!-- Counter - Alerts -->
-                             <span class="badge badge-danger badge-counter">3+</span>
-                         </a>
-                         <!-- Dropdown - Alerts -->
-                         <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
-                             <h6 class="dropdown-header">
-                                 Alerts Center
-                             </h6>
-                             <a class="dropdown-item d-flex align-items-center" href="#">
-                                 <div class="mr-3">
-                                     <div class="icon-circle bg-primary">
-                                         <i class="fas fa-file-alt text-white"></i>
-                                     </div>
-                                 </div>
-                                 <div>
-                                     <div class="small text-gray-500">December 12, 2019</div>
-                                     <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                                 </div>
-                             </a>
-                             <a class="dropdown-item d-flex align-items-center" href="#">
-                                 <div class="mr-3">
-                                     <div class="icon-circle bg-success">
-                                         <i class="fas fa-donate text-white"></i>
-                                     </div>
-                                 </div>
-                                 <div>
-                                     <div class="small text-gray-500">December 7, 2019</div>
-                                     $290.29 has been deposited into your account!
-                                 </div>
-                             </a>
-                             <a class="dropdown-item d-flex align-items-center" href="#">
-                                 <div class="mr-3">
-                                     <div class="icon-circle bg-warning">
-                                         <i class="fas fa-exclamation-triangle text-white"></i>
-                                     </div>
-                                 </div>
-                                 <div>
-                                     <div class="small text-gray-500">December 2, 2019</div>
-                                     Spending Alert: We've noticed unusually high spending for your account.
-                                 </div>
-                             </a>
-                             <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                         </div>
-                     </li>
-
-                     <!-- Nav Item - Messages -->
-                     <li class="nav-item dropdown no-arrow mx-1">
-                         <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                             <i class="fas fa-envelope fa-fw"></i>
-                             <!-- Counter - Messages -->
-                             <span class="badge badge-danger badge-counter">7</span>
-                         </a>
-                         <!-- Dropdown - Messages -->
-                         <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
-                             <h6 class="dropdown-header">
-                                 Message Center
-                             </h6>
-                             <a class="dropdown-item d-flex align-items-center" href="#">
-                                 <div class="dropdown-list-image mr-3">
-                                     <img class="rounded-circle" src="img/undraw_profile_1.svg" alt="...">
-                                     <div class="status-indicator bg-success"></div>
-                                 </div>
-                                 <div class="font-weight-bold">
-                                     <div class="text-truncate">Hi there! I am wondering if you can help me with a
-                                         problem I've been having.</div>
-                                     <div class="small text-gray-500">Emily Fowler · 58m</div>
-                                 </div>
-                             </a>
-                             <a class="dropdown-item d-flex align-items-center" href="#">
-                                 <div class="dropdown-list-image mr-3">
-                                     <img class="rounded-circle" src="img/undraw_profile_2.svg" alt="...">
-                                     <div class="status-indicator"></div>
-                                 </div>
-                                 <div>
-                                     <div class="text-truncate">I have the photos that you ordered last month, how
-                                         would you like them sent to you?</div>
-                                     <div class="small text-gray-500">Jae Chun · 1d</div>
-                                 </div>
-                             </a>
-                             <a class="dropdown-item d-flex align-items-center" href="#">
-                                 <div class="dropdown-list-image mr-3">
-                                     <img class="rounded-circle" src="img/undraw_profile_3.svg" alt="...">
-                                     <div class="status-indicator bg-warning"></div>
-                                 </div>
-                                 <div>
-                                     <div class="text-truncate">Last month's report looks great, I am very happy with
-                                         the progress so far, keep up the good work!</div>
-                                     <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                                 </div>
-                             </a>
-                             <a class="dropdown-item d-flex align-items-center" href="#">
-                                 <div class="dropdown-list-image mr-3">
-                                     <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="...">
-                                     <div class="status-indicator bg-success"></div>
-                                 </div>
-                                 <div>
-                                     <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-                                         told me that people say this to all dogs, even if they aren't good...</div>
-                                     <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                                 </div>
-                             </a>
-                             <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-                         </div>
-                     </li>
-
-                     <div class="topbar-divider d-none d-sm-block"></div>
-
-                     <!-- Nav Item - User Information -->
-                     <li class="nav-item dropdown no-arrow">
-                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                             <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
-                         </a>
-                         <!-- Dropdown - User Information -->
-                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                             <a class="dropdown-item" href="#">
-                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                 Profile
-                             </a>
-                             <a class="dropdown-item" href="#">
-                                 <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                 Settings
-                             </a>
-                             <a class="dropdown-item" href="#">
-                                 <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                 Activity Log
-                             </a>
-                             <div class="dropdown-divider"></div>
-                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                 Logout
-                             </a>
-                         </div>
-                     </li>
-
-                 </ul>
-
-             </nav>
-             <!-- End of Topbar -->
-
-             <!-- Begin Page Content -->
-             <div class="container-fluid">
-
-                 <!-- Page Heading -->
-                 <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
-
-             </div>
-             <!-- /.container-fluid -->
-
-         </div>
-         <!-- End of Main Content -->
-
-         <!-- Footer -->
-         <footer class="sticky-footer bg-white">
-             <div class="container my-auto">
-                 <div class="copyright text-center my-auto">
-                     <span>Copyright &copy; Your Website 2020</span>
-                 </div>
-             </div>
-         </footer>
-         <!-- End of Footer -->
-
-     </div>
-     <!-- End of Content Wrapper -->
-
- </div>
- <!-- End of Page Wrapper -->
-
- <!-- Scroll to Top Button-->
- <a class="scroll-to-top rounded" href="#page-top">
-     <i class="fas fa-angle-up"></i>
- </a>
-
- <!-- Logout Modal-->
- <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-     <div class="modal-dialog" role="document">
-         <div class="modal-content">
-             <div class="modal-header">
-                 <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                     <span aria-hidden="true">×</span>
-                 </button>
-             </div>
-             <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-             <div class="modal-footer">
-                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                 <a class="btn btn-primary" href="login.html">Logout</a>
-             </div>
-         </div>
-     </div>
- </div>
+    const config = {
+        type: 'line',
+        data: data,
+        options: {}
+    };
+    const myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+    );
+</script>
+<?php getFooterDashboard(); ?>

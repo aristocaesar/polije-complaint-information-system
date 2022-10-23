@@ -1,7 +1,7 @@
 <!-- Tracking Laporan -->
-<section id="tracking-laporan" class="tracking-laporan bg-blue">
-    <div class="container text-center d-flex flex-column align-items-center">
-        <h5 class="h3 font-weight-bold text-white">Tracking Laporan</h5>
-        <input type="text" class="form-control mt-3" id="exampleInputIDlaporan" aria-describedby="idHelp" placeholder="Ketikkan ID Laporan">
+<section id="tracking-laporan" class="bg-blue-800 py-32">
+    <div class="container flex flex-col text-center max-w-2xl m-auto">
+        <h5 class="text-3xl font-bold tracking-wide mb-10 text-white">Tracking Laporan</h5>
+        <input type="text" class="py-3 px-4 rounded border-none w-full focus:drop-shadow-lg" placeholder="Ketikkan ID Laporan">
     </div>
 </section>

@@ -3,171 +3,235 @@
     <?php getNavbarHome(); ?>
 </section>
 <!-- Form -->
-<section class="form-lapor">
-    <div class="container d-flex flex-column align-items-center">
-        <h1>Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember</h1>
-        <p class="text-white h5 mt-5">Sampaikan laporan Anda langsung kepada divisi yang berwenang</p>
+<section id="form-lapor" class="mt-[-570px] lg:mt-[-550px]">
+    <div class="container flex flex-col items-center text-center text-white max-w-[950px] mt-36">
+        <h1 class="md:text-4xl text-3xl font-bold tracking-wide">Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember</h1>
+        <p class="md:text-xl text-lg mt-8 font-light">Sampaikan laporan Anda langsung kepada divisi yang berwenang</p>
+        <hr class="w-[200px] my-[50px] border-t-4 ">
     </div>
-    <hr>
-    <div class="container">
-        <div class="row d-flex justify-content-center">
-            <div class="col-lg-9 col-12">
-                <div id="card-menu-user" class="card shadow border-0 p-5" style="width: 100%;">
-                    <div class="card-body">
-                        <h5 class="card-title text-center text-new-blue font-weight-bold h3 mb-5"><i data-feather="users" style="width:35px;height: 35px;left: 140px;top: 17px; margin-right:10px"></i> User Area</h5>
-                        <div id="user-menu" class="d-flex">
-                            <button type="button" id="laporan" onclick="userMenuSelected(this)" class="btn btn-white p-3 mr-3 font-weight-bold"><i data-feather="edit-3" style="width:35px;height: 35px;left: 140px;top: 17px; margin-right:10px"></i>Laporan</button>
-                            <button type="button" id="pengaturan" onclick="userMenuSelected(this)" class="btn btn-white p-3 mr-3 font-weight-bold"><i data-feather="settings" style="width:35px;height: 35px;left: 140px;top: 17px; margin-right:10px"></i> Akun</button>
-                            <button type="button" id="keluar" class="btn btn-white p-3 mr-3 font-weight-bold" data-toggle="modal" data-target="#logoutModal"><i data-feather="log-in" style="width:35px;height: 35px;left: 140px;top: 17px; margin-right:10px"></i> Keluar</button>
+    <div class="container drop-shadow-xl max-w-5xl">
+        <div class="bg-white py-11 px-10">
+            <div class="flex text-blue-800 font-bold justify-center mb-11">
+                <i data-feather="users" style="width:35px;height: 35px;left: 140px;top: 17px; margin-right:10px"></i>
+                <h5 class="md:text-3xl text-xl"> User Area</h5>
+            </div>
+            <div class="mt-16">
+                <div id="user-menu" class="grid grid-cols-3 gap-x-5">
+                    <button type="button" id="laporan" onclick="userFormSelect(this.id)" class="py-4 text-xl font-bold text-white bg-blue-800 hover:bg-blue-900 hover:drop-shadow-lg flex items-center justify-center"><i data-feather="edit-3" style="width:35px;height: 35px;left: 140px;top: 17px;" class="md:pr-3"></i> <span class="hidden md:block">LAPORAN</span></button>
+                    <button type="button" id="pengaturan" onclick="userFormSelect(this.id)" class="py-4 text-xl font-bold text-white bg-blue-800 hover:bg-blue-900 hover:drop-shadow-lg flex items-center justify-center"><i data-feather="settings" style="width:35px;height: 35px;left: 140px;top: 17px;" class="md:pr-3"></i> <span class="hidden md:block">AKUN</span></button>
+                    <button type="button" id="keluar" onclick="Modal(this.id)" class="py-4 text-xl font-bold text-white bg-blue-800 hover:bg-blue-900 hover:drop-shadow-lg flex items-center justify-center"><i data-feather="log-in" style="width:35px;height: 35px;left: 140px;top: 17px;" class="md:pr-3"></i> <span class="hidden md:block">KELUAR</span></button>
+                </div>
+                <div id="user-form-content">
+                    <div id="content-user-laporan" class="grid grid-cols-1 gap-y-5">
+                        <div class="my-11 text-center">
+                            <a href="<?= BaseURL(); ?>" class="text-blue-800 hover:text-blue-900 hover:underline">Buat Laporan Baru</a>
                         </div>
-                        <div id="btn-create-new-laporan" class="my-5 text-center">
-                            <a href="<?= BaseURL(); ?>" class="text-new-blue">Buat Laporan Baru</a>
-                        </div>
-                        <div class="card-content">
-                            <div class="card border-0">
-                                <div class="card-body">
-                                    <div id="card-user-laporan">
-                                        <div class="d-flex align-items-center border px-3 py-4 mb-4">
-                                            <div>
-                                                <h6 class="font-weight-bold text-dark">UKT saya tinggi</h6>
-                                                <h6 class="text-muted font-weight-light">Labore consequat commodo dolor dolore sit excepteur culpa. Aliquip ad ad ut labore nostrud Lorem in tempor in ut reprehenderit. Pariatur occaecat magna mollit sunt duis aute cillum aliqua consectetur.</h6>
-                                                <div>
-                                                    <small>Senin, 26 September 2022 - 16:03:01 -</small>
-                                                    <small class="text-new-blue">Proses Tindak Lanjut</small>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <i data-feather="more-vertical" style="width:35px;height: 35px;left: 140px;top: 17px; margin-right:10px"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div id="card-user-setting">
-                                        <div class="d-flex flex-column">
-                                            <div class="mt-5">
-                                                <h5 class="text-new-blue font-weight-bold">Email</h5>
-                                                <p class="text-dark">hi@aristoc.space - <span class="text-success font-italic">Terverifikasi</span> <a href="#" data-toggle="modal" data-target="#gantiEmail" class="ml-2 text-new-blue underline"><u>Ganti Email</u></a></p>
-                                            </div>
-                                            <div class="mt-3">
-                                                <h5 class="text-new-blue font-weight-bold">Password</h5>
-                                                <p class="text-dark">Terakhir diperbarui - Senin, 26 September 2022 - 16:26:09<a href="#" data-toggle="modal" data-target="#gantiPassword" class="ml-2 text-new-blue underline"><u>Ganti Password</u></a></p>
-                                            </div>
-                                            <div class="mt-3">
-                                                <h5 class="text-new-blue font-weight-bold">Verifikasi</h5>
-                                                <p class="text-dark">Akun belum terverifikasi <a href="#" data-toggle="modal" data-target="#verifikasiAkun" class="ml-2 text-new-blue underline"><u>Verifikasi Sekarang</u></a></p>
-                                            </div>
-                                            <div class="mt-3">
-                                                <h5 class="text-new-blue font-weight-bold">Aktifitas Terakhir</h5>
-                                                <p class="text-dark">Senin, 26 September 2022 - 16:29:25</p>
-                                            </div>
-                                        </div>
-                                    </div>
+                        <div class="flex flex-col md:flex-row border py-5 px-5 items-center">
+                            <div>
+                                <h6 class="font-bold text-gray-800 mb-3">UKT saya tinggi</h6>
+                                <h6 class="text-gray-500 font-light">Labore consequat commodo dolor dolore sit excepteur culpa. Aliquip ad ad ut labore nostrud Lorem in tempor in ut reprehenderit. Pariatur occaecat magna mollit sunt duis aute cillum aliqua consectetur.</h6>
+                                <div>
+                                    <small class="text-gray-8000">Senin, 26 September 2022 - 16:03:01 -</small>
+                                    <small class="text-blue-800">Proses Tindak Lanjut</small>
                                 </div>
+                            </div>
+                            <div class="m-5">
+                                <i data-feather="more-vertical" class="cursor-pointer hidden md:block" style="width:35px;height: 35px;left: 140px;top: 17px;"></i>
+                                <i data-feather="more-horizontal" class="cursor-pointer block md:hidden" style="width:35px;height: 35px;left: 140px;top: 17px;"></i>
+                            </div>
+                        </div>
+                        <div class="flex flex-col md:flex-row border py-5 px-5 items-center">
+                            <div>
+                                <h6 class="font-bold text-gray-800 mb-3">UKT saya tinggi</h6>
+                                <h6 class="text-gray-500 font-light">Labore consequat commodo dolor dolore sit excepteur culpa. Aliquip ad ad ut labore nostrud Lorem in tempor in ut reprehenderit. Pariatur occaecat magna mollit sunt duis aute cillum aliqua consectetur.</h6>
+                                <div>
+                                    <small class="text-gray-8000">Senin, 26 September 2022 - 16:03:01 -</small>
+                                    <small class="text-blue-800">Proses Tindak Lanjut</small>
+                                </div>
+                            </div>
+                            <div class="m-5">
+                                <i data-feather="more-vertical" class="cursor-pointer hidden md:block" style="width:35px;height: 35px;left: 140px;top: 17px;"></i>
+                                <i data-feather="more-horizontal" class="cursor-pointer block md:hidden" style="width:35px;height: 35px;left: 140px;top: 17px;"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="content-user-pengaturan">
+                        <div class="flex flex-col text-grey-800 space-y-8 mt-11">
+                            <div>
+                                <h5 class="text-blue-800 font-bold text-2xl mb-2">Email</h5>
+                                <p class="">hi@aristoc.space - <span class="text-green-500 italic">Terverifikasi</span> <button type="button" class="ml-2 text-blue-800 underline" onclick="Modal('ganti-email')"><u>Ganti Email</u></button></p>
+                            </div>
+                            <div>
+                                <h5 class="text-blue-800 font-bold text-2xl mb-2">Password</h5>
+                                <p class="text-dark">Terakhir diperbarui - Senin, 26 September 2022 - 16:26:09<button type="button" class="ml-2 text-blue-800 underline" onclick="Modal('ganti-password')"><u>Ganti Password</u></button></p>
+                            </div>
+                            <div>
+                                <h5 class="text-blue-800 font-bold text-2xl mb-2">Verifikasi</h5>
+                                <p class="text-dark">Akun belum terverifikasi <button type="button" class="ml-2 text-blue-800 underline" onclick="Modal('verifikasi')"><u>Verifikasi Sekarang</u></button></p>
+                            </div>
+                            <div>
+                                <h5 class="text-blue-800 font-bold text-2xl mb-2">Aktifitas Terakhir</h5>
+                                <p class="text-dark">Senin, 26 September 2022 - 16:29:25</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </section>
+
 <!-- Modal Logout -->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModal" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title font-weight-bold">Konfirmasi Keluar</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+<div id="modal-keluar" class="modal hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center bg-black bg-opacity-50">
+    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+            <div class="flex justify-between items-start p-4 rounded-t border-b">
+                <h3 class="text-xl font-semibold text-gray-800 ">
+                    Konfirmasi Keluar
+                </h3>
+                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" onclick="ModalClose()">
+                    <svg aria-hidden=" true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
                 </button>
             </div>
-            <div class="modal-body">
-                <p>Apakah kamu ingin keluar ?</p>
+            <!-- Modal body -->
+            <div class="p-6 space-y-6">
+                <p class="text-base leading-relaxed text-gray-500">
+                    Apakah anda ingin keluar ?
+                </p>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-blue font-weight-bold py-3">Ya, Keluar</button>
+            <!-- Modal footer -->
+            <div class="flex justify-end items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+                <a href="<?= BaseURL() ?>/auth" class="text-white bg-blue-800 hover:bg-blue-900 hover:drop-shadow-md font-medium rounded-lg text-sm px-5 py-2.5 text-cente">Ya, Logout</a>
+                <button type="button" class="text-gray-800 border border-gray-800 hover:drop-shadow-md font-medium rounded-lg text-sm px-5 py-2.5 text-center" onclick="ModalClose()">Batal</button>
             </div>
         </div>
     </div>
 </div>
+
 <!-- Modal Ganti Email -->
-<div class="modal fade" id="gantiEmail" tabindex="-1" role="dialog" aria-labelledby="gantiEmail" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title font-weight-bold">Ganti Email</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+<div id="modal-ganti-email" class="modal hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center bg-black bg-opacity-50">
+    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+            <div class="flex justify-between items-start p-4 rounded-t border-b">
+                <h3 class="text-xl font-semibold text-gray-800 ">
+                    Ganti Email
+                </h3>
+                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" onclick="ModalClose()">
+                    <svg aria-hidden=" true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
                 </button>
             </div>
-            <form>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Email</label>
-                        <input type="email" name="email1" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan email baru">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Konfirmasi Email</label>
-                        <input type="email" name="email2" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Konfirmasi email baru">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
-                        <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                    </div>
-                    <div class="form-group">
-                        <p>Perhatikan</p>
-                        <ul>
-                            <li>Email harus aktif.</li>
-                            <li>Jika link verifikasi tidak tersedia, harap cek pada bagian spam.</li>
-                            <li>Setelah anda mengklik konfirmasi, anda akan otomatis keluar.</li>
-                        </ul>
-                    </div>
+            <!-- Modal body -->
+            <form action="" method="" class="px-10 py-5 text-grey-800">
+                <div class="flex flex-col mb-5">
+                    <label for="email" class="text-gray-700">Email</label>
+                    <input type="email" class="mt-3 border border-gray-400 py-3 px-2 rounded" name="email" placeholder="Ketikkan Email" required>
                 </div>
-                <div class="modal-footer">
-                    <button type="submit" name="gantiEmail" class="btn btn-blue font-weight-bold py-2">Ya, Konfirmasi</button>
+                <div class="flex flex-col mb-5">
+                    <label for="email" class="text-gray-700">Konfirmasi Email</label>
+                    <input type="email" class="mt-3 border border-gray-400 py-3 px-2 rounded" name="email2" placeholder="Ketikkan Email" required>
+                </div>
+                <div class="flex flex-col mb-5">
+                    <label for="password" class="text-gray-700">Password</label>
+                    <input type="password" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password" name="password" placeholder="Ketikkan Password" required>
+                </div>
+                <p class="font-bold mb-4">Perhatikan</p>
+                <ul class="pl-5 list-disc font-light mb-5">
+                    <li>Email harus aktif.</li>
+                    <li>Jika link verifikasi tidak tersedia, harap cek pada bagian spam.</li>
+                    <li>Setelah anda mengklik konfirmasi, anda akan otomatis keluar.</li>
+                </ul>
+                <!-- Modal footer -->
+                <div class="flex justify-end items-center pt-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+                    <button type="submit" class="text-white bg-blue-800 hover:bg-blue-900 hover:drop-shadow-md font-medium rounded-lg text-sm px-5 py-2.5 text-cente">Ya, Ganti Email</button>
+                    <button type="button" class="text-gray-800 border border-gray-800 hover:drop-shadow-md font-medium rounded-lg text-sm px-5 py-2.5 text-center" onclick="ModalClose()">Batal</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 <!-- Modal Ganti Password -->
-<div class="modal fade" id="gantiPassword" tabindex="-1" role="dialog" aria-labelledby="gantiPassword" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title font-weight-bold">Ganti Password</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+<div id="modal-ganti-password" class="modal hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center bg-black bg-opacity-50">
+    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+            <div class="flex justify-between items-start p-4 rounded-t border-b">
+                <h3 class="text-xl font-semibold text-gray-800 ">
+                    Ganti Password
+                </h3>
+                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" onclick="ModalClose()">
+                    <svg aria-hidden=" true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
                 </button>
             </div>
-            <form>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="exampleFormControlInput1">Password Lama</label>
-                        <input type="text" name="passwordlama" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan password lama">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleFormControlInput1">Password Baru</label>
-                        <input type="text" name="password1" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan password baru">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleFormControlInput1">Konfirmasi Password Baru</label>
-                        <input type="text" name="password2" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan kembali password baru">
-                    </div>
-                    <div class="form-group">
-                        <p>Perhatikan</p>
-                        <ul>
-                            <li>Setelah anda mengklik konfirmasi, anda akan otomatis keluar.</li>
-                        </ul>
-                    </div>
+            <!-- Modal body -->
+            <form action="" method="" class="px-10 py-5 text-grey-800">
+                <div class="flex flex-col mb-5">
+                    <label for="password" class="text-gray-700">Password Sekarang</label>
+                    <input type="password" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password" name="password" placeholder="Ketikkan Password" required>
                 </div>
-                <div class="modal-footer">
-                    <button type="submit" name="gantiPassword" class="btn btn-blue font-weight-bold py-3">Ya, Konfirmasi</button>
+                <div class="flex flex-col mb-5">
+                    <label for="password" class="text-gray-700">Password Baru</label>
+                    <input type="password" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password1" name="password1" placeholder="Ketikkan Password" required>
+                </div>
+                <div class="flex flex-col mb-5">
+                    <label for="password" class="text-gray-700">Konfirmasi Password Baru</label>
+                    <input type="password" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password2" name="password2" placeholder="Ketikkan Password" required>
+                </div>
+                <p class="font-bold mb-4">Perhatikan</p>
+                <ul class="pl-5 list-disc font-light mb-5">
+                    <li>Setelah anda mengklik konfirmasi, anda akan otomatis keluar.</li>
+                </ul>
+                <!-- Modal footer -->
+                <div class="flex justify-end items-center pt-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+                    <button type="submit" class="text-white bg-blue-800 hover:bg-blue-900 hover:drop-shadow-md font-medium rounded-lg text-sm px-5 py-2.5 text-cente">Ya, Ganti Password</button>
+                    <button type="button" class="text-gray-800 border border-gray-800 hover:drop-shadow-md font-medium rounded-lg text-sm px-5 py-2.5 text-center" onclick="ModalClose()">Batal</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 <!-- Modal Verifikasi Keaslian Akun -->
-<div class="modal fade" id="verifikasiAkun" tabindex="-1" role="dialog" aria-labelledby="verifikasiAkun" aria-hidden="true">
+<div id="modal-verifikasi" class="modal hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center bg-black bg-opacity-50">
+    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+            <div class="flex justify-between items-start p-4 rounded-t border-b">
+                <h3 class="text-xl font-semibold text-gray-800 ">
+                    Verifikasi Akun
+                </h3>
+                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" onclick="ModalClose()">
+                    <svg aria-hidden=" true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <form action="" method="" class="px-10 py-5 text-grey-800">
+                <div class="flex flex-col mb-5">
+                    <label for="password" class="text-gray-700">Password Sekarang</label>
+                    <input type="password" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password" name="password" placeholder="Ketikkan Password" required>
+                </div>
+                <!-- Modal footer -->
+                <div class="flex justify-end items-center pt-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+                    <button type="submit" class="text-white bg-blue-800 hover:bg-blue-900 hover:drop-shadow-md font-medium rounded-lg text-sm px-5 py-2.5 text-cente">Kirim Verifikasi</button>
+                    <button type="button" class="text-gray-800 border border-gray-800 hover:drop-shadow-md font-medium rounded-lg text-sm px-5 py-2.5 text-center" onclick="ModalClose()">Batal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- <div class="modal fade" id="verifikasiAkun" tabindex="-1" role="dialog" aria-labelledby="verifikasiAkun" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -206,5 +270,42 @@
             </form>
         </div>
     </div>
-</div>
+</div> -->
+<script>
+    // USER MENU
+    // Default menu selected
+    userFormSelect("laporan");
+
+    function userFormSelect(id) {
+        const userMenu = $("#user-menu")[0].children;
+        for (let i = 0; i < userMenu.length; i++) {
+            if (userMenu[i].id == id) {
+                userMenu[i].classList.add(
+                    "text-white",
+                    "bg-blue-800",
+                    "hover:bg-blue-900"
+                );
+                userMenu[i].classList.remove("text-blue-800", "bg-white");
+            } else {
+                userMenu[i].classList.remove(
+                    "text-white",
+                    "bg-blue-800",
+                    "hover:bg-blue-900"
+                );
+                userMenu[i].classList.add("text-blue-800", "bg-white");
+            }
+        }
+        formSelected(id);
+    }
+
+    function formSelected(e) {
+        if (e == "laporan") {
+            $("#content-user-laporan").show();
+            $("#content-user-pengaturan").hide();
+        } else if (e == "pengaturan") {
+            $("#content-user-laporan").hide();
+            $("#content-user-pengaturan").show();
+        }
+    }
+</script>
 <?php getFooterCopyright(); ?>

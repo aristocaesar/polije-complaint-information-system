@@ -1,47 +1,47 @@
-<div class="container">
-
-    <!-- Outer Row -->
-    <div class="row justify-content-center">
-
-        <div class="col-xl-6 col-lg-8 col-md-9">
-
-            <div class="card o-hidden border-0 shadow-lg my-5">
-                <div class="card-body p-0">
-                    <!-- Nested Row within Card Body -->
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="p-5">
-                                <div class="text-center">
-                                    <img src="<?= BaseURL() ?>/public/images/logo-politeknik-negeri-jember.png" alt="logo-politeknik-negeri-jember" width="150" />
-                                    <h1 class="h5 font-weight-bold text-bold text-gray-900 mt-4">Layanan Aspirasi dan Pengaduan Online</h1>
-                                    <p class="mb-4">Politeknik Negeri Jember</p>
-                                </div>
-                                <form action="" class="user">
-                                    <div class="form-group">
-                                        <input type="email" class="form-control form-control-user" aria-describedby="emailHelp" placeholder="Ketikkan Email">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="password" class="form-control form-control-user" placeholder="Password">
-                                    </div>
-                                    <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold">
-                                        MASUK
-                                    </button>
-                                    <!-- <hr>
-                                    <a href="index.html" class="btn btn-google btn-user btn-block">
-                                        <i class="fab fa-google fa-fw"></i> Login with Google
-                                    </a>
-                                    <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                        <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                                    </a> -->
-                                </form>
-                            </div>
+<section class="section">
+    <div class="d-flex flex-wrap align-items-stretch">
+        <div class="col-lg-4 col-md-12 col-12 order-lg-1 min-vh-100 order-2 bg-white">
+            <div class="p-4 m-3">
+                <img src="<?= BaseURL() ?>/public/images/logo-politeknik-negeri-jember.png" alt="logo" width="80" class="shadow-light rounded-circle mb-5 mt-2">
+                <h4 class="text-dark font-weight-bold">Layanan Pengaduan dan Aspirasi Online Politeknik Negeri Jember</h4>
+                <p class="text-muted">Sebelum memulai, Anda harus login terlebih dahulu.</p>
+                <form method="POST" action="#" class="needs-validation" novalidate="">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input id="email" type="email" class="form-control" name="email" tabindex="1" placeholder="Ketikkan Email" required autofocus>
+                        <div class="invalid-feedback">
+                            Please fill in your email
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="d-block">
+                            <label for="password" class="control-label">Password</label>
+                        </div>
+                        <input id="password" type="password" class="form-control" name="password" tabindex="2" placeholder="Ketikkan Password" required>
+                        <div class="invalid-feedback">
+                            please fill in your password
+                        </div>
+                    </div>
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-primary btn-lg w-100" tabindex="4">
+                            Login
+                        </button>
+                    </div>
+                    <div class="text-center mt-5 text-small">
+                        2022 &copy; Layanan Pengaduan dan Aspirasi Politeknik Negeri Jember . Powerd By DKODE Creative
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-8 col-12 order-lg-2 order-1 min-vh-100 background-walk-y position-relative overlay-gradient-bottom" data-background="<?= BaseURL() ?>/public/images/bg-politeknik-negeri-jember.png">
+            <div class="absolute-bottom-left index-2">
+                <div class="text-light p-5">
+                    <div class="">
+                        <h1 class="mb-2 display-4 font-weight-bold">Selamat Pagi</h1>
+                        <h5 class="font-weight-normal text-muted-transparent">Jember, Indonesia</h5>
                     </div>
                 </div>
             </div>
-
         </div>
-
     </div>
-
-</div>
+</section>

@@ -1,33 +1,23 @@
-<!-- Hero -->
-<section class="hero">
-    <?php getNavbarHome(); ?>
-</section>
-<!-- Form -->
-<section class="form-lapor">
-    <div class="container d-flex flex-column align-items-center">
-        <h1>Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember</h1>
-        <p class="text-white h5 mt-5">Sampaikan laporan Anda langsung kepada divisi yang berwenang</p>
+<?php getNavbarHome(); ?>
+<!-- Tentang -->
+<section id="form-lapor" class="mt-[-570px] lg:mt-[-550px]">
+    <div class="container flex flex-col items-center text-center text-white max-w-[950px] mt-36">
+        <h1 class="md:text-4xl text-3xl font-bold tracking-wide">Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember</h1>
+        <p class="md:text-xl text-lg mt-8 font-light">Sampaikan laporan Anda langsung kepada divisi yang berwenang</p>
+        <hr class="w-[200px] my-[50px] border-t-4 ">
     </div>
-    <hr>
-    <div class="container">
-        <div class="row d-flex justify-content-center">
-            <div class="col-lg-9 col-12">
-                <div class="card shadow border-0 p-5" style="width: 100%;">
-                    <div class="card-body">
-                        <h5 class="card-title text-center text-new-blue font-weight-bold h3 mb-5"><i data-feather="info" style="width:35px;height: 35px;left: 140px;top: 17px; margin-right:10px"></i> Tentang</h5>
-                        <article>
-                            <p class="text-left text-dark">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
-                            <ul>
-                                <li>Versi 1.0</li>
-                            </ul>
-                            <p class="text-left text-dark">
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                            </p>
-                        </article>
-                    </div>
-                </div>
+    <div class="container drop-shadow-xl max-w-5xl">
+        <div class="bg-white py-11 px-10">
+            <div class="flex text-blue-800 font-bold justify-center mb-11">
+                <i data-feather="info" style="width:35px;height: 35px;left: 140px;top: 17px; margin-right:10px"></i>
+                <h5 class="md:text-3xl text-xl"> Tentang</h5>
+            </div>
+            <div class="mt-16">
+                <p>Laboris non occaecat do minim qui laboris duis ad occaecat officia exercitation ex reprehenderit qui. Culpa reprehenderit minim adipisicing veniam ullamco eiusmod aliqua esse et. Cillum fugiat deserunt et excepteur irure eu cillum. Non consequat ex ullamco do. Sint do consectetur eiusmod mollit tempor et non Lorem et consectetur.</p>
+                <?= $_SERVER["HTTP_USER_AGENT"] ?>
             </div>
         </div>
     </div>
 </section>
+<!-- Footer -->
 <?php getFooterCopyright(); ?>
