@@ -40,7 +40,7 @@ class Admin extends Controller
     }
 
     // Divisi
-    public function divisi()
+    public function divisi($action = "")
     {
         $this->view("admin/divisi", $data = [
             "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Kategori",
