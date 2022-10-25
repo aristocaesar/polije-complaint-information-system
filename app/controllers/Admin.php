@@ -79,12 +79,17 @@ class Admin extends Controller
     }
 
     // Profile
-    public function profil()
+    public function profil($action = "")
     {
-        $this->view("admin/dashboard", $data = [
-            "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Profile",
-            "layout_admin" => true
-        ]);
+        if ($action != "") {
+            if ($action == "aktifitas") {
+            }
+        } else {
+            $this->view("admin/profil/index", $data = [
+                "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Profile",
+                "layout_admin" => true
+            ]);
+        }
     }
 
     // Logout
