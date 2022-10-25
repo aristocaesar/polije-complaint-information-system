@@ -3,6 +3,7 @@ require_once "app/core/Controller.php";
 
 class Admin extends Controller
 {
+    public $title = "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember";
     // Login
     public function index()
     {
@@ -83,6 +84,10 @@ class Admin extends Controller
     {
         if ($action != "") {
             if ($action == "aktifitas") {
+                $this->view("admin/profil/aktifitas", $data = [
+                    "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Aktifitas",
+                    "layout_admin" => true
+                ]);
             }
         } else {
             $this->view("admin/profil/index", $data = [

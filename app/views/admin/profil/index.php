@@ -74,7 +74,7 @@
                                                             <label class="custom-file-label" id="label-input-foto" for="foto">Pilih foto</label>
                                                         </div>
                                                     </div>
-                                                    <small>Maximal 2 MB ( JPEG, JPG, PNG )</small>
+                                                    <small>Maksimal 2 MB ( JPEG, JPG, PNG )</small>
                                                 </div>
                                             </div>
                                         </div>
