@@ -49,21 +49,33 @@ class Admin extends Controller
     }
 
     // Pengguna
-    public function pengguna()
+    public function pengguna($action = "")
     {
-        $this->view("admin/pengguna", $data = [
-            "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Pengguna",
-            "layout_admin" => true
-        ]);
+        if ($action != "") {
+            if ($action == "verifikasi") {
+                $this->view("admin/pengguna/verifikasi", $data = [
+                    "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Pengajuan Verifikasi",
+                    "layout_admin" => true
+                ]);
+            }
+        } else {
+            $this->view("admin/pengguna/index", $data = [
+                "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Pengguna",
+                "layout_admin" => true
+            ]);
+        }
     }
 
     // Petugas
-    public function petugas()
+    public function petugas($action = "")
     {
-        $this->view("admin/dashboard", $data = [
-            "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Petugas",
-            "layout_admin" => true
-        ]);
+        if ($action != "") {
+        } else {
+            $this->view("admin/petugas", $data = [
+                "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Petugas",
+                "layout_admin" => true
+            ]);
+        }
     }
 
     // Profile
