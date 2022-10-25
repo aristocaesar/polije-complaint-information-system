@@ -13,17 +13,17 @@
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-file"></i><span>Pengaduan</span></a>
                 <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="<?= BaseURL() ?>/admin/pengaduan?data=masuk">Masuk</a></li>
-                    <li><a class="nav-link" href="<?= BaseURL() ?>/admin/pengaduan?data=proses">Proses</a></li>
-                    <li><a class="nav-link" href="<?= BaseURL() ?>/admin/pengaduan?data=selesai">Selesai</a></li>
+                    <li><a class="nav-link" href="<?= BaseURL() ?>/admin/pengaduan/masuk">Masuk</a></li>
+                    <li><a class="nav-link" href="<?= BaseURL() ?>/admin/pengaduan/proses">Proses</a></li>
+                    <li><a class="nav-link" href="<?= BaseURL() ?>/admin/pengaduan/selesai">Selesai</a></li>
                 </ul>
             </li>
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-paper-plane"></i><span>Aspirasi</span></a>
                 <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="<?= BaseURL() ?>/admin/aspirasi?data=masuk">Masuk</a></li>
-                    <li><a class="nav-link" href="<?= BaseURL() ?>/admin/aspirasi?data=proses">Proses</a></li>
-                    <li><a class="nav-link" href="<?= BaseURL() ?>/admin/aspirasi?data=selesai">Selesai</a></li>
+                    <li><a class="nav-link" href="<?= BaseURL() ?>/admin/aspirasi/masuk">Masuk</a></li>
+                    <li><a class="nav-link" href="<?= BaseURL() ?>/admin/aspirasi/proses">Proses</a></li>
+                    <li><a class="nav-link" href="<?= BaseURL() ?>/admin/aspirasi/selesai">Selesai</a></li>
                 </ul>
             </li>
             <li class="nav-item dropdown">
