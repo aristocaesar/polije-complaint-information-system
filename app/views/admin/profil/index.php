@@ -20,7 +20,7 @@
                             </div>
                             <div class="form-group col-md-6 col-12">
                                 <label>Email</label>
-                                <input type="email" class="form-control" placeholder="Ketikkan Email" required="">
+                                <input type="email" class="form-control" placeholder="Ketikkan Email" required="" disabled>
                                 <div class="invalid-feedback">
                                     Harap Ketikkan Email
                                 </div>

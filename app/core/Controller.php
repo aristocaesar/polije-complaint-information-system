@@ -11,7 +11,7 @@ class Controller
     {
         // Load Config
         require_once("config/config.php");
-        // Load Lib
+        // Load Libe
         require_once("lib/sweeatalert.php");
     }
     // Show view where controllers

@@ -31,6 +31,20 @@ class Admin extends Controller
         ]);
     }
 
+    // Informasi
+    public function informasi($action = "")
+    {
+        if ($action != "") {
+        } else {
+            $this->view("admin/informasi/masuk", $data = [
+                "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Informasi",
+                "layout_admin" => true,
+                // "css" => ["select2.min"],
+                // "js" => ["select2.full.min"]
+            ]);
+        }
+    }
+
     // Kategori
     public function kategori()
     {

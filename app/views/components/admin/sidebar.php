@@ -29,8 +29,8 @@
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-info"></i><span>Infromasi</span></a>
                 <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="<?= BaseURL() ?>/admin/informasi?data=masuk">Masuk</a></li>
-                    <li><a class="nav-link" href="<?= BaseURL() ?>/admin/informasi?data=selesai">Selesai</a></li>
+                    <li><a class="nav-link" href="<?= BaseURL() ?>/admin/informasi">Masuk</a></li>
+                    <li><a class="nav-link" href="<?= BaseURL() ?>/admin/informasi/selesai">Selesai</a></li>
                 </ul>
             </li>
             <li class="menu-header">Pelayanan</li>
@@ -45,6 +45,7 @@
                 </ul>
             </li>
             <li><a class="nav-link" href="<?= BaseURL() ?>/admin/petugas"><i class="fas fa-user-nurse"></i> <span>Petugas</span></a></li>
+            <li><a class="nav-link" href="<?= BaseURL() ?>" target="_blank"><i class="fas fa-globe"></i> <span>Kunjungi Website</span></a></li>
         </ul>
     </aside>
 </div>

@@ -25,9 +25,6 @@
     <!-- Datatables -->
     <link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
 
-    <!-- Sweeatalert -->
-    <script type="text/javascript" src="<?= BaseURL(); ?>/public/js/sweetalert2.all.min.js"></script>
-
     <!-- Jquery -->
     <script type="text/javascript" src="<?= BaseURL(); ?>/public/js/jquery.js"></script>
 </head>
