@@ -21,11 +21,6 @@
         <script src="<?= BaseURL() ?>/public/js/<?= $js ?>.js"></script>
     <?php endforeach; ?>
 <?php endif; ?>
-<script>
-    $(document).ready(function() {
-
-    });
-</script>
 </body>
 
 </html>

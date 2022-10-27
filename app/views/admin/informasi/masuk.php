@@ -75,10 +75,6 @@
                                 <label>Divisi</label>
                                 <div class="input-group">
                                     <select class="form-control" id="divisi">
-                                        <option value="mahasiswa_mahasiswi">Mahasiswa / Mahasiswi</option>
-                                        <option value="dosen">Dosen</option>
-                                        <option value="staf">Staf</option>
-                                        <option value="masyarakat">Masyarakat</option>
                                     </select>
                                 </div>
                             </div>
@@ -119,6 +115,90 @@
             </div>
         </div>
     </div>
+    <!-- Modal Aksi Detail Informasi -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="detail-informasi">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title modal-title-detail-informasi">Detail Informasi</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="info-user">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12 col-lg-6">
+                                <div class="form-group">
+                                    <label for="id">ID User</label>
+                                    <input type="text" class="form-control" id="id-pengirim" disabled>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <div class="form-group">
+                                    <label for="nama">Nama Lengkap</label>
+                                    <input type="text" class="form-control" id="nama-pengirim" placeholder="Ketikkan Nama Lengkap" disabled>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" id="email-pengirim" placeholder="Ketikkan Email" disabled>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-lg-6">
+                                <div class="form-group">
+                                    <label for="tanggal_lahir">Tanggal Lahir</label>
+                                    <input type="date" class="form-control" id="tanggal-lahir-pengirim" disabled />
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <div class="form-group">
+                                    <label for="alamat">Alamat</label>
+                                    <input type="text" class="form-control" id="alamat-pengirim" placeholder="Ketikkan Alamat" disabled>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <div class="form-group">
+                                    <label for="kontak">No Telp / Whatapps</label>
+                                    <input type="number" class="form-control" id="kontak-pengirim" placeholder="Ketikkan Kontak" disabled>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <div class="form-group">
+                                    <label for="status">Status</label>
+                                    <div class="input-group">
+                                        <select class="form-control" id="status-pengirim" disabled>
+                                            <option value="mahasiswa_mahasiswi">Mahasiswa / Mahasiswi</option>
+                                            <option value="dosen">Dosen</option>
+                                            <option value="staf">Staf</option>
+                                            <option value="masyarakat">Masyarakat</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="status">Foto</label>
+                                    <div class="author-box">
+                                        <div class="">
+                                            <div class="author-box-left">
+                                                <img id="foto-user" class="rounded-circle" alt="foto" src="" height="150">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-whitesmoke">
+                        <button type="submit" class="btn btn-primary" onclick="closeDetailInfo()">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <section class="section">
         <div class="section-header">
             <h1>Informasi</h1>
@@ -138,7 +218,7 @@
                                     </th>
                                     <th>Judul</th>
                                     <th>Kategori</th>
-                                    <th>Tanggal Terkirim</th>
+                                    <th>Tanggal Diterima</th>
                                     <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -165,9 +245,18 @@
         return string.join(" ");
     }
 
+    // GET DIVISI
+    async function getDivisi() {
+        $("#divisi option").remove();
+        const divisi = await fetch("http://localhost:3000/divisi");
+        const response = await divisi.json();
+        if (response.length == 0) return Swal.fire("ERROR", `Gagal mengambil data divisi`, "error");
+        return response;
+    }
+
     // GET INFORMASI != SELESAI
     async function getInformasi() {
-        const informasi = await fetch("http://localhost:3000/informasi");
+        const informasi = await fetch("http://localhost:3000/informasi?status=belum_ditanggapi");
         const response = await informasi.json();
         let htmlBody = [];
         response.forEach((info) => {
@@ -178,7 +267,7 @@
                     </td>
                     <td>${info.judul}</td>
                     <td>${info.kategori}</td>
-                    <td>${new Date()}</td>
+                    <td>${info.created_at}</td>
                     <td>
                         <div class="badge badge-${info.status == "ditangguhkan" ? "danger" : info.status == "belum_ditanggapi" ? "warning" : info.status == "proses" ? "primary" : info.status == "selesai" ? "success" : ""}">${Ucwords(info.status)}</div>
                     </td>
@@ -199,6 +288,14 @@
 
     // GET DETAIL
     async function getDetail(id) {
+        // Data Divisi
+        const divisi = await getDivisi();
+        divisi.forEach((item) => {
+            $("#divisi").append(`
+            <option value='${item.nama}'>${item.nama}</option>
+            `);
+        })
+        // Data Detail
         const detail = await fetch(`http://localhost:3000/informasi?id=${id}`);
         const response = await detail.json();
         if (response.length == 0) {
@@ -263,20 +360,25 @@
                     $(".modal-footer").hide();
                 }
             }
+            // Divisi
+            $("#divisi").val(result.divisi);
         };
-
     }
 
     // CHANGE PROSES TO SELESAI
     $("#status-informasi-terproses").change((e) => {
         if (e.currentTarget.value == "selesai") {
             $(".form-tanggapan").show();
+            $("#deskripsi_tanggapan").removeAttr("disabled");
+            $("#lampiran_tanggapan").removeAttr("disabled");
             $(".btn-tangguhkan").hide();
             $(".btn-sampaikan-tanggapan").hide();
             $(".btn-proses-tanggapan").hide();
             $(".btn-selesai-tanggapan").show();
         } else {
-            $(".form-tanggapan").hide();
+            $(".form-tanggapan").hide()
+            $("#deskripsi_tanggapan").attr("disabled", "disabled");
+            $("#lampiran_tanggapan").attr("disabled", "disabled");
             $(".btn-tangguhkan").show();
             $(".btn-sampaikan-tanggapan").show();
             $(".btn-proses-tanggapan").hide();
@@ -285,7 +387,33 @@
     })
 
     // SHOW USER
-    $(".info-user").click((e) => console.log(e));
+    $(".info-user").click(async (e) => {
+        const id = e.currentTarget.dataset.user;
+        const users = await fetch(`http://localhost:3000/users?id=${id}`);
+        const response = await users.json();
+        const result = response[0];
+        $(".modal-title-detail-informasi").text("Informasi Pengirim");
+        $("#id-pengirim").val(result.id);
+        $("#nama-pengirim").val(result.nama);
+        $("#email-pengirim").val(result.email);
+        $("#tanggal-lahir-pengirim").val(result.tgl_lahir);
+        $("#alamat-pengirim").val(result.alamat);
+        $("#kontak-pengirim").val(result.kontak);
+        $("#status-pengirim").val(result.status);
+        $("#foto-user").attr("src", "<?= BaseURL(); ?>/" + result.foto);
+        $("#informasi").modal("hide");
+        setTimeout(() => {
+            $("#detail-informasi").modal("show");
+        }, 500);
+    });
+
+    // WHEN CLOSE DETAIL INFO
+    function closeDetailInfo() {
+        $("#detail-informasi").modal("hide");
+        setTimeout(() => {
+            $("#informasi").modal("show");
+        }, 500);
+    }
 
     // SHOW LOCATION
     $(".location").click((e) => {
@@ -293,7 +421,5 @@
         if (location != "Akses tidak diberikan")
             window.open(`https://www.google.com/maps?q=${location}`, '_blank');
     });
-
-    // IF CHANGE VALUE ON STATUS INFORMASI
 </script>
 <?php getFooterDashboard(); ?>
