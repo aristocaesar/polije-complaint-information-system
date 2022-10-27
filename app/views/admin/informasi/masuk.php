@@ -94,7 +94,7 @@
                                             <label>Deskripsi</label>
                                             <textarea class="form-control" name="Tanggapan" id="deskripsi_tanggapan" rows="6" placeholder="Ketikkan Tanggapan"></textarea>
                                         </div>
-                                        <div class="form-group col-12">
+                                        <div class="form-group col-12 lampiran-tanggapan">
                                             <label>Lampiran</label>
                                             <div class="input-groups mb-2">
                                                 <div class="custom-file">
@@ -109,9 +109,9 @@
                         </div>
                     </div>
                     <div class="modal-footer bg-whitesmoke py-4">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="button" class="btn btn-secondary btn-batal" data-dismiss="modal">Batal</button>
                         <button type="button" class="btn btn-danger btn-tangguhkan">Tangguhkan Informasi</button>
-                        <button type="button" class="btn btn-info btn-sampaikan-tanggapan">Sampaikan</button>
+                        <button type="button" class="btn btn-info btn-sampaikan-tanggapan">Sampaikan Kedivisi</button>
                         <button type="button" class="btn btn-warning btn-proses-tanggapan">Proses Informasi</button>
                         <button type="submit" class="btn btn-primary btn-selesai-tanggapan">Selesai</button>
                     </div>
@@ -130,7 +130,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table" id="table-1">
+                        <table class="table table-informasi" id="table-1">
                             <thead>
                                 <tr>
                                     <th class="text-center">
@@ -144,18 +144,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        #INFO2510202266
-                                    </td>
-                                    <td>Apakah layanan ini dikelola dengan baik </td>
-                                    <td>Terkait Aplikasi</td>
-                                    <td>25/10/2021</td>
-                                    <td>
-                                        <div class="badge badge-warning">Belum Ditanggapi</div>
-                                    </td>
-                                    <td><button type="button" id="INFO2510202266 " class="btn btn-secondary" onclick="getDetail(this.id)">Detail</button></td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -165,6 +153,50 @@
     </section>
 </div>
 <script type="text/javascript">
+    // UTILS
+    function Ucfirst(str) {
+        return str[0].toUpperCase() + str.slice(1);
+    }
+
+    function Ucwords(str) {
+        let string = [];
+        let letters = str.split("_");
+        letters.forEach(letter => string.push(Ucfirst(letter)));
+        return string.join(" ");
+    }
+
+    // GET INFORMASI != SELESAI
+    async function getInformasi() {
+        const informasi = await fetch("http://localhost:3000/informasi");
+        const response = await informasi.json();
+        let htmlBody = [];
+        response.forEach((info) => {
+            htmlBody.push(
+                ` <tr>
+                    <td>
+                        ${info.id}
+                    </td>
+                    <td>${info.judul}</td>
+                    <td>${info.kategori}</td>
+                    <td>${new Date()}</td>
+                    <td>
+                        <div class="badge badge-${info.status == "ditangguhkan" ? "danger" : info.status == "belum_ditanggapi" ? "warning" : info.status == "proses" ? "primary" : info.status == "selesai" ? "success" : ""}">${Ucwords(info.status)}</div>
+                    </td>
+                    <td><button type="button" id="${info.id}" class="btn btn-secondary" onclick="getDetail(this.id)">Detail</button></td>
+                </tr>`
+            );
+        })
+        const htmlData = htmlBody.join("");
+        $("tbody").html(htmlData).promise().done(() => {
+            $('.table-informasi').DataTable({
+                language: {
+                    url: '<?= BaseURL(); ?>/public/vendor/datatables/indonesia.json'
+                }
+            });
+        });
+    }
+    getInformasi();
+
     // GET DETAIL
     async function getDetail(id) {
         const detail = await fetch(`http://localhost:3000/informasi?id=${id}`);
@@ -185,23 +217,50 @@
             $("#lokasi").val(result.lokasi);
             // Status Informasi
             if (result.status == "belum_ditanggapi" || result.status == "ditangguhkan") {
-                $(".status-informasi-blm-proses").show();
+                // Bussines status informasi
                 $(".status-informasi-terproses").hide();
+                $(".status-informasi-blm-proses").show();
                 $("#status-informasi-blm-proses").val(Ucwords(result.status));
-                // Form Tanggapan
-                $(".form-tanggapan").hide();
+                if (result.status == "ditangguhkan") {
+                    $("#divisi").attr("disabled", "disabled");
+                    $(".form-tanggapan").show();
+                    // Button
+                    $(".modal-footer").hide();
+                    $(".lampiran-tanggapan").hide();
+                    $("#deskripsi_tanggapan").attr("disabled", "disabled");
+                } else {
+                    $("#divisi").removeAttr("disabled");
+                    $(".form-tanggapan").hide();
+                    // All Buttton
+                    $(".modal-footer").show();
+                    $(".btn-tangguhkan").show();
+                    $(".btn-sampaikan-tanggapan").hide();
+                    $(".btn-proses-tanggapan").show();
+                    $(".btn-selesai-tanggapan").hide();
+                }
             } else {
                 $(".status-informasi-blm-proses").hide();
+                $(".status-informasi-terproses").show();
                 $("#status-informasi-terproses").val(result.status);
+                $("#divisi").attr("disabled", "disabled");
                 // Jika status dalam tindak lanjut
                 if (result.status == "proses") {
                     $(".form-tanggapan").hide();
+                    $("#status-informasi-terproses").removeAttr("disabled");
+                    // All Buttton
+                    $(".modal-footer").show();
+                    $(".btn-tangguhkan").show();
+                    $(".btn-sampaikan-tanggapan").show();
+                    $(".btn-proses-tanggapan").hide();
+                    $(".btn-selesai-tanggapan").hide();
                 } else {
                     $(".form-tanggapan").show();
+
                     $("#status-informasi-terproses").attr("disabled", "disabled");
-                    $("#divisi").attr("disabled", "disabled");
                     $("#deskripsi_tanggapan").attr("disabled", "disabled");
                     $("#lampiran_tanggapan").attr("disabled", "disabled");
+
+                    $(".modal-footer").hide();
                 }
             }
         };
@@ -211,11 +270,17 @@
     // CHANGE PROSES TO SELESAI
     $("#status-informasi-terproses").change((e) => {
         if (e.currentTarget.value == "selesai") {
-            $("#divisi").attr("disabled", "disabled");
             $(".form-tanggapan").show();
+            $(".btn-tangguhkan").hide();
+            $(".btn-sampaikan-tanggapan").hide();
+            $(".btn-proses-tanggapan").hide();
+            $(".btn-selesai-tanggapan").show();
         } else {
-            $("#divisi").removeAttr("disabled");
             $(".form-tanggapan").hide();
+            $(".btn-tangguhkan").show();
+            $(".btn-sampaikan-tanggapan").show();
+            $(".btn-proses-tanggapan").hide();
+            $(".btn-selesai-tanggapan").hide();
         }
     })
 

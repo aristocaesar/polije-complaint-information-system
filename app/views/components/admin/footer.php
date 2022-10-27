@@ -23,22 +23,7 @@
 <?php endif; ?>
 <script>
     $(document).ready(function() {
-        // UTILS
-        function Ucfirst(str) {
-            return str[0].toUpperCase() + str.slice(1);
-        }
 
-        function Ucwords(str) {
-            let string = [];
-            let letters = str.split("_");
-            letters.forEach(letter => string.push(Ucfirst(letter)));
-            return string.join(" ");
-        }
-        $('.table').DataTable({
-            language: {
-                url: '<?= BaseURL(); ?>/public/vendor/datatables/indonesia.json'
-            }
-        });
     });
 </script>
 </body>
