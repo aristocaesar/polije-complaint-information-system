@@ -124,5 +124,10 @@
         $("#hapus_kategori").modal('show');
         $("#id-divisi-kategori").val($("#id-kategori").val());
     }
+    $('.table').DataTable({
+        language: {
+            url: '<?= BaseURL(); ?>/public/vendor/datatables/indonesia.json'
+        }
+    });
 </script>
 <?php getFooterDashboard(); ?>

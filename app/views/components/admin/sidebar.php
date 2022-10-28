@@ -13,7 +13,7 @@
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-file"></i><span>Pengaduan</span></a>
                 <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="<?= BaseURL() ?>/admin/pengaduan/masuk">Masuk</a></li>
+                    <li><a class="nav-link" href="<?= BaseURL() ?>/admin/pengaduan">Masuk</a></li>
                     <li><a class="nav-link" href="<?= BaseURL() ?>/admin/pengaduan/proses">Proses</a></li>
                     <li><a class="nav-link" href="<?= BaseURL() ?>/admin/pengaduan/selesai">Selesai</a></li>
                 </ul>
@@ -21,7 +21,7 @@
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-paper-plane"></i><span>Aspirasi</span></a>
                 <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="<?= BaseURL() ?>/admin/aspirasi/masuk">Masuk</a></li>
+                    <li><a class="nav-link" href="<?= BaseURL() ?>/admin/aspirasi">Masuk</a></li>
                     <li><a class="nav-link" href="<?= BaseURL() ?>/admin/aspirasi/proses">Proses</a></li>
                     <li><a class="nav-link" href="<?= BaseURL() ?>/admin/aspirasi/selesai">Selesai</a></li>
                 </ul>
@@ -30,6 +30,7 @@
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-info"></i><span>Infromasi</span></a>
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?= BaseURL() ?>/admin/informasi">Masuk</a></li>
+                    <li><a class="nav-link" href="<?= BaseURL() ?>/admin/informasi/proses">Proses</a></li>
                     <li><a class="nav-link" href="<?= BaseURL() ?>/admin/informasi/selesai">Selesai</a></li>
                 </ul>
             </li>

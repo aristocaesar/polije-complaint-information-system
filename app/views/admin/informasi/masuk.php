@@ -7,7 +7,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Konfirmasi Informasi</h5>
+                    <h5 class="modal-title">Informasi</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -37,6 +37,10 @@
                             </div>
                         </div>
                         <div class="row">
+                            <div class="form-group col-12">
+                                <label>Nomor Antrian</label>
+                                <input type="text" class="form-control" id="id_antrian" placeholder="Nomor Antrian" required="" readonly>
+                            </div>
                             <div class="form-group col-12 col-md-6">
                                 <label>Pengirim</label>
                                 <div class="input-group">
@@ -125,7 +129,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div id="info-user">
+                <div id="informasi-user">
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-12 col-lg-6">
@@ -196,6 +200,70 @@
                         <button type="submit" class="btn btn-primary" onclick="closeDetailInfo()">OK</button>
                     </div>
                 </div>
+                <div id="konfirmasi-tindak-lanjut">
+                    <form action="<?= BaseURL() ?>/admin/informasi/toproses" method="post">
+                        <div class="modal-body">
+                            <div class="row">
+                                <input type="text" class="d-none" name="id-divisi-tindak-lanjut" id="id-divisi-tindak-lanjut">
+                                <div class="form-group col-12">
+                                    <label>Judul</label>
+                                    <input type="text" class="form-control" id="tindak-lanjut-judul" placeholder="Judul Informasi" required="" readonly>
+                                </div>
+                                <div class="form-group col-12">
+                                    <label>Deskripsi</label>
+                                    <textarea class="form-control" id="tindak-lanjut-deskripsi" rows="6" placeholder="Ketikkan Deskripsi" readonly></textarea>
+                                </div>
+                                <div class="form-group col-12">
+                                    <label>Divisi</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="tindak-lanjut-divisi" placeholder="Divisi" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group col-12">
+                                    <label>Kontak Divisi</label>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="card card-large-icons">
+                                                <div class="card-icon bg-primary text-white">
+                                                    <i class="fas fa-envelope"></i>
+                                                </div>
+                                                <div class="card-body">
+                                                    <p class="font-weight-bold text-dark">Email</p>
+                                                    <p id="kontak-divisi-email">hi@aristoc.space</p>
+                                                    <button type="button" class="btn btn-link p-0 card-cta" onclick="contactDivisiEmail()">Hubungi</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="card card-large-icons">
+                                                <div class="card-icon bg-primary text-white">
+                                                    <i class="fas fa-phone"></i>
+                                                </div>
+                                                <div class="card-body">
+                                                    <p class="font-weight-bold text-dark">No Telp / Whatappas</p>
+                                                    <p id="kontak-divisi-notelp">085235119101</p>
+                                                    <button type="button" class="btn btn-link p-0 card-cta" data-toggle="modal" onclick="contactDivisiWA()">Hubungi</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-12">
+                                    <div class="form-check">
+                                        <input class="form-check-input" id="check-penyampain-divisi" type="checkbox">
+                                        <label class="form-check-label">
+                                            Saya sudah menyampaikan informasi kepada divisi yang berwenang
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer bg-whitesmoke footer-konfirmasi-tindak-lanjut">
+                            <button type="button" class="btn btn-secondary btn-batal" data-dismiss="modal">Batal</button>
+                            <button type="submit" name="ubah-status-tindak-lanjut" class="btn btn-primary">Ubah status ke Tindak Lanjut</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -243,6 +311,10 @@
         let letters = str.split("_");
         letters.forEach(letter => string.push(Ucfirst(letter)));
         return string.join(" ");
+    }
+
+    function StringToURI(str) {
+        return str.replaceAll(/ /g, "%20");
     }
 
     // GET DIVISI
@@ -406,6 +478,83 @@
             $("#detail-informasi").modal("show");
         }, 500);
     });
+
+    // TANGGUHKAN INFORMASI
+    $(".btn-tangguhkan").click((e) => {
+        const id_informasi = $("#id_antrian").val();
+        Swal.fire({
+            title: '<b>Apakah anda ingin menangguhkan informasi ini ?</b>',
+            html: "<small>Setelah informasi ditangguhkan, status penangguhan tidak dapat dikembalikan</small>",
+            showCancelButton: true,
+            confirmButtonText: 'Ya, Tangguhkan',
+            cancelButtonText: "Batal",
+            icon: "info"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                // UPDATE STATUS INFORMASI -> ditangguhkan
+                Swal.fire('<b>Informasi Berhasil Ditangguhkan!</b>', '', 'success')
+                setTimeout(() => {
+                    location.reload()
+                }, 1500);
+            }
+        })
+    })
+
+    // PROSES INFROMASI
+    $(".btn-proses-tanggapan").click((e) => {
+        const id = $("#id_antrian").val();
+        const judul = $("#judul").val();
+        const deskripsi = $("#deskripsi").val();
+        const divisi = $("#divisi").val();
+        $("#informasi").modal("hide");
+        setTimeout(async () => {
+            const allDivisi = await getDivisi();
+            const confirmDivisi = allDivisi.filter(div => div.nama == divisi);
+            $("#detail-informasi").modal("show");
+            $(".modal-title-detail-informasi").text("Proses Informasi");
+            $("#informasi-user").hide();
+            $("#konfirmasi-tindak-lanjut").show();
+            $("#id-divisi-tindak-lanjut").val(id);
+            $("#tindak-lanjut-judul").val(judul);
+            $("#tindak-lanjut-deskripsi").val(deskripsi);
+            $("#tindak-lanjut-divisi").val(divisi);
+            $("#kontak-divisi-email").text(confirmDivisi[0].email);
+            $("#kontak-divisi-notelp").text(confirmDivisi[0].kontak);
+            $("#check-penyampain-divisi").prop('checked', false);
+            $(".footer-konfirmasi-tindak-lanjut").hide();
+        }, 500);
+    });
+
+    // PROSES CHECKBOX SUDAH DISAMPAIKAN
+    $("#check-penyampain-divisi").change((e) => {
+        if (e.currentTarget.checked) {
+            $(".footer-konfirmasi-tindak-lanjut").show();
+        } else {
+            $(".footer-konfirmasi-tindak-lanjut").hide();
+        }
+    })
+
+    // KONTAK DIVISI EMAIL
+    function contactDivisiEmail() {
+        const id = $("#id-divisi-tindak-lanjut").val();
+        const email = $("#kontak-divisi-email").text();
+        const judul = $("#tindak-lanjut-judul").val();
+        const deskripsi = $("#tindak-lanjut-deskripsi").val();
+        let subject = `POLIJE - INFORMASI | ${id}`;
+        let message = `Judul : ${judul} | Pesan : ${deskripsi}`;
+        window.open(`mailto:${email}?subject=${StringToURI(subject)}&body=${message}`);
+    }
+
+    // KONTAK DIVISI WHATAPPS
+    function contactDivisiWA() {
+        const id = $("#id-divisi-tindak-lanjut").val();
+        const notelp = $("#kontak-divisi-notelp").text();
+        const judul = $("#tindak-lanjut-judul").val();
+        const deskripsi = $("#tindak-lanjut-deskripsi").val();
+        let subject = `*POLIJE - INFORMASI | ${id}*`;
+        let message = `*Judul :* ${judul} | *Pesan :* ${deskripsi}`;
+        window.open(`https://wa.me/${notelp}?text=${subject}, ${message}`);
+    }
 
     // WHEN CLOSE DETAIL INFO
     function closeDetailInfo() {

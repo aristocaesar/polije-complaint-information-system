@@ -7,10 +7,7 @@
 <script src="<?= BaseURL() ?>/public/js/stisla.js"></script>
 
 <!-- JS Libraies -->
-<!-- Sweeatalert -->
 <script type="text/javascript" src="<?= BaseURL(); ?>/public/js/sweetalert2.all.min.js"></script>
-<script src="<?= BaseURL() ?>/public/vendor/datatables/js/jquery.dataTables.min.js"></script>
-<script src="<?= BaseURL() ?>/public/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
 
 <!-- Template JS File -->
 <script src="<?= BaseURL() ?>/public/js/stisla-script.js"></script>

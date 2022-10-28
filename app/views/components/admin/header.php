@@ -24,6 +24,8 @@
 
     <!-- Jquery Load -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="<?= BaseURL() ?>/public/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="<?= BaseURL() ?>/public/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
 
     <!-- Specific CSS Page -->
     <?php if (isset($data["css"])) : ?>

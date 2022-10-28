@@ -145,5 +145,10 @@
         $("#hapus_divisi").modal('show');
         $("#id-divisi-hapus").val($("#id-divisi").val());
     }
+    $('.table').DataTable({
+        language: {
+            url: '<?= BaseURL(); ?>/public/vendor/datatables/indonesia.json'
+        }
+    });
 </script>
 <?php getFooterDashboard(); ?>

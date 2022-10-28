@@ -108,5 +108,10 @@
         $("#hapus_pengguna").modal('show');
         $("#id-pengguna-hapus").val($("#id-pengguna").val());
     }
+    $('.table').DataTable({
+        language: {
+            url: '<?= BaseURL(); ?>/public/vendor/datatables/indonesia.json'
+        }
+    });
 </script>
 <?php getFooterDashboard(); ?>
