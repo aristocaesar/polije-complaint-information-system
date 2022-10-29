@@ -125,13 +125,6 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="konfirmasi-tangguhkan">
-                    <div class="modal-body">
-                        <p>Penangguhan Informasi</p>
-                    </div>
-                    <div class="modal-footer">
-                    </div>
-                </div>
                 <div id="informasi-user">
                     <div class="modal-body">
                         <div class="row">
@@ -331,7 +324,7 @@
 
     // GET INFORMASI != SELESAI
     async function getInformasi() {
-        const informasi = await fetch("http://localhost:3000/informasi?status=belum_ditanggapi");
+        const informasi = await fetch("http://localhost:3000/informasi?status=selesai&status=ditangguhkan");
         const response = await informasi.json();
         let htmlBody = [];
         response.forEach((info) => {
@@ -519,7 +512,6 @@
             $(".modal-title-detail-informasi").text("Proses Informasi");
             $("#informasi-user").hide();
             $("#konfirmasi-tindak-lanjut").show();
-            $("#konfirmasi-tangguhkan").hide();
             $("#id-divisi-tindak-lanjut").val(id);
             $("#tindak-lanjut-judul").val(judul);
             $("#tindak-lanjut-deskripsi").val(deskripsi);

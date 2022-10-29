@@ -35,14 +35,32 @@ class Admin extends Controller
     public function informasi($action = "")
     {
         if ($action != "") {
-        } else {
-            $this->view("admin/informasi/masuk", $data = [
-                "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Informasi",
-                "layout_admin" => true,
-                // "css" => ["select2.min"],
-                // "js" => ["select2.full.min"]
-            ]);
+            if (isset($_POST)) {
+                if ($action == "toproses") {
+                    // Ubah Status Informasi menjadi proses
+                    header("Location: " . BaseURL() . "/admin/informasi");
+                    exit;
+                }
+            }
+            if ($action == "proses") {
+                $this->view("admin/informasi/proses", $data = [
+                    "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Informasi Proses",
+                    "layout_admin" => true,
+                ]);
+                return;
+            }
+            if ($action == "selesai") {
+                $this->view("admin/informasi/selesai", $data = [
+                    "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Informasi Selesai",
+                    "layout_admin" => true,
+                ]);
+                return;
+            }
         }
+        $this->view("admin/informasi/masuk", $data = [
+            "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Informasi Masuk",
+            "layout_admin" => true,
+        ]);
     }
 
     // Kategori

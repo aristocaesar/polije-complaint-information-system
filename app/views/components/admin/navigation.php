@@ -9,7 +9,7 @@
         <ul class="navbar-nav navbar-right">
 
             <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                    <img alt="image" src="<?= "USR0407200.png" ?>" class="rounded-circle mr-1">
+                    <img alt="image" src="https://media-exp1.licdn.com/dms/image/C5603AQED8L0BQbsIdw/profile-displayphoto-shrink_200_200/0/1654088905112?e=2147483647&v=beta&t=l683DweslHzwVt376iZoViKr9i9uG0GzhcDREE6eAHg" class="rounded-circle mr-1">
                     <div class="d-sm-none d-lg-inline-block">Hallo, Aristo Caesar Pratama</div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
