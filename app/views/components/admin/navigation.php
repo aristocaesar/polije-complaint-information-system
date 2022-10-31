@@ -23,7 +23,7 @@
                         <i class="fas fa-cog"></i> Pengaturan
                     </a>
                     <div class="dropdown-divider"></div>
-                    <a href="<?= BaseURL() ?>/admin" class="dropdown-item has-icon text-danger">
+                    <a href="<?= BaseURL() ?>/admin/logout" class="dropdown-item has-icon text-danger">
                         <i class="fas fa-sign-out-alt"></i> Keluar
                     </a>
                 </div>

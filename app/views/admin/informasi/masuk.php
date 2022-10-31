@@ -489,9 +489,10 @@
         $("#foto-user").attr("src", "<?= BaseURL(); ?>/" + result.foto);
         $("#informasi").modal("hide");
         $("#informasi-user").show();
-        $("#konfirmasi-tindak-lanjut").hide();
         setTimeout(() => {
+            $("#konfirmasi-tangguhkan").hide();
             $("#detail-informasi").modal("show");
+            $("#konfirmasi-tindak-lanjut").hide();
         }, 500);
     });
 
