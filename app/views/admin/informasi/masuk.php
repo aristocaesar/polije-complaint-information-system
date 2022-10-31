@@ -125,12 +125,23 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="konfirmasi-tangguhkan">
-                    <div class="modal-body">
-                        <p>Penangguhan Informasi</p>
-                    </div>
-                    <div class="modal-footer">
-                    </div>
+                <div id="konfirmasi-tangguhkan">
+                    <form action="<?= BaseURL() ?>/admin/informasi/tangguhkan" method="post">
+                        <div class="modal-body">
+                            <input type="text" id="id-konfirmasi-tangguhkan" class="d-none">
+                            <p>Setelah informasi ditangguhkan, status tidak dapat dirubah</p>
+                            <div class="row alasan-konfirmasi-tangguhkan">
+                                <div class="form-group col-12">
+                                    <label>Alasan Ditangguhkan</label>
+                                    <textarea class="form-control" name="alasan-ditangguhkan" rows="6" placeholder="Ketikkan Alasan" required></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-batal" data-dismiss="modal">Batal</button>
+                            <button type="submit" name="tangguhkan" class="btn btn-primary">Ya, Tangguhkan</button>
+                        </div>
+                    </form>
                 </div>
                 <div id="informasi-user">
                     <div class="modal-body">
@@ -486,23 +497,16 @@
 
     // TANGGUHKAN INFORMASI
     $(".btn-tangguhkan").click((e) => {
-        const id_informasi = $("#id_antrian").val();
-        Swal.fire({
-            title: '<b>Apakah anda ingin menangguhkan informasi ini ?</b>',
-            html: "<small>Setelah informasi ditangguhkan, status penangguhan tidak dapat dikembalikan</small>",
-            showCancelButton: true,
-            confirmButtonText: 'Ya, Tangguhkan',
-            cancelButtonText: "Batal",
-            icon: "info"
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                // UPDATE STATUS INFORMASI -> ditangguhkan
-                Swal.fire('<b>Informasi Berhasil Ditangguhkan!</b>', '', 'success')
-                setTimeout(() => {
-                    location.reload()
-                }, 1500);
-            }
-        })
+        $("#id-konfirmasi-tangguhkan").val($("#id_antrian").val());
+        console.log($("#id-konfirmasi-tangguhkan").val());
+        $("#informasi").modal("hide");
+        setTimeout(() => {
+            $("#detail-informasi").modal("show");
+            $(".modal-title-detail-informasi").text("Tangguhkan Informasi");
+            $("#konfirmasi-tangguhkan").show();
+            $("#informasi-user").hide();
+            $("#konfirmasi-tindak-lanjut").hide();
+        }, 500);
     })
 
     // PROSES INFROMASI
@@ -518,6 +522,7 @@
             $("#detail-informasi").modal("show");
             $(".modal-title-detail-informasi").text("Proses Informasi");
             $("#informasi-user").hide();
+            $("#konfirmasi-tangguhkan").hide();
             $("#konfirmasi-tindak-lanjut").show();
             $("#konfirmasi-tangguhkan").hide();
             $("#id-divisi-tindak-lanjut").val(id);
