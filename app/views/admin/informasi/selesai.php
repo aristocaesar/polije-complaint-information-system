@@ -125,24 +125,6 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div id="konfirmasi-tangguhkan">
-                    <form action="<?= BaseURL() ?>/admin/informasi/tangguhkan" method="post">
-                        <div class="modal-body">
-                            <input type="text" id="id-konfirmasi-tangguhkan" class="d-none">
-                            <p>Setelah informasi ditangguhkan, status tidak dapat dirubah</p>
-                            <div class="row alasan-konfirmasi-tangguhkan">
-                                <div class="form-group col-12">
-                                    <label>Alasan Ditangguhkan</label>
-                                    <textarea class="form-control" name="alasan-ditangguhkan" rows="6" placeholder="Ketikkan Alasan" required></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn-batal" data-dismiss="modal">Batal</button>
-                            <button type="submit" name="tangguhkan" class="btn btn-primary">Ya, Tangguhkan</button>
-                        </div>
-                    </form>
-                </div>
                 <div id="informasi-user">
                     <div class="modal-body">
                         <div class="row">
@@ -438,11 +420,10 @@
                     $(".btn-selesai-tanggapan").hide();
                 } else {
                     $(".form-tanggapan").show();
-
                     $("#status-informasi-terproses").attr("disabled", "disabled");
                     $("#deskripsi_tanggapan").attr("disabled", "disabled");
+                    $(".lampiran-tanggapan").show();
                     $("#lampiran_tanggapan").attr("disabled", "disabled");
-
                     $(".modal-footer").hide();
                 }
             }
