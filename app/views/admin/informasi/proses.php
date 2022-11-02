@@ -278,6 +278,60 @@
                         </div>
                     </form>
                 </div>
+                <div id="konfirmasi-penyampaian-ulang">
+                    <div class="modal-body">
+                        <div class="row">
+                            <input type="text" class="d-none" name="id-divisi-tindak-lanjut" id="id-divisi-tindak-lanjut">
+                            <div class="form-group col-12">
+                                <label>Judul</label>
+                                <input type="text" class="form-control tindak-lanjut-judul" placeholder="Judul Informasi" required="" readonly>
+                            </div>
+                            <div class="form-group col-12">
+                                <label>Deskripsi</label>
+                                <textarea class="form-control tindak-lanjut-deskripsi" rows="6" placeholder="Ketikkan Deskripsi" readonly></textarea>
+                            </div>
+                            <div class="form-group col-12">
+                                <label>Divisi</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control tindak-lanjut-divisi" placeholder="Divisi" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group col-12">
+                                <label>Kontak Divisi</label>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="card card-large-icons">
+                                            <div class="card-icon bg-primary text-white">
+                                                <i class="fas fa-envelope"></i>
+                                            </div>
+                                            <div class="card-body">
+                                                <p class="font-weight-bold text-dark">Email</p>
+                                                <p class="kontak-divisi-email">hi@aristoc.space</p>
+                                                <button type="button" class="btn btn-link p-0 card-cta" onclick="contactDivisiEmail()">Hubungi</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="card card-large-icons">
+                                            <div class="card-icon bg-primary text-white">
+                                                <i class="fas fa-phone"></i>
+                                            </div>
+                                            <div class="card-body">
+                                                <p class="font-weight-bold text-dark">No Telp / Whatappas</p>
+                                                <p class="kontak-divisi-notelp">085235119101</p>
+                                                <button type="button" class="btn btn-link p-0 card-cta" data-toggle="modal" onclick="contactDivisiWA()">Hubungi</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-whitesmoke footer-konfirmasi-tindak-lanjut">
+                        <button type="button" class="btn btn-secondary btn-batal" data-dismiss="modal">Batal</button>
+                        <button type="button" class="btn btn-primary" onclick="closeDetailInfo()">Sudah Tersampaikan</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -478,34 +532,40 @@
         const users = await fetch(`http://localhost:3000/users?id=${id}`);
         const response = await users.json();
         const result = response[0];
-        $(".modal-title-detail-informasi").text("Informasi Pengirim");
-        $("#id-pengirim").val(result.id);
-        $("#nama-pengirim").val(result.nama);
-        $("#email-pengirim").val(result.email);
-        $("#tanggal-lahir-pengirim").val(result.tgl_lahir);
-        $("#alamat-pengirim").val(result.alamat);
-        $("#kontak-pengirim").val(result.kontak);
-        $("#status-pengirim").val(result.status);
-        $("#foto-user").attr("src", "<?= BaseURL(); ?>/" + result.foto);
         $("#informasi").modal("hide");
-        $("#informasi-user").show();
-        $("#konfirmasi-tindak-lanjut").hide();
         setTimeout(() => {
             $("#detail-informasi").modal("show");
+            // content detail informasi
+            $("#konfirmasi-tangguhkan").hide();
+            $("#informasi-user").show();
+            $("#konfirmasi-tindak-lanjut").hide();
+            $("#konfirmasi-penyampaian-ulang").hide();
+
+            // set value
+            $(".modal-title-detail-informasi").text("Informasi Pengirim");
+            $("#id-pengirim").val(result.id);
+            $("#nama-pengirim").val(result.nama);
+            $("#email-pengirim").val(result.email);
+            $("#tanggal-lahir-pengirim").val(result.tgl_lahir);
+            $("#alamat-pengirim").val(result.alamat);
+            $("#kontak-pengirim").val(result.kontak);
+            $("#status-pengirim").val(result.status);
+            $("#foto-user").attr("src", "<?= BaseURL(); ?>/" + result.foto);
         }, 500);
     });
 
     // TANGGUHKAN INFORMASI
     $(".btn-tangguhkan").click((e) => {
         $("#id-konfirmasi-tangguhkan").val($("#id_antrian").val());
-        console.log($("#id-konfirmasi-tangguhkan").val());
         $("#informasi").modal("hide");
         setTimeout(() => {
             $("#detail-informasi").modal("show");
+            // content detail informasi
             $(".modal-title-detail-informasi").text("Tangguhkan Informasi");
             $("#konfirmasi-tangguhkan").show();
             $("#informasi-user").hide();
             $("#konfirmasi-tindak-lanjut").hide();
+            $("#konfirmasi-penyampaian-ulang").hide();
         }, 500);
     })
 
@@ -526,11 +586,11 @@
             $("#konfirmasi-tindak-lanjut").show();
             $("#konfirmasi-tangguhkan").hide();
             $("#id-divisi-tindak-lanjut").val(id);
-            $("#tindak-lanjut-judul").val(judul);
-            $("#tindak-lanjut-deskripsi").val(deskripsi);
-            $("#tindak-lanjut-divisi").val(divisi);
-            $("#kontak-divisi-email").text(confirmDivisi[0].email);
-            $("#kontak-divisi-notelp").text(confirmDivisi[0].kontak);
+            $(".tindak-lanjut-judul").val(judul);
+            $(".tindak-lanjut-deskripsi").val(deskripsi);
+            $(".tindak-lanjut-divisi").val(divisi);
+            $(".kontak-divisi-email").text(confirmDivisi[0].email);
+            $(".kontak-divisi-notelp").text(confirmDivisi[0].kontak);
             $("#check-penyampain-divisi").prop('checked', false);
             $(".footer-konfirmasi-tindak-lanjut").hide();
         }, 500);
@@ -548,9 +608,9 @@
     // KONTAK DIVISI EMAIL
     function contactDivisiEmail() {
         const id = $("#id-divisi-tindak-lanjut").val();
-        const email = $("#kontak-divisi-email").text();
-        const judul = $("#tindak-lanjut-judul").val();
-        const deskripsi = $("#tindak-lanjut-deskripsi").val();
+        const email = $(".kontak-divisi-email").text();
+        const judul = $(".tindak-lanjut-judul").val();
+        const deskripsi = $(".tindak-lanjut-deskripsi").val();
         let subject = `POLIJE - INFORMASI | ${id}`;
         let message = `Judul : ${judul} | Pesan : ${deskripsi}`;
         window.open(`mailto:${email}?subject=${StringToURI(subject)}&body=${message}`);
@@ -559,19 +619,48 @@
     // KONTAK DIVISI WHATAPPS
     function contactDivisiWA() {
         const id = $("#id-divisi-tindak-lanjut").val();
-        const notelp = $("#kontak-divisi-notelp").text();
-        const judul = $("#tindak-lanjut-judul").val();
-        const deskripsi = $("#tindak-lanjut-deskripsi").val();
+        const notelp = $(".kontak-divisi-notelp").text();
+        const judul = $(".tindak-lanjut-judul").val();
+        const deskripsi = $(".tindak-lanjut-deskripsi").val();
         let subject = `*POLIJE - INFORMASI | ${id}*`;
         let message = `*Judul :* ${judul} | *Pesan :* ${deskripsi}`;
         window.open(`https://wa.me/${notelp}?text=${subject}, ${message}`);
     }
+
+    // Sampaikan ulang kedivisi
+    $(".btn-sampaikan-tanggapan").click((e) => {
+        const judul = $("#judul").val();
+        const deskripsi = $("#deskripsi").val();
+        const divisi = $("#divisi").val();
+        $("#informasi").modal("hide");
+        setTimeout(async () => {
+            $("#detail-informasi").modal("show");
+            // get divisi
+            const allDivisi = await getDivisi();
+            const confirmDivisi = allDivisi.filter(div => div.nama == divisi);
+            // content detail informasi
+            $(".modal-title-detail-informasi").text("Sampaikan Ulang Informasi");
+            $("#konfirmasi-tangguhkan").hide();
+            $("#informasi-user").hide();
+            $("#konfirmasi-tindak-lanjut").hide();
+            $("#konfirmasi-penyampaian-ulang").show();
+
+            // set value
+            $("#id-divisi-tindak-lanjut").val($("#id_antrian").val());
+            $(".tindak-lanjut-judul").val(judul);
+            $(".tindak-lanjut-deskripsi").val(deskripsi);
+            $(".tindak-lanjut-divisi").val(divisi);
+            $(".kontak-divisi-email").text(confirmDivisi[0].email);
+            $(".kontak-divisi-notelp").text(confirmDivisi[0].kontak);
+        }, 500);
+    })
 
     // WHEN CLOSE DETAIL INFO
     function closeDetailInfo() {
         $("#detail-informasi").modal("hide");
         setTimeout(() => {
             $("#informasi").modal("show");
+            getDetail($("#id_antrian").val());
         }, 500);
     }
 
