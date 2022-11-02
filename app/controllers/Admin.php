@@ -63,6 +63,38 @@ class Admin extends Controller
         ]);
     }
 
+    // Aspirasi
+    public function aspirasi($action = "")
+    {
+        if ($action != "") {
+            if (isset($_POST)) {
+                if ($action == "toproses") {
+                    // Ubah Status Informasi menjadi proses
+                    header("Location: " . BaseURL() . "/admin/aspirasie");
+                    exit;
+                }
+            }
+            if ($action == "proses") {
+                $this->view("admin/aspirasi/proses", $data = [
+                    "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Informasi Proses",
+                    "layout_admin" => true,
+                ]);
+                return;
+            }
+            if ($action == "selesai") {
+                $this->view("admin/aspirasi/selesai", $data = [
+                    "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Informasi Selesai",
+                    "layout_admin" => true,
+                ]);
+                return;
+            }
+        }
+        $this->view("admin/aspirasi/masuk", $data = [
+            "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Aspirasi Masuk",
+            "layout_admin" => true,
+        ]);
+    }
+
     // Kategori
     public function kategori()
     {

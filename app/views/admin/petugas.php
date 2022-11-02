@@ -204,5 +204,10 @@
         $("#hapus_petugas").modal('show');
         $("#id-petugas-hapus").val($("#id-petugas").val());
     }
+    $('.table').DataTable({
+        language: {
+            url: '<?= BaseURL(); ?>/public/vendor/datatables/indonesia.json'
+        }
+    });
 </script>
 <?php getFooterDashboard(); ?>
