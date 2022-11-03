@@ -23,11 +23,34 @@ class Admin extends Controller
     }
 
     // Pengaduan
-    public function pengaduan()
+    public function pengaduan($action = "")
     {
-        $this->view("admin/dashboard", $data = [
-            "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Pengaduan",
-            "layout_admin" => true
+        if ($action != "") {
+            if (isset($_POST)) {
+                if ($action == "toproses") {
+                    // Ubah Status Informasi menjadi proses
+                    header("Location: " . BaseURL() . "/admin/informasi");
+                    exit;
+                }
+            }
+            if ($action == "proses") {
+                $this->view("admin/pengaduan/proses", $data = [
+                    "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Informasi Proses",
+                    "layout_admin" => true,
+                ]);
+                return;
+            }
+            if ($action == "selesai") {
+                $this->view("admin/pengaduan/selesai", $data = [
+                    "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Informasi Selesai",
+                    "layout_admin" => true,
+                ]);
+                return;
+            }
+        }
+        $this->view("admin/pengaduan/masuk", $data = [
+            "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Informasi Masuk",
+            "layout_admin" => true,
         ]);
     }
 
@@ -76,14 +99,14 @@ class Admin extends Controller
             }
             if ($action == "proses") {
                 $this->view("admin/aspirasi/proses", $data = [
-                    "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Informasi Proses",
+                    "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Aspirasi Proses",
                     "layout_admin" => true,
                 ]);
                 return;
             }
             if ($action == "selesai") {
                 $this->view("admin/aspirasi/selesai", $data = [
-                    "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Informasi Selesai",
+                    "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Aspirasi Selesai",
                     "layout_admin" => true,
                 ]);
                 return;

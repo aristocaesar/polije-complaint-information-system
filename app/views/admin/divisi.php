@@ -28,12 +28,16 @@
                             <input type="nama_penanggung_jawab" class="form-control" name="nama_penanggung_jawab" id="nama_penanggung_jawab" aria-describedby="nama_penanggung_jawab" placeholder="Ketikkan Nama Penanggung Jawab">
                         </div>
                         <div class="form-group">
-                            <label for="kontak">Kontak Penanggung Jawab</label>
-                            <input type="number" class="form-control" name="kontak" id="kontak" aria-describedby="kontak" placeholder="Ketikkan Kontak Penanggung Jawab">
+                            <label for="kontak">No Telp / Whatapps Penanggung Jawab</label>
+                            <input type="number" class="form-control" name="notelp" id="kontak" aria-describedby="kontak" placeholder="Ketikkan No Telp / Whatapps Penanggung Jawab">
+                        </div>
+                        <div class="form-group">
+                            <label for="kontak">Email Penanggung Jawab</label>
+                            <input type="email" class="form-control" name="email" id="kontak" aria-describedby="kontak" placeholder="Ketikkan Email Penanggung Jawab">
                         </div>
                         <div class="form-group">
                             <label for="alamat">Alamat Penanggung Jawab</label>
-                            <input type="alamat" class="form-control" name="alamat" id="alamat" aria-describedby="alamat" placeholder="Ketikkan Alamat Penanggung Jawab">
+                            <input type="tel" class="form-control" name="alamat" id="alamat" aria-describedby="alamat" placeholder="Ketikkan Alamat Penanggung Jawab">
                         </div>
                     </div>
                     <div class="modal-footer bg-whitesmoke">
