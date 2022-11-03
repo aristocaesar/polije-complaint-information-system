@@ -123,7 +123,8 @@ class Admin extends Controller
     {
         $this->view("admin/kategori", $data = [
             "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Kategori",
-            "layout_admin" => true
+            "layout_admin" => true,
+            "kategori" => $this->model("kategori_model")->getAll()
         ]);
     }
 

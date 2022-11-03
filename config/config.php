@@ -5,6 +5,14 @@ function BaseURL()
 {
     return "http://localhost/polije-complaint";
 }
+
+// DATABASE
+define("DB_HOST", "localhost");
+define("DB_USER", "aristocaesar");
+define("DB_PASS", "aristo0407");
+define("DB_NAME", "polije_complaint");
+
+// COMPONENTS
 function getNavbarHome()
 {
     require_once("app/views/components/navbarHome.php");
