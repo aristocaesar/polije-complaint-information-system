@@ -2,12 +2,12 @@
 <?php getSidebarAdmin() ?>
 <!-- Main Content -->
 <div class="main-content">
-    <!-- Modal Pengelola aspirasi -->
-    <div class="modal fade" tabindex="-1" role="dialog" id="aspirasi">
+    <!-- Modal Pengelola pengaduan -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="pengaduan">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Aspirasi</h5>
+                    <h5 class="modal-title">Pengaduan</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -21,7 +21,7 @@
                             </div>
                             <div class="form-group col-12">
                                 <label>Judul</label>
-                                <input type="text" class="form-control" id="judul" placeholder="Judul Aspirasi" required="" readonly>
+                                <input type="text" class="form-control" id="judul" placeholder="Judul Pengaduan" required="" readonly>
                             </div>
                             <div class="form-group col-12">
                                 <label>Deskripsi</label>
@@ -60,15 +60,15 @@
                                 </div>
                             </div>
                             <div class="form-group col-12 col-md-6">
-                                <label>Status Aspirasi</label>
-                                <div class="input-group status-aspirasi-terproses">
-                                    <select class="form-control" id="status-aspirasi-terproses" name="status">
+                                <label>Status pengaduan</label>
+                                <div class="input-group status-pengaduan-terproses">
+                                    <select class="form-control" id="status-pengaduan-terproses" name="status">
                                         <option value="proses">Dalam Tindak Lanjut</option>
                                         <option value="selesai">Selesai</option>
                                     </select>
                                 </div>
-                                <div class="input-group status-aspirasi-blm-proses">
-                                    <input type="text" class="form-control" id="status-aspirasi-blm-proses" readonly>
+                                <div class="input-group status-pengaduan-blm-proses">
+                                    <input type="text" class="form-control" id="status-pengaduan-blm-proses" readonly>
                                 </div>
                             </div>
                             <div class="form-group col-12 col-md-6">
@@ -106,30 +106,30 @@
                     </div>
                     <div class="modal-footer bg-whitesmoke py-4">
                         <button type="button" class="btn btn-secondary btn-batal" data-dismiss="modal">Batal</button>
-                        <button type="button" class="btn btn-danger btn-tangguhkan">Tangguhkan aspirasi</button>
+                        <button type="button" class="btn btn-danger btn-tangguhkan">Tangguhkan Pengaduan</button>
                         <button type="button" class="btn btn-info btn-sampaikan-tanggapan">Sampaikan Kedivisi</button>
-                        <button type="button" class="btn btn-warning btn-proses-tanggapan">Proses Aspirasi</button>
+                        <button type="button" class="btn btn-warning btn-proses-tanggapan">Proses Pengaduan</button>
                         <button type="submit" class="btn btn-primary btn-selesai-tanggapan">Selesai</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <!-- Modal Aksi Detail aspirasi -->
-    <div class="modal fade" tabindex="-1" role="dialog" id="detail-aspirasi">
+    <!-- Modal Aksi Detail pengaduan -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="detail-pengaduan">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title modal-title-detail-aspirasi">Detail Aspirasi</h5>
+                    <h5 class="modal-title modal-title-detail-pengaduan">Detail Pengaduan</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div id="konfirmasi-tangguhkan">
-                    <form action="<?= BaseURL() ?>/admin/aspirasi/tangguhkan" method="post">
+                    <form action="<?= BaseURL() ?>/admin/pengaduan/tangguhkan" method="post">
                         <div class="modal-body">
                             <input type="text" id="id-konfirmasi-tangguhkan" class="d-none">
-                            <p>Setelah Aspirasi ditangguhkan, status tidak dapat dirubah</p>
+                            <p>Setelah pengaduan ditangguhkan, status tidak dapat dirubah</p>
                             <div class="row alasan-konfirmasi-tangguhkan">
                                 <div class="form-group col-12">
                                     <label>Alasan Ditangguhkan</label>
@@ -215,13 +215,13 @@
                     </div>
                 </div>
                 <div id="konfirmasi-tindak-lanjut">
-                    <form action="<?= BaseURL() ?>/admin/aspirasi/toproses" method="post">
+                    <form action="<?= BaseURL() ?>/admin/pengaduan/toproses" method="post">
                         <div class="modal-body">
                             <div class="row">
                                 <input type="text" class="d-none" name="id-konfir-tindak-lanjut" id="id-konfir-tindak-lanjut">
                                 <div class="form-group col-12">
                                     <label>Judul</label>
-                                    <input type="text" class="form-control" id="tindak-lanjut-judul" placeholder="Judul Aspirasi" required="" readonly>
+                                    <input type="text" class="form-control" id="tindak-lanjut-judul" placeholder="Judul pengaduan" required="" readonly>
                                 </div>
                                 <div class="form-group col-12">
                                     <label>Deskripsi</label>
@@ -266,7 +266,7 @@
                                     <div class="form-check">
                                         <input class="form-check-input" id="check-penyampain-divisi" type="checkbox">
                                         <label class="form-check-label">
-                                            Saya sudah menyampaikan aspirasi kepada divisi yang berwenang
+                                            Saya sudah menyampaikan pengaduan kepada divisi yang berwenang
                                         </label>
                                     </div>
                                 </div>
@@ -292,7 +292,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-aspirasi" id="table-1">
+                        <table class="table table-pengaduan" id="table-1">
                             <thead>
                                 <tr>
                                     <th class="text-center">
@@ -341,38 +341,38 @@
         return response;
     }
 
-    // GET aspirasi != SELESAI
-    async function getAspirasi() {
-        const aspirasi = await fetch("http://localhost:3000/pengaduan?status=belum_ditanggapi");
-        const response = await aspirasi.json();
+    // GET pengaduan != SELESAI
+    async function getPengaduan() {
+        const pengaduan = await fetch("http://localhost:3000/pengaduan?status=belum_ditanggapi");
+        const response = await pengaduan.json();
         let htmlBody = [];
-        response.forEach((aspi) => {
+        response.forEach((adu) => {
             htmlBody.push(
                 ` <tr>
                     <td>
-                        ${aspi.id}
+                        ${adu.id}
                     </td>
-                    <td>${aspi.judul}</td>
-                    <td>${aspi.kategori}</td>
-                    <td>${aspi.bobot}</td>
-                    <td>${aspi.created_at}</td>
+                    <td>${adu.judul}</td>
+                    <td>${adu.kategori}</td>
+                    <td>${adu.bobot}</td>
+                    <td>${adu.created_at}</td>
                     <td>
-                        <div class="badge badge-${aspi.status == "ditangguhkan" ? "danger" : aspi.status == "belum_ditanggapi" ? "warning" : aspi.status == "proses" ? "primary" : aspi.status == "selesai" ? "success" : ""}">${Ucwords(aspi.status)}</div>
+                        <div class="badge badge-${adu.status == "ditangguhkan" ? "danger" : adu.status == "belum_ditanggapi" ? "warning" : adu.status == "proses" ? "primary" : adu.status == "selesai" ? "success" : ""}">${Ucwords(adu.status)}</div>
                     </td>
-                    <td><button type="button" id="${aspi.id}" class="btn btn-secondary" onclick="getDetail(this.id)">Detail</button></td>
+                    <td><button type="button" id="${adu.id}" class="btn btn-secondary" onclick="getDetail(this.id)">Detail</button></td>
                 </tr>`
             );
         })
         const htmlData = htmlBody.join("");
         $("tbody").html(htmlData).promise().done(() => {
-            $('.table-aspirasi').DataTable({
+            $('.table-pengaduan').DataTable({
                 language: {
                     url: '<?= BaseURL(); ?>/public/vendor/datatables/indonesia.json'
                 }
             });
         });
     }
-    getAspirasi();
+    getPengaduan();
 
     // GET DETAIL
     async function getDetail(id) {
@@ -387,10 +387,10 @@
         const detail = await fetch(`http://localhost:3000/pengaduan?id=${id}`);
         const response = await detail.json();
         if (response.length == 0) {
-            Swal.fire("ERROR", `Gagal mengambil detail aspirasi ${id}`, "error");
+            Swal.fire("ERROR", `Gagal mengambil detail pengaduan ${id}`, "error");
         } else {
             const result = response[0];
-            $("#aspirasi").modal("show");
+            $("#pengaduan").modal("show");
             $("#id_antrian").val(result.id);
             $("#judul").val(result.judul);
             $("#deskripsi").val(result.deskripsi);
@@ -400,12 +400,12 @@
             $("#pengirim").val(result.id_pengirim);
             $(".location")[0].dataset.location = result.lokasi;
             $("#lokasi").val(result.lokasi);
-            // Status aspirasi
+            // Status pengaduan
             if (result.status == "belum_ditanggapi") {
-                // Bussines status aspirasi
-                $(".status-aspirasi-terproses").hide();
-                $(".status-aspirasi-blm-proses").show();
-                $("#status-aspirasi-blm-proses").val(Ucwords(result.status));
+                // Bussines status pengaduan
+                $(".status-pengaduan-terproses").hide();
+                $(".status-pengaduan-blm-proses").show();
+                $("#status-pengaduan-blm-proses").val(Ucwords(result.status));
                 if (result.status == "ditangguhkan") {
                     $("#divisi").attr("disabled", "disabled");
                     $(".form-tanggapan").show();
@@ -430,7 +430,7 @@
     }
 
     // CHANGE PROSES TO SELESAI
-    $("#status-aspirasi-terproses").change((e) => {
+    $("#status-pengaduan-terproses").change((e) => {
         if (e.currentTarget.value == "selesai") {
             $(".form-tanggapan").show();
             $("#deskripsi_tanggapan").removeAttr("disabled");
@@ -456,7 +456,7 @@
         const users = await fetch(`http://localhost:3000/users?id=${id}`);
         const response = await users.json();
         const result = response[0];
-        $(".modal-title-detail-aspirasi").text("aspirasi Pengirim");
+        $(".modal-title-detail-pengaduan").text("Pengirim Aduan");
         $("#id-pengirim").val(result.id);
         $("#nama-pengirim").val(result.nama);
         $("#email-pengirim").val(result.email);
@@ -465,23 +465,23 @@
         $("#kontak-pengirim").val(result.kontak);
         $("#status-pengirim").val(result.status);
         $("#foto-user").attr("src", "<?= BaseURL(); ?>/" + result.foto);
-        $("#aspirasi").modal("hide");
+        $("#pengaduan").modal("hide");
         $("#info-user").show();
         setTimeout(() => {
             $("#konfirmasi-tangguhkan").hide();
-            $("#detail-aspirasi").modal("show");
+            $("#detail-pengaduan").modal("show");
             $("#konfirmasi-tindak-lanjut").hide();
         }, 500);
     });
 
-    // TANGGUHKAN aspirasi
+    // TANGGUHKAN pengaduan
     $(".btn-tangguhkan").click((e) => {
         $("#id-konfirmasi-tangguhkan").val($("#id_antrian").val());
         console.log($("#id-konfirmasi-tangguhkan").val());
-        $("#aspirasi").modal("hide");
+        $("#pengaduan").modal("hide");
         setTimeout(() => {
-            $("#detail-aspirasi").modal("show");
-            $(".modal-title-detail-aspirasi").text("Tangguhkan aspirasi");
+            $("#detail-pengaduan").modal("show");
+            $(".modal-title-detail-pengaduan").text("Tangguhkan pengaduan");
             $("#konfirmasi-tangguhkan").show();
             $("#info-user").hide();
             $("#konfirmasi-tindak-lanjut").hide();
@@ -494,12 +494,12 @@
         const judul = $("#judul").val();
         const deskripsi = $("#deskripsi").val();
         const divisi = $("#divisi").val();
-        $("#aspirasi").modal("hide");
+        $("#pengaduan").modal("hide");
         setTimeout(async () => {
             const allDivisi = await getDivisi();
             const confirmDivisi = allDivisi.filter(div => div.nama == divisi);
-            $("#detail-aspirasi").modal("show");
-            $(".modal-title-detail-aspirasi").text("Proses aspirasi");
+            $("#detail-pengaduan").modal("show");
+            $(".modal-title-detail-pengaduan").text("Proses pengaduan");
             $("#info-user").hide();
             $("#konfirmasi-tangguhkan").hide();
             $("#konfirmasi-tindak-lanjut").show();
@@ -530,7 +530,7 @@
         const email = $("#kontak-divisi-email").text();
         const judul = $("#tindak-lanjut-judul").val();
         const deskripsi = $("#tindak-lanjut-deskripsi").val();
-        let subject = `POLIJE - aspirasi | ${id}`;
+        let subject = `POLIJE - pengaduan | ${id}`;
         let message = `Judul : ${judul} | Pesan : ${deskripsi}`;
         window.open(`mailto:${email}?subject=${StringToURI(subject)}&body=${message}`);
     }
@@ -541,16 +541,16 @@
         const notelp = $("#kontak-divisi-notelp").text();
         const judul = $("#tindak-lanjut-judul").val();
         const deskripsi = $("#tindak-lanjut-deskripsi").val();
-        let subject = `*POLIJE - aspirasi | ${id}*`;
+        let subject = `*POLIJE - pengaduan | ${id}*`;
         let message = `*Judul :* ${judul} | *Pesan :* ${deskripsi}`;
         window.open(`https://wa.me/${notelp}?text=${subject}, ${message}`);
     }
 
     // WHEN CLOSE DETAIL INFO
     function closeDetailInfo() {
-        $("#detail-aspirasi").modal("hide");
+        $("#detail-pengaduan").modal("hide");
         setTimeout(() => {
-            $("#aspirasi").modal("show");
+            $("#pengaduan").modal("show");
         }, 500);
     }
 

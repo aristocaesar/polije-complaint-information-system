@@ -35,21 +35,21 @@ class Admin extends Controller
             }
             if ($action == "proses") {
                 $this->view("admin/pengaduan/proses", $data = [
-                    "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Informasi Proses",
+                    "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Pengaduan Proses",
                     "layout_admin" => true,
                 ]);
                 return;
             }
             if ($action == "selesai") {
                 $this->view("admin/pengaduan/selesai", $data = [
-                    "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Informasi Selesai",
+                    "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Pengaduan Selesai",
                     "layout_admin" => true,
                 ]);
                 return;
             }
         }
         $this->view("admin/pengaduan/masuk", $data = [
-            "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Informasi Masuk",
+            "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Pengaduan Masuk",
             "layout_admin" => true,
         ]);
     }
