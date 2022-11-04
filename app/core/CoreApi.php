@@ -6,11 +6,21 @@ class CoreApi
     {
         header('Content-Type: application/json; charset=utf-8');
     }
-    protected function Response()
+
+    protected function model($model)
     {
-        function statusCode($code)
-        {
-            http_response_code($code);
-        }
+        // Get Model and Instance
+        require_once("app/models/" . $model . ".php");
+        return new $model;
+    }
+
+    public function Response($code, $status, $data)
+    {
+        http_response_code($code);
+        echo json_encode([
+            "code" => $code,
+            "status" => $status,
+            "data" => $data
+        ]);
     }
 }

@@ -119,8 +119,20 @@ class Admin extends Controller
     }
 
     // Kategori
-    public function kategori()
+    public function kategori($action = "")
     {
+        if (!empty($action)) {
+            if (isset($_POST)) {
+                if (isset($_POST["add"])) {
+                    $this->model("kategori_model")->save($_POST);
+                } else if (isset($_POST["update"])) {
+                    $this->model("kategori_model")->update($_POST, $_POST["update"]);
+                } else if (isset($_POST["delete"])) {
+                    $this->model("kategori_model")->delete($_POST["delete"]);
+                }
+                header("Location: " . BaseURL() . "/admin/kategori");
+            }
+        }
         $this->view("admin/kategori", $data = [
             "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Kategori",
             "layout_admin" => true,

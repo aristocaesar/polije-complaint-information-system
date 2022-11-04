@@ -14,12 +14,12 @@ class Database
     public function __construct()
     {
         try {
-            $dsn = "mysql:host=localhost;dbname=polije_complaint";
+            $dsn = "mysql:host=" . $this->db_host . ";dbname=" . $this->db_name;
             $options = [
                 PDO::ATTR_PERSISTENT => true,
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             ];
-            $this->dbh = new PDO($dsn, "aristocaesar", "aristo0407", $options);
+            $this->dbh = new PDO($dsn, $this->db_user, $this->db_pass, $options);
         } catch (PDOException $error) {
             die($error->getMessage());
         }
@@ -33,19 +33,18 @@ class Database
     public function bind($param, $value, $type = null)
     {
         if (is_null($type)) {
-            switch ($type) {
-                case is_int($type):
+            switch (true) {
+                case is_int($value):
                     $type = PDO::PARAM_INT;
                     break;
-                case is_bool($type):
+                case is_bool($value):
                     $type = PDO::PARAM_BOOL;
                     break;
-                case is_null($type):
+                case is_null($value):
                     $type = PDO::PARAM_NULL;
                     break;
                 default:
                     $type = PDO::PARAM_STR;
-                    break;
             }
         }
         $this->stmt->bindValue($param, $value, $type);
@@ -54,6 +53,11 @@ class Database
     public function execute()
     {
         $this->stmt->execute();
+    }
+
+    public function rowCount()
+    {
+        return $this->stmt->rowCount();
     }
 
     public function resultSet()
@@ -66,5 +70,10 @@ class Database
     {
         $this->execute();
         return $this->stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getError()
+    {
+        return $this->dbh->errorInfo()[1];
     }
 }
