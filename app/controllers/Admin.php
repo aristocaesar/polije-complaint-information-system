@@ -143,6 +143,18 @@ class Admin extends Controller
     // Divisi
     public function divisi($action = "")
     {
+        if (!empty($action)) {
+            if (isset($_POST)) {
+                if (isset($_POST["add"])) {
+                    $this->model("divisi_model")->save($_POST);
+                } else if (isset($_POST["update"])) {
+                    $this->model("divisi_model")->update($_POST, $_POST["update"]);
+                } else if (isset($_POST["delete"])) {
+                    $this->model("divisi_model")->delete($_POST["delete"]);
+                }
+                header("Location: " . BaseURL() . "/admin/divisi");
+            }
+        }
         $this->view("admin/divisi", $data = [
             "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Divisi",
             "layout_admin" => true
