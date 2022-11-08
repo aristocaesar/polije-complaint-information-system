@@ -144,7 +144,7 @@ class Admin extends Controller
     public function divisi($action = "")
     {
         if (!empty($action)) {
-            if (isset($_POST)) {
+            if (isset($_POST["submit"])) {
                 if (isset($_POST["add"])) {
                     $this->model("divisi_model")->save($_POST);
                 } else if (isset($_POST["update"])) {
@@ -164,19 +164,30 @@ class Admin extends Controller
     // Pengguna
     public function pengguna($action = "")
     {
-        if ($action != "") {
+        if (!empty($action)) {
+            if (isset($_POST["submit"])) {
+                if (isset($_POST["add"])) {
+                    $this->model("pengguna_model")->save($_POST);
+                } else if (isset($_POST["update"])) {
+                    $this->model("pengguna_model")->update($_POST, $_POST["update"]);
+                } else if (isset($_POST["delete"])) {
+                    $this->model("pengguna_model")->delete($_POST["delete"]);
+                }
+                header("Location: " . BaseURL() . "/admin/pengguna");
+            }
             if ($action == "verifikasi") {
                 $this->view("admin/pengguna/verifikasi", $data = [
                     "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Pengajuan Verifikasi",
                     "layout_admin" => true
                 ]);
+                return;
             }
-        } else {
-            $this->view("admin/pengguna/index", $data = [
-                "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Pengguna",
-                "layout_admin" => true
-            ]);
         }
+        $this->view("admin/pengguna/index", $data = [
+            "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Pengguna",
+            "layout_admin" => true,
+            "penggunas" => $this->model("pengguna_model")->getAll()
+        ]);
     }
 
     // Petugas

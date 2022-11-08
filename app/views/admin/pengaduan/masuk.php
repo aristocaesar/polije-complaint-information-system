@@ -202,7 +202,7 @@
                                     <div class="author-box">
                                         <div class="">
                                             <div class="author-box-left">
-                                                <img id="foto-user" class="rounded-circle" alt="foto" src="" height="150">
+                                                <img id="foto-user" class="rounded-circle" alt="foto" src="<?= BaseURL() ?>/public/upload/assets/images/USER-default.png" height="150">
                                             </div>
                                         </div>
                                     </div>

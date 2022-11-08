@@ -74,6 +74,6 @@ class Database
 
     public function getError()
     {
-        return $this->dbh->errorInfo()[1];
+        return $this->dbh->errorInfo();
     }
 }

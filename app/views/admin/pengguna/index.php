@@ -12,10 +12,15 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form class="mt-4" action="<?= BaseURL() ?>/admin/pengguna/save" method="POST">
+                <form class="mt-4 formAddUpdate" action="<?= BaseURL() ?>/admin/pengguna/save" method="POST">
                     <div class="modal-body">
                         <div class="row">
-                            <input id="id-pengguna" type="text" name="id" class="d-none">
+                            <div class="col-12" id="id">
+                                <div class="form-group">
+                                    <label for="id">ID</label>
+                                    <input id="id-pengguna" type="text" name="add" class="form-control" readonly>
+                                </div>
+                            </div>
                             <div class="col-12 col-lg-6">
                                 <div class="form-group">
                                     <label for="nama">Nama Lengkap</label>
@@ -25,25 +30,40 @@
                             <div class="col-12 col-lg-6">
                                 <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input type="email" class="form-control" name="email" id="email" placeholder="Ketikkan Email">
+                                    <input type="email" class="form-control" name="email" id="email" placeholder="Ketikkan Email" readonly>
+                                </div>
+                            </div>
+                            <div class="password col-12">
+                                <div class="row">
+                                    <div class="col-12 col-lg-6">
+                                        <div class="form-group">
+                                            <label for="password">Password</label>
+                                            <input type="text" class="form-control" name="password" id="password" placeholder="Ketikkan Password">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-lg-6">
+                                        <div class="form-group">
+                                            <label for="password2">Konfirmasi Password</label>
+                                            <input type="text" class="form-control" name="password2" id="password2" placeholder="Ketikkan Password">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-12 col-lg-6">
                                 <div class="form-group">
-                                    <label for="password">Password</label>
-                                    <input type="text" class="form-control" name="password" id="password" placeholder="Ketikkan Password">
+                                    <label for="tgl_lahir">Tanggal Lahir</label>
+                                    <input type="date" class="form-control" name="tgl_lahir" id="tgl_lahir" value="11-21-1999" />
                                 </div>
                             </div>
                             <div class="col-12 col-lg-6">
                                 <div class="form-group">
-                                    <label for="password2">Konfirmasi Password</label>
-                                    <input type="text" class="form-control" name="password2" id="password2" placeholder="Ketikkan Password">
-                                </div>
-                            </div>
-                            <div class="col-12 col-lg-6">
-                                <div class="form-group">
-                                    <label for="tanggal_lahir">Tanggal Lahir</label>
-                                    <input type="date" class="form-control" name="tanggal_lahir" id="tanggal_lahir" />
+                                    <label for="jenis_kelamin">Jenis Kelamin</label>
+                                    <div class="input-group">
+                                        <select class="form-control" id="jenis_kelamin" name="jenis_kelamin">
+                                            <option value="laki-laki">Laki - Laki</option>
+                                            <option value="perempuan">Perempuan</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-12 col-lg-6">
@@ -82,6 +102,18 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-12 col-md-6 foto-user mb-4">
+                                <div class="form-group">
+                                    <label for="status">Foto</label>
+                                    <div class="author-box">
+                                        <div class="">
+                                            <div class="author-box-left">
+                                                <img class="rounded-circle" id="image-user-info" alt="foto" src="" height="150">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="row" id="informasi-akun">
                             <div class="col-12 col-lg-6">
@@ -89,9 +121,10 @@
                                     <label for="verifikasi_keaslian">Verifikasi Keaslian</label>
                                     <div class="input-group">
                                         <select class="form-control" id="verifikasi_keaslian" disabled>
-                                            <option value="belum_verifikasi">Belum Terverifikasi</option>
-                                            <option value="sudah_verifikasi">Sudah Terverifikasi</option>
+                                            <option value="belum_terverifikasi">Belum Terverifikasi</option>
+                                            <option value="terverifikasi">Sudah Terverifikasi</option>
                                         </select>
+                                        <small id="btn-lihat-verifikasi"><button class="btn btn-link"><i>Lihat Selengkapnya</i></button></small>
                                     </div>
                                 </div>
                             </div>
@@ -118,35 +151,47 @@
                     <div class="modal-footer bg-whitesmoke">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                         <button type="button" class="btn btn-danger btn-hapus" onclick="konfirmasiDelete()">Hapus</button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="button" class="btn btn-warning btn-reset-password" onclick="konfirmasiReset()">Reset Password</button>
+                        <button type="submit" name="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <!-- Modal Hapus -->
-    <div class="modal fade" tabindex="-1" role="dialog" id="hapus_pengguna">
+    <!-- Modal Hapus & Reset Password -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="hapus_reset_pengguna">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Hapus Pengguna</h5>
+                    <h5 class="modal-title title-hapus-reset">Hapus Pengguna</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form class="mt-4" action="<?= BaseURL() ?>/admin/pengguna/delete" method="POST">
+                <form class="mt-4 formReset" action="<?= BaseURL() ?>/admin/pengguna/reset" method="POST">
                     <div class="modal-body">
-                        <input id="id-pengguna-hapus" type="text" name="id" class="d-none">
+                        <input id="id-pengguna-hapus-reset" type="text" name="id" class="d-none">
+                        <p>Setelah password direset, pengguna <span id="email-pengguna"></span> akan dikirimkan sebuah tautan untuk mengatur password yang baru</p>
+                    </div>
+                    <div class="modal-footer bg-whitesmoke">
+                        <button type="button" class="btn btn-secondary" onclick="pushBackToMainModal()">Batal</button>
+                        <button type="submit" class="btn btn-primary">Ya, Reset</button>
+                    </div>
+                </form>
+                <form class="mt-4 formHapus" action="<?= BaseURL() ?>/admin/pengguna/delete" method="POST">
+                    <div class="modal-body">
+                        <input id="id-pengguna-hapus-reset" type="text" name="id" class="d-none">
                         <p>Menghapus pengguna dapat menyebabkan perubahan data yang signifikan terhadap data laporan</p>
                     </div>
                     <div class="modal-footer bg-whitesmoke">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="button" class="btn btn-secondary" onclick="pushBackToMainModal()">Batal</button>
                         <button type="submit" class="btn btn-primary">Ya, Hapus</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+    <!-- Table -->
     <section class="section">
         <div class="section-header">
             <h1>Pengguna</h1>
@@ -174,15 +219,18 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                1
-                                            </td>
-                                            <td>Aristo Caesar Pratama</td>
-                                            <td>hi@aristoc.space</td>
-                                            <td>Mahasiswa</td>
-                                            <td><button type="button" id="5" class="btn btn-secondary" data-toggle="modal" data-target="#pengguna" onclick="Detail(this.id)">Detail</button></td>
-                                        </tr>
+                                        <?php $i = 1;
+                                        foreach ($data["penggunas"] as $pengguna) : ?>
+                                            <tr>
+                                                <td>
+                                                    <?= $i++; ?>
+                                                </td>
+                                                <td><?= $pengguna["nama"] ?></td>
+                                                <td><?= $pengguna["email"] ?></td>
+                                                <td><?= ucwords(str_replace("_", " / ", $pengguna["status"])) ?></td>
+                                                <td><button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#pengguna" onclick="Detail(`<?= $pengguna['id'] ?>`)">Detail</button></td>
+                                            </tr>
+                                        <?php endforeach; ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -196,27 +244,102 @@
 <script type="text/javascript">
     function Add() {
         // Modal Tambah
+        $("#id").hide();
         $("#id-pengguna").val("");
+        $("#id-pengguna").attr("name", "add");
         $(".modal-title")[0].textContent = "Tambah Pengguna";
-        $(".akses").hide();
+        $(".formAddUpdate").attr("action", `<?= BaseURL() ?>/admin/pengguna/save`);
+
+        $("#email").attr("readonly", false);
+        $(".password").show();
+        $(".akses").show();
+        $(".foto-user").hide();
         $("#informasi-akun").hide();
+
+        $(".btn-reset-password").hide();
         $(".btn-hapus").hide();
+
+        // set value
+        $("#id-pengguna").val("");
+        $("#nama").val("");
+        $("#email").val("");
+        $("#tgl_lahir").val("");
+        $("#jenis_kelamin").val("laki-laki");
+        $("#alamat").val("");
+        $("#kontak").val("");
+        $("#status").val();
+        $("#akses").val("aktif");
     }
 
-    function Detail(id) {
-        // Modal Update & Hapus
-        $("#id-pengguna").val(id);
+    async function Detail(id) {
+        // Modal Update & Konfirmasi Hapus
+        const pengguna = await fetch(`<?= BaseURL() ?>/api/pengguna/${id}`);
+        const response = await pengguna.json();
+        const result = response.data;
+
+        $("#id").show();
+        $("#id-pengguna").attr("name", "update");
         $(".modal-title")[0].textContent = "Edit Pengguna";
+        $(".formAddUpdate").attr("action", `<?= BaseURL() ?>/admin/pengguna/update`);
+
+        $("#email").attr("readonly", true);
+        $(".password").hide();
         $(".akses").show();
+        $(".foto-user").show();
         $("#informasi-akun").show();
+
+        if ($("#verifikasi_keaslian").val() == "belum_terverifikasi") {
+            $("#btn-lihat-verifikasi").hide();
+        } else {
+            $("#btn-lihat-verifikasi").show();
+        }
+
+        $(".btn-reset-password").show();
         $(".btn-hapus").show();
+
+        // set value
+        $("#id-pengguna").val(id);
+        $("#nama").val(result.nama);
+        $("#email").val(result.email);
+        $("#tgl_lahir").val(result.tgl_lahir);
+        $("#jenis_kelamin").val(result.jenis_kelamin);
+        $("#alamat").val(result.alamat);
+        $("#kontak").val(result.kontak);
+        $("#status").val(result.status);
+        $("#akses").val(result.akses);
+        $("#image-user-info").attr("src", `<?= BaseURL() ?>/public/upload/assets/images/${result.foto}`);
+        $("#verifikasi_keaslian").val(result.verifikasi_keaslian);
+        $("#aktifitas_terakhir").val(result.last_login);
+        $("#tanggal_terdaftar").val(result.created_at);
+        $("#tanggal_diperbarui").val(result.updated_at);
+    }
+
+    function konfirmasiReset() {
+        // Modal Konfirmasi Reset
+        $("#pengguna").modal('hide');
+        $("#hapus_reset_pengguna").modal('show');
+        $(".title-hapus-reset").text("Reset Password");
+        $(".formReset").show();
+        $(".formHapus").hide();
+        $("#id-pengguna-hapus-reset").val($("#email").val());
+        $("#email-pengguna").text($("#email").val());
     }
 
     function konfirmasiDelete() {
+        // Modal Konfirmasi Delete
         $("#pengguna").modal('hide');
-        $("#hapus_pengguna").modal('show');
-        $("#id-pengguna-hapus").val($("#id-pengguna").val());
+        $("#hapus_reset_pengguna").modal('show');
+        $(".title-hapus-reset").text("Hapus Pengguna");
+        $(".formReset").hide();
+        $(".formHapus").show();
+        $("#id-pengguna-hapus-reset").val($("#id-pengguna").val());
     }
+
+    function pushBackToMainModal() {
+        $("#hapus_reset_pengguna").modal('hide');
+        $("#pengguna").modal('show');
+    }
+    // init datatables
     $('.table').DataTable({
         language: {
             url: '<?= BaseURL(); ?>/public/vendor/datatables/indonesia.json'

@@ -27,7 +27,7 @@
                     <div class="modal-footer bg-whitesmoke">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                         <button type="button" class="btn btn-danger btn-hapus" onclick="konfirmasiDelete()">Hapus</button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="submit" name="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -50,7 +50,7 @@
                     </div>
                     <div class="modal-footer bg-whitesmoke">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Ya, Hapus</button>
+                        <button type="submit" name="submit" class="btn btn-primary">Ya, Hapus</button>
                     </div>
                 </form>
             </div>
