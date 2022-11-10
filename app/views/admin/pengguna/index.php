@@ -151,14 +151,13 @@
                     <div class="modal-footer bg-whitesmoke">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                         <button type="button" class="btn btn-danger btn-hapus" onclick="konfirmasiDelete()">Hapus</button>
-                        <button type="button" class="btn btn-warning btn-reset-password" onclick="konfirmasiReset()">Reset Password</button>
                         <button type="submit" name="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <!-- Modal Hapus & Reset Password -->
+    <!-- Modal Hapus -->
     <div class="modal fade" tabindex="-1" role="dialog" id="hapus_reset_pengguna">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -168,24 +167,14 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form class="mt-4 formReset" action="<?= BaseURL() ?>/admin/pengguna/reset" method="POST">
-                    <div class="modal-body">
-                        <input id="id-pengguna-hapus-reset" type="text" name="id" class="d-none">
-                        <p>Setelah password direset, pengguna <span id="email-pengguna"></span> akan dikirimkan sebuah tautan untuk mengatur password yang baru</p>
-                    </div>
-                    <div class="modal-footer bg-whitesmoke">
-                        <button type="button" class="btn btn-secondary" onclick="pushBackToMainModal()">Batal</button>
-                        <button type="submit" class="btn btn-primary">Ya, Reset</button>
-                    </div>
-                </form>
                 <form class="mt-4 formHapus" action="<?= BaseURL() ?>/admin/pengguna/delete" method="POST">
                     <div class="modal-body">
-                        <input id="id-pengguna-hapus-reset" type="text" name="id" class="d-none">
+                        <input id="id-pengguna-hapus" type="text" name="delete" class="d-none">
                         <p>Menghapus pengguna dapat menyebabkan perubahan data yang signifikan terhadap data laporan</p>
                     </div>
                     <div class="modal-footer bg-whitesmoke">
                         <button type="button" class="btn btn-secondary" onclick="pushBackToMainModal()">Batal</button>
-                        <button type="submit" class="btn btn-primary">Ya, Hapus</button>
+                        <button type="submit" name="submit" class="btn btn-primary">Ya, Hapus</button>
                     </div>
                 </form>
             </div>
@@ -314,30 +303,20 @@
         $("#tanggal_diperbarui").val(result.updated_at);
     }
 
-    function konfirmasiReset() {
-        // Modal Konfirmasi Reset
-        $("#pengguna").modal('hide');
-        $("#hapus_reset_pengguna").modal('show');
-        $(".title-hapus-reset").text("Reset Password");
-        $(".formReset").show();
-        $(".formHapus").hide();
-        $("#id-pengguna-hapus-reset").val($("#email").val());
-        $("#email-pengguna").text($("#email").val());
-    }
-
     function konfirmasiDelete() {
         // Modal Konfirmasi Delete
         $("#pengguna").modal('hide');
         $("#hapus_reset_pengguna").modal('show');
         $(".title-hapus-reset").text("Hapus Pengguna");
-        $(".formReset").hide();
-        $(".formHapus").show();
-        $("#id-pengguna-hapus-reset").val($("#id-pengguna").val());
+        $("#id-pengguna-hapus").val($("#id-pengguna").val());
+        console.log($("#id-pengguna-hapus").val());
     }
 
     function pushBackToMainModal() {
         $("#hapus_reset_pengguna").modal('hide');
-        $("#pengguna").modal('show');
+        setTimeout(() => {
+            $("#pengguna").modal('show');
+        }, 500);
     }
     // init datatables
     $('.table').DataTable({

@@ -164,30 +164,34 @@ class Admin extends Controller
     // Pengguna
     public function pengguna($action = "")
     {
-        if (!empty($action)) {
-            if (isset($_POST["submit"])) {
-                if (isset($_POST["add"])) {
-                    $this->model("pengguna_model")->save($_POST);
-                } else if (isset($_POST["update"])) {
-                    $this->model("pengguna_model")->update($_POST, $_POST["update"]);
-                } else if (isset($_POST["delete"])) {
-                    $this->model("pengguna_model")->delete($_POST["delete"]);
+        try {
+            if (!empty($action)) {
+                if (isset($_POST["submit"])) {
+                    if (isset($_POST["add"])) {
+                        $this->model("pengguna_model")->save($_POST);
+                    } else if ($action == "update") {
+                        $this->model("pengguna_model")->update($_POST, $_POST["update"]);
+                    } else if ($action == "delete") {
+                        $this->model("pengguna_model")->delete($_POST["delete"]);
+                    }
+                    header("Location: " . BaseURL() . "/admin/pengguna");
                 }
-                header("Location: " . BaseURL() . "/admin/pengguna");
+                if ($action == "verifikasi") {
+                    $this->view("admin/pengguna/verifikasi", $data = [
+                        "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Pengajuan Verifikasi",
+                        "layout_admin" => true
+                    ]);
+                    return;
+                }
             }
-            if ($action == "verifikasi") {
-                $this->view("admin/pengguna/verifikasi", $data = [
-                    "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Pengajuan Verifikasi",
-                    "layout_admin" => true
-                ]);
-                return;
-            }
+            $this->view("admin/pengguna/index", $data = [
+                "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Pengguna",
+                "layout_admin" => true,
+                "penggunas" => $this->model("pengguna_model")->getAll()
+            ]);
+        } catch (Exception $error) {
+            echo $error;
         }
-        $this->view("admin/pengguna/index", $data = [
-            "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Pengguna",
-            "layout_admin" => true,
-            "penggunas" => $this->model("pengguna_model")->getAll()
-        ]);
     }
 
     // Petugas

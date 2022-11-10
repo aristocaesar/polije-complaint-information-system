@@ -38,7 +38,7 @@ class Pengguna_Model
         // Current Time Stamp
         $date = date("Y-m-d H:i:s");
         // Save Data
-        $this->db->query('INSERT INTO ' . $this->table . ' (id, nama, email, password, tgl_lahir, alamat, kontak, status, akses, foto, created_at, updated_at) VALUES (:id, :nama, :email, :password, :tgl_lahir, :alamat, :kontak, :status, :akses, :foto, :created_at, :updated_at)');
+        $this->db->query('INSERT INTO ' . $this->table . ' (id, nama, email, password, tgl_lahir, jenis_kelamin, alamat, kontak, status, akses, foto, created_at, updated_at) VALUES (:id, :nama, :email, :password, :tgl_lahir, :jenis_kelamin, :alamat, :kontak, :status, :akses, :foto, :created_at, :updated_at)');
         // binding data
         $this->db->bind("id", $this->generateID($data["tgl_lahir"]));
         $this->db->bind("nama", ucwords($data["nama"]));
@@ -51,6 +51,7 @@ class Pengguna_Model
         $password = password_hash($data["password"], PASSWORD_DEFAULT);
         $this->db->bind("password", $password);
         $this->db->bind("tgl_lahir", $data["tgl_lahir"]);
+        $this->db->bind("jenis_kelamin", $data["jenis_kelamin"]);
         $this->db->bind("alamat", $data["alamat"]);
         $this->db->bind("kontak", $data["kontak"]);
         $this->db->bind("status", $data["status"]);
@@ -65,30 +66,38 @@ class Pengguna_Model
         return $data;
     }
 
-    public function update($data, $nama)
+    public function update($data, $id)
     {
-        // Cek Emtpy Data
-        if ((!isset($data["nama"]) || !isset($data["deskripsi"]) || empty($nama))) {
-            throw new Exception("Data yang dikirimkan tidak valid!");
-        }
-        // Current Time Stamp
-        $date = date("Y-m-d H:i:s");
-        $this->db->query('UPDATE ' . $this->table . ' SET nama=:nama, deskripsi=:deskripsi,  updated_at=:updated_at WHERE nama=:nama_pointer');
-        $this->db->bind("nama", ucfirst($data["nama"]));
-        $this->db->bind("deskripsi", ucfirst($data["deskripsi"]));
-        $this->db->bind("updated_at", $date);
-        $this->db->bind("nama_pointer", ucfirst($nama));
+        // Save Data
+        $this->db->query('UPDATE ' . $this->table . ' SET nama=:nama, tgl_lahir=:tgl_lahir, jenis_kelamin=:jenis_kelamin, alamat=:alamat, kontak=:kontak, status=:status, akses=:akses, updated_at=:updated_at WHERE id=:id');
+        // binding data
+        $this->db->bind("nama", ucwords($data["nama"]));
+        $this->db->bind("tgl_lahir", $data["tgl_lahir"]);
+        $this->db->bind("jenis_kelamin", $data["jenis_kelamin"]);
+        $this->db->bind("alamat", $data["alamat"]);
+        $this->db->bind("kontak", $data["kontak"]);
+        $this->db->bind("status", $data["status"]);
+        $this->db->bind("akses", $data["akses"]);
+        $this->db->bind("updated_at", date("Y-m-d H:i:s"));
+        $this->db->bind("id", $id);
         $this->db->execute();
-        return $this->get($data["nama"]);
+        if ($this->db->rowCount() == 0) {
+            throw new Exception("Terjadi Kesalahan! - Gagal memperbarui pengguna");
+        }
+        return $data;
     }
 
     public function resetPassword(string $email)
     {
-        # code...
+        var_dump($email);
+        die;
     }
 
     public function delete($id)
     {
+        if (empty($id)) {
+            throw new Exception("Terjadi Kesalahan!, Gagal menghapus pengguna.");
+        }
         $this->db->query('DELETE FROM ' . $this->table . ' WHERE id=:id');
         $this->db->bind("id", $id);
         $this->db->execute();
