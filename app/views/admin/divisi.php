@@ -99,6 +99,18 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <?php $i = 1;
+                                        foreach ($data["divisi"] as $divisi) : ?>
+                                            <tr>
+                                                <td>
+                                                    <?= $i++ ?>
+                                                </td>
+                                                <td><?= $divisi["nama"] ?></td>
+                                                <td><?= $divisi["deskripsi"] ?></td>
+                                                <td><?= $divisi["penanggung_jawab"] ?></td>
+                                                <td><button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#divisi" onclick="Detail(`<?= $divisi['nama'] ?>`)">Detail</button></td>
+                                            </tr>
+                                        <?php endforeach; ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -110,33 +122,6 @@
     </section>
 </div>
 <script type="text/javascript">
-    async function getDivisi() {
-        const divisies = await fetch("<?= BaseURL(); ?>/api/divisi/");
-        const response = await divisies.json();
-        let tableItems = [];
-        response.data.forEach((divisi, index) => {
-            tableItems.push(
-                `<tr>
-                    <td>
-                        ${index + 1}
-                    </td>
-                    <td>${divisi.nama}</td>
-                    <td>${divisi.deskripsi}</td>
-                    <td>${divisi.penanggung_jawab}</td>
-                    <td><button type="button" id="${divisi.nama}" class="btn btn-secondary" data-toggle="modal" data-target="#divisi" onclick="Detail(this.id)">Detail</button></td>
-                </tr>`);
-        });
-        const htmlData = tableItems.join("");
-        $("tbody").html(htmlData).promise().done(() => {
-            $('.table').DataTable({
-                language: {
-                    url: '<?= BaseURL(); ?>/public/vendor/datatables/indonesia.json'
-                }
-            });
-        });
-    }
-    getDivisi();
-
     function Add() {
         // Modal Tambah
         $("#id-divisi").attr("name", "add");
@@ -176,5 +161,11 @@
         $("#hapus_divisi").modal('show');
         $("#id-divisi-divisi").val($("#id-divisi").val());
     }
+
+    $('.table').DataTable({
+        language: {
+            url: '<?= BaseURL(); ?>/public/vendor/datatables/indonesia.json'
+        }
+    });
 </script>
 <?php getFooterDashboard(); ?>

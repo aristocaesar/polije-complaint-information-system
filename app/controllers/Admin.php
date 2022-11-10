@@ -140,28 +140,39 @@ class Admin extends Controller
         ]);
     }
 
-    // Divisi
+    // Divisi - DONE
     public function divisi($action = "")
     {
-        if (!empty($action)) {
-            if (isset($_POST["submit"])) {
-                if (isset($_POST["add"])) {
-                    $this->model("divisi_model")->save($_POST);
-                } else if (isset($_POST["update"])) {
-                    $this->model("divisi_model")->update($_POST, $_POST["update"]);
-                } else if (isset($_POST["delete"])) {
-                    $this->model("divisi_model")->delete($_POST["delete"]);
+        try {
+            if (!empty($action)) {
+                if (isset($_POST["submit"])) {
+                    if (isset($_POST["add"])) {
+                        $this->model("divisi_model")->save($_POST);
+                        Flasher::setMessage("Berhasil", "Berhasil menambahkan divisi", "success");
+                    } else if (isset($_POST["update"])) {
+                        $this->model("divisi_model")->update($_POST, $_POST["update"]);
+                        Flasher::setMessage("Berhasil", "Berhasil memperbarui divisi", "success");
+                    } else if (isset($_POST["delete"])) {
+                        $this->model("divisi_model")->delete($_POST["delete"]);
+                        Flasher::setMessage("Berhasil", "Berhasil menghapus divisi", "success");
+                    }
+                    header("Location: " . BaseURL() . "/admin/divisi");
+                    exit;
                 }
-                header("Location: " . BaseURL() . "/admin/divisi");
             }
+            $this->view("admin/divisi", $data = [
+                "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Divisi",
+                "layout_admin" => true,
+                "divisi" => $this->model("divisi_model")->getAll()
+            ]);
+        } catch (Exception $error) {
+            Flasher::setMessage("Terjadi Kesalahan!", $error->getMessage(), "error");
+            header("Location: " . BaseURL() . "/admin/divisi");
+            exit;
         }
-        $this->view("admin/divisi", $data = [
-            "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Divisi",
-            "layout_admin" => true
-        ]);
     }
 
-    // Pengguna
+    // Pengguna - DONE
     public function pengguna($action = "")
     {
         try {
