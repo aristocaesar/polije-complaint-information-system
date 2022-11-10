@@ -121,23 +121,33 @@ class Admin extends Controller
     // Kategori
     public function kategori($action = "")
     {
-        if (!empty($action)) {
-            if (isset($_POST)) {
-                if (isset($_POST["add"])) {
-                    $this->model("kategori_model")->save($_POST);
-                } else if (isset($_POST["update"])) {
-                    $this->model("kategori_model")->update($_POST, $_POST["update"]);
-                } else if (isset($_POST["delete"])) {
-                    $this->model("kategori_model")->delete($_POST["delete"]);
+        try {
+            if (!empty($action)) {
+                if (isset($_POST)) {
+                    if (isset($_POST["add"])) {
+                        $this->model("kategori_model")->save($_POST);
+                        Flasher::setMessage("Berhasil", "Berhasil menambahkan kategori", "success");
+                    } else if (isset($_POST["update"])) {
+                        $this->model("kategori_model")->update($_POST, $_POST["update"]);
+                        Flasher::setMessage("Berhasil", "Berhasil memperbarui kategori", "success");
+                    } else if (isset($_POST["delete"])) {
+                        $this->model("kategori_model")->delete($_POST["delete"]);
+                        Flasher::setMessage("Berhasil", "Berhasil menghapus kategori", "success");
+                    }
+                    header("Location: " . BaseURL() . "/admin/kategori");
+                    exit;
                 }
-                header("Location: " . BaseURL() . "/admin/kategori");
             }
+            $this->view("admin/kategori", $data = [
+                "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Kategori",
+                "layout_admin" => true,
+                "kategori" => $this->model("kategori_model")->getAll()
+            ]);
+        } catch (Exception $error) {
+            Flasher::setMessage("Terjadi Kesalahan!", $error->getMessage(), "error");
+            header("Location: " . BaseURL() . "/admin/kategori");
+            exit;
         }
-        $this->view("admin/kategori", $data = [
-            "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Kategori",
-            "layout_admin" => true,
-            "kategori" => $this->model("kategori_model")->getAll()
-        ]);
     }
 
     // Divisi - DONE
