@@ -45,7 +45,7 @@ class Pengguna_Model
         $this->db->bind("email", $data["email"]);
         // check same character
         if ($data["password"] != $data["password2"]) {
-            throw new Exception("Terjadi Kesalahan! - Password tidak sama!");
+            throw new Exception("Password tidak sama!");
         }
         // hash password
         $password = password_hash($data["password"], PASSWORD_DEFAULT);
@@ -61,7 +61,7 @@ class Pengguna_Model
         $this->db->bind("updated_at", $date);
         $this->db->execute();
         if ($this->db->rowCount() == 0) {
-            throw new Exception("Terjadi Kesalahan! - Gagal menambahkan pengguna");
+            throw new Exception("Gagal menambahkan pengguna");
         }
         return $data;
     }
@@ -82,7 +82,7 @@ class Pengguna_Model
         $this->db->bind("id", $id);
         $this->db->execute();
         if ($this->db->rowCount() == 0) {
-            throw new Exception("Terjadi Kesalahan! - Gagal memperbarui pengguna");
+            throw new Exception("Gagal memperbarui pengguna");
         }
         return $data;
     }
@@ -96,7 +96,7 @@ class Pengguna_Model
     public function delete($id)
     {
         if (empty($id)) {
-            throw new Exception("Terjadi Kesalahan!, Gagal menghapus pengguna.");
+            throw new Exception("Gagal menghapus pengguna.");
         }
         $this->db->query('DELETE FROM ' . $this->table . ' WHERE id=:id');
         $this->db->bind("id", $id);

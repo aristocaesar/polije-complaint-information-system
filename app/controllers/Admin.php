@@ -169,19 +169,23 @@ class Admin extends Controller
                 if (isset($_POST["submit"])) {
                     if (isset($_POST["add"])) {
                         $this->model("pengguna_model")->save($_POST);
+                        Flasher::setMessage("Berhasil", "Berhasil menambahkan pengguna", "success");
                     } else if ($action == "update") {
                         $this->model("pengguna_model")->update($_POST, $_POST["update"]);
+                        Flasher::setMessage("Berhasil", "Berhasil memperbarui pengguna", "success");
                     } else if ($action == "delete") {
                         $this->model("pengguna_model")->delete($_POST["delete"]);
+                        Flasher::setMessage("Berhasil", "Berhasil menghapus pengguna", "success");
                     }
                     header("Location: " . BaseURL() . "/admin/pengguna");
+                    exit;
                 }
                 if ($action == "verifikasi") {
                     $this->view("admin/pengguna/verifikasi", $data = [
                         "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Pengajuan Verifikasi",
                         "layout_admin" => true
                     ]);
-                    return;
+                    exit;
                 }
             }
             $this->view("admin/pengguna/index", $data = [
@@ -190,11 +194,13 @@ class Admin extends Controller
                 "penggunas" => $this->model("pengguna_model")->getAll()
             ]);
         } catch (Exception $error) {
-            echo $error;
+            Flasher::setMessage("Terjadi Kesalahan!", $error->getMessage(), "error");
+            header("Location: " . BaseURL() . "/admin/pengguna");
+            exit;
         }
     }
 
-    // Petugas
+    // Petugas - DONE
     public function petugas($action = "")
     {
         try {
