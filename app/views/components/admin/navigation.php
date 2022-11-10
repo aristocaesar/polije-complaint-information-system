@@ -16,9 +16,9 @@
                     <a href="<?= BaseURL() ?>/admin/profil" class="dropdown-item has-icon">
                         <i class="far fa-user"></i> Profil
                     </a>
-                    <a href="<?= BaseURL() ?>/admin/profil/aktifitas" class="dropdown-item has-icon">
+                    <!-- <a href="<?= BaseURL() ?>/admin/profil/aktifitas" class="dropdown-item has-icon">
                         <i class="fas fa-bolt"></i> Aktifitas
-                    </a>
+                    </a> -->
                     <a href="<?= BaseURL() ?>/admin/profil/pengaturan" class="dropdown-item has-icon">
                         <i class="fas fa-cog"></i> Pengaturan
                     </a>

@@ -71,14 +71,14 @@ class API extends CoreApi
         }
     }
 
-    public function pengguna($nama = "")
+    public function pengguna($id = "")
     {
         try {
             if ($_SERVER["REQUEST_METHOD"] == "GET") {
-                if ($nama == "") {
+                if ($id == "") {
                     $this->Response(200, "OK", $this->model("pengguna_model")->getAll());
                 } else {
-                    $this->Response(200, "OK", $this->model("pengguna_model")->get($nama));
+                    $this->Response(200, "OK", $this->model("pengguna_model")->get($id));
                 }
             } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if (isset($_POST["add"])) {
@@ -90,6 +90,36 @@ class API extends CoreApi
                 } else if (isset($_POST["delete"])) {
                     // DELETE
                     $this->Response(200, "OK", $this->model("pengguna_model")->delete($_POST["delete"]));
+                } else {
+                    throw new Exception("Error Method Request!");
+                }
+            }
+        } catch (Exception $error) {
+            $this->Response(400, "ERR", [
+                "message" => $error->getMessage()
+            ]);
+        }
+    }
+
+    public function petugas($id = "")
+    {
+        try {
+            if ($_SERVER["REQUEST_METHOD"] == "GET") {
+                if ($id == "") {
+                    $this->Response(200, "OK", $this->model("petugas_model")->getAll());
+                } else {
+                    $this->Response(200, "OK", $this->model("petugas_model")->get($id));
+                }
+            } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                if (isset($_POST["add"])) {
+                    // ADD
+                    $this->Response(201, "Created", $this->model("petugas_model")->save($_POST));
+                } else if (isset($_POST["update"])) {
+                    // UPDATE
+                    $this->Response(200, "OK", $this->model("petugas_model")->update($_POST, $_POST["update"]));
+                } else if (isset($_POST["delete"])) {
+                    // DELETE
+                    $this->Response(200, "OK", $this->model("petugas_model")->delete($_POST["delete"]));
                 } else {
                     throw new Exception("Error Method Request!");
                 }

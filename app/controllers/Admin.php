@@ -197,12 +197,33 @@ class Admin extends Controller
     // Petugas
     public function petugas($action = "")
     {
-        if ($action != "") {
-        } else {
+        try {
+            if (!empty($action)) {
+
+                if (isset($_POST["submit"])) {
+                    if (isset($_POST["add"])) {
+                        $this->model("petugas_model")->save($_POST, $_FILES);
+                        Flasher::setMessage("Berhasil", "Berhasil menambahkan petugas", "success");
+                    } else if ($action == "update") {
+                        $this->model("petugas_model")->update($_POST, $_FILES, $_POST["update"]);
+                        Flasher::setMessage("Berhasil", "Berhasil memperbarui petugas", "success");
+                    } else if ($action == "delete") {
+                        $this->model("petugas_model")->delete($_POST["delete"], $_POST["foto"]);
+                        Flasher::setMessage("Berhasil", "Berhasil menghapus petugas", "success");
+                    }
+                    header("Location: " . BaseURL() . "/admin/petugas");
+                    exit;
+                }
+            }
             $this->view("admin/petugas", $data = [
                 "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Petugas",
-                "layout_admin" => true
+                "layout_admin" => true,
+                "petugas" => $this->model("petugas_model")->getAll()
             ]);
+        } catch (Exception $error) {
+            Flasher::setMessage("Terjadi Kesalahan!", $error->getMessage(), "error");
+            header("Location: " . BaseURL() . "/admin/petugas");
+            exit;
         }
     }
 

@@ -309,7 +309,7 @@
         $("#hapus_reset_pengguna").modal('show');
         $(".title-hapus-reset").text("Hapus Pengguna");
         $("#id-pengguna-hapus").val($("#id-pengguna").val());
-        console.log($("#id-pengguna-hapus").val());
+
     }
 
     function pushBackToMainModal() {

@@ -42,7 +42,7 @@
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-users"></i><span>Pengguna</span></a>
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?= BaseURL() ?>/admin/pengguna">Master</a></li>
-                    <li><a class="nav-link" href="<?= BaseURL() ?>/admin/pengguna/verifikasi">Verifikasi</a></li>
+                    <!-- <li><a class="nav-link" href="<?= BaseURL() ?>/admin/pengguna/verifikasi">Verifikasi</a></li> -->
                 </ul>
             </li>
             <li><a class="nav-link" href="<?= BaseURL() ?>/admin/petugas"><i class="fas fa-user-nurse"></i> <span>Petugas</span></a></li>

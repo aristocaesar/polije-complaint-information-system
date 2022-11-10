@@ -8,6 +8,7 @@
 
 <!-- JS Libraies -->
 <script type="text/javascript" src="<?= BaseURL(); ?>/public/js/sweetalert2.all.min.js"></script>
+<?php if (isset($_SESSION)) Flasher::Flash() ?>
 
 <!-- Template JS File -->
 <script src="<?= BaseURL() ?>/public/js/stisla-script.js"></script>
