@@ -70,10 +70,11 @@ class Petugas_Model
         if ($files["foto"]["name"] == "") {
             $this->db->bind("foto", "USER-default.png");
         } else {
-            $exFile = end(explode(".", $files["foto"]["name"]));
+            $file = explode(".", $files["foto"]["name"]);
+            $extension = end($file);
             // Upload File ( 2MB 2097152 )
             UploadFile($files, $idPetugas, 2097152, ["image/jpeg", "image/jpg", "image/png"], "images");
-            $this->db->bind("foto", $idPetugas . "." . $exFile);
+            $this->db->bind("foto", $idPetugas . "." . $extension);
         }
 
         $this->db->bind("created_at", $date);
@@ -112,12 +113,12 @@ class Petugas_Model
         if ($files["foto"]["error"] == 4) {
             $this->db->bind("foto", $data["foto-lama"]);
         } else {
-            // hapus foto lama
-            RemoveFileUpload("/images/" . $data["foto-lama"]);
             $file = explode(".", $files["foto"]["name"]);
             $extension = end($file);
             // Upload File ( 2MB 2097152 )
             UploadFile($files, $id, 2097152, ["image/jpeg", "image/jpg", "image/png"], "images");
+            // hapus foto lama
+            RemoveFileUpload("/images/" . $data["foto-lama"]);
             $this->db->bind("foto", $id . "." . $extension);
         }
 
