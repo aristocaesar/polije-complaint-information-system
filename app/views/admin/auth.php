@@ -5,12 +5,12 @@
                 <img src="<?= BaseURL() ?>/public/images/logo-politeknik-negeri-jember.png" alt="logo" width="80" class="mb-5 mt-2">
                 <h4 class="text-dark font-weight-bold">Layanan Pengaduan dan Aspirasi Online Politeknik Negeri Jember</h4>
                 <p class="text-muted">Sebelum memulai, Anda harus login terlebih dahulu.</p>
-                <form method="POST" action="#" class="needs-validation" novalidate="">
+                <form method="POST" action="<?= BaseURL() ?>/admin/login" class="needs-validation" novalidate="">
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input id="email" type="email" class="form-control" name="email" tabindex="1" placeholder="Ketikkan Email" required autofocus>
                         <div class="invalid-feedback">
-                            Please fill in your email
+                            Ketikkan Email
                         </div>
                     </div>
                     <div class="form-group">
@@ -19,11 +19,11 @@
                         </div>
                         <input id="password" type="password" class="form-control" name="password" tabindex="2" placeholder="Ketikkan Password" required>
                         <div class="invalid-feedback">
-                            please fill in your password
+                            Ketikkan Password
                         </div>
                     </div>
                     <div class="form-group text-center">
-                        <button type="submit" class="btn btn-primary btn-lg w-100" tabindex="4">
+                        <button type="submit" name="submit" class="btn btn-primary btn-lg w-100" tabindex="4">
                             Login
                         </button>
                     </div>

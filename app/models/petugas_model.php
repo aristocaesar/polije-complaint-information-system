@@ -22,6 +22,13 @@ class Petugas_Model
         return $this->db->resultSet();
     }
 
+    public function getByEmail($email)
+    {
+        $this->db->query('SELECT * FROM ' . $this->table . " WHERE email=:email");
+        $this->db->bind("email", $email);
+        return $this->db->single();
+    }
+
     public function get($id)
     {
         $this->db->query("SELECT * FROM " . $this->table . " WHERE id=:id");
@@ -107,10 +114,11 @@ class Petugas_Model
         } else {
             // hapus foto lama
             RemoveFileUpload("/images/" . $data["foto-lama"]);
-            $exFile = end(explode(".", $files["foto"]["name"]));
+            $file = explode(".", $files["foto"]["name"]);
+            $extension = end($file);
             // Upload File ( 2MB 2097152 )
             UploadFile($files, $id, 2097152, ["image/jpeg", "image/jpg", "image/png"], "images");
-            $this->db->bind("foto", $id . "." . $exFile);
+            $this->db->bind("foto", $id . "." . $extension);
         }
 
         $this->db->bind("updated_at", $date);
@@ -139,5 +147,36 @@ class Petugas_Model
         $this->db->bind("id", $id);
         $this->db->execute();
         return [];
+    }
+
+    public function updateLastLogin($id)
+    {
+        // Current Time Stamp
+        $date = date("Y-m-d H:i:s");
+        // Save Data
+        $this->db->query('UPDATE ' . $this->table . ' SET last_login=:date WHERE id=:id_pointer');
+        // binding data
+        $this->db->bind("date", $date);
+        $this->db->bind("id_pointer", $id);
+        $this->db->execute();
+    }
+
+    public function login($data)
+    {
+        $petugas = $this->getByEmail($data["email"]);
+        if ($petugas) {
+            if (password_verify($data["password"], $petugas["password"])) {
+                if ($petugas["akses"] == "aktif") {
+                    $this->updateLastLogin($petugas["id"]);
+                    return $petugas;
+                } else {
+                    throw new Exception("Akun sedang ditangguhkan!");
+                }
+            } else {
+                throw new Exception("Email atau Password salah!");
+            }
+        } else {
+            throw new Exception("Email atau Password salah!");
+        }
     }
 }

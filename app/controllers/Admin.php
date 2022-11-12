@@ -5,12 +5,28 @@ class Admin extends Controller
 {
     public $title = "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember";
     // Login
-    public function index()
+    public function index($action = "")
     {
-        $this->view("admin/auth", $data = [
-            "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Login",
-            "layout_admin" => true
-        ]);
+        try {
+            if (!empty($action)) {
+                if ($action == "login") {
+                    if (isset($_POST["submit"])) {
+                        if ($this->model("petugas_model")->login($_POST)) {
+                            Flasher::setMessage("Selamat Datang!", "Anda berhasil login dengan akun", "success");
+                            header("Location: " . BaseURL() . "/admin/dashboard");
+                        }
+                    }
+                }
+            }
+            $this->view("admin/auth", $data = [
+                "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Login",
+                "layout_admin" => true
+            ]);
+        } catch (Exception $error) {
+            Flasher::setMessage("Terjadi Kesalahan!", $error->getMessage(), "error");
+            header("Location: " . BaseURL() . "/admin");
+            exit;
+        }
     }
 
     // Dasboard
