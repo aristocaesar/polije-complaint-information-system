@@ -169,6 +169,11 @@ class Petugas_Model
             if (password_verify($data["password"], $petugas["password"])) {
                 if ($petugas["akses"] == "aktif") {
                     $this->updateLastLogin($petugas["id"]);
+                    setSession("admin", [
+                        "id" => $petugas["id"],
+                        "nama" => $petugas["nama"],
+                        "foto" => $petugas["foto"],
+                    ]);
                     return $petugas;
                 } else {
                     throw new Exception("Akun sedang ditangguhkan!");

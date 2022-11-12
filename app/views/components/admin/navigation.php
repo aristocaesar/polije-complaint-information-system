@@ -9,16 +9,13 @@
         <ul class="navbar-nav navbar-right">
 
             <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                    <img alt="image" src="https://media-exp1.licdn.com/dms/image/C5603AQED8L0BQbsIdw/profile-displayphoto-shrink_200_200/0/1654088905112?e=2147483647&v=beta&t=l683DweslHzwVt376iZoViKr9i9uG0GzhcDREE6eAHg" class="rounded-circle mr-1">
-                    <div class="d-sm-none d-lg-inline-block">Hallo, Aristo Caesar Pratama</div>
+                    <img alt="image" src="<?= BaseURL(); ?>/public/upload/assets/images/<?= $_SESSION["admin"]["foto"] ?>" class="rounded-circle mr-1">
+                    <div class="d-sm-none d-lg-inline-block">Hallo, <?= $_SESSION["admin"]["nama"] ?></div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <a href="<?= BaseURL() ?>/admin/profil" class="dropdown-item has-icon">
                         <i class="far fa-user"></i> Profil
                     </a>
-                    <!-- <a href="<?= BaseURL() ?>/admin/profil/aktifitas" class="dropdown-item has-icon">
-                        <i class="fas fa-bolt"></i> Aktifitas
-                    </a> -->
                     <a href="<?= BaseURL() ?>/admin/profil/pengaturan" class="dropdown-item has-icon">
                         <i class="fas fa-cog"></i> Pengaturan
                     </a>

@@ -4,9 +4,11 @@ require_once "app/core/Controller.php";
 class Admin extends Controller
 {
     public $title = "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember";
+
     // Login
     public function index($action = "")
     {
+        AdminIsActive();
         try {
             if (!empty($action)) {
                 if ($action == "login") {
@@ -32,6 +34,7 @@ class Admin extends Controller
     // Dasboard
     public function dashboard()
     {
+        AdminIsTrue();
         $this->view("admin/dashboard", $data = [
             "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Dashboard",
             "layout_admin" => true
@@ -41,6 +44,7 @@ class Admin extends Controller
     // Pengaduan
     public function pengaduan($action = "")
     {
+        AdminIsTrue();
         if ($action != "") {
             if (isset($_POST)) {
                 if ($action == "toproses") {
@@ -73,6 +77,7 @@ class Admin extends Controller
     // Informasi
     public function informasi($action = "")
     {
+        AdminIsTrue();
         if ($action != "") {
             if (isset($_POST)) {
                 if ($action == "toproses") {
@@ -105,6 +110,7 @@ class Admin extends Controller
     // Aspirasi
     public function aspirasi($action = "")
     {
+        AdminIsTrue();
         if ($action != "") {
             if (isset($_POST)) {
                 if ($action == "toproses") {
@@ -137,6 +143,7 @@ class Admin extends Controller
     // Kategori
     public function kategori($action = "")
     {
+        AdminIsTrue();
         try {
             if (!empty($action)) {
                 if (isset($_POST)) {
@@ -169,6 +176,7 @@ class Admin extends Controller
     // Divisi - DONE
     public function divisi($action = "")
     {
+        AdminIsTrue();
         try {
             if (!empty($action)) {
                 if (isset($_POST["submit"])) {
@@ -201,6 +209,7 @@ class Admin extends Controller
     // Pengguna - DONE
     public function pengguna($action = "")
     {
+        AdminIsTrue();
         try {
             if (!empty($action)) {
                 if (isset($_POST["submit"])) {
@@ -240,6 +249,7 @@ class Admin extends Controller
     // Petugas - DONE
     public function petugas($action = "")
     {
+        AdminIsTrue();
         try {
             if (!empty($action)) {
 
@@ -273,12 +283,8 @@ class Admin extends Controller
     // Profile
     public function profil($action = "")
     {
-        if ($action == "aktifitas") {
-            $this->view("admin/profil/aktifitas", $data = [
-                "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Aktifitas",
-                "layout_admin" => true
-            ]);
-        } else if ($action == "pengaturan") {
+        AdminIsTrue();
+        if ($action == "pengaturan") {
             $this->view("admin/profil/pengaturan", $data = [
                 "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Aktifitas",
                 "layout_admin" => true
@@ -294,9 +300,7 @@ class Admin extends Controller
     // Logout
     public function logout()
     {
-        $this->view("admin/auth", $data = [
-            "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Dashboard",
-            "layout_admin" => true
-        ]);
+        session_destroy();
+        header("Location: " . BaseURL() . "/admin");
     }
 }
