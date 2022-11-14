@@ -42,12 +42,14 @@ class Petugas_Model
 
     public function save($data = [], $files = null)
     {
+        // set idverifikasi
+        $idVerifikasi = $this->generateVerifikasi($data["email"]);
         // id
         $idPetugas = $this->generateID($data["tgl_lahir"]);
         // Current Time Stamp
         $date = date("Y-m-d H:i:s");
         // Save Data
-        $this->db->query('INSERT INTO ' . $this->table . ' (id, nama, email, password, tgl_lahir, jenis_kelamin, alamat, kontak, status, akses, foto, created_at, updated_at) VALUES (:id, :nama, :email, :password, :tgl_lahir, :jenis_kelamin, :alamat, :kontak, :status, :akses, :foto, :created_at, :updated_at)');
+        $this->db->query('INSERT INTO ' . $this->table . ' (id, nama, email, password, tgl_lahir, jenis_kelamin, alamat, kontak, status, akses, foto, verifikasi_email, created_at, updated_at) VALUES (:id, :nama, :email, :password, :tgl_lahir, :jenis_kelamin, :alamat, :kontak, :status, :akses, :foto, :verifikasi_email, :created_at, :updated_at)');
         // binding data
         $this->db->bind("id", $idPetugas);
         $this->db->bind("nama", ucwords($data["nama"]));
@@ -76,7 +78,11 @@ class Petugas_Model
             UploadFile($files, $idPetugas, 2097152, ["image/jpeg", "image/jpg", "image/png"], "images");
             $this->db->bind("foto", $idPetugas . "." . $extension);
         }
-
+        // Send Mail
+        if (!PHPmail($data["email"], "E-LAPOR | VERIFIKASI EMAIL", PHPmailVerifikasi($data["nama"], BaseURL() . "/admin/verifikasi/" . $idVerifikasi))) {
+            throw new Exception("Gagal melakukan pengiriman tautan verifikasi!");
+        }
+        $this->db->bind("verifikasi_email", "belum_terverifikasi");
         $this->db->bind("created_at", $date);
         $this->db->bind("updated_at", $date);
         $this->db->execute();
@@ -131,12 +137,6 @@ class Petugas_Model
         return $data;
     }
 
-    public function resetPassword(string $email)
-    {
-        var_dump($email);
-        die;
-    }
-
     public function delete($id, $foto)
     {
         if (empty($id)) {
@@ -148,6 +148,60 @@ class Petugas_Model
         $this->db->bind("id", $id);
         $this->db->execute();
         return [];
+    }
+
+    public function generateVerifikasi($email = "", $time = 5)
+    {
+        if (!empty($email)) {
+            $date = date("Y-m-d H:i:s");
+            $idVerifikasi = md5($email);
+            $times = 60 * $time;
+            $limit = time() + $times;
+            $this->db->query("INSERT INTO users_verifikasi (email, verifikasi, time_limit, created_at, updated_at) VALUES (:email, :verifikasi, :time_limit, :created_at, :updated_at)");
+            $this->db->bind("email", $email);
+            $this->db->bind("verifikasi", "" . $idVerifikasi);
+            $this->db->bind("time_limit", $limit);
+            $this->db->bind("created_at", $date);
+            $this->db->bind("updated_at", $date);
+            $this->db->execute();
+            return $idVerifikasi;
+        } else {
+            throw new Exception("Gagal melakukan pengiriman tautan verifikasi!");
+        }
+    }
+
+    public function acceptVerifikasi($id)
+    {
+        $this->db->query('SELECT * FROM users_verifikasi WHERE verifikasi=:id');
+        $this->db->bind("id", $id);
+        $verifikasi = $this->db->single();
+        if ($verifikasi["time_limit"] >= time()) {
+            // update users
+            $this->updateToVerified($verifikasi["email"]);
+            // // hapus data verifikasi
+            $this->removeDataVerifikasi($verifikasi["email"]);
+            return true;
+        } else {
+            throw new Exception("Tautan sudah kadaluarsa!");
+        }
+    }
+
+    public function updateToVerified($email)
+    {
+        if (!empty($email)) {
+            $this->db->query("UPDATE petugas SET verifikasi_email=:verifikasi, updated_at=:updated_at WHERE email=:email");
+            $this->db->bind("verifikasi", "terverifikasi");
+            $this->db->bind("updated_at", date("Y-m-d H:i:s"));
+            $this->db->bind("email", $email);
+            $this->db->execute();
+        }
+    }
+
+    public function removeDataVerifikasi($email)
+    {
+        $this->db->query("DELETE FROM users_verifikasi WHERE email=:email");
+        $this->db->bind("email", $email);
+        $this->db->execute();
     }
 
     public function updateOnProfile($data, $file)
@@ -215,17 +269,21 @@ class Petugas_Model
         $petugas = $this->getByEmail($data["email"]);
         if ($petugas) {
             if (password_verify($data["password"], $petugas["password"])) {
-                if ($petugas["akses"] == "aktif") {
-                    $this->updateLastLogin($petugas["id"]);
-                    setSession("admin", [
-                        "id" => $petugas["id"],
-                        "nama" => $petugas["nama"],
-                        "status" => $petugas["status"],
-                        "foto" => $petugas["foto"],
-                    ]);
-                    return $petugas;
+                if ($petugas["verifikasi_email"] == "terverifikasi") {
+                    if ($petugas["akses"] == "aktif") {
+                        $this->updateLastLogin($petugas["id"]);
+                        setSession("admin", [
+                            "id" => $petugas["id"],
+                            "nama" => $petugas["nama"],
+                            "status" => $petugas["status"],
+                            "foto" => $petugas["foto"],
+                        ]);
+                        return $petugas;
+                    } else {
+                        throw new Exception("Akun sedang ditangguhkan!");
+                    }
                 } else {
-                    throw new Exception("Akun sedang ditangguhkan!");
+                    throw new Exception("Akun belum terverifikasi, harap cek pesan pada email!");
                 }
             } else {
                 throw new Exception("Email atau Password salah!");

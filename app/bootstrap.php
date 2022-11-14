@@ -3,6 +3,9 @@
 // Init Session
 if (!session_id()) session_start();
 
+//Load Composer's autoloader
+require 'vendor/autoload.php';
+
 // APP
 require_once("core/App.php");
 // DATABASE

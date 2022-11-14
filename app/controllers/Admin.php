@@ -252,7 +252,6 @@ class Admin extends Controller
         AdminIsTrue();
         try {
             if (!empty($action)) {
-
                 if (isset($_POST["submit"])) {
                     if (isset($_POST["add"])) {
                         $this->model("petugas_model")->save($_POST, $_FILES);
@@ -264,9 +263,9 @@ class Admin extends Controller
                         $this->model("petugas_model")->delete($_POST["delete"], $_POST["foto"]);
                         Flasher::setMessage("Berhasil", "Berhasil menghapus petugas", "success");
                     }
-                    header("Location: " . BaseURL() . "/admin/petugas");
-                    exit;
                 }
+                header("Location: " . BaseURL() . "/admin/petugas");
+                exit;
             }
             $this->view("admin/petugas", $data = [
                 "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Petugas",
@@ -276,6 +275,21 @@ class Admin extends Controller
         } catch (Exception $error) {
             Flasher::setMessage("Terjadi Kesalahan!", $error->getMessage(), "error");
             header("Location: " . BaseURL() . "/admin/petugas");
+            exit;
+        }
+    }
+
+    public function verifikasi($idVerifikasi)
+    {
+        try {
+            if (!isset($_SESSION["admin"]["id"])) {
+                $this->model("petugas_model")->acceptVerifikasi($idVerifikasi);
+                Flasher::setMessage("Berhasil", "Berhasil verifikasi email, silakan login!", "success");
+            }
+            header("Location: " . BaseURL() . "/admin");
+        } catch (Exception $error) {
+            Flasher::setMessage("Terjadi Kesalahan!", $error->getMessage(), "error");
+            header("Location: " . BaseURL() . "/admin");
             exit;
         }
     }
