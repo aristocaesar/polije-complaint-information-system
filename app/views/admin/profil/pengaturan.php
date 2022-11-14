@@ -42,10 +42,11 @@
                 </form>
             </div>
             <div class="form-password">
-                <form action="" method="post">
+                <form action="<?= BaseURL() ?>/admin/profil/gantipassword" method="post">
                     <div class="modal-body">
+                        <input type="text" name="id" class="d-none" value="<?= $_SESSION["admin"]["id"] ?>">
                         <div class="form-group">
-                            <label>Email</label>
+                            <label>Password</label>
                             <input type="text" name="password" class="form-control" placeholder="Ketikkan Password" required="">
                             <div class="invalid-feedback">
                                 Harap Ketikkan Password
@@ -61,7 +62,7 @@
                     </div>
                     <div class="modal-footer bg-whitesmoke">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                        <button type="submit" name="submit" class="btn btn-primary">Simpan Perubahan</button>
                     </div>
                 </form>
             </div>

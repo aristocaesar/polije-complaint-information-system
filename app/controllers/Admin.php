@@ -284,16 +284,42 @@ class Admin extends Controller
     public function profil($action = "")
     {
         AdminIsTrue();
-        if ($action == "pengaturan") {
-            $this->view("admin/profil/pengaturan", $data = [
-                "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Aktifitas",
-                "layout_admin" => true
-            ]);
-        } else {
+        try {
+            if (!empty($action)) {
+                if (isset($_POST["submit"])) {
+                    if ($action == "update") {
+                        $this->model("petugas_model")->updateOnProfile($_POST, $_FILES);
+                        Flasher::setMessage("Berhasil", "Berhasil memperbarui profil", "success");
+                        header("Location: " . BaseURL() . "/admin/profil");
+                        exit;
+                    } else if ($action == "gantipassword") {
+                        $this->model("petugas_model")->updatePassword($_POST);
+                        Flasher::setMessage("Berhasil", "Berhasil memperbarui password", "success", "/admin/profil/pengaturan");
+                        header("Location: " . BaseURL() . "/admin/profil/pengaturan");
+                        exit;
+                    }
+                }
+                if ($action == "pengaturan") {
+                    $this->view("admin/profil/pengaturan", $data = [
+                        "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Aktifitas",
+                        "layout_admin" => true
+                    ]);
+                    exit;
+                }
+            }
             $this->view("admin/profil/index", $data = [
                 "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Profile",
-                "layout_admin" => true
+                "layout_admin" => true,
+                "profile" => $this->model("petugas_model")->get($_SESSION["admin"]["id"])
             ]);
+        } catch (Exception $error) {
+            Flasher::setMessage("Terjadi Kesalahan!", $error->getMessage(), "error");
+            if (!empty($_SESSION["admin"]["redirect"])) {
+                header("Location: " . BaseURL() . $_SESSION["admin"]["redirect"]);
+            } else {
+                header("Location: " . BaseURL() . "/admin/profil");
+            }
+            exit;
         }
     }
 

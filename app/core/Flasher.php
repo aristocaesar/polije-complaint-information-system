@@ -3,12 +3,13 @@
 class Flasher
 {
 
-    public static function setMessage($title, $message, $action)
+    public static function setMessage($title = "", $message = "", $action = "", $redirect = "")
     {
         $_SESSION["flash"] = [
             "title" => $title,
             "message" => $message,
-            "action" => $action
+            "action" => $action,
+            "redirect" => $redirect
         ];
     }
 

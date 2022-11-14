@@ -208,15 +208,17 @@
                                     <tbody>
                                         <?php $i = 1;
                                         foreach ($data["petugas"] as $petugas) : ?>
-                                            <tr>
-                                                <td>
-                                                    <?= $i++; ?>
-                                                </td>
-                                                <td><?= $petugas["nama"] ?></td>
-                                                <td><?= $petugas["email"] ?></td>
-                                                <td><?= ucfirst($petugas["status"]) ?></td>
-                                                <td><button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#petugas" onclick="Detail(`<?= $petugas['id'] ?>`)">Detail</button></td>
-                                            </tr>
+                                            <?php if ($petugas["id"] != $_SESSION["admin"]["id"]) : ?>
+                                                <tr>
+                                                    <td>
+                                                        <?= $i++; ?>
+                                                    </td>
+                                                    <td><?= $petugas["nama"] ?></td>
+                                                    <td><?= $petugas["email"] ?></td>
+                                                    <td><?= ucfirst($petugas["status"]) ?></td>
+                                                    <td><button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#petugas" onclick="Detail(`<?= $petugas['id'] ?>`)">Detail</button></td>
+                                                </tr>
+                                            <?php endif; ?>
                                         <?php endforeach; ?>
                                     </tbody>
                                 </table>

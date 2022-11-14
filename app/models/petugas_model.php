@@ -150,6 +150,54 @@ class Petugas_Model
         return [];
     }
 
+    public function updateOnProfile($data, $file)
+    {
+        // Current Time Stamp
+        $date = date("Y-m-d H:i:s");
+        // Save Data
+        $this->db->query('UPDATE ' . $this->table . ' SET nama=:nama, tgl_lahir=:tgl_lahir, jenis_kelamin=:jenis_kelamin, alamat=:alamat, kontak=:kontak, foto=:foto, updated_at=:updated_at WHERE id=:id_pointer');
+
+        $this->db->bind("nama", ucwords($data["nama"]));
+        $this->db->bind("tgl_lahir", $data["tgl_lahir"]);
+        $this->db->bind("jenis_kelamin", $data["jenis_kelamin"]);
+        $this->db->bind("alamat", $data["alamat"]);
+        $this->db->bind("kontak", $data["kontak"]);
+
+        if ($file["foto"]["error"] == 4) {
+            $this->db->bind("foto", $data["foto_lama"]);
+        } else {
+            $fileName = explode(".", $file["foto"]["name"]);
+            $extension = end($fileName);
+            // Upload File ( 2MB 2097152 )
+            UploadFile($file, $data["update"], 2097152, ["image/jpeg", "image/jpg", "image/png"], "images");
+            // hapus foto lama
+            RemoveFileUpload("/images/" . $data["foto_lama"]);
+            $this->db->bind("foto", $data["update"] . "." . $extension);
+            $_SESSION["admin"]["foto"] = $data["update"] . "." . $extension;
+        }
+        $this->db->bind("updated_at", $date);
+        $this->db->bind("id_pointer", $data["update"]);
+        $this->db->execute();
+        return $data;
+    }
+
+    public function updatePassword($data)
+    {
+        if (!empty($data)) {
+            if ($data["password"] == $data["password2"]) {
+                // Save Data
+                $this->db->query('UPDATE ' . $this->table . ' SET password=:password, updated_at=:updated_at WHERE id=:id_pointer');
+                $this->db->bind("password", password_hash($data["password"], PASSWORD_DEFAULT));
+                $this->db->bind("updated_at", date("Y-m-d H:i:s"));
+                $this->db->bind("id_pointer", $data["id"]);
+                $this->db->execute();
+                return true;
+            } else {
+                throw new Exception("Password tidak sama!");
+            }
+        }
+    }
+
     public function updateLastLogin($id)
     {
         // Current Time Stamp
@@ -172,6 +220,7 @@ class Petugas_Model
                     setSession("admin", [
                         "id" => $petugas["id"],
                         "nama" => $petugas["nama"],
+                        "status" => $petugas["status"],
                         "foto" => $petugas["foto"],
                     ]);
                     return $petugas;
