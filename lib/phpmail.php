@@ -107,7 +107,7 @@ function PHPmailVerifikasi($nama = "", $link = "")
                             font-size: 16px;
                         "
                         >
-                        Hi, <span id="name">' . $nama . '</span>
+                        Hi, <span id="name">' . ucwords($nama) . '</span>
                         </td>
                     </tr>
                     <tr>

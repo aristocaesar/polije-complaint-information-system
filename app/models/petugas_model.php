@@ -42,8 +42,6 @@ class Petugas_Model
 
     public function save($data = [], $files = null)
     {
-        // set idverifikasi
-        $idVerifikasi = $this->generateVerifikasi($data["email"]);
         // id
         $idPetugas = $this->generateID($data["tgl_lahir"]);
         // Current Time Stamp
@@ -78,16 +76,18 @@ class Petugas_Model
             UploadFile($files, $idPetugas, 2097152, ["image/jpeg", "image/jpg", "image/png"], "images");
             $this->db->bind("foto", $idPetugas . "." . $extension);
         }
-        // Send Mail
-        if (!PHPmail($data["email"], "E-LAPOR | VERIFIKASI EMAIL", PHPmailVerifikasi($data["nama"], BaseURL() . "/admin/verifikasi/" . $idVerifikasi))) {
-            throw new Exception("Gagal melakukan pengiriman tautan verifikasi!");
-        }
         $this->db->bind("verifikasi_email", "belum_terverifikasi");
         $this->db->bind("created_at", $date);
         $this->db->bind("updated_at", $date);
         $this->db->execute();
         if ($this->db->rowCount() == 0) {
             throw new Exception("Gagal menambahkan pengguna");
+        }
+        // set idverifikasi
+        $idVerifikasi = $this->generateVerifikasi($data["email"]);
+        // Send Mail
+        if (!PHPmail($data["email"], "E-LAPOR | VERIFIKASI EMAIL", PHPmailVerifikasi($data["nama"], BaseURL() . "/admin/verifikasi/" . $idVerifikasi))) {
+            throw new Exception("Gagal melakukan pengiriman tautan verifikasi!");
         }
         return $data;
     }
@@ -150,20 +150,29 @@ class Petugas_Model
         return [];
     }
 
-    public function generateVerifikasi($email = "", $time = 5)
+    public function generateVerifikasi($email = "", $time = 5, $action = "create")
     {
         if (!empty($email)) {
             $date = date("Y-m-d H:i:s");
-            $idVerifikasi = md5($email);
+            $idVerifikasi = substr(md5(openssl_random_pseudo_bytes(20)), -32);
             $times = 60 * $time;
             $limit = time() + $times;
-            $this->db->query("INSERT INTO users_verifikasi (email, verifikasi, time_limit, created_at, updated_at) VALUES (:email, :verifikasi, :time_limit, :created_at, :updated_at)");
-            $this->db->bind("email", $email);
-            $this->db->bind("verifikasi", "" . $idVerifikasi);
-            $this->db->bind("time_limit", $limit);
-            $this->db->bind("created_at", $date);
-            $this->db->bind("updated_at", $date);
-            $this->db->execute();
+            if ($action == "create") {
+                $this->db->query("INSERT INTO users_verifikasi (email, verifikasi, time_limit, created_at, updated_at) VALUES (:email, :verifikasi, :time_limit, :created_at, :updated_at)");
+                $this->db->bind("email", $email);
+                $this->db->bind("verifikasi", $idVerifikasi);
+                $this->db->bind("time_limit", $limit);
+                $this->db->bind("created_at", $date);
+                $this->db->bind("updated_at", $date);
+                $this->db->execute();
+            } else if ($action == "update") {
+                $this->db->query("UPDATE users_verifikasi SET verifikasi=:verifikasi, time_limit=:time_limit, updated_at=:updated_at WHERE email=:email");
+                $this->db->bind("verifikasi", $idVerifikasi);
+                $this->db->bind("time_limit", $limit);
+                $this->db->bind("updated_at", $date);
+                $this->db->bind("email", $email);
+                $this->db->execute();
+            }
             return $idVerifikasi;
         } else {
             throw new Exception("Gagal melakukan pengiriman tautan verifikasi!");
@@ -283,6 +292,18 @@ class Petugas_Model
                         throw new Exception("Akun sedang ditangguhkan!");
                     }
                 } else {
+                    // cek waktu
+                    $this->db->query("SELECT * FROM users_verifikasi WHERE email=:email");
+                    $this->db->bind("email", $petugas["email"]);
+                    $verifikasi = $this->db->single();
+                    if ($verifikasi["time_limit"] <= time()) {
+                        // set idverifikasi
+                        $idVerifikasi = $this->generateVerifikasi($petugas["email"], 5, "update");
+                        // Send Mail
+                        if (!PHPmail($petugas["email"], "E-LAPOR | VERIFIKASI EMAIL", PHPmailVerifikasi($petugas["nama"], BaseURL() . "/admin/verifikasi/" . $idVerifikasi))) {
+                            throw new Exception("Gagal melakukan pengiriman tautan verifikasi!");
+                        }
+                    }
                     throw new Exception("Akun belum terverifikasi, harap cek pesan pada email!");
                 }
             } else {
