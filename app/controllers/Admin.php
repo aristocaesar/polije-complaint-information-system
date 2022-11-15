@@ -37,7 +37,8 @@ class Admin extends Controller
         AdminIsTrue();
         $this->view("admin/dashboard", $data = [
             "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Dashboard",
-            "layout_admin" => true
+            "layout_admin" => true,
+            "main" => $this->model("dashboard_model")->getDataMain()
         ]);
     }
 
@@ -308,8 +309,14 @@ class Admin extends Controller
                         exit;
                     } else if ($action == "gantipassword") {
                         $this->model("petugas_model")->updatePassword($_POST);
-                        Flasher::setMessage("Berhasil", "Berhasil memperbarui password", "success", "/admin/profil/pengaturan");
+                        Flasher::setMessage("Berhasil", "Berhasil memperbarui password", "success");
                         header("Location: " . BaseURL() . "/admin/profil/pengaturan");
+                        exit;
+                    } else if ($action == "gantiemail") {
+                        // $this->model("petugas_modeel")->updateEmail($_POST, $_SESSION["admin"]["id"]);
+                        Flasher::setMessage("Berhasil", "Berhasil memperbarui email, silakan verifikasi dan login kembali", "success");
+                        header("Location: " . BaseURL() . "/admin/profil/pengaturan");
+                        Flasher::Redirect("/admin/logout", 5);
                         exit;
                     }
                 }
@@ -330,6 +337,7 @@ class Admin extends Controller
             Flasher::setMessage("Terjadi Kesalahan!", $error->getMessage(), "error");
             if (!empty($_SESSION["admin"]["redirect"])) {
                 header("Location: " . BaseURL() . $_SESSION["admin"]["redirect"]);
+                unset($_SESSION["admin"]["redirect"]);
             } else {
                 header("Location: " . BaseURL() . "/admin/profil");
             }

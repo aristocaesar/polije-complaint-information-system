@@ -29,4 +29,16 @@ class Flasher
             unset($_SESSION["flash"]);
         }
     }
+
+    public static function Redirect($to = "", $time = 3)
+    {
+        $times = 1000 * 3;
+        $_SESSION["redirect"] = '
+        <script>
+        setTimeout(() => {
+            window.location.href = "' . BaseURL() . $to . '";
+        }, ' . $times . ')
+        </script>
+        ';
+    }
 }

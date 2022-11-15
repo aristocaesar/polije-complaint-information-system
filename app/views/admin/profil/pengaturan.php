@@ -11,7 +11,7 @@
                 </button>
             </div>
             <div class="form-email">
-                <form action="" method="post" class="needs-validation" novalidate="">
+                <form action="<?= BaseURL() ?>/admin/profil/gantiemail" method="post" class="needs-validation" novalidate="">
                     <div class="modal-body">
                         <div class="form-group">
                             <label>Email</label>
@@ -22,7 +22,7 @@
                         </div>
                         <div class="form-group">
                             <label>Konfirmasi Email</label>
-                            <input type="email" name="email" class="form-control" placeholder="Ketikkan Email" required="">
+                            <input type="email" name="email2" class="form-control" placeholder="Ketikkan Email" required="">
                             <div class="invalid-feedback">
                                 Harap Ketikkan Email
                             </div>
@@ -37,7 +37,7 @@
                     </div>
                     <div class="modal-footer bg-whitesmoke">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                        <button type="submit" name="submit" class="btn btn-primary">Simpan Perubahan</button>
                     </div>
                 </form>
             </div>

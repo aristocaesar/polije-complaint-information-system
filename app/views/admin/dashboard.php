@@ -19,7 +19,7 @@
                                 <h4>Pengaduan</h4>
                             </div>
                             <div class="card-body">
-                                2408
+                                <?= $data["main"][2]["jumlah"] ?>
                             </div>
                         </div>
                     </div>
@@ -34,7 +34,7 @@
                                 <h4>Aspirasi</h4>
                             </div>
                             <div class="card-body">
-                                425
+                                <?= $data["main"][0]["jumlah"] ?>
                             </div>
                         </div>
                     </div>
@@ -49,7 +49,7 @@
                                 <h4>Informasi</h4>
                             </div>
                             <div class="card-body">
-                                124
+                                <?= $data["main"][1]["jumlah"] ?>
                             </div>
                         </div>
                     </div>
@@ -64,7 +64,7 @@
                                 <h4>Pengguna</h4>
                             </div>
                             <div class="card-body">
-                                2344
+                                <?= $data["main"][3]["jumlah"] ?>
                             </div>
                         </div>
                     </div>

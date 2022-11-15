@@ -3,7 +3,7 @@
 class Pengguna_Model
 {
     private $db;
-    private $table = "users";
+    private $table = "pengguna";
 
     public function __construct()
     {

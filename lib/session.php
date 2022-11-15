@@ -7,7 +7,7 @@ function setSession($name = "", $data = [])
     }
 }
 
-function getSesstion($name = "", $key = "")
+function getSession($name = "", $key = "")
 {
     return $_SESSION[$name][$key];
 }

@@ -7,7 +7,6 @@
             </ul>
         </form>
         <ul class="navbar-nav navbar-right">
-
             <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
                     <img alt="image" src="<?= BaseURL(); ?>/public/upload/assets/images/<?= $_SESSION["admin"]["foto"] ?>" class="rounded-circle mr-1">
                     <div class="d-sm-none d-lg-inline-block">Hallo, <?= $_SESSION["admin"]["nama"] ?></div>

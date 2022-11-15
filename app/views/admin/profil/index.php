@@ -21,7 +21,7 @@
                             </div>
                             <div class="form-group col-md-6 col-12">
                                 <label>Email</label>
-                                <input type="email" class="form-control" placeholder="Ketikkan Email" required="" value="<?= $data["profile"]["email"] ?>" readonly>
+                                <input type="email" class="form-control" placeholder="Ketikkan Email" required="" value="<?= $data["profile"]["email"] ?> - <?= ucwords(str_replace("_", " ", $data["profile"]["verifikasi_email"])) ?>" readonly>
                                 <div class="invalid-feedback">
                                     Harap Ketikkan Email
                                 </div>
@@ -70,7 +70,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6">
+                            <div class="col-12 col-md-6 mb-5">
                                 <div class="form-group">
                                     <label for="status">Foto</label>
                                     <div class="author-box">
@@ -93,6 +93,18 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="form-group col-md-6 col-12">
+                                <label>Aktifitas Terakhir</label>
+                                <input type="aktifitas_terakhir" class="form-control" required="" value="<?= $data["profile"]["last_login"] ?>" readonly>
+                            </div>
+                            <div class="form-group col-md-6 col-12">
+                                <label>Terakhir Diperbarui</label>
+                                <input type="terakhir_diperbarui" class="form-control" required="" value="<?= $data["profile"]["updated_at"] ?>" readonly>
+                            </div>
+                            <div class="form-group col-md-6 col-12">
+                                <label>Tanggal Terdaftar</label>
+                                <input type="tanggal_terdaftar" class="form-control" required="" value="<?= $data["profile"]["created_at"] ?>" readonly>
                             </div>
                         </div>
                     </div>

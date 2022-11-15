@@ -134,6 +134,7 @@ class Petugas_Model
         if ($this->db->rowCount() == 0) {
             throw new Exception("Gagal memperbarui pengguna");
         }
+        die;
         return $data;
     }
 
@@ -241,7 +242,44 @@ class Petugas_Model
         $this->db->bind("updated_at", $date);
         $this->db->bind("id_pointer", $data["update"]);
         $this->db->execute();
+        $_SESSION["admin"]["nama"] = $data["nama"];
         return $data;
+    }
+
+    public function updateEmail($data, $id)
+    {
+        if (!empty($data) && !empty($id)) {
+            if ($data["email"] == $data["email2"]) {
+                // cek email sudah ada atau tidak
+                if ($data["email"] != $_SESSION["admin"]["email"]) {
+                    if (!$this->getByEmail($data["email"])) {
+                        // change email
+                        $this->db->query("UPDATE " . $this->table . " SET email=:email, verifikasi_email=:verifikasi WHERE id=:id_pointer");
+                        $this->db->bind("email", $data["email"]);
+                        $this->db->bind("verifikasi", "belum_terverifikasi");
+                        $this->db->bind("id_pointer", $id);
+                        $this->db->execute();
+                        // send email to verifikasi
+                        $_SESSION["admin"]["email"] = $data["email"];
+                        // set idverifikasi
+                        $idVerifikasi = $this->generateVerifikasi($data["email"]);
+                        // Send Mail
+                        if (!PHPmail($data["email"], "E-LAPOR | VERIFIKASI EMAIL", PHPmailVerifikasi(ucwords($_SESSION["admin"]["nama"]), BaseURL() . "/admin/verifikasi/" . $idVerifikasi))) {
+                            throw new Exception("Gagal melakukan pengiriman tautan verifikasi!");
+                        }
+                    } else {
+                        $_SESSION["admin"]["redirect"] = "/admin/profil/pengaturan";
+                        throw new Exception("Email tersebut sudah digunakan");
+                    }
+                } else {
+                    $_SESSION["admin"]["redirect"] = "/admin/profil/pengaturan";
+                    throw new Exception("Anda sekarang menggunakan email tersebut");
+                }
+            } else {
+                $_SESSION["admin"]["redirect"] = "/admin/profil/pengaturan";
+                throw new Exception("Email yang anda masukkan tidak sama");
+            }
+        }
     }
 
     public function updatePassword($data)
@@ -284,6 +322,7 @@ class Petugas_Model
                         setSession("admin", [
                             "id" => $petugas["id"],
                             "nama" => $petugas["nama"],
+                            "email" => $petugas["email"],
                             "status" => $petugas["status"],
                             "foto" => $petugas["foto"],
                         ]);
