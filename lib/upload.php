@@ -47,7 +47,9 @@ function RemoveFileUpload($directory = "")
                 unlink(dirname(__DIR__) . "/public/upload/assets/" . $directory);
             }
         }
+        return true;
     } else {
-        throw new Exception("Terjadi kesalahan dalam menghapus file!");
+        return false;
+        // throw new Exception("Terjadi kesalahan dalam menghapus file!");
     }
 }

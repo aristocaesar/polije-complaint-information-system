@@ -33,7 +33,7 @@
                             </div>
                             <div class="form-group col-12 col-md-6">
                                 <label>Tanggal Terkirim</label>
-                                <input type="date" class="form-control" id="tanggal_terkirim" readonly>
+                                <input type="text" class="form-control" id="tanggal_terkirim" readonly>
                             </div>
                         </div>
                         <div class="row">
@@ -126,20 +126,20 @@
                     </button>
                 </div>
                 <div id="konfirmasi-tangguhkan">
-                    <form action="<?= BaseURL() ?>/admin/informasi/tangguhkan" method="post">
+                    <form action="<?= BaseURL() ?>/admin/informasi/tangguhkan" method="POST">
                         <div class="modal-body">
-                            <input type="text" id="id-konfirmasi-tangguhkan" class="d-none">
+                            <input type="text" id="id-konfirmasi-tangguhkan" name="id" class="d-none">
                             <p>Setelah informasi ditangguhkan, status tidak dapat dirubah</p>
                             <div class="row alasan-konfirmasi-tangguhkan">
                                 <div class="form-group col-12">
                                     <label>Alasan Ditangguhkan</label>
-                                    <textarea class="form-control" name="alasan-ditangguhkan" rows="6" placeholder="Ketikkan Alasan" required></textarea>
+                                    <textarea class="form-control" name="alasan_ditangguhkan" rows="6" placeholder="Ketikkan Alasan" required></textarea>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary btn-batal" data-dismiss="modal">Batal</button>
-                            <button type="submit" name="tangguhkan" class="btn btn-primary">Ya, Tangguhkan</button>
+                            <button type="submit" name="submit" class="btn btn-primary">Ya, Tangguhkan</button>
                         </div>
                     </form>
                 </div>
@@ -218,7 +218,7 @@
                     <form action="<?= BaseURL() ?>/admin/informasi/toproses" method="post">
                         <div class="modal-body">
                             <div class="row">
-                                <input type="text" class="d-none" name="id-divisi-tindak-lanjut" id="id-divisi-tindak-lanjut">
+                                <input type="text" class="d-none" name="id-informasi-tindak-lanjut" id="id-informasi-tindak-lanjut">
                                 <div class="form-group col-12">
                                     <label>Judul</label>
                                     <input type="text" class="form-control" id="tindak-lanjut-judul" placeholder="Judul Informasi" required="" readonly>
@@ -274,7 +274,7 @@
                         </div>
                         <div class="modal-footer bg-whitesmoke footer-konfirmasi-tindak-lanjut">
                             <button type="button" class="btn btn-secondary btn-batal" data-dismiss="modal">Batal</button>
-                            <button type="submit" name="ubah-status-tindak-lanjut" class="btn btn-primary">Ubah status ke Tindak Lanjut</button>
+                            <button type="submit" name="submit" class="btn btn-primary">Ubah status ke Tindak Lanjut</button>
                         </div>
                     </form>
                 </div>
@@ -306,6 +306,24 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php $i = 1;
+                                foreach ($data["informasi"] as $informasi) :
+                                    if ($informasi["status"] == "belum_ditanggapi") :
+                                ?>
+                                        <tr>
+                                            <td>
+                                                <?= $i++; ?>s
+                                            </td>
+                                            <td><?= $informasi["judul"] ?></td>
+                                            <td><?= $informasi["kategori"] ?></td>
+                                            <td><?= $informasi["created_at"] ?></td>
+                                            <td>
+                                                <div class="badge badge-warning"><?= ucwords(str_replace("_", " ", $informasi["status"])); ?></div>
+                                            </td>
+                                            <td><button type="button" class="btn btn-secondary" onclick="getDetail(`<?= $informasi['id'] ?>`)">Detail</button></td>
+                                        </tr>
+                                <?php endif;
+                                endforeach; ?>
                             </tbody>
                         </table>
                     </div>
@@ -334,43 +352,17 @@
     // GET DIVISI
     async function getDivisi() {
         $("#divisi option").remove();
-        const divisi = await fetch("http://localhost:3000/divisi");
+        const divisi = await fetch("<?= BaseURL() ?>/api/divisi");
         const response = await divisi.json();
         if (response.length == 0) return Swal.fire("ERROR", `Gagal mengambil data divisi`, "error");
-        return response;
+        return response.data;
     }
 
-    // GET INFORMASI != SELESAI
-    async function getInformasi() {
-        const informasi = await fetch("http://localhost:3000/informasi?status=belum_ditanggapi");
-        const response = await informasi.json();
-        let htmlBody = [];
-        response.forEach((info) => {
-            htmlBody.push(
-                ` <tr>
-                    <td>
-                        ${info.id}
-                    </td>
-                    <td>${info.judul}</td>
-                    <td>${info.kategori}</td>
-                    <td>${info.created_at}</td>
-                    <td>
-                        <div class="badge badge-${info.status == "ditangguhkan" ? "danger" : info.status == "belum_ditanggapi" ? "warning" : info.status == "proses" ? "primary" : info.status == "selesai" ? "success" : ""}">${Ucwords(info.status)}</div>
-                    </td>
-                    <td><button type="button" id="${info.id}" class="btn btn-secondary" onclick="getDetail(this.id)">Detail</button></td>
-                </tr>`
-            );
-        })
-        const htmlData = htmlBody.join("");
-        $("tbody").html(htmlData).promise().done(() => {
-            $('.table-informasi').DataTable({
-                language: {
-                    url: '<?= BaseURL(); ?>/public/vendor/datatables/indonesia.json'
-                }
-            });
-        });
-    }
-    getInformasi();
+    $('.table-informasi').DataTable({
+        language: {
+            url: '<?= BaseURL(); ?>/public/vendor/datatables/indonesia.json'
+        }
+    });
 
     // GET DETAIL
     async function getDetail(id) {
@@ -382,20 +374,20 @@
             `);
         })
         // Data Detail
-        const detail = await fetch(`http://localhost:3000/informasi?id=${id}`);
+        const detail = await fetch(`<?= BaseURL(); ?>/api/informasi/${id}`);
         const response = await detail.json();
-        if (response.length == 0) {
+        const result = response.data;
+        if (result.length == 0) {
             Swal.fire("ERROR", `Gagal mengambil detail informasi ${id}`, "error");
         } else {
-            const result = response[0];
             $("#informasi").modal("show");
             $("#id_antrian").val(result.id);
             $("#judul").val(result.judul);
             $("#deskripsi").val(result.deskripsi);
             $("#kategori").val(result.kategori);
-            $("#tanggal_terkirim").val();
-            $(".info-user")[0].dataset.user = result.id_pengirim;
-            $("#pengirim").val(result.id_pengirim);
+            $("#tanggal_terkirim").val(result.created_at);
+            $(".info-user")[0].dataset.user = result.pengirim;
+            $("#pengirim").val(result.pengirim);
             $(".location")[0].dataset.location = result.lokasi;
             $("#lokasi").val(result.lokasi);
             // Status Informasi
@@ -475,9 +467,9 @@
     // SHOW USER
     $(".info-user").click(async (e) => {
         const id = e.currentTarget.dataset.user;
-        const users = await fetch(`http://localhost:3000/users?id=${id}`);
+        const users = await fetch(`<?= BaseURL() ?>/api/pengguna/${id}`);
         const response = await users.json();
-        const result = response[0];
+        const result = response.data;
         $(".modal-title-detail-informasi").text("Informasi Pengirim");
         $("#id-pengirim").val(result.id);
         $("#nama-pengirim").val(result.nama);
@@ -486,7 +478,7 @@
         $("#alamat-pengirim").val(result.alamat);
         $("#kontak-pengirim").val(result.kontak);
         $("#status-pengirim").val(result.status);
-        $("#foto-user").attr("src", "<?= BaseURL(); ?>/" + result.foto);
+        $("#foto-user").attr("src", "<?= BaseURL(); ?>/public/upload/assets/images/" + result.foto);
         $("#informasi").modal("hide");
         $("#informasi-user").show();
         setTimeout(() => {
@@ -526,7 +518,7 @@
             $("#konfirmasi-tangguhkan").hide();
             $("#konfirmasi-tindak-lanjut").show();
             $("#konfirmasi-tangguhkan").hide();
-            $("#id-divisi-tindak-lanjut").val(id);
+            $("#id-informasi-tindak-lanjut").val(id);
             $("#tindak-lanjut-judul").val(judul);
             $("#tindak-lanjut-deskripsi").val(deskripsi);
             $("#tindak-lanjut-divisi").val(divisi);
@@ -548,7 +540,7 @@
 
     // KONTAK DIVISI EMAIL
     function contactDivisiEmail() {
-        const id = $("#id-divisi-tindak-lanjut").val();
+        const id = $("#id-informasi-tindak-lanjut").val();
         const email = $("#kontak-divisi-email").text();
         const judul = $("#tindak-lanjut-judul").val();
         const deskripsi = $("#tindak-lanjut-deskripsi").val();
@@ -559,7 +551,7 @@
 
     // KONTAK DIVISI WHATAPPS
     function contactDivisiWA() {
-        const id = $("#id-divisi-tindak-lanjut").val();
+        const id = $("#id-informasi-tindak-lanjut").val();
         const notelp = $("#kontak-divisi-notelp").text();
         const judul = $("#tindak-lanjut-judul").val();
         const deskripsi = $("#tindak-lanjut-deskripsi").val();

@@ -75,39 +75,6 @@ class Admin extends Controller
         ]);
     }
 
-    // Informasi
-    public function informasi($action = "")
-    {
-        AdminIsTrue();
-        if ($action != "") {
-            if (isset($_POST)) {
-                if ($action == "toproses") {
-                    // Ubah Status Informasi menjadi proses
-                    header("Location: " . BaseURL() . "/admin/informasi");
-                    exit;
-                }
-            }
-            if ($action == "proses") {
-                $this->view("admin/informasi/proses", $data = [
-                    "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Informasi Proses",
-                    "layout_admin" => true,
-                ]);
-                return;
-            }
-            if ($action == "selesai") {
-                $this->view("admin/informasi/selesai", $data = [
-                    "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Informasi Selesai",
-                    "layout_admin" => true,
-                ]);
-                return;
-            }
-        }
-        $this->view("admin/informasi/masuk", $data = [
-            "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Informasi Masuk",
-            "layout_admin" => true,
-        ]);
-    }
-
     // Aspirasi
     public function aspirasi($action = "")
     {
@@ -139,6 +106,54 @@ class Admin extends Controller
             "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Aspirasi Masuk",
             "layout_admin" => true,
         ]);
+    }
+
+    // Informasi
+    public function informasi($action = "")
+    {
+        AdminIsTrue();
+        try {
+            if (!empty($action)) {
+                if (isset($_POST["submit"])) {
+                    if ($action == "toproses") {
+                        // Ubah Status Informasi menjadi proses
+                        $this->model("informasi_model")->changeToProces($_POST["id-informasi-tindak-lanjut"]);
+                        Flasher::setMessage("Berhasil", "Berhasil memproses informasi", "success");
+                    }
+                    if ($action == "tangguhkan") {
+                        // Ubah Status Informasi menjadi ditangguhkan
+                        $this->model("informasi_model")->tangguhkan($_POST["alasan_ditangguhkan"], $_POST["id"]);
+                        Flasher::setMessage("Berhasil", "Berhasil menangguhkan informasi", "success");
+                    }
+                    header("Location: " . BaseURL() . "/admin/informasi");
+                    exit;
+                }
+                if ($action == "proses") {
+                    $this->view("admin/informasi/proses", $data = [
+                        "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Informasi Proses",
+                        "layout_admin" => true,
+                    ]);
+                    exit;
+                }
+                if ($action == "selesai") {
+                    $this->view("admin/informasi/selesai", $data = [
+                        "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Informasi Selesai",
+                        "layout_admin" => true,
+                        "informasi" => $this->model("informasi_model")->getByStatus("selesai")
+                    ]);
+                    exit;
+                }
+            }
+            $this->view("admin/informasi/masuk", $data = [
+                "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Informasi Masuk",
+                "layout_admin" => true,
+                "informasi" => $this->model("informasi_model")->getByStatus("belum_ditanggapi")
+            ]);
+        } catch (Exception $error) {
+            Flasher::setMessage("Terjadi Kesalahan!", $error->getMessage(), "error");
+            header("Location: " . BaseURL() . "/admin/informasi");
+            exit;
+        }
     }
 
     // Kategori
@@ -313,7 +328,7 @@ class Admin extends Controller
                         header("Location: " . BaseURL() . "/admin/profil/pengaturan");
                         exit;
                     } else if ($action == "gantiemail") {
-                        // $this->model("petugas_modeel")->updateEmail($_POST, $_SESSION["admin"]["id"]);
+                        $this->model("petugas_model")->updateEmail($_POST, $_SESSION["admin"]["id"]);
                         Flasher::setMessage("Berhasil", "Berhasil memperbarui email, silakan verifikasi dan login kembali", "success");
                         header("Location: " . BaseURL() . "/admin/profil/pengaturan");
                         Flasher::Redirect("/admin/logout", 5);

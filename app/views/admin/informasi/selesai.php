@@ -33,7 +33,7 @@
                             </div>
                             <div class="form-group col-12 col-md-6">
                                 <label>Tanggal Terkirim</label>
-                                <input type="date" class="form-control" id="tanggal_terkirim" readonly>
+                                <input type="text" class="form-control" id="tanggal_terkirim" readonly>
                             </div>
                         </div>
                         <div class="row">
@@ -282,12 +282,29 @@
                                     </th>
                                     <th>Judul</th>
                                     <th>Kategori</th>
-                                    <th>Tanggal Diterima</th>
                                     <th>Status</th>
+                                    <th>Terkonfirmasi</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php $i = 1;
+                                foreach ($data["informasi"] as $informasi) :
+                                ?>
+                                    <tr>
+                                        <td>
+                                            <?= $i++; ?>
+                                        </td>
+                                        <td><?= $informasi["judul"] ?></td>
+                                        <td><?= $informasi["kategori"] ?></td>
+                                        <td>
+                                            <div class="badge badge-<?= $informasi["status"] == "ditangguhkan" ? "danger" : "success"  ?>"><?= ucwords(str_replace("_", " ", $informasi["status"])); ?></div>
+                                        </td>
+                                        <td><?= $informasi["updated_at"] ?></td>
+                                        <td><button type="button" class="btn btn-secondary" onclick="getDetail(`<?= $informasi['id'] ?>`)">Detail</button></td>
+                                    </tr>
+                                <?php
+                                endforeach; ?>
                             </tbody>
                         </table>
                     </div>
@@ -313,46 +330,21 @@
         return str.replaceAll(/ /g, "%20");
     }
 
+    $('.table-informasi').DataTable({
+        language: {
+            url: '<?= BaseURL(); ?>/public/vendor/datatables/indonesia.json'
+        }
+    });
+
     // GET DIVISI
     async function getDivisi() {
         $("#divisi option").remove();
-        const divisi = await fetch("http://localhost:3000/divisi");
+        const divisi = await fetch(`<?= BaseURL() ?>/api/divisi`);
         const response = await divisi.json();
-        if (response.length == 0) return Swal.fire("ERROR", `Gagal mengambil data divisi`, "error");
-        return response;
+        const result = response.data;
+        if (result.length == 0) return Swal.fire("ERROR", `Gagal mengambil data divisi`, "error");
+        return result;
     }
-
-    // GET INFORMASI != SELESAI
-    async function getInformasi() {
-        const informasi = await fetch("http://localhost:3000/informasi?status=ditangguhkan&status=selesai");
-        const response = await informasi.json();
-        let htmlBody = [];
-        response.forEach((info) => {
-            htmlBody.push(
-                ` <tr>
-                    <td>
-                        ${info.id}
-                    </td>
-                    <td>${info.judul}</td>
-                    <td>${info.kategori}</td>
-                    <td>${info.created_at}</td>
-                    <td>
-                        <div class="badge badge-${info.status == "ditangguhkan" ? "danger" : info.status == "belum_ditanggapi" ? "warning" : info.status == "proses" ? "primary" : info.status == "selesai" ? "success" : ""}">${Ucwords(info.status)}</div>
-                    </td>
-                    <td><button type="button" id="${info.id}" class="btn btn-secondary" onclick="getDetail(this.id)">Detail</button></td>
-                </tr>`
-            );
-        })
-        const htmlData = htmlBody.join("");
-        $("tbody").html(htmlData).promise().done(() => {
-            $('.table-informasi').DataTable({
-                language: {
-                    url: '<?= BaseURL(); ?>/public/vendor/datatables/indonesia.json'
-                }
-            });
-        });
-    }
-    getInformasi();
 
     // GET DETAIL
     async function getDetail(id) {
@@ -364,20 +356,20 @@
             `);
         })
         // Data Detail
-        const detail = await fetch(`http://localhost:3000/informasi?id=${id}`);
+        const detail = await fetch(`<?= BaseURL() ?>/api/informasi/${id}`);
         const response = await detail.json();
-        if (response.length == 0) {
+        const result = response.data;
+        if (result.length == 0) {
             Swal.fire("ERROR", `Gagal mengambil detail informasi ${id}`, "error");
         } else {
-            const result = response[0];
             $("#informasi").modal("show");
             $("#id_antrian").val(result.id);
             $("#judul").val(result.judul);
             $("#deskripsi").val(result.deskripsi);
             $("#kategori").val(result.kategori);
-            $("#tanggal_terkirim").val();
-            $(".info-user")[0].dataset.user = result.id_pengirim;
-            $("#pengirim").val(result.id_pengirim);
+            $("#tanggal_terkirim").val(result.created_at);
+            $(".info-user")[0].dataset.user = result.pengirim;
+            $("#pengirim").val(result.pengirim);
             $(".location")[0].dataset.location = result.lokasi;
             $("#lokasi").val(result.lokasi);
             // Status Informasi
@@ -429,6 +421,7 @@
             }
             // Divisi
             $("#divisi").val(result.divisi);
+            $("#deskripsi_tanggapan").val(result.deskripsi);
         };
     }
 
@@ -456,9 +449,9 @@
     // SHOW USER
     $(".info-user").click(async (e) => {
         const id = e.currentTarget.dataset.user;
-        const users = await fetch(`http://localhost:3000/users?id=${id}`);
+        const users = await fetch(`<?= BaseURL() ?>/api/pengguna/${id}`);
         const response = await users.json();
-        const result = response[0];
+        const result = response.data;
         $(".modal-title-detail-informasi").text("Informasi Pengirim");
         $("#id-pengirim").val(result.id);
         $("#nama-pengirim").val(result.nama);
@@ -467,7 +460,7 @@
         $("#alamat-pengirim").val(result.alamat);
         $("#kontak-pengirim").val(result.kontak);
         $("#status-pengirim").val(result.status);
-        $("#foto-user").attr("src", "<?= BaseURL(); ?>/" + result.foto);
+        $("#foto-user").attr("src", "<?= BaseURL(); ?>/public/upload/assets/images/" + result.foto);
         $("#informasi").modal("hide");
         $("#informasi-user").show();
         $("#konfirmasi-tindak-lanjut").hide();
