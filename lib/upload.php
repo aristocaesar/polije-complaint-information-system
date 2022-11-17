@@ -32,9 +32,11 @@ function UploadFile($file = null, $name = "", $limitSize = 0, $fileType = [], $d
     }
 
     // upload 
-    if (!move_uploaded_file($file["foto"]["tmp_name"], $dirFile . "/" . $nameFile)) {
+    if (move_uploaded_file($file["foto"]["tmp_name"], $dirFile . "/" . $nameFile)) {
+        return true;
+    } else {
         throw new Exception("Failed Upload!");
-    };
+    }
 }
 
 function RemoveFileUpload($directory = "")

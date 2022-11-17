@@ -308,21 +308,20 @@
                             <tbody>
                                 <?php $i = 1;
                                 foreach ($data["informasi"] as $informasi) :
-                                    if ($informasi["status"] == "belum_ditanggapi") :
                                 ?>
-                                        <tr>
-                                            <td>
-                                                <?= $i++; ?>s
-                                            </td>
-                                            <td><?= $informasi["judul"] ?></td>
-                                            <td><?= $informasi["kategori"] ?></td>
-                                            <td><?= $informasi["created_at"] ?></td>
-                                            <td>
-                                                <div class="badge badge-warning"><?= ucwords(str_replace("_", " ", $informasi["status"])); ?></div>
-                                            </td>
-                                            <td><button type="button" class="btn btn-secondary" onclick="getDetail(`<?= $informasi['id'] ?>`)">Detail</button></td>
-                                        </tr>
-                                <?php endif;
+                                    <tr>
+                                        <td>
+                                            <?= $i++; ?>
+                                        </td>
+                                        <td><?= $informasi["judul"] ?></td>
+                                        <td><?= $informasi["kategori"] ?></td>
+                                        <td><?= date("d-m-Y s:m:h", strtotime($informasi["created_at"])) ?></td>
+                                        <td>
+                                            <div class="badge badge-warning"><?= ucwords(str_replace("_", " ", $informasi["status"])); ?></div>
+                                        </td>
+                                        <td><button type="button" class="btn btn-secondary" onclick="getDetail(`<?= $informasi['id'] ?>`)">Detail</button></td>
+                                    </tr>
+                                <?php
                                 endforeach; ?>
                             </tbody>
                         </table>

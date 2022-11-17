@@ -99,6 +99,10 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="form-group col-12 downloard-lampiran">
+                                            <label>Lampiran</label>
+                                            <a id="lampiran" target="_blank" class="form-control" href="">Downloard - Judul Lampiran</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -300,7 +304,7 @@
                                         <td>
                                             <div class="badge badge-<?= $informasi["status"] == "ditangguhkan" ? "danger" : "success"  ?>"><?= ucwords(str_replace("_", " ", $informasi["status"])); ?></div>
                                         </td>
-                                        <td><?= $informasi["updated_at"] ?></td>
+                                        <td><?= date("d-m-Y s:m:h", strtotime($informasi["updated_at"])) ?></td>
                                         <td><button type="button" class="btn btn-secondary" onclick="getDetail(`<?= $informasi['id'] ?>`)">Detail</button></td>
                                     </tr>
                                 <?php
@@ -414,14 +418,22 @@
                     $(".form-tanggapan").show();
                     $("#status-informasi-terproses").attr("disabled", "disabled");
                     $("#deskripsi_tanggapan").attr("disabled", "disabled");
-                    $(".lampiran-tanggapan").show();
                     $("#lampiran_tanggapan").attr("disabled", "disabled");
                     $(".modal-footer").hide();
                 }
             }
             // Divisi
             $("#divisi").val(result.divisi);
-            $("#deskripsi_tanggapan").val(result.deskripsi);
+            $("#deskripsi_tanggapan").val(result.tanggapan);
+            $(".lampiran-tanggapan").hide();
+            if (result.lampiran != null) {
+                $(".downloard-lampiran").show();
+                $("#lampiran").removeAttr("disabled");
+                $("#lampiran").text(result.lampiran);
+                $("#lampiran").attr("href", `<?= BaseURL() ?>/public/upload/assets/document/informasi/${result.lampiran}`);
+            } else {
+                $(".downloard-lampiran").hide();
+            }
         };
     }
 

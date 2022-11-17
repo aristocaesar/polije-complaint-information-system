@@ -125,13 +125,18 @@ class Admin extends Controller
                         $this->model("informasi_model")->tangguhkan($_POST["alasan_ditangguhkan"], $_POST["id"]);
                         Flasher::setMessage("Berhasil", "Berhasil menangguhkan informasi", "success");
                     }
-                    header("Location: " . BaseURL() . "/admin/informasi");
+                    if ($action == "toselesai") {
+                        $this->model("informasi_model")->changeToComplate($_POST, $_FILES);
+                        Flasher::setMessage("Berhasil", "Berhasil menyelesaikan informasi", "success");
+                    }
+                    header("Location: " . $_SERVER["HTTP_REFERER"]);
                     exit;
                 }
                 if ($action == "proses") {
                     $this->view("admin/informasi/proses", $data = [
                         "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Informasi Proses",
                         "layout_admin" => true,
+                        "informasi" => $this->model("informasi_model")->getByStatus("proses")
                     ]);
                     exit;
                 }
@@ -151,7 +156,7 @@ class Admin extends Controller
             ]);
         } catch (Exception $error) {
             Flasher::setMessage("Terjadi Kesalahan!", $error->getMessage(), "error");
-            header("Location: " . BaseURL() . "/admin/informasi");
+            header("Location: " . $_SERVER["HTTP_REFERER"]);
             exit;
         }
     }
@@ -350,12 +355,7 @@ class Admin extends Controller
             ]);
         } catch (Exception $error) {
             Flasher::setMessage("Terjadi Kesalahan!", $error->getMessage(), "error");
-            if (!empty($_SESSION["admin"]["redirect"])) {
-                header("Location: " . BaseURL() . $_SESSION["admin"]["redirect"]);
-                unset($_SESSION["admin"]["redirect"]);
-            } else {
-                header("Location: " . BaseURL() . "/admin/profil");
-            }
+            header("Location: " . BaseURL() . "/admin/profil");
             exit;
         }
     }
