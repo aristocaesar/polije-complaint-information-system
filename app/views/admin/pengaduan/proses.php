@@ -297,6 +297,24 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php $i = 1;
+                                foreach ($data["pengaduan"] as $pengaduan) :
+                                ?>
+                                    <tr>
+                                        <td>
+                                            <?= $i++; ?>
+                                        </td>
+                                        <td><?= $pengaduan["judul"] ?></td>
+                                        <td><?= $pengaduan["kategori"] ?></td>
+                                        <td><?= $pengaduan["bobot"] ?></td>
+                                        <td><?= date("d-m-Y s:m:h", strtotime($pengaduan["created_at"])) ?></td>
+                                        <td>
+                                            <div class="badge badge-warning"><?= ucwords(str_replace("_", " ", $pengaduan["status"])); ?></div>
+                                        </td>
+                                        <td><button type="button" class="btn btn-secondary" onclick="getDetail(`<?= $pengaduan['id'] ?>`)">Detail</button></td>
+                                    </tr>
+                                <?php
+                                endforeach; ?>
                             </tbody>
                         </table>
                     </div>
@@ -322,47 +340,21 @@
         return str.replaceAll(/ /g, "%20");
     }
 
+    $('.table-pengaduan').DataTable({
+        language: {
+            url: '<?= BaseURL(); ?>/public/vendor/datatables/indonesia.json'
+        }
+    });
+
     // GET DIVISI
     async function getDivisi() {
         $("#divisi option").remove();
-        const divisi = await fetch("http://localhost:3000/divisi");
+        const divisi = await fetch("<?= BaseURL() ?>/api/divisi");
         const response = await divisi.json();
-        if (response.length == 0) return Swal.fire("ERROR", `Gagal mengambil data divisi`, "error");
-        return response;
+        const result = response.data;
+        if (result.length == 0) return Swal.fire("ERROR", `Gagal mengambil data divisi`, "error");
+        return result;
     }
-
-    // GET pengaduan != SELESAI
-    async function getPengaduan() {
-        const pengaduan = await fetch("http://localhost:3000/pengaduan?status=proses");
-        const response = await pengaduan.json();
-        let htmlBody = [];
-        response.forEach((adu) => {
-            htmlBody.push(
-                ` <tr>
-                    <td>
-                        ${adu.id}
-                    </td>
-                    <td>${adu.judul}</td>
-                    <td>${adu.kategori}</td>
-                    <td>${adu.bobot}</td>
-                    <td>${adu.created_at}</td>
-                    <td>
-                        <div class="badge badge-${adu.status == "ditangguhkan" ? "danger" : adu.status == "belum_ditanggapi" ? "warning" : adu.status == "proses" ? "primary" : adu.status == "selesai" ? "success" : ""}">${Ucwords(adu.status)}</div>
-                    </td>
-                    <td><button type="button" id="${adu.id}" class="btn btn-secondary" onclick="getDetail(this.id)">Detail</button></td>
-                </tr>`
-            );
-        })
-        const htmlData = htmlBody.join("");
-        $("tbody").html(htmlData).promise().done(() => {
-            $('.table-pengaduan').DataTable({
-                language: {
-                    url: '<?= BaseURL(); ?>/public/vendor/datatables/indonesia.json'
-                }
-            });
-        });
-    }
-    getPengaduan();
 
     // GET DETAIL
     async function getDetail(id) {

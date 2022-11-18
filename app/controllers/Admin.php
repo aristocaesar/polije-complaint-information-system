@@ -46,33 +46,54 @@ class Admin extends Controller
     public function pengaduan($action = "")
     {
         AdminIsTrue();
-        if ($action != "") {
-            if (isset($_POST)) {
-                if ($action == "toproses") {
-                    // Ubah Status Informasi menjadi proses
-                    header("Location: " . BaseURL() . "/admin/informasi");
+        try {
+            if (!empty($action)) {
+                if (isset($_POST["submit"])) {
+                    if ($action == "toproses") {
+                        // Ubah Status Pengaduan menjadi proses
+                        $this->model("pengaduan_model")->changeToProces($_POST["id-konfir-tindak-lanjut"]);
+                        Flasher::setMessage("Berhasil", "Berhasil memproses pengaduan", "success");
+                    }
+                    if ($action == "tangguhkan") {
+                        // Ubah Status Pengaduan menjadi ditangguhkan
+                        $this->model("pengaduan_model")->tangguhkan($_POST);
+                        Flasher::setMessage("Berhasil", "Berhasil menangguhkan pengaduan", "success");
+                    }
+                    if ($action == "toselesai") {
+                        // Ubah Status Pengaduan menjadi selesai
+                        $this->model("pengaduan_model")->changeToComplate($_POST, $_FILES);
+                        Flasher::setMessage("Berhasil", "Berhasil menyelesaikan pengaduan", "success");
+                    }
+                    header("Location: " . $_SERVER["HTTP_REFERER"]);
+                    exit;
+                }
+                if ($action == "proses") {
+                    $this->view("admin/pengaduan/proses", $data = [
+                        "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Pengaduan Proses",
+                        "layout_admin" => true,
+                        "pengaduan" => $this->model("pengaduan_model")->getByStatus("proses")
+                    ]);
+                    exit;
+                }
+                if ($action == "selesai") {
+                    $this->view("admin/pengaduan/selesai", $data = [
+                        "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Pengaduan Selesai",
+                        "layout_admin" => true,
+                        "pengaduan" => $this->model("pengaduan_model")->getByStatus("selesai")
+                    ]);
                     exit;
                 }
             }
-            if ($action == "proses") {
-                $this->view("admin/pengaduan/proses", $data = [
-                    "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Pengaduan Proses",
-                    "layout_admin" => true,
-                ]);
-                return;
-            }
-            if ($action == "selesai") {
-                $this->view("admin/pengaduan/selesai", $data = [
-                    "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Pengaduan Selesai",
-                    "layout_admin" => true,
-                ]);
-                return;
-            }
+            $this->view("admin/pengaduan/masuk", $data = [
+                "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Pengaduan Masuk",
+                "layout_admin" => true,
+                "pengaduan" => $this->model("pengaduan_model")->getByStatus("belum_ditanggapi")
+            ]);
+        } catch (Exception $error) {
+            Flasher::setMessage("Terjadi Kesalahan!", $error->getMessage(), "error");
+            header("Location: " . $_SERVER["HTTP_REFERER"]);
+            exit;
         }
-        $this->view("admin/pengaduan/masuk", $data = [
-            "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Pengaduan Masuk",
-            "layout_admin" => true,
-        ]);
     }
 
     // Aspirasi

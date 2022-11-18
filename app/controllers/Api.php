@@ -11,6 +11,36 @@ class API extends CoreApi
         // Cek Auth
     }
 
+    public function pengaduan($id = "")
+    {
+        try {
+            if ($_SERVER["REQUEST_METHOD"] == "GET") {
+                if ($id == "") {
+                    $this->Response(200, "OK", $this->model("pengaduan_model")->getAll());
+                } else {
+                    $this->Response(200, "OK", $this->model("pengaduan_model")->get($id));
+                }
+            } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                if (isset($_POST["add"])) {
+                    // ADD
+                    $this->Response(201, "Created", $this->model("pengaduan_model")->save($_POST));
+                } else if (isset($_POST["update"])) {
+                    // UPDATE
+                    $this->Response(200, "OK", $this->model("pengaduan_model")->update($_POST, $_POST["update"]));
+                } else if (isset($_POST["delete"])) {
+                    // DELETE
+                    $this->Response(200, "OK", $this->model("pengaduan_model")->delete($_POST["delete"]));
+                } else {
+                    throw new Exception("Error Method Request!");
+                }
+            }
+        } catch (Exception $error) {
+            $this->Response(400, "ERR", [
+                "message" => $error->getMessage()
+            ]);
+        }
+    }
+
     public function aspirasi($id = "")
     {
         try {
