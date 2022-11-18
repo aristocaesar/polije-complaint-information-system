@@ -93,6 +93,7 @@ class Admin extends Controller
                         Flasher::setMessage("Berhasil", "Berhasil menangguhkan aspirasi", "success");
                     }
                     if ($action == "toselesai") {
+                        // Ubah Status Informasi menjadi selesai
                         $this->model("aspirasi_model")->changeToComplate($_POST, $_FILES);
                         Flasher::setMessage("Berhasil", "Berhasil menyelesaikan aspirasi", "success");
                     }

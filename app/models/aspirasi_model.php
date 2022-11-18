@@ -92,7 +92,7 @@ class Aspirasi_Model
             if ($file["foto"]["error"] != 4) {
                 $f = explode(".", $file["foto"]["name"]);
                 $extension = end($f);
-                UploadFile($file, "L-INFO-" . $data["id"], 2097152, ["application/pdf", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "image/jpeg", "image/jpg", "image/png"], "document/aspirasi");
+                UploadFile($file, "L-ASPI-" . $data["id"], 2097152, ["application/pdf", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "image/jpeg", "image/jpg", "image/png"], "document/aspirasi");
                 $this->db->bind("lampiran", "L-INFO-" . $data["id"] . "." . $extension);
             } else {
                 $this->db->bind("lampiran", null);

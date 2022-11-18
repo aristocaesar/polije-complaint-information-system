@@ -12,12 +12,12 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form class="mt-4" action="<?= BaseURL() ?>/admin/aspirasi/toselesai" method="POST">
+                <form class="mt-4" action="<?= BaseURL() ?>/admin/aspirasi/toselesai" method="POST" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="row">
                             <div class="form-group col-12">
                                 <label>Nomor Antrian</label>
-                                <input type="text" class="form-control" id="id_antrian" placeholder="Nomor Antrian" required="" readonly>
+                                <input type="text" class="form-control" id="id_antrian" placeholder="Nomor Antrian" name="id" required="" readonly>
                             </div>
                             <div class="form-group col-12">
                                 <label>Judul</label>
@@ -33,7 +33,7 @@
                             </div>
                             <div class="form-group col-12 col-md-6">
                                 <label>Tanggal Terkirim</label>
-                                <input type="date" class="form-control" id="tanggal_terkirim" readonly>
+                                <input type="text" class="form-control" id="tanggal_terkirim" readonly>
                             </div>
                         </div>
                         <div class="row">
@@ -62,7 +62,7 @@
                             <div class="form-group col-12 col-md-6">
                                 <label>Status Aspirasi</label>
                                 <div class="input-group status-aspirasi-terproses">
-                                    <select class="form-control" id="status-aspirasi-terproses" name="status">
+                                    <select class="form-control" id="status-aspirasi-terproses">
                                         <option value="proses">Dalam Tindak Lanjut</option>
                                         <option value="selesai">Selesai</option>
                                     </select>
@@ -88,14 +88,14 @@
                                     <div class="row">
                                         <div class="form-group col-12">
                                             <label>Deskripsi</label>
-                                            <textarea class="form-control" name="Tanggapan" id="deskripsi_tanggapan" rows="6" placeholder="Ketikkan Tanggapan"></textarea>
+                                            <textarea class="form-control" name="tanggapan" id="deskripsi_tanggapan" rows="6" placeholder="Ketikkan Tanggapan"></textarea>
                                         </div>
                                         <div class="form-group col-12 lampiran-tanggapan">
                                             <label>Lampiran</label>
                                             <div class="input-groups mb-2">
                                                 <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" name="lampiran" id="lampiran_tanggapan">
-                                                    <label class="custom-file-label" id="label-input-foto" for="foto">Pilih Lampiran</label>
+                                                    <input type="file" class="custom-file-input" name="foto" id="lampiran_tanggapan" onchange="lampiranOnChange(this)">
+                                                    <label class="custom-file-label" id="label-input-lampiran" for="foto">Pilih Lampiran</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -109,7 +109,7 @@
                         <button type="button" class="btn btn-danger btn-tangguhkan">Tangguhkan Aspirasi</button>
                         <button type="button" class="btn btn-info btn-sampaikan-tanggapan">Sampaikan Kedivisi</button>
                         <button type="button" class="btn btn-warning btn-proses-tanggapan">Proses Aspirasi</button>
-                        <button type="submit" class="btn btn-primary btn-selesai-tanggapan">Selesai</button>
+                        <button type="submit" name="submit" class="btn btn-primary btn-selesai-tanggapan">Selesai</button>
                     </div>
                 </form>
             </div>
@@ -128,7 +128,7 @@
                 <div id="konfirmasi-tangguhkan">
                     <form action="<?= BaseURL() ?>/admin/aspirasi/tangguhkan" method="post">
                         <div class="modal-body">
-                            <input type="text" id="id-konfirmasi-tangguhkan" class="d-none">
+                            <input type="text" id="id-konfirmasi-tangguhkan" name="id" class="d-none">
                             <p>Setelah aspirasi ditangguhkan, status tidak dapat dirubah</p>
                             <div class="row alasan-konfirmasi-tangguhkan">
                                 <div class="form-group col-12">
@@ -139,7 +139,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary btn-batal" data-dismiss="modal">Batal</button>
-                            <button type="submit" name="tangguhkan" class="btn btn-primary">Ya, Tangguhkan</button>
+                            <button type="submit" name="submit" class="btn btn-primary">Ya, Tangguhkan</button>
                         </div>
                     </form>
                 </div>
@@ -296,6 +296,23 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php $i = 1;
+                                foreach ($data["aspirasi"] as $aspirasi) :
+                                ?>
+                                    <tr>
+                                        <td>
+                                            <?= $i++; ?>
+                                        </td>
+                                        <td><?= $aspirasi["judul"] ?></td>
+                                        <td><?= $aspirasi["kategori"] ?></td>
+                                        <td><?= date("d-m-Y s:m:h", strtotime($aspirasi["created_at"])) ?></td>
+                                        <td>
+                                            <div class="badge badge-primary"><?= ucwords(str_replace("_", " ", $aspirasi["status"])); ?></div>
+                                        </td>
+                                        <td><button type="button" class="btn btn-secondary" onclick="getDetail(`<?= $aspirasi['id'] ?>`)">Detail</button></td>
+                                    </tr>
+                                <?php
+                                endforeach; ?>
                             </tbody>
                         </table>
                     </div>
@@ -321,46 +338,26 @@
         return str.replaceAll(/ /g, "%20");
     }
 
+    function lampiranOnChange(e) {
+        const file = e.files[0];
+        $("#label-input-lampiran").text(file.name);
+    }
+
+    $('.table-aspirasi').DataTable({
+        language: {
+            url: '<?= BaseURL(); ?>/public/vendor/datatables/indonesia.json'
+        }
+    });
+
     // GET DIVISI
     async function getDivisi() {
         $("#divisi option").remove();
-        const divisi = await fetch("http://localhost:3000/divisi");
+        const divisi = await fetch("<?= BaseURL() ?>/api/divisi");
         const response = await divisi.json();
-        if (response.length == 0) return Swal.fire("ERROR", `Gagal mengambil data divisi`, "error");
-        return response;
+        const result = response.data;
+        if (result.length == 0) return Swal.fire("ERROR", `Gagal mengambil data divisi`, "error");
+        return result;
     }
-
-    // GET aspirasi != SELESAI
-    async function getAspirasi() {
-        const aspirasi = await fetch("http://localhost:3000/aspirasi?status=proses");
-        const response = await aspirasi.json();
-        let htmlBody = [];
-        response.forEach((aspi) => {
-            htmlBody.push(
-                ` <tr>
-                    <td>
-                        ${aspi.id}
-                    </td>
-                    <td>${aspi.judul}</td>
-                    <td>${aspi.kategori}</td>
-                    <td>${aspi.created_at}</td>
-                    <td>
-                        <div class="badge badge-${aspi.status == "ditangguhkan" ? "danger" : aspi.status == "belum_ditanggapi" ? "warning" : aspi.status == "proses" ? "primary" : aspi.status == "selesai" ? "success" : ""}">${Ucwords(aspi.status)}</div>
-                    </td>
-                    <td><button type="button" id="${aspi.id}" class="btn btn-secondary" onclick="getDetail(this.id)">Detail</button></td>
-                </tr>`
-            );
-        })
-        const htmlData = htmlBody.join("");
-        $("tbody").html(htmlData).promise().done(() => {
-            $('.table-aspirasi').DataTable({
-                language: {
-                    url: '<?= BaseURL(); ?>/public/vendor/datatables/indonesia.json'
-                }
-            });
-        });
-    }
-    getAspirasi();
 
     // GET DETAIL
     async function getDetail(id) {
@@ -372,20 +369,20 @@
             `);
         })
         // Data Detail
-        const detail = await fetch(`http://localhost:3000/aspirasi?id=${id}`);
+        const detail = await fetch(`<?= BaseURL() ?>/api/aspirasi/${id}`);
         const response = await detail.json();
-        if (response.length == 0) {
+        const result = response.data;
+        if (result.length == 0) {
             Swal.fire("ERROR", `Gagal mengambil detail aspirasi ${id}`, "error");
         } else {
-            const result = response[0];
             $("#aspirasi").modal("show");
             $("#id_antrian").val(result.id);
             $("#judul").val(result.judul);
             $("#deskripsi").val(result.deskripsi);
             $("#kategori").val(result.kategori);
-            $("#tanggal_terkirim").val();
-            $(".info-user")[0].dataset.user = result.id_pengirim;
-            $("#pengirim").val(result.id_pengirim);
+            $("#tanggal_terkirim").val(moment(result.created_at, "DD-MM-YYYY ss:mm:hh"));
+            $(".info-user")[0].dataset.user = result.pengirim;
+            $("#pengirim").val(result.pengirim);
             $(".location")[0].dataset.location = result.lokasi;
             $("#lokasi").val(result.lokasi);
             // Status aspirasi
@@ -441,9 +438,9 @@
     // SHOW USER
     $(".info-user").click(async (e) => {
         const id = e.currentTarget.dataset.user;
-        const users = await fetch(`http://localhost:3000/users?id=${id}`);
+        const users = await fetch(`<?= BaseURL() ?>/api/pengguna/${id}`);
         const response = await users.json();
-        const result = response[0];
+        const result = response.data;
         $("#aspirasi").modal("hide");
         setTimeout(() => {
             $("#detail-aspirasi").modal("show");
@@ -460,7 +457,7 @@
             $("#alamat-pengirim").val(result.alamat);
             $("#kontak-pengirim").val(result.kontak);
             $("#status-pengirim").val(result.status);
-            $("#foto-user").attr("src", "<?= BaseURL(); ?>/" + result.foto);
+            $("#foto-user").attr("src", "<?= BaseURL(); ?>/public/upload/assets/images/" + result.foto);
         }, 500);
     });
 
