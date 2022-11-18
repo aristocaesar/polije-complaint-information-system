@@ -33,7 +33,7 @@
                             </div>
                             <div class="form-group col-12 col-md-6">
                                 <label>Tanggal Terkirim</label>
-                                <input type="date" class="form-control" id="tanggal_terkirim" readonly>
+                                <input type="text" class="form-control" id="tanggal_terkirim" readonly>
                             </div>
                         </div>
                         <div class="row">
@@ -62,7 +62,7 @@
                             <div class="form-group col-12 col-md-6">
                                 <label>Status Aspirasi</label>
                                 <div class="input-group status-aspirasi-terproses">
-                                    <select class="form-control" id="status-aspirasi-terproses" name="status">
+                                    <select class="form-control" id="status-aspirasi-terproses">
                                         <option value="proses">Dalam Tindak Lanjut</option>
                                         <option value="selesai">Selesai</option>
                                     </select>
@@ -98,6 +98,10 @@
                                                     <label class="custom-file-label" id="label-input-foto" for="foto">Pilih Lampiran</label>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="form-group col-12 downloard-lampiran">
+                                            <label>Lampiran</label>
+                                            <a id="lampiran" target="_blank" class="form-control" href="">Downloard - Judul Lampiran</a>
                                         </div>
                                     </div>
                                 </div>
@@ -224,6 +228,23 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php $i = 1;
+                                foreach ($data["aspirasi"] as $aspirasi) :
+                                ?>
+                                    <tr>
+                                        <td>
+                                            <?= $i++; ?>
+                                        </td>
+                                        <td><?= $aspirasi["judul"] ?></td>
+                                        <td><?= $aspirasi["kategori"] ?></td>
+                                        <td><?= date("d-m-Y s:m:h", strtotime($aspirasi["created_at"])) ?></td>
+                                        <td>
+                                            <div class="badge badge-<?= $aspirasi["status"] == "ditangguhkan" ? "danger" : "success"  ?>"><?= ucwords(str_replace("_", " ", $aspirasi["status"])); ?></div>
+                                        </td>
+                                        <td><button type="button" class="btn btn-secondary" onclick="getDetail(`<?= $aspirasi['id'] ?>`)">Detail</button></td>
+                                    </tr>
+                                <?php
+                                endforeach; ?>
                             </tbody>
                         </table>
                     </div>
@@ -252,43 +273,18 @@
     // GET DIVISI
     async function getDivisi() {
         $("#divisi option").remove();
-        const divisi = await fetch("http://localhost:3000/divisi");
+        const divisi = await fetch("<?= BaseURL() ?>/api/divisi");
         const response = await divisi.json();
-        if (response.length == 0) return Swal.fire("ERROR", `Gagal mengambil data divisi`, "error");
-        return response;
+        const result = response.data;
+        if (result.length == 0) return Swal.fire("ERROR", `Gagal mengambil data divisi`, "error");
+        return result;
     }
 
-    // GET aspirasi != SELESAI
-    async function getAspirasi() {
-        const aspirasi = await fetch("http://localhost:3000/aspirasi?status=ditangguhkan&status=selesai");
-        const response = await aspirasi.json();
-        let htmlBody = [];
-        response.forEach((aspi) => {
-            htmlBody.push(
-                ` <tr>
-                    <td>
-                        ${aspi.id}
-                    </td>
-                    <td>${aspi.judul}</td>
-                    <td>${aspi.kategori}</td>
-                    <td>${aspi.created_at}</td>
-                    <td>
-                        <div class="badge badge-${aspi.status == "ditangguhkan" ? "danger" : aspi.status == "belum_ditanggapi" ? "warning" : aspi.status == "proses" ? "primary" : aspi.status == "selesai" ? "success" : ""}">${Ucwords(aspi.status)}</div>
-                    </td>
-                    <td><button type="button" id="${aspi.id}" class="btn btn-secondary" onclick="getDetail(this.id)">Detail</button></td>
-                </tr>`
-            );
-        })
-        const htmlData = htmlBody.join("");
-        $("tbody").html(htmlData).promise().done(() => {
-            $('.table-aspirasi').DataTable({
-                language: {
-                    url: '<?= BaseURL(); ?>/public/vendor/datatables/indonesia.json'
-                }
-            });
-        });
-    }
-    getAspirasi();
+    $('.table-aspirasi').DataTable({
+        language: {
+            url: '<?= BaseURL(); ?>/public/vendor/datatables/indonesia.json'
+        }
+    });
 
     // GET DETAIL
     async function getDetail(id) {
@@ -300,20 +296,20 @@
             `);
         })
         // Data Detail
-        const detail = await fetch(`http://localhost:3000/aspirasi?id=${id}`);
+        const detail = await fetch(`<?= BaseURL() ?>/api/aspirasi/${id}`);
         const response = await detail.json();
-        if (response.length == 0) {
+        const result = response.data;
+        if (result.length == 0) {
             Swal.fire("ERROR", `Gagal mengambil detail aspirasi ${id}`, "error");
         } else {
-            const result = response[0];
             $("#aspirasi").modal("show");
             $("#id_antrian").val(result.id);
             $("#judul").val(result.judul);
             $("#deskripsi").val(result.deskripsi);
             $("#kategori").val(result.kategori);
-            $("#tanggal_terkirim").val();
-            $(".info-user")[0].dataset.user = result.id_pengirim;
-            $("#pengirim").val(result.id_pengirim);
+            $("#tanggal_terkirim").val(result.created_at);
+            $(".info-user")[0].dataset.user = result.pengirim;
+            $("#pengirim").val(result.pengirim);
             $(".location")[0].dataset.location = result.lokasi;
             $("#lokasi").val(result.lokasi);
             // Status aspirasi
@@ -365,14 +361,24 @@
             }
             // Divisi
             $("#divisi").val(result.divisi);
+            $("#deskripsi_tanggapan").val(result.tanggapan);
+            $(".lampiran-tanggapan").hide();
+            if (result.lampiran != null) {
+                $(".downloard-lampiran").show();
+                $("#lampiran").removeAttr("disabled");
+                $("#lampiran").text(result.lampiran);
+                $("#lampiran").attr("href", `<?= BaseURL() ?>/public/upload/assets/document/aspirasi/${result.lampiran}`);
+            } else {
+                $(".downloard-lampiran").hide();
+            }
         };
     }
     // SHOW USER
     $(".info-user").click(async (e) => {
         const id = e.currentTarget.dataset.user;
-        const users = await fetch(`http://localhost:3000/users?id=${id}`);
+        const users = await fetch(`<?= BaseURL() ?>/api/pengguna/${id}`);
         const response = await users.json();
-        const result = response[0];
+        const result = response.data;
         $(".modal-title-detail-aspirasi").text("aspirasi Pengirim");
         $("#id-pengirim").val(result.id);
         $("#nama-pengirim").val(result.nama);
@@ -381,7 +387,7 @@
         $("#alamat-pengirim").val(result.alamat);
         $("#kontak-pengirim").val(result.kontak);
         $("#status-pengirim").val(result.status);
-        $("#foto-user").attr("src", "<?= BaseURL(); ?>/" + result.foto);
+        $("#foto-user").attr("src", "<?= BaseURL(); ?>/public/upload/assets/images/" + result.foto);
         $("#aspirasi").modal("hide");
         $("#info-user").show();
         $("#konfirmasi-tindak-lanjut").hide();

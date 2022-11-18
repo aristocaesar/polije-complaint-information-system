@@ -75,73 +75,6 @@
                 <div class="col-lg-8">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Statistik Laporan</h4>
-                        </div>
-                        <div class="card-body">
-                            <canvas id="myChart" height="158"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-12 col-12 col-sm-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Aktifitas Terbaru</h4>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-unstyled list-unstyled-border">
-                                <li class="media">
-                                    <img class="mr-3 rounded-circle" width="50" src="https://media-exp1.licdn.com/dms/image/C5603AQED8L0BQbsIdw/profile-displayphoto-shrink_200_200/0/1654088905112?e=2147483647&v=beta&t=l683DweslHzwVt376iZoViKr9i9uG0GzhcDREE6eAHg" alt="avatar">
-                                    <div class="media-body">
-                                        <div class="float-right text-primary">Sekarang</div>
-                                        <div class="media-title">Aristo Caesar</div>
-                                        <span class="text-small text-muted">Baru saja melakukan sebuah laporan. #4982342</span>
-                                    </div>
-                                </li>
-                            </ul>
-                            <ul class="list-unstyled list-unstyled-border">
-                                <li class="media">
-                                    <img class="mr-3 rounded-circle" width="50" src="https://media-exp1.licdn.com/dms/image/C5603AQED8L0BQbsIdw/profile-displayphoto-shrink_200_200/0/1654088905112?e=2147483647&v=beta&t=l683DweslHzwVt376iZoViKr9i9uG0GzhcDREE6eAHg" alt="avatar">
-                                    <div class="media-body">
-                                        <div class="float-right text-primary">Sekarang</div>
-                                        <div class="media-title">Aristo Caesar</div>
-                                        <span class="text-small text-muted">Baru saja melakukan sebuah laporan. #4982342</span>
-                                    </div>
-                                </li>
-                            </ul>
-                            <ul class="list-unstyled list-unstyled-border">
-                                <li class="media">
-                                    <img class="mr-3 rounded-circle" width="50" src="https://media-exp1.licdn.com/dms/image/C5603AQED8L0BQbsIdw/profile-displayphoto-shrink_200_200/0/1654088905112?e=2147483647&v=beta&t=l683DweslHzwVt376iZoViKr9i9uG0GzhcDREE6eAHg" alt="avatar">
-                                    <div class="media-body">
-                                        <div class="float-right text-primary">Sekarang</div>
-                                        <div class="media-title">Aristo Caesar</div>
-                                        <span class="text-small text-muted">Baru saja melakukan sebuah laporan. #4982342</span>
-                                    </div>
-                                </li>
-                            </ul>
-                            <ul class="list-unstyled list-unstyled-border">
-                                <li class="media">
-                                    <img class="mr-3 rounded-circle" width="50" src="https://media-exp1.licdn.com/dms/image/C5603AQED8L0BQbsIdw/profile-displayphoto-shrink_200_200/0/1654088905112?e=2147483647&v=beta&t=l683DweslHzwVt376iZoViKr9i9uG0GzhcDREE6eAHg" alt="avatar">
-                                    <div class="media-body">
-                                        <div class="float-right text-primary">Sekarang</div>
-                                        <div class="media-title">Aristo Caesar</div>
-                                        <span class="text-small text-muted">Baru saja melakukan sebuah laporan. #4982342</span>
-                                    </div>
-                                </li>
-                            </ul>
-                            <div class="text-center pt-1 pb-1">
-                                <a href="<?= BaseURL() ?>/admin/aktifitas" class="btn btn-primary btn-lg btn-round">
-                                    Selengkapnya
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Statistik Pengguna -->
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-header">
                             <h4>Pengguna</h4>
                         </div>
                         <div class="card-body">
@@ -194,6 +127,43 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-4 col-md-12 col-12 col-sm-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Aktifitas Terbaru</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled list-unstyled-border">
+                                <li class="media">
+                                    <img class="mr-3 rounded-circle" width="50" src="https://media-exp1.licdn.com/dms/image/C5603AQED8L0BQbsIdw/profile-displayphoto-shrink_200_200/0/1654088905112?e=2147483647&v=beta&t=l683DweslHzwVt376iZoViKr9i9uG0GzhcDREE6eAHg" alt="avatar">
+                                    <div class="media-body">
+                                        <div class="float-right text-primary">Sekarang</div>
+                                        <div class="media-title">Aristo Caesar</div>
+                                        <span class="text-small text-muted">Baru saja melakukan sebuah laporan. #4982342</span>
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul class="list-unstyled list-unstyled-border">
+                                <li class="media">
+                                    <img class="mr-3 rounded-circle" width="50" src="https://media-exp1.licdn.com/dms/image/C5603AQED8L0BQbsIdw/profile-displayphoto-shrink_200_200/0/1654088905112?e=2147483647&v=beta&t=l683DweslHzwVt376iZoViKr9i9uG0GzhcDREE6eAHg" alt="avatar">
+                                    <div class="media-body">
+                                        <div class="float-right text-primary">Sekarang</div>
+                                        <div class="media-title">Aristo Caesar</div>
+                                        <span class="text-small text-muted">Baru saja melakukan sebuah laporan. #4982342</span>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="text-center pt-1 pb-1">
+                                <a href="<?= BaseURL() ?>/admin/aktifitas" class="btn btn-primary btn-lg btn-round">
+                                    Selengkapnya
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Statistik Pengguna -->
+            <div class="row">
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-header">
