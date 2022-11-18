@@ -33,7 +33,7 @@
                             </div>
                             <div class="form-group col-12 col-md-6">
                                 <label>Tanggal Terkirim</label>
-                                <input type="date" class="form-control" id="tanggal_terkirim" readonly>
+                                <input type="text" class="form-control" id="tanggal_terkirim" readonly>
                             </div>
                         </div>
                         <div class="row">
@@ -128,7 +128,7 @@
                 <div id="konfirmasi-tangguhkan">
                     <form action="<?= BaseURL() ?>/admin/aspirasi/tangguhkan" method="post">
                         <div class="modal-body">
-                            <input type="text" id="id-konfirmasi-tangguhkan" class="d-none">
+                            <input type="text" id="id-konfirmasi-tangguhkan" name="id" class="d-none">
                             <p>Setelah Aspirasi ditangguhkan, status tidak dapat dirubah</p>
                             <div class="row alasan-konfirmasi-tangguhkan">
                                 <div class="form-group col-12">
@@ -139,7 +139,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary btn-batal" data-dismiss="modal">Batal</button>
-                            <button type="submit" name="tangguhkan" class="btn btn-primary">Ya, Tangguhkan</button>
+                            <button type="submit" name="submit" class="btn btn-primary">Ya, Tangguhkan</button>
                         </div>
                     </form>
                 </div>
@@ -274,7 +274,7 @@
                         </div>
                         <div class="modal-footer bg-whitesmoke footer-konfirmasi-tindak-lanjut">
                             <button type="button" class="btn btn-secondary btn-batal" data-dismiss="modal">Batal</button>
-                            <button type="submit" name="ubah-status-tindak-lanjut" class="btn btn-primary">Ubah status ke Tindak Lanjut</button>
+                            <button type="submit" name="submit" class="btn btn-primary">Ubah status ke Tindak Lanjut</button>
                         </div>
                     </form>
                 </div>
@@ -306,6 +306,23 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php $i = 1;
+                                foreach ($data["aspirasi"] as $aspirasi) :
+                                ?>
+                                    <tr>
+                                        <td>
+                                            <?= $i++; ?>
+                                        </td>
+                                        <td><?= $aspirasi["judul"] ?></td>
+                                        <td><?= $aspirasi["kategori"] ?></td>
+                                        <td><?= date("d-m-Y s:m:h", strtotime($aspirasi["created_at"])) ?></td>
+                                        <td>
+                                            <div class="badge badge-warning"><?= ucwords(str_replace("_", " ", $aspirasi["status"])); ?></div>
+                                        </td>
+                                        <td><button type="button" class="btn btn-secondary" onclick="getDetail(`<?= $aspirasi['id'] ?>`)">Detail</button></td>
+                                    </tr>
+                                <?php
+                                endforeach; ?>
                             </tbody>
                         </table>
                     </div>
@@ -331,46 +348,21 @@
         return str.replaceAll(/ /g, "%20");
     }
 
+    $('.table-aspirasi').DataTable({
+        language: {
+            url: '<?= BaseURL(); ?>/public/vendor/datatables/indonesia.json'
+        }
+    });
+
     // GET DIVISI
     async function getDivisi() {
         $("#divisi option").remove();
-        const divisi = await fetch("http://localhost:3000/divisi");
+        const divisi = await fetch("<?= BaseURL() ?>/api/divisi");
         const response = await divisi.json();
-        if (response.length == 0) return Swal.fire("ERROR", `Gagal mengambil data divisi`, "error");
-        return response;
+        const result = response.data
+        if (result.length == 0) return Swal.fire("ERROR", `Gagal mengambil data divisi`, "error");
+        return result;
     }
-
-    // GET aspirasi != SELESAI
-    async function getAspirasi() {
-        const aspirasi = await fetch("http://localhost:3000/aspirasi?status=belum_ditanggapi");
-        const response = await aspirasi.json();
-        let htmlBody = [];
-        response.forEach((aspi) => {
-            htmlBody.push(
-                ` <tr>
-                    <td>
-                        ${aspi.id}
-                    </td>
-                    <td>${aspi.judul}</td>
-                    <td>${aspi.kategori}</td>
-                    <td>${aspi.created_at}</td>
-                    <td>
-                        <div class="badge badge-${aspi.status == "ditangguhkan" ? "danger" : aspi.status == "belum_ditanggapi" ? "warning" : aspi.status == "proses" ? "primary" : aspi.status == "selesai" ? "success" : ""}">${Ucwords(aspi.status)}</div>
-                    </td>
-                    <td><button type="button" id="${aspi.id}" class="btn btn-secondary" onclick="getDetail(this.id)">Detail</button></td>
-                </tr>`
-            );
-        })
-        const htmlData = htmlBody.join("");
-        $("tbody").html(htmlData).promise().done(() => {
-            $('.table-aspirasi').DataTable({
-                language: {
-                    url: '<?= BaseURL(); ?>/public/vendor/datatables/indonesia.json'
-                }
-            });
-        });
-    }
-    getAspirasi();
 
     // GET DETAIL
     async function getDetail(id) {
@@ -382,20 +374,20 @@
             `);
         })
         // Data Detail
-        const detail = await fetch(`http://localhost:3000/aspirasi?id=${id}`);
+        const detail = await fetch(`<?= BaseURL() ?>/api/aspirasi/${id}`);
         const response = await detail.json();
-        if (response.length == 0) {
+        const result = response.data;
+        if (result.length == 0) {
             Swal.fire("ERROR", `Gagal mengambil detail aspirasi ${id}`, "error");
         } else {
-            const result = response[0];
             $("#aspirasi").modal("show");
             $("#id_antrian").val(result.id);
             $("#judul").val(result.judul);
             $("#deskripsi").val(result.deskripsi);
             $("#kategori").val(result.kategori);
-            $("#tanggal_terkirim").val();
-            $(".info-user")[0].dataset.user = result.id_pengirim;
-            $("#pengirim").val(result.id_pengirim);
+            $("#tanggal_terkirim").val(moment(result.created_at, "DD-MM-YYYY ss:mm:hh"));
+            $(".info-user")[0].dataset.user = result.pengirim;
+            $("#pengirim").val(result.pengirim);
             $(".location")[0].dataset.location = result.lokasi;
             $("#lokasi").val(result.lokasi);
             // Status aspirasi
@@ -451,9 +443,9 @@
     // SHOW USER
     $(".info-user").click(async (e) => {
         const id = e.currentTarget.dataset.user;
-        const users = await fetch(`http://localhost:3000/users?id=${id}`);
+        const users = await fetch(`<?= BaseURL() ?>/api/pengguna/${id}`);
         const response = await users.json();
-        const result = response[0];
+        const result = response.data;
         $(".modal-title-detail-aspirasi").text("aspirasi Pengirim");
         $("#id-pengirim").val(result.id);
         $("#nama-pengirim").val(result.nama);
@@ -462,7 +454,7 @@
         $("#alamat-pengirim").val(result.alamat);
         $("#kontak-pengirim").val(result.kontak);
         $("#status-pengirim").val(result.status);
-        $("#foto-user").attr("src", "<?= BaseURL(); ?>/" + result.foto);
+        $("#foto-user").attr("src", "<?= BaseURL(); ?>/public/upload/assets/images/" + result.foto);
         $("#aspirasi").modal("hide");
         $("#info-user").show();
         setTimeout(() => {
