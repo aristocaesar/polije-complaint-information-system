@@ -1,13 +1,17 @@
 <?php
 
+require_once("app/models/dashboard_model.php");
+
 class Pengguna_Model
 {
     private $db;
+    private $dashboard;
     private $table = "pengguna";
 
     public function __construct()
     {
         $this->db = new Database;
+        $this->dashboard = new Dashboard_Model;
     }
 
     private function generateID(string $set)
@@ -63,6 +67,7 @@ class Pengguna_Model
         if ($this->db->rowCount() == 0) {
             throw new Exception("Gagal menambahkan pengguna");
         }
+        $this->dashboard->actionPengguna("add");
         return $data;
     }
 
@@ -101,6 +106,7 @@ class Pengguna_Model
         $this->db->query('DELETE FROM ' . $this->table . ' WHERE id=:id');
         $this->db->bind("id", $id);
         $this->db->execute();
+        $this->dashboard->actionPengguna("less");
         return [];
     }
 }

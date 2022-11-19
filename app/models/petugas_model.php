@@ -1,13 +1,17 @@
 <?php
 
+require_once("app/models/dashboard_model.php");
+
 class Petugas_Model
 {
     private $db;
+    private $dashboard;
     private $table = "petugas";
 
     public function __construct()
     {
         $this->db = new Database;
+        $this->dashboard = new Dashboard_Model;
     }
 
     private function generateID(string $set)
@@ -89,6 +93,7 @@ class Petugas_Model
         if (!PHPmail($data["email"], "E-LAPOR | VERIFIKASI EMAIL", PHPmailVerifikasi($data["nama"], BaseURL() . "/admin/verifikasi/" . $idVerifikasi))) {
             throw new Exception("Gagal melakukan pengiriman tautan verifikasi!");
         }
+        $this->dashboard->actionPengguna("add");
         return $data;
     }
 
@@ -148,6 +153,7 @@ class Petugas_Model
         $this->db->query('DELETE FROM ' . $this->table . ' WHERE id=:id');
         $this->db->bind("id", $id);
         $this->db->execute();
+        $this->dashboard->actionPengguna("less");
         return [];
     }
 
