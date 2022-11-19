@@ -92,7 +92,7 @@ class Pengaduan_Model
             if ($file["foto"]["error"] != 4) {
                 $f = explode(".", $file["foto"]["name"]);
                 $extension = end($f);
-                UploadFile($file, "L-ASPI-" . $data["id"], 2097152, ["application/pdf", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "image/jpeg", "image/jpg", "image/png"], "document/pengaduan");
+                UploadFile($file, "L-ADU-" . $data["id"], 2097152, ["application/pdf", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "image/jpeg", "image/jpg", "image/png"], "document/pengaduan");
                 $this->db->bind("lampiran", "L-ADU-" . $data["id"] . "." . $extension);
             } else {
                 $this->db->bind("lampiran", null);

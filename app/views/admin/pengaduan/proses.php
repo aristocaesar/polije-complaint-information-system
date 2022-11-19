@@ -12,12 +12,12 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form class="mt-4" action="<?= BaseURL() ?>/admin/pengaduan/toselesai" method="POST">
+                <form class="mt-4" action="<?= BaseURL() ?>/admin/pengaduan/toselesai" method="POST" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="row">
                             <div class="form-group col-12">
                                 <label>Nomor Antrian</label>
-                                <input type="text" class="form-control" id="id_antrian" placeholder="Nomor Antrian" required="" readonly>
+                                <input type="text" class="form-control" id="id_antrian" name="id" placeholder="Nomor Antrian" required="" readonly>
                             </div>
                             <div class="form-group col-12">
                                 <label>Judul</label>
@@ -33,7 +33,7 @@
                             </div>
                             <div class="form-group col-12 col-md-6">
                                 <label>Tanggal Terkirim</label>
-                                <input type="date" class="form-control" id="tanggal_terkirim" readonly>
+                                <input type="text" class="form-control" id="tanggal_terkirim" readonly>
                             </div>
                         </div>
                         <div class="row">
@@ -62,7 +62,7 @@
                             <div class="form-group col-12 col-md-6">
                                 <label>Status pengaduan</label>
                                 <div class="input-group status-pengaduan-terproses">
-                                    <select class="form-control" id="status-pengaduan-terproses" name="status">
+                                    <select class="form-control" id="status-pengaduan-terproses">
                                         <option value="proses">Dalam Tindak Lanjut</option>
                                         <option value="selesai">Selesai</option>
                                     </select>
@@ -88,14 +88,14 @@
                                     <div class="row">
                                         <div class="form-group col-12">
                                             <label>Deskripsi</label>
-                                            <textarea class="form-control" name="Tanggapan" id="deskripsi_tanggapan" rows="6" placeholder="Ketikkan Tanggapan"></textarea>
+                                            <textarea class="form-control" name="tanggapan" id="deskripsi_tanggapan" rows="6" placeholder="Ketikkan Tanggapan"></textarea>
                                         </div>
                                         <div class="form-group col-12 lampiran-tanggapan">
                                             <label>Lampiran</label>
                                             <div class="input-groups mb-2">
                                                 <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" name="lampiran" id="lampiran_tanggapan">
-                                                    <label class="custom-file-label" id="label-input-foto" for="foto">Pilih Lampiran</label>
+                                                    <input type="file" class="custom-file-input" name="foto" id="lampiran_tanggapan" onchange="lampiranOnChange(this)">
+                                                    <label class="custom-file-label" id="label-input-lampiran" for="foto">Pilih Lampiran</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -109,7 +109,7 @@
                         <button type="button" class="btn btn-danger btn-tangguhkan">Tangguhkan pengaduan</button>
                         <button type="button" class="btn btn-info btn-sampaikan-tanggapan">Sampaikan Kedivisi</button>
                         <button type="button" class="btn btn-warning btn-proses-tanggapan">Proses pengaduan</button>
-                        <button type="submit" class="btn btn-primary btn-selesai-tanggapan">Selesai</button>
+                        <button type="submit" name="submit" class="btn btn-primary btn-selesai-tanggapan">Selesai</button>
                     </div>
                 </form>
             </div>
@@ -128,7 +128,7 @@
                 <div id="konfirmasi-tangguhkan">
                     <form action="<?= BaseURL() ?>/admin/pengaduan/tangguhkan" method="post">
                         <div class="modal-body">
-                            <input type="text" id="id-konfirmasi-tangguhkan" class="d-none">
+                            <input type="text" id="id-konfirmasi-tangguhkan" name="id" class="d-none">
                             <p>Setelah pengaduan ditangguhkan, status tidak dapat dirubah</p>
                             <div class="row alasan-konfirmasi-tangguhkan">
                                 <div class="form-group col-12">
@@ -139,7 +139,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary btn-batal" data-dismiss="modal">Batal</button>
-                            <button type="submit" name="tangguhkan" class="btn btn-primary">Ya, Tangguhkan</button>
+                            <button type="submit" name="submit" class="btn btn-primary">Ya, Tangguhkan</button>
                         </div>
                     </form>
                 </div>
@@ -309,7 +309,7 @@
                                         <td><?= $pengaduan["bobot"] ?></td>
                                         <td><?= date("d-m-Y s:m:h", strtotime($pengaduan["created_at"])) ?></td>
                                         <td>
-                                            <div class="badge badge-warning"><?= ucwords(str_replace("_", " ", $pengaduan["status"])); ?></div>
+                                            <div class="badge badge-primary"><?= ucwords(str_replace("_", " ", $pengaduan["status"])); ?></div>
                                         </td>
                                         <td><button type="button" class="btn btn-secondary" onclick="getDetail(`<?= $pengaduan['id'] ?>`)">Detail</button></td>
                                     </tr>
@@ -356,6 +356,11 @@
         return result;
     }
 
+    function lampiranOnChange(e) {
+        const file = e.files[0];
+        $("#label-input-lampiran").text(file.name);
+    }
+
     // GET DETAIL
     async function getDetail(id) {
         // Data Divisi
@@ -366,20 +371,20 @@
             `);
         })
         // Data Detail
-        const detail = await fetch(`http://localhost:3000/pengaduan?id=${id}`);
+        const detail = await fetch(`<?= BaseURL() ?>/api/pengaduan/${id}`);
         const response = await detail.json();
-        if (response.length == 0) {
+        const result = response.data;
+        if (result.length == 0) {
             Swal.fire("ERROR", `Gagal mengambil detail pengaduan ${id}`, "error");
         } else {
-            const result = response[0];
             $("#pengaduan").modal("show");
             $("#id_antrian").val(result.id);
             $("#judul").val(result.judul);
             $("#deskripsi").val(result.deskripsi);
             $("#kategori").val(result.kategori);
-            $("#tanggal_terkirim").val();
-            $(".info-user")[0].dataset.user = result.id_pengirim;
-            $("#pengirim").val(result.id_pengirim);
+            $("#tanggal_terkirim").val(result.created_at);
+            $(".info-user")[0].dataset.user = result.pengirim;
+            $("#pengirim").val(result.pengirim);
             $(".location")[0].dataset.location = result.lokasi;
             $("#lokasi").val(result.lokasi);
             // Status pengaduan
@@ -435,9 +440,9 @@
     // SHOW USER
     $(".info-user").click(async (e) => {
         const id = e.currentTarget.dataset.user;
-        const users = await fetch(`http://localhost:3000/users?id=${id}`);
+        const users = await fetch(`<?= BaseURL() ?>/api/pengguna/${id}`);
         const response = await users.json();
-        const result = response[0];
+        const result = response.data;
         $("#pengaduan").modal("hide");
         setTimeout(() => {
             $("#detail-pengaduan").modal("show");
@@ -454,7 +459,7 @@
             $("#alamat-pengirim").val(result.alamat);
             $("#kontak-pengirim").val(result.kontak);
             $("#status-pengirim").val(result.status);
-            $("#foto-user").attr("src", "<?= BaseURL(); ?>/" + result.foto);
+            $("#foto-user").attr("src", "<?= BaseURL(); ?>/public/upload/assets/images/" + result.foto);
         }, 500);
     });
 
