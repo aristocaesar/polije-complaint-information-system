@@ -300,7 +300,7 @@
                                     </th>
                                     <th>Judul</th>
                                     <th>Kategori</th>
-                                    <th>Bobot</th>
+                                    <th>Bobot Masalah</th>
                                     <th>Tanggal Diterima</th>
                                     <th>Status</th>
                                     <th>Aksi</th>

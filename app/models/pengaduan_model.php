@@ -40,7 +40,7 @@ class Pengaduan_Model
                 $this->db->bind("status", "proses");
                 break;
             case 'selesai':
-                $this->db->query("SELECT * FROM " . $this->table . " WHERE status=:staetus OR status=:status_dua ORDER BY created_at DESC");
+                $this->db->query("SELECT * FROM " . $this->table . " WHERE status=:status OR status=:status_dua ORDER BY created_at DESC");
                 $this->db->bind("status", "ditangguhkan");
                 $this->db->bind("status_dua", "selesai");
                 break;

@@ -33,7 +33,7 @@
                             </div>
                             <div class="form-group col-12 col-md-6">
                                 <label>Tanggal Terkirim</label>
-                                <input type="date" class="form-control" id="tanggal_terkirim" readonly>
+                                <input type="text" class="form-control" id="tanggal_terkirim" readonly>
                             </div>
                         </div>
                         <div class="row">
@@ -98,6 +98,10 @@
                                                     <label class="custom-file-label" id="label-input-foto" for="foto">Pilih Lampiran</label>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="form-group col-12 downloard-lampiran">
+                                            <label>Lampiran</label>
+                                            <a id="lampiran" target="_blank" class="form-control" href="">Downloard - Judul Lampiran</a>
                                         </div>
                                     </div>
                                 </div>
@@ -217,13 +221,31 @@
                                     </th>
                                     <th>Judul</th>
                                     <th>Kategori</th>
-                                    <th>Bobot</th>
+                                    <th>Bobot Masalah</th>
                                     <th>Tanggal Diterima</th>
                                     <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php $i = 1;
+                                foreach ($data["pengaduan"] as $pengaduan) :
+                                ?>
+                                    <tr>
+                                        <td>
+                                            <?= $i++; ?>
+                                        </td>
+                                        <td><?= $pengaduan["judul"] ?></td>
+                                        <td><?= $pengaduan["kategori"] ?></td>
+                                        <td><?= $pengaduan["bobot"] ?></td>
+                                        <td><?= date("d-m-Y s:m:h", strtotime($pengaduan["created_at"])) ?></td>
+                                        <td>
+                                            <div class="badge badge-<?= $pengaduan["status"] == "ditangguhkan" ? "danger" : "success"  ?>"><?= ucwords(str_replace("_", " ", $pengaduan["status"])); ?></div>
+                                        </td>
+                                        <td><button type="button" class="btn btn-secondary" onclick="getDetail(`<?= $pengaduan['id'] ?>`)">Detail</button></td>
+                                    </tr>
+                                <?php
+                                endforeach; ?>
                             </tbody>
                         </table>
                     </div>
@@ -249,47 +271,21 @@
         return str.replaceAll(/ /g, "%20");
     }
 
+    $('.table-pengaduan').DataTable({
+        language: {
+            url: '<?= BaseURL(); ?>/public/vendor/datatables/indonesia.json'
+        }
+    });
+
     // GET DIVISI
     async function getDivisi() {
         $("#divisi option").remove();
-        const divisi = await fetch("http://localhost:3000/divisi");
+        const divisi = await fetch("<?= BaseURL() ?>/api/divisi");
         const response = await divisi.json();
-        if (response.length == 0) return Swal.fire("ERROR", `Gagal mengambil data divisi`, "error");
-        return response;
+        const result = response.data;
+        if (result.length == 0) return Swal.fire("ERROR", `Gagal mengambil data divisi`, "error");
+        return result;
     }
-
-    // GET pengaduan != SELESAI
-    async function getpengaduan() {
-        const pengaduan = await fetch("http://localhost:3000/pengaduan?status=ditangguhkan&status=selesai");
-        const response = await pengaduan.json();
-        let htmlBody = [];
-        response.forEach((adu) => {
-            htmlBody.push(
-                ` <tr>
-                    <td>
-                        ${adu.id}
-                    </td>
-                    <td>${adu.judul}</td>
-                    <td>${adu.kategori}</td>
-                    <td>${adu.bobot}</td>
-                    <td>${adu.created_at}</td>
-                    <td>
-                        <div class="badge badge-${adu.status == "ditangguhkan" ? "danger" : adu.status == "belum_ditanggapi" ? "warning" : adu.status == "proses" ? "primary" : adu.status == "selesai" ? "success" : ""}">${Ucwords(adu.status)}</div>
-                    </td>
-                    <td><button type="button" id="${adu.id}" class="btn btn-secondary" onclick="getDetail(this.id)">Detail</button></td>
-                </tr>`
-            );
-        })
-        const htmlData = htmlBody.join("");
-        $("tbody").html(htmlData).promise().done(() => {
-            $('.table-pengaduan').DataTable({
-                language: {
-                    url: '<?= BaseURL(); ?>/public/vendor/datatables/indonesia.json'
-                }
-            });
-        });
-    }
-    getpengaduan();
 
     // GET DETAIL
     async function getDetail(id) {
@@ -301,20 +297,20 @@
             `);
         })
         // Data Detail
-        const detail = await fetch(`http://localhost:3000/pengaduan?id=${id}`);
+        const detail = await fetch(`<?= BaseURL() ?>/api/pengaduan/${id}`);
         const response = await detail.json();
-        if (response.length == 0) {
+        const result = response.data;
+        if (result.length == 0) {
             Swal.fire("ERROR", `Gagal mengambil detail pengaduan ${id}`, "error");
         } else {
-            const result = response[0];
             $("#pengaduan").modal("show");
             $("#id_antrian").val(result.id);
             $("#judul").val(result.judul);
             $("#deskripsi").val(result.deskripsi);
             $("#kategori").val(result.kategori);
-            $("#tanggal_terkirim").val();
-            $(".info-user")[0].dataset.user = result.id_pengirim;
-            $("#pengirim").val(result.id_pengirim);
+            $("#tanggal_terkirim").val(result.created_at);
+            $(".info-user")[0].dataset.user = result.pengirim;
+            $("#pengirim").val(result.pengirim);
             $(".location")[0].dataset.location = result.lokasi;
             $("#lokasi").val(result.lokasi);
             // Status pengaduan
@@ -366,14 +362,24 @@
             }
             // Divisi
             $("#divisi").val(result.divisi);
+            $("#deskripsi_tanggapan").val(result.tanggapan);
+            $(".lampiran-tanggapan").hide();
+            if (result.lampiran != null) {
+                $(".downloard-lampiran").show();
+                $("#lampiran").removeAttr("disabled");
+                $("#lampiran").text(result.lampiran);
+                $("#lampiran").attr("href", `<?= BaseURL() ?>/public/upload/assets/document/pengaduan/${result.lampiran}`);
+            } else {
+                $(".downloard-lampiran").hide();
+            }
         };
     }
     // SHOW USER
     $(".info-user").click(async (e) => {
         const id = e.currentTarget.dataset.user;
-        const users = await fetch(`http://localhost:3000/users?id=${id}`);
+        const users = await fetch(`<?= BaseURL() ?>/api/pengguna/${id}`);
         const response = await users.json();
-        const result = response[0];
+        const result = response.data;
         $(".modal-title-detail-pengaduan").text("Pengirim Aduan");
         $("#id-pengirim").val(result.id);
         $("#nama-pengirim").val(result.nama);
@@ -382,7 +388,7 @@
         $("#alamat-pengirim").val(result.alamat);
         $("#kontak-pengirim").val(result.kontak);
         $("#status-pengirim").val(result.status);
-        $("#foto-user").attr("src", "<?= BaseURL(); ?>/" + result.foto);
+        $("#foto-user").attr("src", "<?= BaseURL(); ?>/public/upload/assets/images/" + result.foto);
         $("#pengaduan").modal("hide");
         $("#info-user").show();
         $("#konfirmasi-tindak-lanjut").hide();
