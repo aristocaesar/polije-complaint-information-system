@@ -13,7 +13,7 @@
 <?php if (isset($_SESSION)) Flasher::Flash() ?>
 
 <!-- Custom Script -->
-<script type="text/javascript" src="<?= BaseURL() ?>/public/js/dkode-script.js" async></script>
+<script type="text/javascript" src="<?= BaseURL() ?>/public/js/dkode-script.js"></script>
 
 </body>
 

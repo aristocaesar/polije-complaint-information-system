@@ -1,9 +1,13 @@
 <!-- Informasi Laporan -->
+<?php
+require_once("app/models/dashboard_model.php");
+$info_dahsboard = new Dashboard_Model;
+?>
 <section id="informasi-laporan" class="container py-32 text-center">
     <div class="grid md:grid-cols-2 grid-cols-1 gap-10">
         <div class="text-left">
             <h3 class="font-bold text-2xl text-gray-800">Jumlah Laporan Sekarang</h3>
-            <h3 class="font-bold text-2xl my-4 text-gray-600">9.065</h3>
+            <h3 class="font-bold text-2xl my-4 text-gray-600"><?= $info_dahsboard->getCountAllLaporan()["jumlah_semua_laporan"] ?></h3>
             <p class="font-light text-gray-800">Selamat siang, mau tanya tentang kelanjutan
                 proyek jalan tol Pejagan-Pemalang seksi 3 di
                 Kabupaten Tegal. Kapan sosialisasinya?
@@ -11,7 +15,7 @@
         </div>
         <div class="md:text-right text-left">
             <h3 class="font-bold text-2xl text-gray-800">Divisi Yang Terhubung</h3>
-            <h3 class="font-bold text-2xl my-4 text-gray-600">90</h3>
+            <h3 class="font-bold text-2xl my-4 text-gray-600"><?= $info_dahsboard->getCountDivisi()["jumlah_divisi"] ?></h3>
             <p class="font-light text-gray-800">Selamat siang, mau tanya tentang kelanjutan
                 proyek jalan tol Pejagan-Pemalang seksi 3 di
                 Kabupaten Tegal. Kapan sosialisasinya?

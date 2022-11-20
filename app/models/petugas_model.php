@@ -33,6 +33,21 @@ class Petugas_Model
         return $this->db->single();
     }
 
+    public function checkUniqEmail($email = "")
+    {
+        if (!empty($email)) {
+            $this->db->query("SELECT * FROM pengguna WHERE email=:email");
+            $this->db->bind("email", $email);
+            $result = $this->db->single();
+            if ($result) {
+                throw new Exception("Email ini sudah digunakan!");
+            }
+            return true;
+        } else {
+            throw new Exception("Error Processing Request Check Email");
+        }
+    }
+
     public function get($id)
     {
         $this->db->query("SELECT * FROM " . $this->table . " WHERE id=:id");
@@ -46,6 +61,8 @@ class Petugas_Model
 
     public function save($data = [], $files = null)
     {
+        // check uniq email
+        $this->checkUniqEmail($data["email"]);
         // id
         $idPetugas = $this->generateID($data["tgl_lahir"]);
         // Current Time Stamp
@@ -139,7 +156,6 @@ class Petugas_Model
         if ($this->db->rowCount() == 0) {
             throw new Exception("Gagal memperbarui pengguna");
         }
-        die;
         return $data;
     }
 

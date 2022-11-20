@@ -37,8 +37,29 @@ class Pengguna_Model
         return $result;
     }
 
+    public function getByEmail($email = "")
+    {
+        if (!empty($email)) {
+            $this->db->query("SELECT * FROM pengguna WHERE email=:email");
+            $this->db->bind("email", $email);
+            return $this->db->single();
+        } else {
+            return false;
+        }
+    }
+
+    public function getAllLaporan($id = "")
+    {
+        if (!empty($id)) {
+            // ambil semua pengaduan, informasi dan aspirasi berdasarkan id
+            return true;
+        }
+    }
+
     public function save($data = [])
     {
+        // check uniq mail
+        $this->checkUniqEmail($data["email"]);
         // Current Time Stamp
         $date = date("Y-m-d H:i:s");
         // Save Data
@@ -108,5 +129,186 @@ class Pengguna_Model
         $this->db->execute();
         $this->dashboard->actionPengguna("less");
         return [];
+    }
+
+    public function checkUniqEmail($email = "")
+    {
+        if (!empty($email)) {
+            $this->db->query("SELECT * FROM petugas WHERE email=:email");
+            $this->db->bind("email", $email);
+            $result = $this->db->single();
+            if ($result) {
+                throw new Exception("Email ini sudah digunakan!");
+            }
+            return true;
+        } else {
+            throw new Exception("Error Processing Request Check Email");
+        }
+    }
+
+    public function generateVerifikasi($email = "", $time = 5, $action = "create")
+    {
+        if (!empty($email)) {
+            $date = date("Y-m-d H:i:s");
+            $idVerifikasi = substr(md5(openssl_random_pseudo_bytes(20)), -32);
+            $times = 60 * $time;
+            $limit = time() + $times;
+            if ($action == "create") {
+                $this->db->query("INSERT INTO users_verifikasi (email, verifikasi, time_limit, created_at, updated_at) VALUES (:email, :verifikasi, :time_limit, :created_at, :updated_at)");
+                $this->db->bind("email", $email);
+                $this->db->bind("verifikasi", $idVerifikasi);
+                $this->db->bind("time_limit", $limit);
+                $this->db->bind("created_at", $date);
+                $this->db->bind("updated_at", $date);
+                $this->db->execute();
+            } else if ($action == "update") {
+                $this->db->query("UPDATE users_verifikasi SET verifikasi=:verifikasi, time_limit=:time_limit, updated_at=:updated_at WHERE email=:email");
+                $this->db->bind("verifikasi", $idVerifikasi);
+                $this->db->bind("time_limit", $limit);
+                $this->db->bind("updated_at", $date);
+                $this->db->bind("email", $email);
+                $this->db->execute();
+            }
+            return $idVerifikasi;
+        } else {
+            throw new Exception("Gagal melakukan pengiriman tautan verifikasi!");
+        }
+    }
+
+    public function register($data = [])
+    {
+        if (!empty($data)) {
+            // check uniq email
+            $this->checkUniqEmail($data["email"]);
+            // Current Time Stamp
+            $date = date("Y-m-d H:i:s");
+            // Register query
+            $this->db->query('INSERT INTO ' . $this->table . ' (id, nama, email, password, tgl_lahir, jenis_kelamin, alamat, kontak, status, akses, foto, created_at, updated_at) VALUES (:id, :nama, :email, :password, :tgl_lahir, :jenis_kelamin, :alamat, :kontak, :status, :akses, :foto, :created_at, :updated_at)');
+            // binding data
+            $this->db->bind("id", $this->generateID($data["tgl_lahir"]));
+            $this->db->bind("nama", ucwords($data["nama_lengkap"]));
+            $this->db->bind("email", $data["email"]);
+            // check same character
+            if ($data["password"] != $data["password2"]) {
+                throw new Exception("Password tidak sama!");
+            }
+            // hash password
+            $password = password_hash($data["password"], PASSWORD_DEFAULT);
+            $this->db->bind("password", $password);
+            $this->db->bind("tgl_lahir", $data["tgl_lahir"]);
+            $this->db->bind("jenis_kelamin", $data["jenis_kelamin"]);
+            $this->db->bind("alamat", "");
+            $this->db->bind("kontak", $data["kontak"]);
+            $this->db->bind("status", $data["status"]);
+            $this->db->bind("akses", "aktif");
+            $this->db->bind("foto", "USER-default.png");
+            $this->db->bind("created_at", $date);
+            $this->db->bind("updated_at", $date);
+            $this->db->execute();
+            if ($this->db->rowCount() == 0) {
+                throw new Exception("Gagal Registrasi");
+            }
+            // set idverifikasi
+            $idVerifikasi = $this->generateVerifikasi($data["email"]);
+            // Send Mail
+            if (!PHPmail($data["email"], "E-LAPOR | VERIFIKASI EMAIL", PHPmailVerifikasi($data["nama_lengkap"], BaseURL() . "/users/verifikasi/" . $idVerifikasi))) {
+                throw new Exception("Gagal melakukan pengiriman tautan verifikasi!");
+            }
+            $this->dashboard->actionPengguna("add");
+            return $data;
+        } else {
+            throw new Exception("Gagal melakukan registarsi!");
+        }
+    }
+
+    public function updateLastLogin($id)
+    {
+        // Current Time Stamp
+        $date = date("Y-m-d H:i:s");
+        // Save Data
+        $this->db->query('UPDATE ' . $this->table . ' SET last_login=:date WHERE id=:id_pointer');
+        // binding data
+        $this->db->bind("date", $date);
+        $this->db->bind("id_pointer", $id);
+        $this->db->execute();
+    }
+
+    public function acceptVerifikasi($id)
+    {
+        $this->db->query('SELECT * FROM users_verifikasi WHERE verifikasi=:id');
+        $this->db->bind("id", $id);
+        $verifikasi = $this->db->single();
+        if ($verifikasi["time_limit"] >= time()) {
+            // update users
+            $this->updateToVerified($verifikasi["email"]);
+            // // hapus data verifikasi
+            $this->removeDataVerifikasi($verifikasi["email"]);
+            return true;
+        } else {
+            throw new Exception("Tautan sudah kadaluarsa!");
+        }
+    }
+
+    public function updateToVerified($email)
+    {
+        if (!empty($email)) {
+            $this->db->query("UPDATE pengguna SET verifikasi_daftar=:verifikasi, updated_at=:updated_at WHERE email=:email");
+            $this->db->bind("verifikasi", "aktif");
+            $this->db->bind("updated_at", date("Y-m-d H:i:s"));
+            $this->db->bind("email", $email);
+            $this->db->execute();
+        }
+    }
+
+    public function removeDataVerifikasi($email)
+    {
+        $this->db->query("DELETE FROM users_verifikasi WHERE email=:email");
+        $this->db->bind("email", $email);
+        $this->db->execute();
+    }
+
+    public function login($data = [])
+    {
+        if (!empty($data)) {
+            $pengguna = $this->getByEmail($data["email"]);
+            if ($pengguna) {
+                if (password_verify($data["password"], $pengguna["password"])) {
+                    if ($pengguna["verifikasi_daftar"] == "aktif") {
+                        if ($pengguna["akses"] == "aktif") {
+                            $this->updateLastLogin($pengguna["id"]);
+                            setSession("user", [
+                                "id" => $pengguna["id"],
+                                "nama" => $pengguna["nama"],
+                                "email" => $pengguna["email"],
+                                "foto" => $pengguna["foto"],
+                            ]);
+                            return $pengguna;
+                        } else {
+                            throw new Exception("Akun sedang ditangguhkan!");
+                        }
+                    } else {
+                        // cek waktu
+                        $this->db->query("SELECT * FROM users_verifikasi WHERE email=:email");
+                        $this->db->bind("email", $pengguna["email"]);
+                        $verifikasi = $this->db->single();
+                        if ($verifikasi["time_limit"] <= time()) {
+                            // set idverifikasi
+                            $idVerifikasi = $this->generateVerifikasi($pengguna["email"], 5, "update");
+                            // Send Mail
+                            if (!PHPmail($pengguna["email"], "E-LAPOR | VERIFIKASI EMAIL", PHPmailVerifikasi($pengguna["nama"], BaseURL() . "/users/verifikasi/" . $idVerifikasi))) {
+                                throw new Exception("Gagal melakukan pengiriman tautan verifikasi!");
+                            }
+                        }
+                        throw new Exception("Akun belum terverifikasi, harap cek pesan pada email!");
+                    }
+                } else {
+                    throw new Exception("Email atau Password salah!");
+                }
+            } else {
+                throw new Exception("Email atau Password salah!");
+            }
+        } else {
+            throw new Exception("Gagal melakukan request login!");
+        }
     }
 }

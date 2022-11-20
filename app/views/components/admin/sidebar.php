@@ -34,18 +34,20 @@
                     <li><a class="nav-link" href="<?= BaseURL() ?>/admin/informasi/selesai">Selesai</a></li>
                 </ul>
             </li>
-            <li class="menu-header">Pelayanan</li>
-            <li><a class="nav-link" href="<?= BaseURL() ?>/admin/kategori"><i class="fas fa-list"></i> <span>Kategori</span></a></li>
-            <li><a class="nav-link" href="<?= BaseURL() ?>/admin/divisi"><i class="fas fa-sitemap"></i> <span>Divisi</span></a></li>
-            <li class="menu-header">users</li>
-            <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown"><i class="fas fa-users"></i><span>Pengguna</span></a>
-                <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="<?= BaseURL() ?>/admin/pengguna">Master</a></li>
-                    <!-- <li><a class="nav-link" href="<?= BaseURL() ?>/admin/pengguna/verifikasi">Verifikasi</a></li> -->
-                </ul>
-            </li>
-            <li><a class="nav-link" href="<?= BaseURL() ?>/admin/petugas"><i class="fas fa-user-nurse"></i> <span>Petugas</span></a></li>
+            <?php if ($_SESSION["admin"]["status"] == "administrator") : ?>
+                <li class="menu-header">Pelayanan</li>
+                <li><a class="nav-link" href="<?= BaseURL() ?>/admin/kategori"><i class="fas fa-list"></i> <span>Kategori</span></a></li>
+                <li><a class="nav-link" href="<?= BaseURL() ?>/admin/divisi"><i class="fas fa-sitemap"></i> <span>Divisi</span></a></li>
+                <li class="menu-header">users</li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link has-dropdown"><i class="fas fa-users"></i><span>Pengguna</span></a>
+                    <ul class="dropdown-menu">
+                        <li><a class="nav-link" href="<?= BaseURL() ?>/admin/pengguna">Master</a></li>
+                        <!-- <li><a class="nav-link" href="<?= BaseURL() ?>/admin/pengguna/verifikasi">Verifikasi</a></li> -->
+                    </ul>
+                </li>
+                <li><a class="nav-link" href="<?= BaseURL() ?>/admin/petugas"><i class="fas fa-user-nurse"></i> <span>Petugas</span></a></li>
+            <?php endif; ?>
             <li><a class="nav-link" href="<?= BaseURL() ?>" target="_blank"><i class="fas fa-globe"></i> <span>Kunjungi Website</span></a></li>
         </ul>
     </aside>

@@ -15,7 +15,7 @@
                 <i data-feather="log-in" style="width:35px;height: 35px;left: 140px;top: 17px; margin-right:10px"></i>
                 <h5 class="md:text-3xl text-xl"> Masuk</h5>
             </div>
-            <form action="" method="POST">
+            <form action="<?= BaseURL(); ?>/auth" method="POST">
                 <div class="flex flex-col mb-5">
                     <label for="email" class="text-gray-700">Email</label>
                     <input type="email" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="email" aria-describedby="email" name="email" placeholder="Masukkan Email" required>
@@ -27,7 +27,7 @@
                 <div class="mb-5">
                     <a href="<?= BaseURL() ?>/auth/recovery" class="text-blue-800 font-ligth">Lupa Password ?</a>
                 </div>
-                <button type="submit" name="login" class="text-xl text-white w-full rounded bg-blue-800 py-4 font-bold tracking-wide hover:bg-blue-900 hover:drop-shadow-lg">MASUK</button>
+                <button type="submit" name="submit" class="text-xl text-white w-full rounded bg-blue-800 py-4 font-bold tracking-wide hover:bg-blue-900 hover:drop-shadow-lg">MASUK</button>
                 <div class="flex space-x-3 mt-8">
                     <p class="text-gray-800">Belum punya akun ?</p>
                     <a href="<?= BaseURL() ?>/auth/daftar" class="text-blue-800 font-ligth">Daftar</a>

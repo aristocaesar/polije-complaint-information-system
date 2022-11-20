@@ -15,10 +15,21 @@
                 <i data-feather="log-in" style="width:35px;height: 35px;left: 140px;top: 17px; margin-right:10px"></i>
                 <h5 class="md:text-3xl text-xl"> Daftar</h5>
             </div>
-            <form action="" method="POST">
+            <form action="<?= BaseURL() ?>/auth/daftar" method="POST">
                 <div class="flex flex-col mb-5">
                     <label for="nama_lengkap" class="text-gray-700">Nama Lengkap</label>
                     <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="nama_lengkap" aria-describedby="nama_lengkap" name="nama_lengkap" placeholder="Ketikkan Nama Lengkap" required>
+                </div>
+                <div class="flex flex-col mb-10">
+                    <label for="status" class="text-gray-700">Tanggal Lahir</label>
+                    <input type="date" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="tgl_lahir" aria-describedby="tgl_lahir" name="tgl_lahir">
+                </div>
+                <div class="flex flex-col mb-10">
+                    <label for="status" class="text-gray-700">Jenis Kelamin</label>
+                    <select class="mt-3 border border-gray-400 py-3 px-2 rounded" name="jenis_kelamin" id="jenis-kelamin">
+                        <option value="laki-laki">Laki - Laki</option>
+                        <option value="perempuan">Perempuan</option>
+                    </select>
                 </div>
                 <div class="flex flex-col mb-5">
                     <label for="email" class="text-gray-700">Email</label>
@@ -34,18 +45,18 @@
                 </div>
                 <div class="flex flex-col mb-5">
                     <label for="notelp" class="text-gray-700">No Telp / Whatapps</label>
-                    <input type="number" class="mt-3 border border-gray-400 py-3 px-2 rounded" maxlength="13" minlength="10" id="notelp" aria-describedby="notelp" name="notelp" placeholder="Ketikkan No Telp / Whatapps" required>
+                    <input type="number" class="mt-3 border border-gray-400 py-3 px-2 rounded" maxlength="13" minlength="10" id="notelp" aria-describedby="notelp" name="kontak" placeholder="Ketikkan No Telp / Whatapps" required>
                 </div>
                 <div class="flex flex-col mb-10">
-                    <label for="divisi-tujuan" class="text-gray-700">Status</label>
-                    <select class="mt-3 border border-gray-400 py-3 px-2 rounded" name="divisi" id="divisi-tujuan">
-                        <option value="mahasiswa">Mahasiswa / Mahasiswi</option>
+                    <label for="status" class="text-gray-700">Status</label>
+                    <select class="mt-3 border border-gray-400 py-3 px-2 rounded" name="status" id="status">
+                        <option value="mahasiswa_mahasiswi">Mahasiswa / Mahasiswi</option>
                         <option value="dosen">Dosen</option>
                         <option value="staf">Staf</option>
                         <option value="masyarakat">Masyarakat</option>
                     </select>
                 </div>
-                <button type="submit" name="login" class="text-xl text-white w-full rounded bg-blue-800 py-4 font-bold tracking-wide hover:bg-blue-900 hover:drop-shadow-lg">DAFTAR</button>
+                <button type="submit" name="submit" class="text-xl text-white w-full rounded bg-blue-800 py-4 font-bold tracking-wide hover:bg-blue-900 hover:drop-shadow-lg">DAFTAR</button>
                 <div class="flex space-x-3 mt-5">
                     <p>Sudah punya akun ?</p>
                     <a href="<?= BaseURL() ?>/auth" class="text-blue-800 font-ligth">Masuk</a>

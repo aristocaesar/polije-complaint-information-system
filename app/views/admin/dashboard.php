@@ -162,45 +162,6 @@
                     </div>
                 </div>
             </div>
-            <!-- Statistik Pengguna -->
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Browser Pengguna</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col text-center">
-                                    <div class="browser browser-chrome"></div>
-                                    <div class="mt-2 font-weight-bold">Chrome</div>
-                                    <div class="text-muted text-small">48%</div>
-                                </div>
-                                <div class="col text-center">
-                                    <div class="browser browser-firefox"></div>
-                                    <div class="mt-2 font-weight-bold">Firefox</div>
-                                    <div class="text-muted text-small">26%</div>
-                                </div>
-                                <div class="col text-center">
-                                    <div class="browser browser-safari"></div>
-                                    <div class="mt-2 font-weight-bold">Safari</div>
-                                    <div class="text-muted text-small">14%</div>
-                                </div>
-                                <div class="col text-center">
-                                    <div class="browser browser-opera"></div>
-                                    <div class="mt-2 font-weight-bold">Opera</div>
-                                    <div class="text-muted text-small">7%</div>
-                                </div>
-                                <div class="col text-center">
-                                    <div class="browser browser-internet-explorer"></div>
-                                    <div class="mt-2 font-weight-bold">IE</div>
-                                    <div class="text-muted text-small">5%</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
 </div>

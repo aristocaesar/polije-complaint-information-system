@@ -26,6 +26,20 @@ function AdminIsActive()
     }
 }
 
+function UserIsTrue()
+{
+    if (!isset($_SESSION["user"])) {
+        header("Location: " . BaseURL() . "/auth");
+    }
+}
+
+function UserIsActive()
+{
+    if (isset($_SESSION["user"])) {
+        header("Location: " . BaseURL() . "/users");
+    }
+}
+
 function removeSession()
 {
     session_destroy();
