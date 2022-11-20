@@ -6,14 +6,6 @@
  */
 class Controller
 {
-    // Constructor
-    public function __construct()
-    {
-        // Load Config
-        require_once("config/config.php");
-        // Load Lib
-        require_once("lib/sweeatalert.php");
-    }
     // Show view where controllers
     protected function view($file, $data)
     {
@@ -38,8 +30,10 @@ class Controller
         }
     }
 
-    // protected function model($table)
-    // {
-    //     # code...
-    // }
+    protected function model($model)
+    {
+        // Get Model and Instance
+        require_once("app/models/" . $model . ".php");
+        return new $model;
+    }
 }

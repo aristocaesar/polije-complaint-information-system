@@ -19,7 +19,7 @@
                                 <h4>Pengaduan</h4>
                             </div>
                             <div class="card-body">
-                                2408
+                                <?= $data["main"][2]["jumlah"] ?>
                             </div>
                         </div>
                     </div>
@@ -34,7 +34,7 @@
                                 <h4>Aspirasi</h4>
                             </div>
                             <div class="card-body">
-                                425
+                                <?= $data["main"][0]["jumlah"] ?>
                             </div>
                         </div>
                     </div>
@@ -49,7 +49,7 @@
                                 <h4>Informasi</h4>
                             </div>
                             <div class="card-body">
-                                124
+                                <?= $data["main"][1]["jumlah"] ?>
                             </div>
                         </div>
                     </div>
@@ -64,7 +64,7 @@
                                 <h4>Pengguna</h4>
                             </div>
                             <div class="card-body">
-                                2344
+                                <?= $data["main"][3]["jumlah"] ?>
                             </div>
                         </div>
                     </div>
@@ -75,10 +75,55 @@
                 <div class="col-lg-8">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Statistik Laporan</h4>
+                            <h4>Pengguna</h4>
                         </div>
                         <div class="card-body">
-                            <canvas id="myChart" height="158"></canvas>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <ul class="list-unstyled list-unstyled-border list-unstyled-noborder mb-0">
+                                        <li class="media">
+                                            <div class="media-body ml-3">
+                                                <div class="media-title">Rahasia</div>
+                                                <div class="text-small text-muted">2,317</div>
+                                            </div>
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-body ml-3">
+                                                <div class="media-title">Mahasiswa / Mahasiswi</div>
+                                                <div class="text-small text-muted">2,317</div>
+                                            </div>
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-body ml-3">
+                                                <div class="media-title">Staf</div>
+                                                <div class="text-small text-muted">2,317</div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-sm-6 mt-sm-0 mt-4">
+                                    <ul class="list-unstyled list-unstyled-border list-unstyled-noborder mb-0">
+                                        <li class="media">
+                                            <div class="media-body ml-3">
+                                                <div class="media-title">Dosen</div>
+                                                <div class="text-small text-muted">2,317</div>
+                                            </div>
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-body ml-3">
+                                                <div class="media-title">Masyarakat</div>
+                                                <div class="text-small text-muted">2,317</div>
+                                            </div>
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-body ml-3">
+                                                <div class="media-title">Terdaftar</div>
+                                                <div class="text-small text-muted">2,317</div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -98,76 +143,20 @@
                                     </div>
                                 </li>
                             </ul>
+                            <ul class="list-unstyled list-unstyled-border">
+                                <li class="media">
+                                    <img class="mr-3 rounded-circle" width="50" src="https://media-exp1.licdn.com/dms/image/C5603AQED8L0BQbsIdw/profile-displayphoto-shrink_200_200/0/1654088905112?e=2147483647&v=beta&t=l683DweslHzwVt376iZoViKr9i9uG0GzhcDREE6eAHg" alt="avatar">
+                                    <div class="media-body">
+                                        <div class="float-right text-primary">Sekarang</div>
+                                        <div class="media-title">Aristo Caesar</div>
+                                        <span class="text-small text-muted">Baru saja melakukan sebuah laporan. #4982342</span>
+                                    </div>
+                                </li>
+                            </ul>
                             <div class="text-center pt-1 pb-1">
-                                <a href="#" class="btn btn-primary btn-lg btn-round">
+                                <a href="<?= BaseURL() ?>/admin/aktifitas" class="btn btn-primary btn-lg btn-round">
                                     Selengkapnya
                                 </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Statistik Pengguna -->
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Pengguna</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="text-title mb-2">July</div>
-                                    <ul class="list-unstyled list-unstyled-border list-unstyled-noborder mb-0">
-                                        <li class="media">
-                                            <img class="img-fluid mt-1 img-shadow" src="../node_modules/flag-icon-css/flags/4x3/id.svg" alt="image" width="40">
-                                            <div class="media-body ml-3">
-                                                <div class="media-title">Indonesia</div>
-                                                <div class="text-small text-muted">3,282 <i class="fas fa-caret-down text-danger"></i></div>
-                                            </div>
-                                        </li>
-                                        <li class="media">
-                                            <img class="img-fluid mt-1 img-shadow" src="../node_modules/flag-icon-css/flags/4x3/my.svg" alt="image" width="40">
-                                            <div class="media-body ml-3">
-                                                <div class="media-title">Malaysia</div>
-                                                <div class="text-small text-muted">2,976 <i class="fas fa-caret-down text-danger"></i></div>
-                                            </div>
-                                        </li>
-                                        <li class="media">
-                                            <img class="img-fluid mt-1 img-shadow" src="../node_modules/flag-icon-css/flags/4x3/us.svg" alt="image" width="40">
-                                            <div class="media-body ml-3">
-                                                <div class="media-title">United States</div>
-                                                <div class="text-small text-muted">1,576 <i class="fas fa-caret-up text-success"></i></div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col-sm-6 mt-sm-0 mt-4">
-                                    <div class="text-title mb-2">August</div>
-                                    <ul class="list-unstyled list-unstyled-border list-unstyled-noborder mb-0">
-                                        <li class="media">
-                                            <img class="img-fluid mt-1 img-shadow" src="../node_modules/flag-icon-css/flags/4x3/id.svg" alt="image" width="40">
-                                            <div class="media-body ml-3">
-                                                <div class="media-title">Indonesia</div>
-                                                <div class="text-small text-muted">3,486 <i class="fas fa-caret-up text-success"></i></div>
-                                            </div>
-                                        </li>
-                                        <li class="media">
-                                            <img class="img-fluid mt-1 img-shadow" src="../node_modules/flag-icon-css/flags/4x3/ps.svg" alt="image" width="40">
-                                            <div class="media-body ml-3">
-                                                <div class="media-title">Palestine</div>
-                                                <div class="text-small text-muted">3,182 <i class="fas fa-caret-up text-success"></i></div>
-                                            </div>
-                                        </li>
-                                        <li class="media">
-                                            <img class="img-fluid mt-1 img-shadow" src="../node_modules/flag-icon-css/flags/4x3/de.svg" alt="image" width="40">
-                                            <div class="media-body ml-3">
-                                                <div class="media-title">Germany</div>
-                                                <div class="text-small text-muted">2,317 <i class="fas fa-caret-down text-danger"></i></div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
                             </div>
                         </div>
                     </div>

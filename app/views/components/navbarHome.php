@@ -13,12 +13,14 @@
         <li>
             <a class="text-gray-800 hover:text-gray-500 drop-shadow-sm" href="<?= BaseURL(); ?>/tentang">Tentang</a>
         </li>
-        <li>
-            <a href="<?= BaseURL() ?>/auth" class="text-gray-800 hover:text-gray-500 drop-shadow-sm">Masuk</a>
-        </li>
-        <li>
-            <a href="<?= BaseURL() ?>/auth/daftar" class="text-white bg-blue-800 hover:drop-shadow-lg py-2 px-5 rounded">Daftar</a>
-        </li>
+        <?php if (isset($_SESSION["users"])) : ?>
+            <li>
+                <a href="<?= BaseURL() ?>/auth" class="text-gray-800 hover:text-gray-500 drop-shadow-sm">Masuk</a>
+            </li>
+            <li>
+                <a href="<?= BaseURL() ?>/auth/daftar" class="text-white bg-blue-800 hover:drop-shadow-lg py-2 px-5 rounded">Daftar</a>
+            </li>
+        <?php endif; ?>
     </ul>
 </div>
 <nav class="navbar-user transition duration-300 ease-in-out w-full bg-transparent flex py-5 justify-between items-center px-[2rem] md:px-[5rem] lg:px-[12rem] fixed z-10">
@@ -41,8 +43,12 @@
         </div>
     </div>
     <div class="text-white space-x-8 hidden md:block">
-        <a href="<?= BaseURL() ?>/auth" id="nav-items-btn-masuk-hor" class="text-white hover:text-gray-200">Masuk</a>
-        <a href="<?= BaseURL() ?>/auth/daftar" id="nav-items-btn-daftar-hor" class="border text-white hover:drop-shadow-lg py-2 px-5 rounded">Daftar</a>
+        <?php if (!isset($_SESSION["user"])) : ?>
+            <a href="<?= BaseURL() ?>/auth" id="nav-items-btn-masuk-hor" class="text-white hover:text-gray-200">Masuk</a>
+            <a href="<?= BaseURL() ?>/auth/daftar" id="nav-items-btn-daftar-hor" class="border text-white hover:drop-shadow-lg py-2 px-5 rounded">Daftar</a>
+        <?php else : ?>
+            <a href="<?= BaseURL() ?>/users" id="nav-items-btn-user-hor" class="text-white hover:drop-shadow-lg py-2 px-5 rounded">Hallo, <?= $_SESSION["user"]["nama"] ?> <i class="fa fa-user ml-2"></i></a>
+        <?php endif; ?>
     </div>
     <div class="block md:hidden text-white cursor-pointer ">
         <i id="nav-menu-open" data-feather="menu" style="width:35px;height: 35px;left: 140px;top: 17px; margin-right:10px"></i>

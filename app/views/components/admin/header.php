@@ -21,6 +21,19 @@
     <!-- Template CSS -->
     <link rel="stylesheet" href="<?= BaseURL() ?>/public/css/stisla.css">
     <link rel="stylesheet" href="<?= BaseURL() ?>/public/css/stisla-component.css">
+
+    <!-- Jquery Load -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="<?= BaseURL() ?>/public/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="<?= BaseURL() ?>/public/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Specific CSS Page -->
+    <?php if (isset($data["css"])) : ?>
+        <?php foreach ($data["css"] as $key => $css) : ?>
+            <link rel="stylesheet" href="<?= BaseURL() ?>/public/css/<?= $css ?>.css">
+        <?php endforeach; ?>
+    <?php endif; ?>
+
 </head>
 
 <body>

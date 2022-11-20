@@ -13,8 +13,12 @@
                 <h5 class="md:text-3xl text-xl"> Tentang</h5>
             </div>
             <div class="mt-16">
-                <p>Laboris non occaecat do minim qui laboris duis ad occaecat officia exercitation ex reprehenderit qui. Culpa reprehenderit minim adipisicing veniam ullamco eiusmod aliqua esse et. Cillum fugiat deserunt et excepteur irure eu cillum. Non consequat ex ullamco do. Sint do consectetur eiusmod mollit tempor et non Lorem et consectetur.</p>
-                <?= $_SERVER["HTTP_USER_AGENT"] ?>
+                <p class="mb-5 text-dark-50">
+                    Pengelolaan pengaduan pelayanan publik di Politeknik Negeri Jember belum terkelola secara efektif dan terintegrasi. Masing-masing penyelenggara mengelola pengaduan secara parsial dan tidak terkoordinir dengan baik. Akibatnya terjadi duplikasi penanganan pengaduan, atau bahkan bisa terjadi suatu pengaduan tidak ditangani oleh satupun penyelenggara, dengan alasan pengaduan bukan kewenangannya. Oleh karena itu, untuk mencapai visi dalam good governance maka perlu untuk mengintegrasikan sistem pengelolaan pengaduan pelayanan publik dalam satu pintu. Tujuannya, Politeknik Negeri Jember memiliki satu saluran pengaduan secara Nasional.
+                </p>
+                <p class="text-dark-50">
+                    Untuk itu Politeknik Negeri Jember membentuk Sistem Pengelolaan Pengaduan Pelayanan Kampus - Layanan Aspirasi dan Pengaduan Online adalah layanan penyampaian semua aspirasi dan pengaduan masyrakat Politeknik Negeri Jember melalui beberapa kanal pengaduan yaitu website www.lapor.polije.ac.id serta aplikasi mobile (Android).
+                </p>
             </div>
         </div>
     </div>

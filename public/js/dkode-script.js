@@ -1,3 +1,6 @@
+// BASE URL
+const BaseUrl = "http://localhost/polije-complaint";
+
 // ASK TO GET CURRENT LOCATION
 
 // DATA TABLES
@@ -21,6 +24,9 @@ $(window).scroll(function () {
     // BTN DAFTAR
     $("#nav-items-btn-daftar-hor").removeClass("border");
     $("#nav-items-btn-daftar-hor").addClass("bg-blue-800 hover:bg-blue-900");
+    // BTN USER
+    $("#nav-items-btn-user-hor").removeClass("text-white");
+    $("#nav-items-btn-user-hor").addClass("text-gray-800 hover:text-gray-900");
     // BTN VERTIKAL
     $("#nav-menu-open").addClass("text-gray-800");
   } else {
@@ -41,6 +47,11 @@ $(window).scroll(function () {
     // BTN DAFTAR
     $("#nav-items-btn-daftar-hor").removeClass("bg-blue-800 hover:bg-blue-900");
     $("#nav-items-btn-daftar-hor").addClass("border");
+    // BTN USER
+    $("#nav-items-btn-user-hor").removeClass(
+      "text-gray-800 hover:text-gray-900"
+    );
+    $("#nav-items-btn-user-hor").addClass("text-white hover:text-gray-200");
     // BTN VERTIKAL
     $("#nav-menu-open").removeClass("text-gray-800");
   }
@@ -65,4 +76,34 @@ function Modal(target) {
 function ModalClose() {
   $(".modal").addClass("hidden");
   $(".modal").removeClass("flex");
+}
+
+// Tracking Laporan
+$(".state-not-found").hide();
+$(".form-tracking").hide();
+async function trackingLaporan(id) {
+  if (id != "") {
+    const laporan = await fetch(`${BaseUrl}/api/pengaduan/${id}`);
+    const response = await laporan.json();
+    const result = response.data;
+    if (result.length != 0) {
+      $(".state-not-found").hide();
+      $(".form-tracking").show();
+      $("#id-tracking-laporan").text(result.id);
+      $("#tgl-tracking-laporan").text(moment(result.created_at).format("LLLL"));
+      $("#nama-pelapor-tracking-laporan").text(result.pengirim);
+      $("#judul-tracking-laporan").text(result.judul);
+      $("#deskripsi-tracking-laporan").text(result.deskripsi);
+      $("#kategori-tracking-laporan").text(result.kategori);
+      $("#divisi-tracking-laporan").text(result.divisi);
+      $("#status-tracking-laporan").text(result.status);
+      $("#hasil-tracking-laporan").text(result.lampiran);
+    } else {
+      $(".state-not-found").show();
+      $(".form-tracking").hide();
+    }
+  } else {
+    $(".state-not-found").hide();
+    $(".form-tracking").hide();
+  }
 }
