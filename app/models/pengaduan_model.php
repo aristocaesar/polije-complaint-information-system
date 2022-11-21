@@ -52,6 +52,14 @@ class Pengaduan_Model
         return $this->db->resultSet();
     }
 
+    public function getByPengguna($id)
+    {
+        $nama = str_replace("-", " ", $id);
+        $this->db->query("SELECT * FROM " . $this->table . " WHERE pengirim=:pengirim");
+        $this->db->bind("pengirim", $id);
+        return $this->db->resultSet();
+    }
+
     public function tangguhkan($data = [])
     {
         if (!empty($data)) {

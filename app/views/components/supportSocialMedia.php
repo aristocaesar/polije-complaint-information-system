@@ -15,7 +15,7 @@
                 <p class="text-gray-800 font-normal text-lg mb-8">Lebih Dekat Dengan Kami</p>
                 <div class="flex justify-center items-center gap-x-5">
                     <a href="https://www.facebook.com/politekniknegerijember/" target="_blank" rel="noopener noreferrer"><img src="<?= BaseURL(); ?>/public/images/logo-facebook.png" alt="logo-politeknik-negeri-jember" width="50" class="mr-3"></a>
-                    <a href="https://www.instagram.com/humaspolije/" target="_blank" rel="noopener noreferrer"><img src="<?= BaseURL(); ?>/public/images/logo-instagram.png" alt="logo-politeknik-negeri-jember" width="50" class="mr-3"></a>
+                    <a href="https://www.instagram.com/humaspolije/" target="_blank" rel="noopener noreferrer"><img src="<?= BaseURL(); ?>/public/images/logo-instagram.webp" alt="logo-politeknik-negeri-jember" width="50" class="mr-3"></a>
                     <a href="https://www.youtube.com/c/POLIJESIP/" target="_blank" rel="noopener noreferrer"><img src="<?= BaseURL(); ?>/public/images/logo-youtube.png" alt="logo-politeknik-negeri-jember" width="50"></a>
                 </div>
             </div>

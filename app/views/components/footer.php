@@ -10,6 +10,8 @@
 
 <!-- JS Libraies -->
 <script type="text/javascript" src="<?= BaseURL(); ?>/public/js/sweetalert2.all.min.js"></script>
+<!-- Moment.js -->
+<script type="text/javascript" src="<?= BaseURL(); ?>/public/vendor/momentjs/moment.js"></script>
 <?php if (isset($_SESSION)) Flasher::Flash() ?>
 
 <!-- Custom Script -->

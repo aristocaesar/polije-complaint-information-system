@@ -221,6 +221,63 @@ class Pengguna_Model
         }
     }
 
+    public function userUpdate($data, $foto)
+    {
+        if (!empty($data)) {
+            $this->db->query("UPDATE " . $this->table . " SET nama=:nama, tgl_lahir=:tgl_lahir, jenis_kelamin=:jenis_kelamin, alamat=:alamat, kontak=:kontak, status=:status, foto=:foto, updated_at=:updated_at WHERE id=:id");
+            $this->db->bind("nama", ucwords($data["nama"]));
+            $this->db->bind("tgl_lahir", $data["tgl_lahir"]);
+            $this->db->bind("jenis_kelamin", $data["jenis_kelamin"]);
+            $this->db->bind("alamat", $data["alamat"]);
+            $this->db->bind("kontak", $data["kontak"]);
+            $this->db->bind("status", $data["status"]);
+            if ($foto["foto"]["error"] != 4) {
+                $file = explode(".", $foto["foto"]["name"]);
+                $extension = end($file);
+                // hapus foto lama
+                RemoveFileUpload("/images/" . $data["foto_lama"]);
+                // Upload File ( 2MB 2097152 )
+                UploadFile($foto, $data["id"], 2097152, ["image/jpeg", "image/jpg", "image/png"], "images");
+                $this->db->bind("foto", $data["id"] . "." . $extension);
+                $_SESSION["user"]["foto"] = $data["id"] . "." . $extension;
+            } else {
+                $this->db->bind("foto", $data["foto_lama"]);
+            }
+            $this->db->bind("updated_at", date("Y-m-d H:i:s"));
+            $this->db->bind("id", $data["id"]);
+            $this->db->execute();
+            if ($this->db->rowCount() == 0) {
+                throw new Exception("Gagal memperbarui profil");
+            }
+            return $data;
+        } else {
+            throw new Exception("Gagal memperbarui profil!");
+        }
+    }
+
+    public function userUpdatePassword($data)
+    {
+        try {
+            if ($data["password1"] === $data["password2"]) {
+                $user = $this->get($_SESSION["user"]["id"]);
+                if (password_verify($data["password"], $user["password"])) {
+                    $this->db->query("UPDATE " . $this->table . " SET password=:password, updated_at=:updated_at WHERE id=:id");
+                    $this->db->bind("password", password_hash($data["password1"], PASSWORD_DEFAULT));
+                    $this->db->bind("updated_at", date("Y-m-d H:i:s"));
+                    $this->db->bind("id", $_SESSION["user"]["id"]);
+                    $this->db->execute();
+                    return true;
+                } else {
+                    throw new Exception("Password yang anda masukkan salah!");
+                }
+            } else {
+                throw new Exception("Password tidak sama!");
+            }
+        } catch (Exception $error) {
+            throw new Exception($error->getMessage());
+        }
+    }
+
     public function updateLastLogin($id)
     {
         // Current Time Stamp

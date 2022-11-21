@@ -28,6 +28,14 @@ class Informasi_Model
         return $result;
     }
 
+    public function getByPengguna($id)
+    {
+        $nama = str_replace("-", " ", $id);
+        $this->db->query("SELECT * FROM " . $this->table . " WHERE pengirim=:pengirim");
+        $this->db->bind("pengirim", $id);
+        return $this->db->resultSet();
+    }
+
     public function getByStatus($status = "")
     {
         switch ($status) {

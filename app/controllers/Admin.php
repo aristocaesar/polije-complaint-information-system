@@ -405,7 +405,7 @@ class Admin extends Controller
     // Logout
     public function logout()
     {
-        session_destroy();
+        unset($_SESSION["admin"]);
         header("Location: " . BaseURL() . "/admin");
     }
 }

@@ -9,6 +9,7 @@ class Auth extends Controller
         try {
             if (isset($_POST["submit"])) {
                 $this->model("pengguna_model")->login($_POST);
+                Flasher::setMessage("Berhasil Login", "Hallo, Selamat Datang " . $_SESSION["user"]["nama"], "success");
                 header("Location: " . BaseURL() . "/users");
                 exit;
             }
@@ -56,7 +57,7 @@ class Auth extends Controller
 
     public function logout()
     {
-        session_destroy();
+        unset($_SESSION["user"]);
         header("Location: " . BaseURL() . "/auth");
     }
 }

@@ -23,43 +23,208 @@
                 </div>
                 <div id="user-form-content">
                     <div id="content-user-laporan" class="grid grid-cols-1 gap-y-5">
-                        <div class="my-11 text-center">
-                            <a href="<?= BaseURL(); ?>" class="text-blue-800 hover:text-blue-900 hover:underline">Buat Laporan Baru</a>
-                        </div>
-                        <div class="flex flex-col md:flex-row border py-5 px-5 items-center">
-                            <div>
-                                <h6 class="font-bold text-gray-800 mb-3">UKT saya tinggi</h6>
-                                <h6 class="text-gray-500 font-light">Labore consequat commodo dolor dolore sit excepteur culpa. Aliquip ad ad ut labore nostrud Lorem in tempor in ut reprehenderit. Pariatur occaecat magna mollit sunt duis aute cillum aliqua consectetur.</h6>
-                                <div>
-                                    <small class="text-gray-8000">Senin, 26 September 2022 - 16:03:01 -</small>
-                                    <small class="text-blue-800">Proses Tindak Lanjut</small>
+                        <div class="flex md:flex-row flex-col-reverse justify-between items-center my-11">
+                            <div class="flex justify-center md:mt-0 mt-5">
+                                <div class="flex flex-row items-center text-center">
+                                    <h5 class="text-base font-bold text-gray-800 mr-3">Klasifikasi</h5>
+                                    <select class="border border-gray-400 rounded" onchange="changeFormLaporan(this)">
+                                        <option value="pengaduan">Pengaduan</option>
+                                        <option value="aspirasi">Aspirasi</option>
+                                        <option value="informasi">Informasi</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="m-5">
-                                <i data-feather="more-vertical" class="cursor-pointer hidden md:block" style="width:35px;height: 35px;left: 140px;top: 17px;"></i>
-                                <i data-feather="more-horizontal" class="cursor-pointer block md:hidden" style="width:35px;height: 35px;left: 140px;top: 17px;"></i>
+                            <div class="text-center">
+                                <a href="<?= BaseURL(); ?>" class="text-blue-800 hover:text-blue-900 hover:underline">Buat Laporan Baru</a>
                             </div>
+                        </div>
+                        <div id="form-laporan-pengaduan" class="flex flex-col">
+                            <h5 class="text-blue-800 font-bold text-xl mb-8">Pengaduan</h5>
+                            <?php if (!empty($data["pengaduan"])) : ?>
+                                <?php foreach ($data["pengaduan"] as $pengaduan) : ?>
+                                    <div class="flex flex-col md:flex-row border py-5 px-5 items-center justify-between">
+                                        <div>
+                                            <h6 class="font-bold text-gray-800 mb-3"><?= $pengaduan["judul"] ?></h6>
+                                            <h6 class="text-gray-500 font-light"><?= $pengaduan["deskripsi"] ?></h6>
+                                            <div>
+                                                <small class="text-gray-800"><?= $pengaduan["created_at"] ?></small>
+                                                <?php
+                                                $status = "";
+                                                $sts = $pengaduan["status"];
+                                                if ($sts == "ditangguhkan") {
+                                                    $status = "text-red-500";
+                                                } elseif ($sts == "belum_ditanggapi") {
+                                                    $status = "text-yellow-500";
+                                                } elseif ($sts == "proses") {
+                                                    $status = "text-blue-800";
+                                                } elseif ($sts == "selesai") {
+                                                    $status = "text-green-500";
+                                                }
+                                                ?>
+                                                <small class="<?= $status ?>"><?= ucwords(str_replace("_", " ", $pengaduan["status"])); ?></small>
+                                            </div>
+                                        </div>
+                                        <div class="m-5">
+                                            <i data-feather="more-vertical" class="cursor-pointer hidden md:block" style="width:35px;height: 35px;left: 140px;top: 17px;"></i>
+                                            <i data-feather="more-horizontal" class="cursor-pointer block md:hidden" style="width:35px;height: 35px;left: 140px;top: 17px;"></i>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php else : ?>
+                                <div class="flex flex-col md:flex-row border py-5 px-5 items-center">
+                                    <div>
+                                        <h6 class="text-gray-800">Tidak Ada Pengaduan</h6>
+                                    </div>
+                                </div>
+                            <?php endif ?>
+                        </div>
+                        <div id="form-laporan-aspirasi" class="flex flex-col">
+                            <h5 class="text-blue-800 font-bold text-xl mb-8">Aspirasi</h5>
+                            <?php if (!empty($data["aspirasi"])) : ?>
+                                <?php foreach ($data["aspirasi"] as $aspirasi) : ?>
+                                    <div class="flex flex-col md:flex-row border py-5 px-5 items-center justify-between">
+                                        <div>
+                                            <h6 class="font-bold text-gray-800 mb-3"><?= $aspirasi["judul"] ?></h6>
+                                            <h6 class="text-gray-500 font-light"><?= $aspirasi["deskripsi"] ?></h6>
+                                            <div>
+                                                <small class="text-gray-800"><?= $aspirasi["created_at"] ?></small>
+                                                <?php
+                                                $status_aspi = "";
+                                                $sts_aspi = $aspirasi["status"];
+                                                if ($sts_aspi == "ditangguhkan") {
+                                                    $status_aspi = "text-red-500";
+                                                } elseif ($sts_aspi == "belum_ditanggapi") {
+                                                    $status_aspi = "text-yellow-500";
+                                                } elseif ($sts_aspi == "proses") {
+                                                    $status_aspi = "text-blue-800";
+                                                } elseif ($sts_aspi == "selesai") {
+                                                    $status_aspi = "text-green-500";
+                                                }
+                                                ?>
+                                                <small class="<?= $status_aspi ?>"><?= ucwords(str_replace("_", " ", $aspirasi["status"])); ?></small>
+                                            </div>
+                                        </div>
+                                        <div class="m-5">
+                                            <i data-feather="more-vertical" class="cursor-pointer hidden md:block" style="width:35px;height: 35px;left: 140px;top: 17px;"></i>
+                                            <i data-feather="more-horizontal" class="cursor-pointer block md:hidden" style="width:35px;height: 35px;left: 140px;top: 17px;"></i>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php else : ?>
+                                <div class="flex flex-col md:flex-row border py-5 px-5 items-center">
+                                    <div>
+                                        <h6 class="text-gray-800">Tidak Ada Aspirasi</h6>
+                                    </div>
+                                </div>
+                            <?php endif ?>
+                        </div>
+                        <div id="form-laporan-informasi" class="flex flex-col">
+                            <h5 class="text-blue-800 font-bold text-xl mb-8">Informasi</h5>
+                            <?php if (!empty($data["informasi"])) : ?>
+                                <?php foreach ($data["informasi"] as $informasi) : ?>
+                                    <div class="flex flex-col md:flex-row border py-5 px-5 items-center justify-between">
+                                        <div>
+                                            <h6 class="font-bold text-gray-800 mb-3"><?= $informasi["judul"] ?></h6>
+                                            <h6 class="text-gray-500 font-light"><?= $informasi["deskripsi"] ?></h6>
+                                            <div>
+                                                <small class="text-gray-800"><?= $informasi["created_at"] ?></small>
+                                                <?php
+                                                $status_info = "";
+                                                $sts_info = $informasi["status"];
+                                                if ($sts_info == "ditangguhkan") {
+                                                    $status_info = "text-red-500";
+                                                } elseif ($sts_info == "belum_ditanggapi") {
+                                                    $status_info = "text-yellow-500";
+                                                } elseif ($sts_info == "proses") {
+                                                    $status_info = "text-blue-800";
+                                                } elseif ($sts_info == "selesai") {
+                                                    $status_info = "text-green-500";
+                                                }
+                                                ?>
+                                                <small class="<?= $status_info ?>"><?= ucwords(str_replace("_", " ", $informasi["status"])); ?></small>
+                                            </div>
+                                        </div>
+                                        <div class="m-5">
+                                            <i data-feather="more-vertical" class="cursor-pointer hidden md:block" style="width:35px;height: 35px;left: 140px;top: 17px;"></i>
+                                            <i data-feather="more-horizontal" class="cursor-pointer block md:hidden" style="width:35px;height: 35px;left: 140px;top: 17px;"></i>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php else : ?>
+                                <div class="flex flex-col md:flex-row border py-5 px-5 items-center">
+                                    <div>
+                                        <h6 class="text-gray-800">Tidak Ada Informasi</h6>
+                                    </div>
+                                </div>
+                            <?php endif ?>
                         </div>
                     </div>
                     <div id="content-user-pengaturan">
-                        <div class="flex flex-col text-grey-800 space-y-8 mt-11">
-                            <div>
-                                <h5 class="text-blue-800 font-bold text-2xl mb-2">Email</h5>
-                                <p class="">hi@aristoc.space - <span class="text-green-500 italic">Terverifikasi</span> <button type="button" class="ml-2 text-blue-800 underline" onclick="Modal('ganti-email')"><u>Ganti Email</u></button></p>
+                        <form action="<?= BaseURL() ?>/users/profil" method="post" enctype="multipart/form-data">
+                            <div class="grid grid-cols-2 text-grey-800 gap-x-5 gap-y-5 mt-11">
+                                <input type="text" class="hidden" name="id" value="<?= $data["user"]["id"] ?>">
+                                <div>
+                                    <h5 class="text-blue-800 font-bold text-xl mb-2">Nama Lengkap</h5>
+                                    <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded w-full" id="nama_lengkap" name="nama" placeholder="Ketikkan Nama Lengkap" value="<?= $data["user"]["nama"] ?>" required>
+                                </div>
+                                <div>
+                                    <h5 class="text-blue-800 font-bold text-xl mb-2">Tanggal Lahir</h5>
+                                    <input type="date" class="mt-3 border border-gray-400 w-full py-3 px-2 rounded" id="tgl_lahir" name="tgl_lahir" value="<?= $data["user"]["tgl_lahir"] ?>" required>
+                                </div>
+                                <div class="flex flex-col mb-5">
+                                    <h5 class="text-blue-800 font-bold text-xl mb-2">Jenis Kelamin</h5>
+                                    <select class="mt-3 border border-gray-400 py-3 px-2 rounded" name="jenis_kelamin" id="jenis_kelamin">
+                                        <option value="laki-laki" <?= $data["user"]["jenis_kelamin"] == "laki-laki" ? "selected" : "" ?>>Laki - Laki</option>
+                                        <option value="perempuan" <?= $data["user"]["jenis_kelamin"] == "perempuan" ? "selected" : "" ?>>Perempuan</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <h5 class="text-blue-800 font-bold text-xl mb-2">Alamat</h5>
+                                    <input type="text" class="mt-3 border border-gray-400 w-full py-3 px-2 rounded" id="alamat" name="alamat" placeholder="Ketikkan Alamat" value="<?= $data["user"]["alamat"] ?>">
+                                </div>
+                                <div class="flex flex-col mb-5">
+                                    <h5 class="text-blue-800 font-bold text-xl mb-2">Kontak</h5>
+                                    <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" name="kontak" id="kontak" value="<?= $data["user"]["kontak"] ?>" placeholder="Ketikkan No Telp / Whatapps / Email" required>
+                                </div>
+                                <div class="flex flex-col mb-5">
+                                    <h5 class="text-blue-800 font-bold text-xl mb-2">Status</h5>
+                                    <select class="mt-3 border border-gray-400 py-3 px-2 rounded" name="status" id="status">
+                                        <option value="masyarakat" <?= $data["user"]["status"] == "masyarakat" ? "selected" : "" ?>>Masyarakat Umum</option>
+                                        <option value="mahasiswa_mahasiswi" <?= $data["user"]["status"] == "mahasiswa_mahasiswi" ? "selected" : "" ?>>Mahasiswa</option>
+                                        <option value="dosen" <?= $data["user"]["status"] == "dosen" ? "selected" : "" ?>>Dosen</option>
+                                        <option value="staf" <?= $data["user"]["status"] == "staf" ? "selected" : "" ?>>Staf Kampus</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <h5 class="text-blue-800 font-bold text-xl mb-2">Email</h5>
+                                    <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded w-full" required value="<?= $data["user"]["email"] ?>" readonly>
+                                    <button type="button" class="mt-2 text-blue-800 underline" onclick="Modal('ganti-email')"><u>Ganti Email</u></button>
+                                </div>
+                                <div>
+                                    <h5 class="text-blue-800 font-bold text-2xl mb-2">Password</h5>
+                                    <p class="text-dark"><button type="button" class="text-blue-800 underline" onclick="Modal('ganti-password')"><u>Ganti Password</u></button></p>
+                                </div>
+                                <div>
+                                    <h5 class="text-blue-800 font-bold text-2xl mb-2">Foto</h5>
+                                    <img src="<?= BaseURL() ?>/public/upload/assets/images/<?= $_SESSION["user"]["foto"] ?>" alt="<?= $_SESSION["user"]["foto"] ?>" class="w-28 rounded-full my-5" id="foto-profil">
+                                    <div class="flex flex-col mb-10">
+                                        <div class="mt-3 border border-gray-400 py-3 px-2 rounded">
+                                            <div class="flex">
+                                                <input type="text" class="hidden" name="foto_lama" value="<?= $data["user"]["foto"] ?>">
+                                                <input type="file" name="foto" onchange="changeFotoProfil(this)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h5 class="text-blue-800 font-bold text-2xl mb-2">Aktifitas Terakhir</h5>
+                                    <p class="text-dark" id="aktifitas-terakhir"><?= $data["user"]["updated_at"] ?></p>
+                                </div>
                             </div>
-                            <div>
-                                <h5 class="text-blue-800 font-bold text-2xl mb-2">Password</h5>
-                                <p class="text-dark">Terakhir diperbarui - Senin, 26 September 2022 - 16:26:09<button type="button" class="ml-2 text-blue-800 underline" onclick="Modal('ganti-password')"><u>Ganti Password</u></button></p>
+                            <div class="flex justify-center">
+                                <button type="submit" name="submit" class="px-5 py-3 text-xl font-bold text-white bg-blue-800 hover:bg-blue-900 hover:drop-shadow-lg ">Simpan</button>
                             </div>
-                            <div>
-                                <h5 class="text-blue-800 font-bold text-2xl mb-2">Verifikasi</h5>
-                                <p class="text-dark">Akun belum terverifikasi <button type="button" class="ml-2 text-blue-800 underline" onclick="Modal('verifikasi')"><u>Verifikasi Sekarang</u></button></p>
-                            </div>
-                            <div>
-                                <h5 class="text-blue-800 font-bold text-2xl mb-2">Aktifitas Terakhir</h5>
-                                <p class="text-dark">Senin, 26 September 2022 - 16:29:25</p>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -97,7 +262,6 @@
         </div>
     </div>
 </div>
-
 <!-- Modal Ganti Email -->
 <div id="modal-ganti-email" class="modal hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center bg-black bg-opacity-50">
     <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
@@ -160,18 +324,18 @@
                 </button>
             </div>
             <!-- Modal body -->
-            <form action="" method="" class="px-10 py-5 text-grey-800">
+            <form action="<?= BaseURL() ?>/users/changepassword" method="post" class="px-10 py-5 text-grey-800">
                 <div class="flex flex-col mb-5">
                     <label for="password" class="text-gray-700">Password Sekarang</label>
-                    <input type="password" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password" name="password" placeholder="Ketikkan Password" required>
+                    <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password" name="password" placeholder="Ketikkan Password" required>
                 </div>
                 <div class="flex flex-col mb-5">
                     <label for="password" class="text-gray-700">Password Baru</label>
-                    <input type="password" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password1" name="password1" placeholder="Ketikkan Password" required>
+                    <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password1" name="password1" placeholder="Ketikkan Password" required>
                 </div>
                 <div class="flex flex-col mb-5">
                     <label for="password" class="text-gray-700">Konfirmasi Password Baru</label>
-                    <input type="password" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password2" name="password2" placeholder="Ketikkan Password" required>
+                    <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password2" name="password2" placeholder="Ketikkan Password" required>
                 </div>
                 <p class="font-bold mb-4">Perhatikan</p>
                 <ul class="pl-5 list-disc font-light mb-5">
@@ -179,84 +343,13 @@
                 </ul>
                 <!-- Modal footer -->
                 <div class="flex justify-end items-center pt-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
-                    <button type="submit" class="text-white bg-blue-800 hover:bg-blue-900 hover:drop-shadow-md font-medium rounded-lg text-sm px-5 py-2.5 text-cente">Ya, Ganti Password</button>
+                    <button type="submit" name="submit" class="text-white bg-blue-800 hover:bg-blue-900 hover:drop-shadow-md font-medium rounded-lg text-sm px-5 py-2.5 text-cente">Ya, Ganti Password</button>
                     <button type="button" class="text-gray-800 border border-gray-800 hover:drop-shadow-md font-medium rounded-lg text-sm px-5 py-2.5 text-center" onclick="ModalClose()">Batal</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-<!-- Modal Verifikasi Keaslian Akun -->
-<div id="modal-verifikasi" class="modal hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center bg-black bg-opacity-50">
-    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
-        <!-- Modal content -->
-        <div class="relative bg-white rounded-lg shadow">
-            <!-- Modal header -->
-            <div class="flex justify-between items-start p-4 rounded-t border-b">
-                <h3 class="text-xl font-semibold text-gray-800 ">
-                    Verifikasi Akun
-                </h3>
-                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" onclick="ModalClose()">
-                    <svg aria-hidden=" true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                    </svg>
-                </button>
-            </div>
-            <!-- Modal body -->
-            <form action="" method="" class="px-10 py-5 text-grey-800">
-                <div class="flex flex-col mb-5">
-                    <label for="password" class="text-gray-700">Password Sekarang</label>
-                    <input type="password" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password" name="password" placeholder="Ketikkan Password" required>
-                </div>
-                <!-- Modal footer -->
-                <div class="flex justify-end items-center pt-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
-                    <button type="submit" class="text-white bg-blue-800 hover:bg-blue-900 hover:drop-shadow-md font-medium rounded-lg text-sm px-5 py-2.5 text-cente">Kirim Verifikasi</button>
-                    <button type="button" class="text-gray-800 border border-gray-800 hover:drop-shadow-md font-medium rounded-lg text-sm px-5 py-2.5 text-center" onclick="ModalClose()">Batal</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<!-- <div class="modal fade" id="verifikasiAkun" tabindex="-1" role="dialog" aria-labelledby="verifikasiAkun" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title font-weight-bold">Verifikasi Keaslian Akun</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="inputStatus">Verifikasi Status Sebagai</label>
-                        <div class="input-group mb-3">
-                            <select class="custom-select" id="inputStatus" name="status" onchange="userVerifikasiSelected(this)">
-                                <option value="mahasiswa">Mahasiswa / Mahasiswi</option>
-                                <option value="dosen">Dosen</option>
-                                <option value="staf">Staf</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div id="form-verifikasi">
-                        <div id="form-verifikasi-mahasiswa">
-                            <p>Form mahasiswa</p>
-                        </div>
-                        <div id="form-verifikasi-dosen">
-                            <p>Form dosen</p>
-                        </div>
-                        <div id="form-verifikasi-staf">
-                            <p>Form staf</p>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" name="verifikasiAkun" class="btn btn-blue font-weight-bold py-3">Verifikasi</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div> -->
 <script>
     // USER MENU
     // Default menu selected
@@ -291,6 +384,33 @@
         } else if (e == "pengaturan") {
             $("#content-user-laporan").hide();
             $("#content-user-pengaturan").show();
+        }
+    }
+
+    function changeFotoProfil(e) {
+        const file = e.files[0];
+        console.log(file);
+        $("#foto-profil").attr("src", window.URL.createObjectURL(file));
+    }
+    // Form Laporan
+    $("#form-laporan-pengaduan").show();
+    $("#form-laporan-aspirasi").hide();
+    $("#form-laporan-informasi").hide();
+
+    function changeFormLaporan(form) {
+        const formSelected = form.value;
+        if (formSelected == "pengaduan") {
+            $("#form-laporan-pengaduan").show();
+            $("#form-laporan-aspirasi").hide();
+            $("#form-laporan-informasi").hide();
+        } else if (formSelected == "aspirasi") {
+            $("#form-laporan-pengaduan").hide();
+            $("#form-laporan-aspirasi").show();
+            $("#form-laporan-informasi").hide();
+        } else if (formSelected == "informasi") {
+            $("#form-laporan-pengaduan").hide();
+            $("#form-laporan-aspirasi").hide();
+            $("#form-laporan-informasi").show();
         }
     }
 </script>
