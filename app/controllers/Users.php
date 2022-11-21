@@ -39,6 +39,42 @@ class Users extends Controller
         }
     }
 
+    public function changeemail()
+    {
+        try {
+            if (isset($_POST["submit"])) {
+                if ($_POST["email"] == $_POST["email2"]) {
+                    $userLogin = $this->model("pengguna_model")->get($_SESSION["user"]["id"]);
+                    if ($userLogin["email"] != $_POST["email"]) {
+                        $user = $this->model("petugas_model")->getByEmail($_POST["email"]);
+                        if (!$user) {
+                            if (password_verify($_POST["password"], $userLogin["password"])) {
+                                // rubah email dan kirimkan link verifikasi
+                                var_dump("ok");
+                                die;
+                            } else {
+                                throw new Exception("Password salah");
+                            }
+                        } else {
+                            throw new Exception("Email sudah digunakan");
+                        }
+                    } else {
+                        throw new Exception("Email ini sedang kamu gunakan");
+                    }
+                } else {
+                    throw new Exception("Email tidak sama");
+                }
+            } else {
+                header("Location: " . BaseURL() . "/users");
+                exit;
+            }
+        } catch (Exception $error) {
+            Flasher::setMessage("Terjadi Kesalahan!", $error->getMessage(), "error");
+            header("Location: " . BaseURL() . "/users");
+            exit;
+        }
+    }
+
     public function changepassword()
     {
         if (isset($_POST["submit"])) {

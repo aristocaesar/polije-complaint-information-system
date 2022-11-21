@@ -6,10 +6,11 @@ class Laporan extends Controller
 
     public function index()
     {
-        $data = [
-            "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Laporan",
-        ];
+        // $data = [
+        //     "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Laporan",
+        // ];
 
-        $this->view("laporan/index", $data);
+        // $this->view("laporan/index", $data);
+        header("Location: " . BaseURL());
     }
 }

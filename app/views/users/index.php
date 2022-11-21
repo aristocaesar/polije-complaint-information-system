@@ -16,13 +16,16 @@
                 <h5 class="md:text-3xl text-xl"> User Area</h5>
             </div>
             <div class="mt-16">
+                <!-- Menu Control -->
                 <div id="user-menu" class="grid grid-cols-3 gap-x-5">
                     <button type="button" id="laporan" onclick="userFormSelect(this.id)" class="py-4 text-xl font-bold text-white bg-blue-800 hover:bg-blue-900 hover:drop-shadow-lg flex items-center justify-center"><i data-feather="edit-3" style="width:35px;height: 35px;left: 140px;top: 17px;" class="md:pr-3"></i> <span class="hidden md:block">LAPORAN</span></button>
                     <button type="button" id="pengaturan" onclick="userFormSelect(this.id)" class="py-4 text-xl font-bold text-white bg-blue-800 hover:bg-blue-900 hover:drop-shadow-lg flex items-center justify-center"><i data-feather="settings" style="width:35px;height: 35px;left: 140px;top: 17px;" class="md:pr-3"></i> <span class="hidden md:block">AKUN</span></button>
                     <button type="button" id="keluar" onclick="Modal(this.id)" class="py-4 text-xl font-bold text-white bg-blue-800 hover:bg-blue-900 hover:drop-shadow-lg flex items-center justify-center"><i data-feather="log-in" style="width:35px;height: 35px;left: 140px;top: 17px;" class="md:pr-3"></i> <span class="hidden md:block">KELUAR</span></button>
                 </div>
                 <div id="user-form-content">
+                    <!-- Laporan -->
                     <div id="content-user-laporan" class="grid grid-cols-1 gap-y-5">
+                        <!-- Laporan Control -->
                         <div class="flex md:flex-row flex-col-reverse justify-between items-center my-11">
                             <div class="flex justify-center md:mt-0 mt-5">
                                 <div class="flex flex-row items-center text-center">
@@ -38,6 +41,7 @@
                                 <a href="<?= BaseURL(); ?>" class="text-blue-800 hover:text-blue-900 hover:underline">Buat Laporan Baru</a>
                             </div>
                         </div>
+                        <!-- Laporan - Pengaduan -->
                         <div id="form-laporan-pengaduan" class="flex flex-col">
                             <h5 class="text-blue-800 font-bold text-xl mb-8">Pengaduan</h5>
                             <?php if (!empty($data["pengaduan"])) : ?>
@@ -78,6 +82,7 @@
                                 </div>
                             <?php endif ?>
                         </div>
+                        <!-- Laporan - Aspirasi -->
                         <div id="form-laporan-aspirasi" class="flex flex-col">
                             <h5 class="text-blue-800 font-bold text-xl mb-8">Aspirasi</h5>
                             <?php if (!empty($data["aspirasi"])) : ?>
@@ -118,6 +123,7 @@
                                 </div>
                             <?php endif ?>
                         </div>
+                        <!-- Laporan - Informasi -->
                         <div id="form-laporan-informasi" class="flex flex-col">
                             <h5 class="text-blue-800 font-bold text-xl mb-8">Informasi</h5>
                             <?php if (!empty($data["informasi"])) : ?>
@@ -159,6 +165,7 @@
                             <?php endif ?>
                         </div>
                     </div>
+                    <!-- User Setting -->
                     <div id="content-user-pengaturan">
                         <form action="<?= BaseURL() ?>/users/profil" method="post" enctype="multipart/form-data">
                             <div class="grid grid-cols-2 text-grey-800 gap-x-5 gap-y-5 mt-11">
@@ -189,8 +196,8 @@
                                 <div class="flex flex-col mb-5">
                                     <h5 class="text-blue-800 font-bold text-xl mb-2">Status</h5>
                                     <select class="mt-3 border border-gray-400 py-3 px-2 rounded" name="status" id="status">
-                                        <option value="masyarakat" <?= $data["user"]["status"] == "masyarakat" ? "selected" : "" ?>>Masyarakat Umum</option>
-                                        <option value="mahasiswa_mahasiswi" <?= $data["user"]["status"] == "mahasiswa_mahasiswi" ? "selected" : "" ?>>Mahasiswa</option>
+                                        <option value="masyarakat" <?= $data["user"]["status"] == "masyarakat" ? "selected" : "" ?>>Masyarakat</option>
+                                        <option value="mahasiswa_mahasiswi" <?= $data["user"]["status"] == "mahasiswa_mahasiswi" ? "selected" : "" ?>>Mahasiswa / Mahasiswi</option>
                                         <option value="dosen" <?= $data["user"]["status"] == "dosen" ? "selected" : "" ?>>Dosen</option>
                                         <option value="staf" <?= $data["user"]["status"] == "staf" ? "selected" : "" ?>>Staf Kampus</option>
                                     </select>
@@ -279,7 +286,7 @@
                 </button>
             </div>
             <!-- Modal body -->
-            <form action="" method="" class="px-10 py-5 text-grey-800">
+            <form action="<?= BaseURL() ?>/users/changeemail" method="POST" class="px-10 py-5 text-grey-800">
                 <div class="flex flex-col mb-5">
                     <label for="email" class="text-gray-700">Email</label>
                     <input type="email" class="mt-3 border border-gray-400 py-3 px-2 rounded" name="email" placeholder="Ketikkan Email" required>
@@ -300,7 +307,7 @@
                 </ul>
                 <!-- Modal footer -->
                 <div class="flex justify-end items-center pt-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
-                    <button type="submit" class="text-white bg-blue-800 hover:bg-blue-900 hover:drop-shadow-md font-medium rounded-lg text-sm px-5 py-2.5 text-cente">Ya, Ganti Email</button>
+                    <button type="submit" name="submit" class="text-white bg-blue-800 hover:bg-blue-900 hover:drop-shadow-md font-medium rounded-lg text-sm px-5 py-2.5 text-cente">Ya, Ganti Email</button>
                     <button type="button" class="text-gray-800 border border-gray-800 hover:drop-shadow-md font-medium rounded-lg text-sm px-5 py-2.5 text-center" onclick="ModalClose()">Batal</button>
                 </div>
             </form>

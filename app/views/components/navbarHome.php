@@ -33,9 +33,9 @@
                 <li>
                     <a class="nav-items-horizontal text-white hover:text-gray-200" href="<?= BaseURL(); ?>">Home</a>
                 </li>
-                <li>
+                <!-- <li>
                     <a class="nav-items-horizontal text-white hover:text-gray-200" href="<?= BaseURL(); ?>/laporan">Laporan</a>
-                </li>
+                </li> -->
                 <li>
                     <a class="nav-items-horizontal text-white hover:text-gray-200" href="<?= BaseURL(); ?>/tentang">Tentang</a>
                 </li>

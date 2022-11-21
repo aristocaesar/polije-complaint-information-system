@@ -83,7 +83,14 @@ $(".state-not-found").hide();
 $(".form-tracking").hide();
 async function trackingLaporan(id) {
   if (id != "") {
-    const laporan = await fetch(`${BaseUrl}/api/pengaduan/${id}`);
+    const idLaporan = id.replaceAll(/[0-9]/g, "");
+    let klasifikasi = "informasi";
+    if (idLaporan == "ADU") {
+      klasifikasi = "pengaduan";
+    } else if (idLaporan == "ASPI") {
+      klasifikasi = "aspirasi";
+    }
+    const laporan = await fetch(`${BaseUrl}/api/${klasifikasi}/${id}`);
     const response = await laporan.json();
     const result = response.data;
     if (result.length != 0) {
@@ -97,7 +104,15 @@ async function trackingLaporan(id) {
       $("#kategori-tracking-laporan").text(result.kategori);
       $("#divisi-tracking-laporan").text(result.divisi);
       $("#status-tracking-laporan").text(result.status);
-      $("#hasil-tracking-laporan").text(result.lampiran);
+      if (result.lampiran == "" || result.lampiran == null) {
+        $("#hasil-tracking-laporan").text("-");
+      } else {
+        $("#hasil-tracking-laporan").text(result.lampiran);
+      }
+      $("#hasil-tracking-laporan").attr(
+        "href",
+        `${BaseUrl}/public/upload/assets/document/${klasifikasi}/${result.lampiran}`
+      );
     } else {
       $(".state-not-found").show();
       $(".form-tracking").hide();
