@@ -15,11 +15,11 @@ if (getCookie("location") == undefined) {
       const longitude = position.coords.longitude;
       const location = latitude + "," + longitude;
       document.cookie = `location=${location}`;
-      $("#lokasi").attr("value", location);
+      $(".lokasi").attr("value", location);
     });
   }
 } else {
-  $("#lokasi").attr("value", getCookie("location"));
+  $(".lokasi").attr("value", getCookie("location"));
 }
 
 // DATA TABLES

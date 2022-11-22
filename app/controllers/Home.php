@@ -40,9 +40,9 @@ class Home extends Controller
     {
         try {
             if (isset($_POST)) {
-                var_dump($_POST);
-                var_dump($_FILES);
-                exit;
+                $this->model("aspirasi_model")->sendAspirasi();
+                Flasher::setMessage("Berhasil", "Berhasil mengirim aspirasi", "success");
+                header("Location: " . BaseURL());
             }
         } catch (Exception $error) {
             Flasher::setMessage("Terjadi Kesalahan!", $error->getMessage(), "error");

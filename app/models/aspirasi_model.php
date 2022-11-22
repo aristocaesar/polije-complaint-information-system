@@ -119,7 +119,7 @@ class Aspirasi_Model
         return "INFO" . time();
     }
 
-    public function sendInformasi()
+    public function sendAspirasi()
     {
         if (isset($_POST["submit"])) {
             $id = $this->generateID();

@@ -75,6 +75,7 @@
                             <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" name="pelapor" value="Rahasia" readonly>
                         </div>
                     <?php endif; ?>
+                    <input type="text" class="hidden lokasi" value="Akses tidak diberikan" name="lokasi">
                     <button type="submit" name="submit" class="text-xl text-white w-full rounded bg-blue-800 py-4 font-bold tracking-wide hover:bg-blue-900 hover:drop-shadow-lg">LAPOR!</button>
                 </form>
                 <!-- FORM ASPIRASI -->
@@ -115,6 +116,7 @@
                                 </div>
                             </div>
                         </div>
+                        <input type="text" class="hidden lokasi" value="Akses tidak diberikan" name="lokasi">
                         <button type="submit" name="submit" class="text-xl text-white w-full rounded bg-blue-800 py-4 font-bold tracking-wide hover:bg-blue-900 hover:drop-shadow-lg">KIRIM ASPIRASI</button>
                     <?php else : ?>
                         <div class="text-center">
@@ -161,7 +163,7 @@
                                 </div>
                             </div>
                         </div>
-                        <input type="text" id="lokasi" class="hidden" value="Akses tidak diberikan" name="lokasi">
+                        <input type="text" class="hidden lokasi" value="Akses tidak diberikan" name="lokasi">
                         <button type="submit" name="submit" class="text-xl text-white w-full rounded bg-blue-800 py-4 font-bold tracking-wide hover:bg-blue-900 hover:drop-shadow-lg">MINTA INFORMASI</button>
                     <?php else : ?>
                         <div class="text-center">
