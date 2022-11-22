@@ -33,131 +33,142 @@
             </div>
             <div id="form-pai">
                 <!-- FORM PENGADUAN -->
-                <form id="form-pengaduan" class="mt-11 mb-5" action="" method="POST">
-                    <div class="text-center mb-10">
+                <form id="form-pengaduan" class="mt-11 mb-5" action="<?= BaseURL() ?>/home/pengaduan" method="POST" enctype="multipart/form-data">
+                    <!-- <div class="text-center mb-10">
                         <small id="panduan-pengaduan" class="font-light text-gray-700 hover:cursor-pointer hover:underline" onclick="Panduan(this.id)">Perhatikan Cara Menyampaikan Pengaduan Yang Baik dan Benar</small>
-                    </div>
+                    </div> -->
                     <div class="flex flex-col mb-5">
-                        <label for="judul" class="text-gray-700">Judul Laporan Anda*</label>
+                        <label for="judul" class="text-gray-700">Judul Laporan*</label>
                         <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="judul" aria-describedby="judul" name="judul" placeholder="Ketikkan Judul Laporan" required>
                     </div>
                     <div class="flex flex-col mb-5">
-                        <label for="deskripsi" class="text-gray-700">Deskripsikan Laporan Anda*</label>
+                        <label for="deskripsi" class="text-gray-700">Deskripsikan Laporan*</label>
                         <textarea class="mt-3 border border-gray-400 py-3 px-2 rounded" name="deskripsi" id="deskripsi" placeholder="Deskripsikan Laporan Anda" rows="3" required></textarea>
                     </div>
                     <div class="flex flex-col mb-5">
                         <label for="kategori" class="text-gray-700">Kategori</label>
                         <select class="mt-3 border border-gray-400 py-3 px-2 rounded" name="kategori" id="kategori">
-                            <option value="umum">Umum</option>
-                            <option value="infrastruktur">Infrastruktur</option>
-                            <option value="keamanan">Keamanan</option>
-                            <option value="kebersihan">Kebersihan</option>
-                            <option value="jaringan-public">Jaringan Publik</option>
-                            <option value="pelayanan-public">Pelayanan Publik</option>
+                            <?php foreach ($data["kategori"] as $kategori_pengaduan) : ?>
+                                <option value="<?= $kategori_pengaduan["nama"] ?>"><?= $kategori_pengaduan["nama"] ?></option>
+                            <?php endforeach; ?>
                         </select>
-                    </div>
-                    <div class="flex flex-col mb-5">
-                        <label for="pelapor" class="text-gray-700">Kirim Sebagai</label>
-                        <select class="mt-3 border border-gray-400 py-3 px-2 rounded" name="pelapor" id="pelapor">
-                            <option value="rahasia">Rahasia</option>
-                            <option value="masyarakat-umum">Masyarakat Umum</option>
-                            <option value="mahasiswa">Mahasiswa</option>
-                            <option value="dosen">Dosen</option>
-                            <option value="staf-kampus">Staf Kampus</option>
-                        </select>
-                    </div>
-                    <div class="flex flex-col mb-5">
-                        <label for="kontak" class="text-gray-700">No Telp / Whatapps / Email*</label>
-                        <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" name="kontak" id="kontak" aria-describedby="kontak" placeholder="Ketikkan No Telp / Whatapps / Email" required>
                     </div>
                     <div class="flex flex-col mb-5">
                         <label for="divisi-tujuan" class="text-gray-700">Divisi Tujuan</label>
                         <select class="mt-3 border border-gray-400 py-3 px-2 rounded" name="divisi" id="divisi-tujuan">
-                            <option>Dosen</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
+                            <?php foreach ($data["divisi"] as $divisi_pengaduan) : ?>
+                                <option value="<?= $divisi_pengaduan["nama"] ?>"><?= $divisi_pengaduan["nama"] ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
-                    <div class="flex flex-col mb-10">
+                    <div class="flex flex-col <?= !isset($_SESSION["user"]) ? "mb-5" : "mb-10" ?>">
                         <label for="input-file" class="text-gray-700">Lampiran</label>
                         <div class="mt-3 border border-gray-400 py-3 px-2 rounded">
                             <div class="flex">
-                                <input type="file" name="lampiran">
+                                <input type="file" name="foto">
                             </div>
                         </div>
                     </div>
+                    <?php if (!isset($_SESSION["user"])) : ?>
+                        <div class="flex flex-col mb-10">
+                            <label for="pelapor" class="text-gray-700">Kirim Sebagai</label>
+                            <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" name="pelapor" value="Rahasia" readonly>
+                        </div>
+                    <?php endif; ?>
                     <button type="submit" name="submit" class="text-xl text-white w-full rounded bg-blue-800 py-4 font-bold tracking-wide hover:bg-blue-900 hover:drop-shadow-lg">LAPOR!</button>
                 </form>
                 <!-- FORM ASPIRASI -->
-                <form id="form-aspirasi" class="mt-11 mb-5" action="" method="POST">
-                    <div class="text-center mb-10">
+                <form id="form-aspirasi" class="mt-11 mb-5" action="<?= BaseURL() ?>/home/aspirasi" method="POST" enctype="multipart/form-data">
+                    <?php if (isset($_SESSION["user"])) : ?>
+                        <!-- <div class="text-center mb-10">
                         <small id="panduan-aspirasi" class="font-light text-gray-700 hover:cursor-pointer hover:underline" onclick="Panduan(this.id)">Perhatikan Cara Menyampaikan Aspirasi Yang Baik dan Benar</small>
-                    </div>
-                    <div class="flex flex-col mb-5">
-                        <label for="judul" class="text-gray-700">Judul Aspirasi Anda*</label>
-                        <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="judul" aria-describedby="judul" name="judul" placeholder="Ketikkan Judul Aspirasi" required>
-                    </div>
-                    <div class="flex flex-col mb-5">
-                        <label for="deskripsi" class="text-gray-700">Deskripsikan Aspirasi Anda*</label>
-                        <textarea class="mt-3 border border-gray-400 py-3 px-2 rounded" name="deskripsi" id="deskripsi" placeholder="Deskripsikan Aspirasi Anda" rows="3" required></textarea>
-                    </div>
-                    <div class="flex flex-col mb-5">
-                        <label for="kategori" class="text-gray-700">Kategori</label>
-                        <select class="mt-3 border border-gray-400 py-3 px-2 rounded" name="kategori" id="kategori">
-                            <option value="umum">Umum</option>
-                            <option value="infrastruktur">Infrastruktur</option>
-                            <option value="keamanan">Keamanan</option>
-                            <option value="kebersihan">Kebersihan</option>
-                            <option value="jaringan-public">Jaringan Publik</option>
-                            <option value="pelayanan-public">Pelayanan Publik</option>
-                        </select>
-                    </div>
-                    <div class="flex flex-col mb-5">
-                        <label for="pelapor" class="text-gray-700">Kirim Sebagai</label>
-                        <select class="mt-3 border border-gray-400 py-3 px-2 rounded" name="pelapor" id="pelapor">
-                            <option value="rahasia">Rahasia</option>
-                            <option value="masyarakat-umum">Masyarakat Umum</option>
-                            <option value="mahasiswa">Mahasiswa</option>
-                            <option value="dosen">Dosen</option>
-                            <option value="staf-kampus">Staf Kampus</option>
-                        </select>
-                    </div>
-                    <div class="flex flex-col mb-5">
-                        <label for="kontak" class="text-gray-700">No Telp / Whatapps / Email*</label>
-                        <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" name="kontak" id="kontak" aria-describedby="kontak" placeholder="Ketikkan No Telp / Whatapps / Email" required>
-                    </div>
-                    <div class="flex flex-col mb-5">
-                        <label for="divisi-tujuan" class="text-gray-700">Divisi Tujuan</label>
-                        <select class="mt-3 border border-gray-400 py-3 px-2 rounded" name="divisi" id="divisi-tujuan">
-                            <option>Dosen</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                        </select>
-                    </div>
-                    <div class="flex flex-col mb-10">
-                        <label for="input-file" class="text-gray-700">Lampiran</label>
-                        <div class="mt-3 border border-gray-400 py-3 px-2 rounded">
-                            <div class="flex">
-                                <input type="file" name="lampiran">
+                    </div> -->
+                        <div class="flex flex-col mb-5">
+                            <label for="judul" class="text-gray-700">Judul Aspirasi Anda*</label>
+                            <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="judul" aria-describedby="judul" name="judul" placeholder="Ketikkan Judul Aspirasi" required>
+                        </div>
+                        <div class="flex flex-col mb-5">
+                            <label for="deskripsi" class="text-gray-700">Deskripsikan Aspirasi Anda*</label>
+                            <textarea class="mt-3 border border-gray-400 py-3 px-2 rounded" name="deskripsi" id="deskripsi" placeholder="Deskripsikan Aspirasi Anda" rows="3" required></textarea>
+                        </div>
+                        <div class="flex flex-col mb-5">
+                            <label for="kategori" class="text-gray-700">Kategori</label>
+                            <select class="mt-3 border border-gray-400 py-3 px-2 rounded" name="kategori" id="kategori">
+                                <?php foreach ($data["kategori"] as $kategori_aspirasi) : ?>
+                                    <option value="<?= $kategori_aspirasi["nama"] ?>"><?= $kategori_aspirasi["nama"] ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="flex flex-col mb-5">
+                            <label for="divisi-tujuan" class="text-gray-700">Divisi Tujuan</label>
+                            <select class="mt-3 border border-gray-400 py-3 px-2 rounded" name="divisi" id="divisi-tujuan">
+                                <?php foreach ($data["divisi"] as $divisi_aspirasi) : ?>
+                                    <option value="<?= $divisi_aspirasi["nama"] ?>"><?= $divisi_aspirasi["nama"] ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="flex flex-col mb-5">
+                            <label for="input-file" class="text-gray-700">Lampiran</label>
+                            <div class="mt-3 border border-gray-400 py-3 px-2 rounded">
+                                <div class="flex">
+                                    <input type="file" name="foto">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <button type="submit" name="submit" class="text-xl text-white w-full rounded bg-blue-800 py-4 font-bold tracking-wide hover:bg-blue-900 hover:drop-shadow-lg">KIRIM ASPIRASI</button>
+                        <button type="submit" name="submit" class="text-xl text-white w-full rounded bg-blue-800 py-4 font-bold tracking-wide hover:bg-blue-900 hover:drop-shadow-lg">KIRIM ASPIRASI</button>
+                    <?php else : ?>
+                        <div class="text-center">
+                            <p class="mb-2">Harap login terlebih dahulu untuk menyuarakan aspirasi</p>
+                            <a href="<?= BaseURL() ?>/auth" class="text-blue-500">Login</a>
+                        </div>
+                    <?php endif; ?>
                 </form>
                 <!-- FORM INFORMASI -->
-                <form id="form-informasi" class="mt-11 mb-5" action="" method="POST">
-                    <div class="text-center mb-10">
-                        <small id="panduan-informasi" class="font-light text-gray-700 hover:cursor-pointer hover:underline" onclick="Panduan(this.id)">Perhatikan Cara Menanyakan Informasi Yang Baik dan Benar</small>
-                    </div>
-                    <div class="flex flex-col mb-5">
-                        <label for="judul" class="text-gray-700">Judul Aspirasi Anda*</label>
-                        <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="judul" aria-describedby="judul" name="judul" placeholder="Ketikkan Judul Aspirasi" required>
-                    </div>
-                    <button type="submit" name="submit" class="text-xl text-white w-full rounded bg-blue-800 py-4 font-bold tracking-wide hover:bg-blue-900 hover:drop-shadow-lg">MINTA INFORMASI</button>
+                <form id="form-informasi" class="mt-11 mb-5" action="<?= BaseURL() ?>/home/informasi" method="POST" enctype="multipart/form-data">
+                    <?php if (isset($_SESSION["user"])) : ?>
+                        <!-- <div class="text-center mb-10">
+                        <small id="panduan-aspirasi" class="font-light text-gray-700 hover:cursor-pointer hover:underline" onclick="Panduan(this.id)">Perhatikan Cara Menyampaikan Aspirasi Yang Baik dan Benar</small>
+                    </div> -->
+                        <div class="flex flex-col mb-5">
+                            <label for="judul" class="text-gray-700">Judul Informasi*</label>
+                            <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="judul" aria-describedby="judul" name="judul" placeholder="Ketikkan Judul Informasi" required>
+                        </div>
+                        <div class="flex flex-col mb-5">
+                            <label for="deskripsi" class="text-gray-700">Deskripsikan Informasi*</label>
+                            <textarea class="mt-3 border border-gray-400 py-3 px-2 rounded" name="deskripsi" id="deskripsi" placeholder="Ketikkan Deskripsikan Informasi" rows="3" required></textarea>
+                        </div>
+                        <div class="flex flex-col mb-5">
+                            <label for="kategori" class="text-gray-700">Kategori</label>
+                            <select class="mt-3 border border-gray-400 py-3 px-2 rounded" name="kategori" id="kategori">
+                                <?php foreach ($data["kategori"] as $kategori_informasi) : ?>
+                                    <option value="<?= $kategori_informasi["nama"] ?>"><?= $kategori_informasi["nama"] ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="flex flex-col mb-5">
+                            <label for="divisi-tujuan" class="text-gray-700">Divisi Tujuan</label>
+                            <select class="mt-3 border border-gray-400 py-3 px-2 rounded" name="divisi" id="divisi-tujuan">
+                                <?php foreach ($data["divisi"] as $divisi_informasi) : ?>
+                                    <option value="<?= $divisi_informasi["nama"] ?>"><?= $divisi_informasi["nama"] ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="flex flex-col mb-5">
+                            <label for="input-file" class="text-gray-700">Lampiran</label>
+                            <div class="mt-3 border border-gray-400 py-3 px-2 rounded">
+                                <div class="flex">
+                                    <input type="file" name="foto">
+                                </div>
+                            </div>
+                        </div>
+                        <input type="text" id="lokasi" class="hidden" value="Akses tidak diberikan" name="lokasi">
+                        <button type="submit" name="submit" class="text-xl text-white w-full rounded bg-blue-800 py-4 font-bold tracking-wide hover:bg-blue-900 hover:drop-shadow-lg">MINTA INFORMASI</button>
+                    <?php else : ?>
+                        <div class="text-center">
+                            <p class="mb-2">Harap login terlebih dahulu untuk meminta informasi</p>
+                            <a href="<?= BaseURL() ?>/auth" class="text-blue-500">Login</a>
+                        </div>
+                    <?php endif; ?>
                 </form>
             </div>
         </div>
@@ -200,19 +211,19 @@
 </div>
 <script>
     // Modal Panduan
-    function Panduan(id) {
-        Modal("panduan");
-        const panduan = $("#modal-panduan-content")[0].children;
-        for (let i = 0; i < panduan.length; i++) {
-            if (panduan[i].id == id) {
-                panduan[i].classList.add("block");
-                panduan[i].classList.remove("hidden");
-            } else {
-                panduan[i].classList.add("hidden");
-                panduan[i].classList.remove("block");
-            }
-        }
-    }
+    // function Panduan(id) {
+    //     Modal("panduan");
+    //     const panduan = $("#modal-panduan-content")[0].children;
+    //     for (let i = 0; i < panduan.length; i++) {
+    //         if (panduan[i].id == id) {
+    //             panduan[i].classList.add("block");
+    //             panduan[i].classList.remove("hidden");
+    //         } else {
+    //             panduan[i].classList.add("hidden");
+    //             panduan[i].classList.remove("block");
+    //         }
+    //     }
+    // }
 
     // KLASIFIKASI MENU
     Klasifikasi($("#btn-select-klasifikasi")[0].children[0]);

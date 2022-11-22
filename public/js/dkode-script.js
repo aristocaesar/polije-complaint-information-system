@@ -1,7 +1,26 @@
 // BASE URL
 const BaseUrl = "http://localhost/polije-complaint";
 
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(";").shift();
+}
+
 // ASK TO GET CURRENT LOCATION
+if (getCookie("location") == undefined) {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition((position, error) => {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      const location = latitude + "," + longitude;
+      document.cookie = `location=${location}`;
+      $("#lokasi").attr("value", location);
+    });
+  }
+} else {
+  $("#lokasi").attr("value", getCookie("location"));
+}
 
 // DATA TABLES
 $("#dataTableLaporan").DataTable();

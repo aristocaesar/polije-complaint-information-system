@@ -6,10 +6,63 @@ class Home extends Controller
 
     public function index()
     {
-        $data = [
-            "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember",
-        ];
+        try {
+            $data = [
+                "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember",
+                "kategori" => $this->model("kategori_model")->getAll(),
+                "divisi" => $this->model("divisi_model")->getAll(),
+            ];
 
-        $this->view("home/index", $data);
+            $this->view("home/index", $data);
+        } catch (Exception $error) {
+            Flasher::setMessage("Terjadi Kesalahan!", $error->getMessage(), "error");
+            header("Location: " . BaseURL());
+            exit;
+        }
+    }
+
+    public function pengaduan()
+    {
+        try {
+            if (isset($_POST)) {
+                var_dump($_POST);
+                var_dump($_FILES);
+                exit;
+            }
+        } catch (Exception $error) {
+            Flasher::setMessage("Terjadi Kesalahan!", $error->getMessage(), "error");
+            header("Location: " . BaseURL());
+            exit;
+        }
+    }
+
+    public function aspirasi()
+    {
+        try {
+            if (isset($_POST)) {
+                var_dump($_POST);
+                var_dump($_FILES);
+                exit;
+            }
+        } catch (Exception $error) {
+            Flasher::setMessage("Terjadi Kesalahan!", $error->getMessage(), "error");
+            header("Location: " . BaseURL());
+            exit;
+        }
+    }
+
+    public function informasi()
+    {
+        try {
+            if (isset($_POST)) {
+                $this->model("informasi_model")->sendInformasi();
+                Flasher::setMessage("Berhasil", "Berhasil mengirim permintaan informasi", "success");
+                header("Location: " . BaseURL());
+            }
+        } catch (Exception $error) {
+            Flasher::setMessage("Terjadi Kesalahan!", $error->getMessage(), "error");
+            header("Location: " . BaseURL());
+            exit;
+        }
     }
 }

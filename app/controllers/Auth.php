@@ -47,12 +47,22 @@ class Auth extends Controller
 
     public function recovery()
     {
-        UserIsActive();
-        $data = [
-            "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Lupa Password",
-        ];
+        try {
+            UserIsActive();
+            if (isset($_POST["submit"])) {
+                var_dump($_POST);
+                exit;
+            }
+            $data = [
+                "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - Lupa Password",
+            ];
 
-        $this->view("auth/recovery", $data);
+            $this->view("auth/recovery", $data);
+        } catch (Exception $error) {
+            Flasher::setMessage("Terjadi Kesalahan!", $error->getMessage(), "error");
+            header("Location: " . BaseURL() . "/auth/recovery");
+            exit;
+        }
     }
 
     public function logout()

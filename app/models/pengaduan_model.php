@@ -55,7 +55,7 @@ class Pengaduan_Model
     public function getByPengguna($id)
     {
         $nama = str_replace("-", " ", $id);
-        $this->db->query("SELECT * FROM " . $this->table . " WHERE pengirim=:pengirim");
+        $this->db->query("SELECT * FROM " . $this->table . " WHERE pengirim=:pengirim ORDER BY created_at DESC");
         $this->db->bind("pengirim", $id);
         return $this->db->resultSet();
     }

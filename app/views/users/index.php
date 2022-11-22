@@ -46,7 +46,7 @@
                             <h5 class="text-blue-800 font-bold text-xl mb-8">Pengaduan</h5>
                             <?php if (!empty($data["pengaduan"])) : ?>
                                 <?php foreach ($data["pengaduan"] as $pengaduan) : ?>
-                                    <div class="flex flex-col md:flex-row border py-5 px-5 items-center justify-between">
+                                    <div class="flex flex-col md:flex-row border py-5 px-5 items-center justify-between mb-5">
                                         <div>
                                             <h6 class="font-bold text-gray-800 mb-3"><?= $pengaduan["judul"] ?></h6>
                                             <h6 class="text-gray-500 font-light"><?= $pengaduan["deskripsi"] ?></h6>
@@ -87,7 +87,7 @@
                             <h5 class="text-blue-800 font-bold text-xl mb-8">Aspirasi</h5>
                             <?php if (!empty($data["aspirasi"])) : ?>
                                 <?php foreach ($data["aspirasi"] as $aspirasi) : ?>
-                                    <div class="flex flex-col md:flex-row border py-5 px-5 items-center justify-between">
+                                    <div class="flex flex-col md:flex-row border py-5 px-5 items-center justify-between mb-5">
                                         <div>
                                             <h6 class="font-bold text-gray-800 mb-3"><?= $aspirasi["judul"] ?></h6>
                                             <h6 class="text-gray-500 font-light"><?= $aspirasi["deskripsi"] ?></h6>
@@ -128,7 +128,7 @@
                             <h5 class="text-blue-800 font-bold text-xl mb-8">Informasi</h5>
                             <?php if (!empty($data["informasi"])) : ?>
                                 <?php foreach ($data["informasi"] as $informasi) : ?>
-                                    <div class="flex flex-col md:flex-row border py-5 px-5 items-center justify-between">
+                                    <div class="flex flex-col md:flex-row border py-5 px-5 items-center justify-between mb-5">
                                         <div>
                                             <h6 class="font-bold text-gray-800 mb-3"><?= $informasi["judul"] ?></h6>
                                             <h6 class="text-gray-500 font-light"><?= $informasi["deskripsi"] ?></h6>
@@ -204,7 +204,7 @@
                                 </div>
                                 <div>
                                     <h5 class="text-blue-800 font-bold text-xl mb-2">Email</h5>
-                                    <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded w-full" required value="<?= $data["user"]["email"] ?>" readonly>
+                                    <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded w-full" required value="<?= $data["user"]["email"] ?> - <?= ucwords(str_replace("_", " ", $data["user"]["verifikasi_email"])) ?>" readonly>
                                     <button type="button" class="mt-2 text-blue-800 underline" onclick="Modal('ganti-email')"><u>Ganti Email</u></button>
                                 </div>
                                 <div>
@@ -303,7 +303,6 @@
                 <ul class="pl-5 list-disc font-light mb-5">
                     <li>Email harus aktif.</li>
                     <li>Jika link verifikasi tidak tersedia, harap cek pada bagian spam.</li>
-                    <li>Setelah anda mengklik konfirmasi, anda akan otomatis keluar.</li>
                 </ul>
                 <!-- Modal footer -->
                 <div class="flex justify-end items-center pt-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">

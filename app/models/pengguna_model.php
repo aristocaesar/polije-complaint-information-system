@@ -226,6 +226,7 @@ class Pengguna_Model
         if (!empty($data)) {
             $this->db->query("UPDATE " . $this->table . " SET nama=:nama, tgl_lahir=:tgl_lahir, jenis_kelamin=:jenis_kelamin, alamat=:alamat, kontak=:kontak, status=:status, foto=:foto, updated_at=:updated_at WHERE id=:id");
             $this->db->bind("nama", ucwords($data["nama"]));
+            $_SESSION["user"]["nama"] = $data["nama"];
             $this->db->bind("tgl_lahir", $data["tgl_lahir"]);
             $this->db->bind("jenis_kelamin", $data["jenis_kelamin"]);
             $this->db->bind("alamat", $data["alamat"]);
@@ -309,8 +310,9 @@ class Pengguna_Model
     public function updateToVerified($email)
     {
         if (!empty($email)) {
-            $this->db->query("UPDATE pengguna SET verifikasi_daftar=:verifikasi, updated_at=:updated_at WHERE email=:email");
+            $this->db->query("UPDATE pengguna SET verifikasi_daftar=:verifikasi, verifikasi_email=:verifikasi_email,  updated_at=:updated_at WHERE email=:email");
             $this->db->bind("verifikasi", "aktif");
+            $this->db->bind("verifikasi_email", "terverifikasi");
             $this->db->bind("updated_at", date("Y-m-d H:i:s"));
             $this->db->bind("email", $email);
             $this->db->execute();

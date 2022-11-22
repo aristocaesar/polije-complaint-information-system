@@ -22,5 +22,5 @@ $info_dahsboard = new Dashboard_Model;
                 Terima kasih... </p>
         </div>
     </div>
-    <button type="button" class="bg-blue-800 hover:drop-shadow-lg hover:bg-blue-900 mt-28 py-3 px-7 tracking-wide text-white rounded font-bold">Selengkapnya</button>
+    <a href="<?= BaseURL() ?>/tentang" class="bg-blue-800 hover:drop-shadow-lg hover:bg-blue-900 mt-28 py-3 px-7 tracking-wide text-white rounded font-bold">Selengkapnya</a>
 </section>
