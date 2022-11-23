@@ -1,13 +1,16 @@
 <?php
+require_once("app/models/dashboard_model.php");
 
 class Pengaduan_Model
 {
     private $db;
+    private $dashboard;
     private $table = "pengaduan";
 
     public function __construct()
     {
         $this->db = new Database;
+        $this->dashboard = new Dashboard_Model;
     }
 
     public function getAll()
@@ -193,6 +196,8 @@ class Pengaduan_Model
             $this->db->bind("created_at", $date);
             $this->db->bind("updated_at", $date);
             $this->db->execute();
+            // add count pengaduan
+            $this->dashboard->addPengaduan();
             return true;
         } else {
             throw new Exception("Error Processing Send Pengaduan");

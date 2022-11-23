@@ -217,7 +217,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer bg-whitesmoke">
+                    <div class="modal-footer modal-footer-info-user bg-whitesmoke">
                         <button type="submit" class="btn btn-primary" onclick="closeDetailInfo()">OK</button>
                     </div>
                 </div>
@@ -288,6 +288,7 @@
             </div>
         </div>
     </div>
+
     <section class="section">
         <div class="section-header">
             <h1>Pengaduan</h1>
@@ -482,6 +483,7 @@
             $("#foto-user").attr("src", "<?= BaseURL(); ?>/public/upload/assets/images/" + result.foto);
             $("#pengaduan").modal("hide");
             $("#info-user").show();
+            $(".modal-footer-info-user").show();
             setTimeout(() => {
                 $("#konfirmasi-tangguhkan").hide();
                 $("#detail-pengaduan").modal("show");

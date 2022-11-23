@@ -217,7 +217,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer bg-whitesmoke">
+                    <div class="modal-footer modal-footer-info-user bg-whitesmoke">
                         <button type="submit" class="btn btn-primary" onclick="closeDetailInfo()">OK</button>
                     </div>
                 </div>
@@ -463,6 +463,7 @@
         $("#aspirasi").modal("hide");
         setTimeout(() => {
             $("#detail-aspirasi").modal("show");
+            $(".modal-footer-info-user").show();
             // content detail aspirasi
             $("#konfirmasi-tangguhkan").hide();
             $("#info-user").show();

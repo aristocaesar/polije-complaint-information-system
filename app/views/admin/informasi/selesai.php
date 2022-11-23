@@ -203,7 +203,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer bg-whitesmoke">
+                    <div class="modal-footer modal-footer-info-user bg-whitesmoke">
                         <button type="submit" class="btn btn-primary" onclick="closeDetailInfo()">OK</button>
                     </div>
                 </div>
@@ -486,6 +486,7 @@
         const response = await users.json();
         const result = response.data;
         $(".modal-title-detail-informasi").text("Informasi Pengirim");
+        $(".modal-footer-info-user").show();
         $("#id-pengirim").val(result.id);
         $("#nama-pengirim").val(result.nama);
         $("#email-pengirim").val(result.email);

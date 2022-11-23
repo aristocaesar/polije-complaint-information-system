@@ -1,13 +1,16 @@
 <?php
+require_once("app/models/dashboard_model.php");
 
 class Informasi_Model
 {
     private $db;
+    private $dashboard;
     private $table = "informasi";
 
     public function __construct()
     {
         $this->db = new Database;
+        $this->dashboard = new Dashboard_Model;
     }
 
     public function getAll()
@@ -150,6 +153,8 @@ class Informasi_Model
             $this->db->bind("created_at", $date);
             $this->db->bind("updated_at", $date);
             $this->db->execute();
+            // add count informasi
+            $this->dashboard->addInformasi();
             return true;
         } else {
             throw new Exception("Error Processing Send Information");

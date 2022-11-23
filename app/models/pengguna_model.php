@@ -186,7 +186,7 @@ class Pengguna_Model
             $this->db->query('INSERT INTO ' . $this->table . ' (id, nama, email, password, tgl_lahir, jenis_kelamin, alamat, kontak, status, akses, foto, created_at, updated_at) VALUES (:id, :nama, :email, :password, :tgl_lahir, :jenis_kelamin, :alamat, :kontak, :status, :akses, :foto, :created_at, :updated_at)');
             // binding data
             $this->db->bind("id", $this->generateID($data["tgl_lahir"]));
-            $this->db->bind("nama", ucwords($data["nama_lengkap"]));
+            $this->db->bind("nama", ucwords(strtolower($data["nama_lengkap"])));
             $this->db->bind("email", $data["email"]);
             // check same character
             if ($data["password"] != $data["password2"]) {
@@ -211,7 +211,7 @@ class Pengguna_Model
             // set idverifikasi
             $idVerifikasi = $this->generateVerifikasi($data["email"]);
             // Send Mail
-            if (!PHPmail($data["email"], "E-LAPOR | VERIFIKASI EMAIL", PHPmailVerifikasi($data["nama_lengkap"], BaseURL() . "/users/verifikasi/" . $idVerifikasi))) {
+            if (!PHPmail($data["email"], "E-LAPOR | VERIFIKASI EMAIL", PHPmailVerifikasi(ucwords(strtolower($data["nama_lengkap"])), BaseURL() . "/users/verifikasi/" . $idVerifikasi))) {
                 throw new Exception("Gagal melakukan pengiriman tautan verifikasi!");
             }
             $this->dashboard->actionPengguna("add");

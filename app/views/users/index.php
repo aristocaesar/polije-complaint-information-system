@@ -49,7 +49,10 @@
                                     <div class="flex flex-col md:flex-row border py-5 px-5 items-center justify-between mb-5">
                                         <div>
                                             <h6 class="font-bold text-gray-800 mb-3"><?= $pengaduan["judul"] ?></h6>
-                                            <h6 class="text-gray-500 font-light"><?= $pengaduan["deskripsi"] ?></h6>
+                                            <?php
+                                            $deskripsi_adu = strlen($pengaduan["deskripsi"]) > 100 ? substr($pengaduan["deskripsi"], 0, 150) . "..." : $pengaduan["deskripsi"];
+                                            ?>
+                                            <h6 class="text-gray-500 font-light"><?= $deskripsi_adu; ?></h6>
                                             <div>
                                                 <small class="text-gray-800"><?= $pengaduan["created_at"] ?></small>
                                                 <?php
@@ -90,7 +93,10 @@
                                     <div class="flex flex-col md:flex-row border py-5 px-5 items-center justify-between mb-5">
                                         <div>
                                             <h6 class="font-bold text-gray-800 mb-3"><?= $aspirasi["judul"] ?></h6>
-                                            <h6 class="text-gray-500 font-light"><?= $aspirasi["deskripsi"] ?></h6>
+                                            <?php
+                                            $deskripsi_aspi = strlen($aspirasi["deskripsi"]) > 100 ? substr($aspirasi["deskripsi"], 0, 150) . "..." : $aspirasi["deskripsi"];
+                                            ?>
+                                            <h6 class="text-gray-500 font-light"><?= $deskripsi_aspi; ?></h6>
                                             <div>
                                                 <small class="text-gray-800"><?= $aspirasi["created_at"] ?></small>
                                                 <?php
@@ -131,7 +137,10 @@
                                     <div class="flex flex-col md:flex-row border py-5 px-5 items-center justify-between mb-5">
                                         <div>
                                             <h6 class="font-bold text-gray-800 mb-3"><?= $informasi["judul"] ?></h6>
-                                            <h6 class="text-gray-500 font-light"><?= $informasi["deskripsi"] ?></h6>
+                                            <?php
+                                            $deskripsi_info = strlen($informasi["deskripsi"]) > 100 ? substr($informasi["deskripsi"], 0, 150) . "..." : $informasi["deskripsi"];
+                                            ?>
+                                            <h6 class="text-gray-500 font-light"><?= $deskripsi_info; ?></h6>
                                             <div>
                                                 <small class="text-gray-800"><?= $informasi["created_at"] ?></small>
                                                 <?php
