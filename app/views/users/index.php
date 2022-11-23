@@ -168,7 +168,7 @@
                     <!-- User Setting -->
                     <div id="content-user-pengaturan">
                         <form action="<?= BaseURL() ?>/users/profil" method="post" enctype="multipart/form-data">
-                            <div class="grid grid-cols-2 text-grey-800 gap-x-5 gap-y-5 mt-11">
+                            <div class="grid md:grid-cols-2 grid-cols-1 text-grey-800 gap-x-5 gap-y-5 mt-11">
                                 <input type="text" class="hidden" name="id" value="<?= $data["user"]["id"] ?>">
                                 <div>
                                     <h5 class="text-blue-800 font-bold text-xl mb-2">Nama Lengkap</h5>
@@ -228,7 +228,7 @@
                                     <p class="text-dark" id="aktifitas-terakhir"><?= $data["user"]["updated_at"] ?></p>
                                 </div>
                             </div>
-                            <div class="flex justify-center">
+                            <div class="flex justify-center md:mt-0 mt-10">
                                 <button type="submit" name="submit" class="px-5 py-3 text-xl font-bold text-white bg-blue-800 hover:bg-blue-900 hover:drop-shadow-lg ">Simpan</button>
                             </div>
                         </form>

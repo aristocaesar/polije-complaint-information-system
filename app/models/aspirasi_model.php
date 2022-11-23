@@ -152,7 +152,7 @@ class Aspirasi_Model
             $this->db->execute();
             return true;
         } else {
-            throw new Exception("Error Processing Send Information");
+            throw new Exception("Error Processing Send Aspirasi");
         }
     }
 }

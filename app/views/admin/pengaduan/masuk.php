@@ -78,6 +78,13 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="form-group col-12">
+                                <label>Lampiran</label>
+                                <div class="input-group">
+                                    <p id="lampiran_pengirim_none">Tidak Ada Lampiran</p>
+                                    <a href="#" target="_blank" rel="noopener noreferrer" id="lampiran_pengirim_link"></a>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-tanggapan">
                             <div class="card card-primary">
@@ -389,7 +396,11 @@
             $("#kategori").val(result.kategori);
             $("#tanggal_terkirim").val(result.created_at);
             $(".info-user")[0].dataset.user = result.pengirim;
-            $("#pengirim").val(result.pengirim);
+            if (result.pengirim != null) {
+                $("#pengirim").val(result.pengirim);
+            } else {
+                $("#pengirim").val("Dirahasiakan");
+            }
             $(".location")[0].dataset.location = result.lokasi;
             $("#lokasi").val(result.lokasi);
             // Status pengaduan
@@ -418,6 +429,17 @@
             }
             // Divisi
             $("#divisi").val(result.divisi);
+            if (result.lampiran_pengirim != null) {
+                $("#lampiran_pengirim_none").hide();
+                $("#lampiran_pengirim_link").show();
+                $("#lampiran_pengirim_link").text(result.lampiran_pengirim);
+                $("#lampiran_pengirim_link").attr("href", `<?= BaseURL() ?>/public/upload/assets/document/pengaduan/${result.lampiran_pengirim}`);
+            } else {
+                $("#lampiran_pengirim_none").show();
+                $("#lampiran_pengirim_link").hide();
+                $("#lampiran_pengirim_link").text("");
+                $("#lampiran_pengirim_link").attr("href", "");
+            }
         };
     }
 
@@ -445,25 +467,27 @@
     // SHOW USER
     $(".info-user").click(async (e) => {
         const id = e.currentTarget.dataset.user;
-        const users = await fetch(`<?= BaseURL() ?>/api/pengguna/${id}`);
-        const response = await users.json();
-        const result = response.data;
-        $(".modal-title-detail-pengaduan").text("Pengirim Aduan");
-        $("#id-pengirim").val(result.id);
-        $("#nama-pengirim").val(result.nama);
-        $("#email-pengirim").val(result.email);
-        $("#tanggal-lahir-pengirim").val(result.tgl_lahir);
-        $("#alamat-pengirim").val(result.alamat);
-        $("#kontak-pengirim").val(result.kontak);
-        $("#status-pengirim").val(result.status);
-        $("#foto-user").attr("src", "<?= BaseURL(); ?>/public/upload/assets/images/" + result.foto);
-        $("#pengaduan").modal("hide");
-        $("#info-user").show();
-        setTimeout(() => {
-            $("#konfirmasi-tangguhkan").hide();
-            $("#detail-pengaduan").modal("show");
-            $("#konfirmasi-tindak-lanjut").hide();
-        }, 500);
+        if (id != "null") {
+            const users = await fetch(`<?= BaseURL() ?>/api/pengguna/${id}`);
+            const response = await users.json();
+            const result = response.data;
+            $(".modal-title-detail-pengaduan").text("Pengirim Aduan");
+            $("#id-pengirim").val(result.id);
+            $("#nama-pengirim").val(result.nama);
+            $("#email-pengirim").val(result.email);
+            $("#tanggal-lahir-pengirim").val(result.tgl_lahir);
+            $("#alamat-pengirim").val(result.alamat);
+            $("#kontak-pengirim").val(result.kontak);
+            $("#status-pengirim").val(result.status);
+            $("#foto-user").attr("src", "<?= BaseURL(); ?>/public/upload/assets/images/" + result.foto);
+            $("#pengaduan").modal("hide");
+            $("#info-user").show();
+            setTimeout(() => {
+                $("#konfirmasi-tangguhkan").hide();
+                $("#detail-pengaduan").modal("show");
+                $("#konfirmasi-tindak-lanjut").hide();
+            }, 500);
+        }
     });
 
     // TANGGUHKAN pengaduan

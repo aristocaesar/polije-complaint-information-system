@@ -25,8 +25,9 @@ class Home extends Controller
     {
         try {
             if (isset($_POST)) {
-                var_dump($_POST);
-                var_dump($_FILES);
+                $this->model("pengaduan_model")->sendPengaduan();
+                Flasher::setMessage("Berhasil", "Berhasil mengirim pengaduan", "success");
+                header("Location: " . BaseURL());
                 exit;
             }
         } catch (Exception $error) {
@@ -43,6 +44,7 @@ class Home extends Controller
                 $this->model("aspirasi_model")->sendAspirasi();
                 Flasher::setMessage("Berhasil", "Berhasil mengirim aspirasi", "success");
                 header("Location: " . BaseURL());
+                exit;
             }
         } catch (Exception $error) {
             Flasher::setMessage("Terjadi Kesalahan!", $error->getMessage(), "error");
@@ -58,6 +60,7 @@ class Home extends Controller
                 $this->model("informasi_model")->sendInformasi();
                 Flasher::setMessage("Berhasil", "Berhasil mengirim permintaan informasi", "success");
                 header("Location: " . BaseURL());
+                exit;
             }
         } catch (Exception $error) {
             Flasher::setMessage("Terjadi Kesalahan!", $error->getMessage(), "error");
