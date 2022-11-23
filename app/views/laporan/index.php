@@ -32,28 +32,28 @@
                             <td>System Architect</td>
                             <td>Edinburgh</td>
                             <td>2011/04/25</td>
-                            <td><a class="text-blue-500" data-toggle="modal" data-target="#modalDetail">Lihat Detail</a></td>
+                            <td><a class="text-blue-500 " data-toggle="modal" data-target="#modalDetail">Lihat Detail</a></td>
                         </tr>
                         <tr>
                             <td>Tiger Nixon</td>
                             <td>System Architect</td>
                             <td>Edinburgh</td>
                             <td>2011/04/25</td>
-                            <td><a class="text-blue-500" data-toggle="modal" data-target="#modalDetail">Lihat Detail</a></td>
+                            <td><a class="text-blue-500 " data-toggle="modal" data-target="#modalDetail">Lihat Detail</a></td>
                         </tr>
                         <tr>
                             <td>Aristo Nixon</td>
                             <td>System Architect</td>
                             <td>Edinburgh</td>
                             <td>2011/04/25</td>
-                            <td><a class="text-blue-500" data-toggle="modal" data-target="#modalDetail">Lihat Detail</a></td>
+                            <td><a class="text-blue-500 " data-toggle="modal" data-target="#modalDetail">Lihat Detail</a></td>
                         </tr>
                         <tr>
                             <td>Tiger Nixon</td>
                             <td>System Architect</td>
                             <td>Edinburgh</td>
                             <td>2011/04/25</td>
-                            <td><a class="text-blue-500" data-toggle="modal" data-target="#modalDetail">Lihat Detail</a></td>
+                            <td><a class="text-blue-500 " data-toggle="modal" data-target="#modalDetail">Lihat Detail</a></td>
                         </tr>
                     </tbody>
                 </table>

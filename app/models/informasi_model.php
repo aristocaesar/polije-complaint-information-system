@@ -141,7 +141,7 @@ class Informasi_Model
                 $file = explode(".", $_FILES["foto"]["name"]);
                 $extension = end($file);
                 // Upload File ( 2MB 2097152 )
-                UploadFile($_FILES, "L-USER-" . $id . "." . $extension, 2097152, ["image/jpeg", "image/jpg", "image/png"], "document/informasi");
+                UploadFile($_FILES, "L-USER-" . $id, 2097152, ["image/jpeg", "image/jpg", "image/png"], "document/informasi");
                 $this->db->bind("lampiran_pengirim", "L-USER-" . $id . "." . $extension);
             } else {
                 $this->db->bind("lampiran_pengirim", null);
