@@ -116,7 +116,7 @@ class Aspirasi_Model
 
     public function generateID()
     {
-        return "INFO" . time();
+        return "ASPI" . time();
     }
 
     public function sendAspirasi()
@@ -141,7 +141,7 @@ class Aspirasi_Model
                 $file = explode(".", $_FILES["foto"]["name"]);
                 $extension = end($file);
                 // Upload File ( 2MB 2097152 )
-                UploadFile($_FILES, "L-USER-" . $id . "." . $extension, 2097152, ["image/jpeg", "image/jpg", "image/png"], "document/aspirasi");
+                UploadFile($_FILES, "L-USER-" . $id, 2097152, ["image/jpeg", "image/jpg", "image/png"], "document/aspirasi");
                 $this->db->bind("lampiran_pengirim", "L-USER-" . $id . "." . $extension);
             } else {
                 $this->db->bind("lampiran_pengirim", null);
