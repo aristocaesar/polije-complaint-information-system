@@ -48,14 +48,6 @@ class Pengguna_Model
         }
     }
 
-    public function getAllLaporan($id = "")
-    {
-        if (!empty($id)) {
-            // ambil semua pengaduan, informasi dan aspirasi berdasarkan id
-            return true;
-        }
-    }
-
     public function save($data = [])
     {
         // check uniq mail
@@ -368,6 +360,130 @@ class Pengguna_Model
             }
         } else {
             throw new Exception("Gagal melakukan request login!");
+        }
+    }
+
+    public function generateRecoveryToken(String $email = "", int $time = 5, String $action = "create")
+    {
+        if (!empty($email)) {
+            $date = date("Y-m-d H:i:s");
+            $token = substr(md5(openssl_random_pseudo_bytes(20)), -32);
+            $times = 60 * $time;
+            $limit = time() + $times;
+            if ($action == "create") {
+                $this->db->query("INSERT INTO users_recovery (email, verifikasi, time_limit, created_at, updated_at) VALUES (:email, :verifikasi, :time_limit, :created_at, :updated_at)");
+                $this->db->bind("email", $email);
+                $this->db->bind("verifikasi", $token);
+                $this->db->bind("time_limit", $limit);
+                $this->db->bind("created_at", $date);
+                $this->db->bind("updated_at", $date);
+                $this->db->execute();
+            } else if ($action == "update") {
+                $this->db->query("UPDATE users_recovery SET verifikasi=:verifikasi, time_limit=:time_limit, updated_at=:updated_at WHERE email=:email");
+                $this->db->bind("verifikasi", $token);
+                $this->db->bind("time_limit", $limit);
+                $this->db->bind("updated_at", $date);
+                $this->db->bind("email", $email);
+                $this->db->execute();
+            }
+            return $token;
+        } else {
+            throw new Exception("Gagal melakukan pemulihan kata sandi");
+        }
+    }
+
+    public function recoveryCheck(String $email = "")
+    {
+        if (!empty($email)) {
+            $this->db->query("SELECT * FROM users_recovery WHERE email=:email");
+            $this->db->bind("email", $email);
+            return $this->db->single();
+        } else {
+            throw new Exception("Error Processing Check Recovery");
+        }
+    }
+
+    public function recoveryPassword(String $email = "")
+    {
+        if (!empty($email)) {
+            // cek email user 
+            $user = $this->getByEmail($email);
+            if ($user) {
+                // cek data recovery, jika tidak ada maka buat token
+                $recovery = $this->recoveryCheck($email);
+                if (!$recovery) {
+                    // create token
+                    $token = $this->generateRecoveryToken($email, 5);
+                    // send email with new updated token
+                    PHPmail($user["email"], "E-LAPOR | RECOVERY PASSWORD", PHPmailRecovery($user["nama"], BaseURL() . "/auth/recovery/" . $token));
+                } else {
+                    // update token when time expired
+                    if ($recovery["time_limit"] <= time()) {
+                        $token = $this->generateRecoveryToken($email, 5, "update");
+                        // send email with new updated token
+                        PHPmail($user["email"], "E-LAPOR | RECOVERY PASSWORD", PHPmailRecovery($user["nama"], BaseURL() . "/auth/recovery/" . $token));
+                    }
+                }
+                return true;
+            } else {
+                throw new Exception("Email tidak terdaftar");
+            }
+        } else {
+            throw new Exception("Error Processing Recovery Password");
+        }
+    }
+
+    public function checkRecoveryToken(String $token = "")
+    {
+        if (!empty($token)) {
+            // cek token
+            $this->db->query("SELECT * FROM users_recovery WHERE verifikasi=:token");
+            $this->db->bind("token", $token);
+            $token = $this->db->single();
+            if ($token) {
+                if ($token["time_limit"] <= time()) {
+                    throw new Exception("Token sudah kadaluarsa");
+                } else {
+                    return $token;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            throw new Exception("Error Processing Check Token");
+        }
+    }
+
+    public function removeToken(String $token = "")
+    {
+        if (!empty($token)) {
+            $this->db->query("DELETE FROM users_recovery WHERE verifikasi=:token");
+            $this->db->bind("token", $token);
+            $this->db->execute();
+            return true;
+        } else {
+            throw new Exception("Error Processing Remove Token");
+        }
+    }
+
+    public function changePasswordRecovery()
+    {
+        if (isset($_POST["submit"])) {
+            if ($_POST["password"] == $_POST["password2"]) {
+                if ($this->checkRecoveryToken($_POST["token"])) {
+                    $this->db->query("UPDATE pengguna SET password=:password, updated_at=:updated_at WHERE email=:email");
+                    $this->db->bind("password", password_hash($_POST["password"], PASSWORD_DEFAULT));
+                    $this->db->bind("updated_at", date("Y-m-d H:i:s"));
+                    $this->db->bind("email", $_POST["email"]);
+                    $this->db->execute();
+                    $this->removeToken($_POST["token"]);
+                    return true;
+                }
+            } else {
+                throw new Exception("Password tidak sama");
+            }
+        } else {
+            throw new Exception("Gagal memperbarui password");
         }
     }
 }

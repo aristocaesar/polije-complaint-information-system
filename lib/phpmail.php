@@ -44,6 +44,150 @@ function PHPmail($receiver = "", $subject = "", $message = "", $attachment = "")
     }
 }
 
+function PHPmailRecovery($nama = "", $link = "")
+{
+    return '
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>E-LAPOR | Recovery Akun E-Lapor</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+        href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,800,900&display=swap"
+        rel="stylesheet"
+        />
+    </head>
+    <body style="margin: 0; padding: 0; box-sizing: border-box">
+        <table align="center" cellpadding="0" cellspacing="0" width="95%">
+        <tr>
+            <td align="center">
+            <table
+                align="center"
+                cellpadding="0"
+                cellspacing="0"
+                width="600"
+                style="border-spacing: 2px 5px"
+                bgcolor="#fff"
+            >
+                <tr>
+                <td align="center" style="padding: 5px 5px 5px 5px">
+                    <a href="' . BaseURL() . '" target="_blank">
+                    <img src="https://i2.wp.com/www.agilecampus.org/wp-content/uploads/2021/12/Screenshot-2021-12-30-at-15.40.57.png?fit=700%2C192&ssl=1" alt="Logo" style="width:300px; margin: 30px 0px 30px 0px;
+                    border:0;"/>
+                    </a>
+                </td>
+                </tr>
+                <tr>
+                <td bgcolor="#fff">
+                    <table cellpadding="0" cellspacing="0" width="100%%">
+                    <tr>
+                        <td
+                        style="
+                            padding: 10px 0 10px 0;
+                            font-family: Nunito, sans-serif;
+                            font-size: 20px;
+                            font-weight: 900;
+                        "
+                        >
+                        Recovery Akun E-Lapor Politeknik Negeri Jember
+                        </td>
+                    </tr>
+                    </table>
+                </td>
+                </tr>
+                <tr>
+                <td bgcolor="#fff">
+                    <table cellpadding="0" cellspacing="0" width="100%%">
+                    <tr>
+                        <td
+                        style="
+                            padding: 20px 0 20px 0;
+                            font-family: Nunito, sans-serif;
+                            font-size: 16px;
+                        "
+                        >
+                        Hallo, <span id="name">' . ucwords($nama) . '</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td
+                        style="
+                            padding: 0;
+                            font-family: Nunito, sans-serif;
+                            font-size: 16px;
+                        "
+                        >
+                        Silakan setel kata sandi
+                        untuk memulihkan akun E-Lapor Anda.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td
+                        style="
+                            padding: 20px 0 20px 0;
+                            font-family: Nunito, sans-serif;
+                            font-size: 16px;
+                            text-align: center;
+                        "
+                        >
+                        <a
+                            href="' . $link . '"
+                            style="
+                            background-color: #134467;
+                            border: none;
+                            color: white;
+                            padding: 15px 40px;
+                            text-align: center;
+                            display: inline-block;
+                            font-family: Nunito, sans-serif;
+                            font-size: 18px;
+                            font-weight: bold;
+                            cursor: pointer;
+                            text-decoration: none;
+                            "
+                        >
+                        Pulihkan Kata Sandi
+                        </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td
+                        style="
+                            padding: 0;
+                            font-family: Nunito, sans-serif;
+                            font-size: 16px;
+                        "
+                        >
+                        Jika Anda kesulitan mengklik tombol "Pulihkan Kata Sandi",
+                        copy dan paste URL di bawah ke dalam browser Anda:
+                        <p id="url">' . $link . '</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td
+                        style="
+                            padding: 50px 0;
+                            font-family: Nunito, sans-serif;
+                            font-size: 16px;
+                        "
+                        >
+                        Hormat Kami,
+                        <p>Politeknik Negeri Jember</p>
+                        </td>
+                    </tr>
+                    </table>
+                </td>
+                </tr>
+            </table>
+            </td>
+        </tr>
+        </table>
+    </body>
+    </html>
+    ';
+}
+
 function PHPmailVerifikasi($nama = "", $link = "")
 {
     return '
@@ -107,7 +251,7 @@ function PHPmailVerifikasi($nama = "", $link = "")
                             font-size: 16px;
                         "
                         >
-                        Hi, <span id="name">' . ucwords($nama) . '</span>
+                        Hallo, <span id="name">' . ucwords($nama) . '</span>
                         </td>
                     </tr>
                     <tr>

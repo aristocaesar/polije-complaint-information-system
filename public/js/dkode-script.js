@@ -14,7 +14,7 @@ if (getCookie("location") == undefined) {
       const latitude = position.coords.latitude;
       const longitude = position.coords.longitude;
       const location = latitude + "," + longitude;
-      document.cookie = `location=${location}`;
+      document.cookie = `location=${location}; path=/`;
       $(".lokasi").attr("value", location);
     });
   }

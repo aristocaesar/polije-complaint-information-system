@@ -10,7 +10,6 @@ class Users extends Controller
         $userID = $_SESSION["user"]["id"];
         $data = [
             "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - User Area",
-            "laporan" => $this->model("pengguna_model")->getAllLaporan($userID),
             "user" => $this->model("pengguna_model")->get($userID),
             "pengaduan" => $this->model("pengaduan_model")->getByPengguna($userID),
             "aspirasi" => $this->model("aspirasi_model")->getByPengguna($userID),
