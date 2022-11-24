@@ -131,19 +131,19 @@
                             <div class="col-12 col-lg-6">
                                 <div class="form-group">
                                     <label for="aktifitas_terakhir">Aktifitas Terakhir</label>
-                                    <input type="date" class="form-control" id="aktifitas_terakhir" readonly>
+                                    <input type="text" class="form-control" id="aktifitas_terakhir" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-lg-6">
                                 <div class="form-group">
                                     <label for="tanggal_terdaftar">Tanggal Terdaftar</label>
-                                    <input type="date" class="form-control" id="tanggal_terdaftar" readonly>
+                                    <input type="text" class="form-control" id="tanggal_terdaftar" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-lg-6">
                                 <div class="form-group">
                                     <label for="tanggal_diperbarui">Tanggal Diperbarui</label>
-                                    <input type="date" class="form-control" id="tanggal_diperbarui" readonly>
+                                    <input type="text" class="form-control" id="tanggal_diperbarui" readonly>
                                 </div>
                             </div>
                         </div>
