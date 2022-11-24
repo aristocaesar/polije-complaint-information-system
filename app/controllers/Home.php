@@ -24,9 +24,17 @@ class Home extends Controller
     public function pengaduan()
     {
         try {
-            if (isset($_POST)) {
+            if (!empty($_POST)) {
                 $this->model("pengaduan_model")->sendPengaduan();
-                Flasher::setMessage("Berhasil", "Berhasil mengirim pengaduan", "success");
+                if (isset($_SESSION["p_rahasia"])) {
+                    generatePDF::Klasifikasi($_SESSION["p_rahasia"]["id"], $_POST["judul"], $_POST["deskripsi"], $_SESSION["p_rahasia"]["date"]);
+                } else {
+                    Flasher::setMessage("Berhasil", "Berhasil mengirim pengaduan", "success");
+                    header("Location: " . BaseURL());
+                }
+                exit;
+            } else {
+                unset($_SESSION["flash"]);
                 header("Location: " . BaseURL());
                 exit;
             }

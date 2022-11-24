@@ -1,4 +1,5 @@
 <?php
+
 require_once("app/models/dashboard_model.php");
 
 class Pengaduan_Model
@@ -161,6 +162,7 @@ class Pengaduan_Model
     {
 
         if (isset($_POST["submit"])) {
+
             $bobot = $this->generateBobot($_POST["judul"], $_POST["deskripsi"], $_FILES["foto"]["error"]);
 
             $id = $this->generateID();
@@ -170,8 +172,13 @@ class Pengaduan_Model
             $this->db->bind("judul", $_POST["judul"]);
             $this->db->bind("deskripsi", $_POST["deskripsi"]);
             $this->db->bind("kategori", $_POST["kategori"]);
-            if ($_POST["pelapor"] == "Rahasia") {
+            if (isset($_POST["pelapor"])) {
                 $this->db->bind("pengirim", null);
+                // set sessionn for generate pdf document
+                $_SESSION["p_rahasia"] = [
+                    "id" => $id,
+                    "date" => $date
+                ];
             } else {
                 $this->db->bind("pengirim", $_SESSION["user"]["id"]);
             }
@@ -200,7 +207,7 @@ class Pengaduan_Model
             $this->dashboard->addPengaduan();
             return true;
         } else {
-            throw new Exception("Error Processing Send Pengaduan");
+            header("Location: " . BaseURL());
         }
     }
 }
