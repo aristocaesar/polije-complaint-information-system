@@ -42,15 +42,21 @@ class Users extends Controller
     {
         try {
             if (isset($_POST["submit"])) {
+                // check match emails
                 if ($_POST["email"] == $_POST["email2"]) {
-                    $userLogin = $this->model("pengguna_model")->get($_SESSION["user"]["id"]);
-                    if ($userLogin["email"] != $_POST["email"]) {
-                        $user = $this->model("petugas_model")->getByEmail($_POST["email"]);
-                        if (!$user) {
+                    // check email is not equals with email user logined
+                    if ($_POST["email"] != $_SESSION["user"]["email"]) {
+                        // get user by email user logined
+                        $petugas = $this->model("petugas_model")->getByEmail($_POST["email"]);
+                        if (!$petugas) {
+                            //get user for compare password with user input
+                            $userLogin = $this->model("pengguna_model")->get($_SESSION["user"]["id"]);
                             if (password_verify($_POST["password"], $userLogin["password"])) {
                                 // rubah email dan kirimkan link verifikasi
-                                var_dump("ok");
-                                die;
+                                $this->model("pengguna_model")->changeEmail();
+                                Flasher::setMessage("Berhasil", "Berhasil memperbarui email, silakan check email untuk konfirmasi", "success");
+                                header("Location: " . BaseURL() . "/users");
+                                exit;
                             } else {
                                 throw new Exception("Password salah");
                             }
@@ -68,6 +74,11 @@ class Users extends Controller
                 exit;
             }
         } catch (Exception $error) {
+            if ($error->getCode() == 23000) {
+                Flasher::setMessage("Terjadi Kesalahan!", "Email sudah digunakan", "error");
+                header("Location: " . BaseURL() . "/users");
+                exit;
+            }
             Flasher::setMessage("Terjadi Kesalahan!", $error->getMessage(), "error");
             header("Location: " . BaseURL() . "/users");
             exit;
@@ -96,14 +107,22 @@ class Users extends Controller
     public function verifikasi($idVerifikasi = "")
     {
         try {
-            if (!isset($_SESSION["admin"]["id"])) {
-                $this->model("pengguna_model")->acceptVerifikasi($idVerifikasi);
-                Flasher::setMessage("Berhasil", "Berhasil verifikasi email, silakan login!", "success");
+            if ($this->model("pengguna_model")->acceptVerifikasi($idVerifikasi)) {
+                if (!isset($_SESSION["user"])) {
+                    Flasher::setMessage("Berhasil", "Email berhasil diverifikasi, silakan login!", "success");
+                    header("Location: " . BaseURL() . "/auth");
+                } else {
+                    Flasher::setMessage("Berhasil", "Email berhasil diverifikasi", "success");
+                    header("Location: " . BaseURL() . "/users");
+                }
             }
-            header("Location: " . BaseURL() . "/auth");
         } catch (Exception $error) {
             Flasher::setMessage("Terjadi Kesalahan!", $error->getMessage(), "error");
-            header("Location: " . BaseURL() . "/auth");
+            if (isset($_SESSION["user"])) {
+                header("Location: " . BaseURL() . "/users");
+            } else {
+                header("Location: " . BaseURL() . "/auth");
+            }
             exit;
         }
     }

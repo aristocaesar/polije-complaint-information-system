@@ -288,12 +288,16 @@ class Pengguna_Model
         $this->db->query('SELECT * FROM users_verifikasi WHERE verifikasi=:id');
         $this->db->bind("id", $id);
         $verifikasi = $this->db->single();
-        if ($verifikasi["time_limit"] >= time()) {
-            // update users
-            $this->updateToVerified($verifikasi["email"]);
-            // // hapus data verifikasi
-            $this->removeDataVerifikasi($verifikasi["email"]);
-            return true;
+        if ($verifikasi) {
+            if ($verifikasi["time_limit"] >= time()) {
+                // update users
+                $this->updateToVerified($verifikasi["email"]);
+                // // hapus data verifikasi
+                $this->removeDataVerifikasi($verifikasi["email"]);
+                return true;
+            } else {
+                throw new Exception("Tautan sudah kadaluarsa!");
+            }
         } else {
             throw new Exception("Tautan sudah kadaluarsa!");
         }
@@ -303,7 +307,7 @@ class Pengguna_Model
     {
         if (!empty($email)) {
             $this->db->query("UPDATE pengguna SET verifikasi_daftar=:verifikasi, verifikasi_email=:verifikasi_email,  updated_at=:updated_at WHERE email=:email");
-            $this->db->bind("verifikasi", "aktif");
+            $this->db->bind("verifikasi", "terverifikasi");
             $this->db->bind("verifikasi_email", "terverifikasi");
             $this->db->bind("updated_at", date("Y-m-d H:i:s"));
             $this->db->bind("email", $email);
@@ -324,7 +328,7 @@ class Pengguna_Model
             $pengguna = $this->getByEmail($data["email"]);
             if ($pengguna) {
                 if (password_verify($data["password"], $pengguna["password"])) {
-                    if ($pengguna["verifikasi_daftar"] == "aktif") {
+                    if ($pengguna["verifikasi_daftar"] == "terverifikasi") {
                         if ($pengguna["akses"] == "aktif") {
                             $this->updateLastLogin($pengguna["id"]);
                             setSession("user", [
@@ -484,6 +488,60 @@ class Pengguna_Model
             }
         } else {
             throw new Exception("Gagal memperbarui password");
+        }
+    }
+
+    public function checkEmailVerifikasi(String $email = "")
+    {
+        if (!empty($email)) {
+            $this->db->query("SELECT * FROM users_verifikasi WHERE email=:email");
+            $this->db->bind("email", $email);
+            return $this->db->single();
+        } else {
+            return false;
+        }
+    }
+
+    public function sendEmail($email, $nama, $token)
+    {
+        // send email
+        if (!PHPmail($email, "E_LAPOR | GANTI EMAIL", PHPmailVerifikasi($nama, BaseURL() . "/users/verifikasi/" . $token))) {
+            throw new Exception("Error Processing Sending Email");
+        };
+        return true;
+    }
+
+    public function changeEmail()
+    {
+        // update email
+        $this->db->query("UPDATE " . $this->table . " SET email=:email, verifikasi_email=:verifikasi, created_at=:created_at WHERE id=:id");
+        $this->db->bind("email", $_POST["email"]);
+        $this->db->bind("verifikasi", "belum_terverifikasi");
+        $this->db->bind("created_at", date("Y-m-d H:i:s"));
+        $this->db->bind("id", $_SESSION["user"]["id"]);
+        $this->db->execute();
+        if ($this->db->rowCount() != 0) {
+            // update session email
+            $_SESSION["user"]["email"] = $_POST["email"];
+            // check email on verifikasi
+            // if user verifkasi as true (update token) and false (create token)
+            $token = "";
+            $emailVerifikasiAvaible = $this->checkEmailVerifikasi($_POST["email"]);
+            if (!$emailVerifikasiAvaible) {
+                // create token on db 
+                $token = $this->generateVerifikasi($_POST["email"]);
+                $this->sendEmail($_POST["email"], $_SESSION["user"]["nama"], $token);
+                return true;
+            } else {
+                // update token on db
+                if ($emailVerifikasiAvaible["time_limit"] <= time()) {
+                    $newToken = $this->generateVerifikasi($_POST["email"], 5, "update");
+                    $this->sendEmail($_POST["email"], $_SESSION["user"]["nama"], $newToken);
+                }
+                return true;
+            }
+        } else {
+            throw new Exception("Gagal melakukan ganti email");
         }
     }
 }

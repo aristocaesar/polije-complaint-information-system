@@ -215,6 +215,10 @@
                                     <h5 class="text-blue-800 font-bold text-xl mb-2">Email</h5>
                                     <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded w-full" required value="<?= $data["user"]["email"] ?> - <?= ucwords(str_replace("_", " ", $data["user"]["verifikasi_email"])) ?>" readonly>
                                     <button type="button" class="mt-2 text-blue-800 underline" onclick="Modal('ganti-email')"><u>Ganti Email</u></button>
+                                    <?php if ($data["user"]["verifikasi_email"] != "terverifikasi") : ?>
+                                        <span>|</span>
+                                        <button type="button" class="mt-2 text-blue-800 underline" onclick="Modal('ganti-email')"><u>Kirim kembali tautan verifikasi</u></button>
+                                    <?php endif; ?>
                                 </div>
                                 <div>
                                     <h5 class="text-blue-800 font-bold text-2xl mb-2">Password</h5>

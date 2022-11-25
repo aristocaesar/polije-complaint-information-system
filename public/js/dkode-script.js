@@ -117,12 +117,16 @@ async function trackingLaporan(id) {
       $(".form-tracking").show();
       $("#id-tracking-laporan").text(result.id);
       $("#tgl-tracking-laporan").text(moment(result.created_at).format("LLLL"));
-      $("#nama-pelapor-tracking-laporan").text(result.pengirim);
+      if (result.pengirim != "" || result.pengirim != null) {
+        $("#nama-pelapor-tracking-laporan").text("Dirahasiakan");
+      } else {
+        $("#nama-pelapor-tracking-laporan").text(result.pengirim);
+      }
       $("#judul-tracking-laporan").text(result.judul);
       $("#deskripsi-tracking-laporan").text(result.deskripsi);
       $("#kategori-tracking-laporan").text(result.kategori);
       $("#divisi-tracking-laporan").text(result.divisi);
-      $("#status-tracking-laporan").text(result.status);
+      $("#status-tracking-laporan").text(result.status.replaceAll(/_/g, " "));
       if (result.lampiran == "" || result.lampiran == null) {
         $("#hasil-tracking-laporan").text("-");
       } else {
