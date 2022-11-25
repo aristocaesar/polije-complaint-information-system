@@ -7,6 +7,14 @@ class Home extends Controller
     public function index()
     {
         try {
+            if (isset($_SESSION["user"])) {
+                $user = $this->model("pengguna_model")->get($_SESSION["user"]["id"]);
+                if ($user["verifikasi_email"] == "belum_terverifikasi") {
+                    Flasher::setMessage("Peringatan", "Harap memverifikasi akun untuk melakukan pengaduan, aspirasi atau informasi", "info");
+                    header("Location: " . BaseURL() . "/users");
+                    exit;
+                }
+            }
             $data = [
                 "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember",
                 "kategori" => $this->model("kategori_model")->getAll(),
