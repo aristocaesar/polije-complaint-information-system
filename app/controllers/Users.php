@@ -104,6 +104,14 @@ class Users extends Controller
         }
     }
 
+    public function sendnewverifikasi()
+    {
+        $this->model("pengguna_model")->newVerifikasi();
+        Flasher::setMessage("Berhasil", "Berhasil mengirimkan tautan verifiaksi, silakan check email untuk konfirmasi", "success");
+        header("Location: " . BaseURL() . "/users");
+        exit;
+    }
+
     public function verifikasi($idVerifikasi = "")
     {
         try {

@@ -505,7 +505,7 @@ class Pengguna_Model
     public function sendEmail($email, $nama, $token)
     {
         // send email
-        if (!PHPmail($email, "E_LAPOR | GANTI EMAIL", PHPmailVerifikasi($nama, BaseURL() . "/users/verifikasi/" . $token))) {
+        if (!PHPmail($email, "E_LAPOR | VERIFIKASI EMAIL", PHPmailVerifikasi($nama, BaseURL() . "/users/verifikasi/" . $token))) {
             throw new Exception("Error Processing Sending Email");
         };
         return true;
@@ -542,6 +542,20 @@ class Pengguna_Model
             }
         } else {
             throw new Exception("Gagal melakukan ganti email");
+        }
+    }
+
+    public function newVerifikasi()
+    {
+        $this->db->query("SELECT * FROM users_verifikasi WHERE email=:email");
+        $this->db->bind("email", $_SESSION["user"]["email"]);
+        $userVerifikasi = $this->db->single();
+        if ($userVerifikasi["time_limit"] <= time()) {
+            $token = $this->generateVerifikasi($_SESSION["user"]["email"], 5, "update");
+            $this->sendEmail($_SESSION['user']["email"], $_SESSION["user"]["nama"], $token);
+            return true;
+        } else {
+            return true;
         }
     }
 }
