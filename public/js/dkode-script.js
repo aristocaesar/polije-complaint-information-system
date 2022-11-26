@@ -22,6 +22,11 @@ if (getCookie("location") == undefined) {
   $(".lokasi").attr("value", getCookie("location"));
 }
 
+// go tentang
+function goTentang() {
+  window.location.href = `${BaseUrl}/tentang`;
+}
+
 // DATA TABLES
 $("#dataTableLaporan").DataTable();
 
