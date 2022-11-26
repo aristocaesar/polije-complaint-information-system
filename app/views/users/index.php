@@ -71,10 +71,10 @@
                                                 <small class="<?= $status ?>"><?= ucwords(str_replace("_", " ", $pengaduan["status"])); ?></small>
                                             </div>
                                         </div>
-                                        <div class="m-5" id="<?= $pengaduan["id"] ?>" onclick="getLaporan(this.id)">
+                                        <a href="<?= BaseURL() ?>/users/pengaduan/<?= $pengaduan['id'] ?>" class="m-5" rel="noopener noreferrer">
                                             <i data-feather="more-vertical" class="cursor-pointer hidden md:block" style="width:35px;height: 35px;left: 140px;top: 17px;"></i>
                                             <i data-feather="more-horizontal" class="cursor-pointer block md:hidden" style="width:35px;height: 35px;left: 140px;top: 17px;"></i>
-                                        </div>
+                                        </a>
                                     </div>
                                 <?php endforeach; ?>
                             <?php else : ?>
@@ -115,10 +115,10 @@
                                                 <small class="<?= $status_aspi ?>"><?= ucwords(str_replace("_", " ", $aspirasi["status"])); ?></small>
                                             </div>
                                         </div>
-                                        <div class="m-5" id="<?= $aspirasi["id"] ?>" onclick="getLaporan(this.id)">
+                                        <a href="<?= BaseURL() ?>/users/aspirasi/<?= $aspirasi['id'] ?>" class="m-5" rel="noopener noreferrer">
                                             <i data-feather="more-vertical" class="cursor-pointer hidden md:block" style="width:35px;height: 35px;left: 140px;top: 17px;"></i>
                                             <i data-feather="more-horizontal" class="cursor-pointer block md:hidden" style="width:35px;height: 35px;left: 140px;top: 17px;"></i>
-                                        </div>
+                                        </a>
                                     </div>
                                 <?php endforeach; ?>
                             <?php else : ?>
@@ -159,10 +159,10 @@
                                                 <small class="<?= $status_info ?>"><?= ucwords(str_replace("_", " ", $informasi["status"])); ?></small>
                                             </div>
                                         </div>
-                                        <div class="m-5" id="<?= $informasi["id"] ?>" onclick="getLaporan(this.id)">
+                                        <a href="<?= BaseURL() ?>/users/informasi/<?= $informasi['id'] ?>" class="m-5" rel="noopener noreferrer">
                                             <i data-feather="more-vertical" class="cursor-pointer hidden md:block" style="width:35px;height: 35px;left: 140px;top: 17px;"></i>
                                             <i data-feather="more-horizontal" class="cursor-pointer block md:hidden" style="width:35px;height: 35px;left: 140px;top: 17px;"></i>
-                                        </div>
+                                        </a>
                                     </div>
                                 <?php endforeach; ?>
                             <?php else : ?>
@@ -254,62 +254,6 @@
     </div>
 </section>
 
-<!-- Modal Detail Laporan -->
-<div id="modal-detail-laporan" class="modal hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center bg-black bg-opacity-50">
-    <div class="relative mt-72 p-4 w-full max-w-3xl h-full md:h-auto">
-        <!-- Modal content -->
-        <div class="relative bg-white rounded-lg shadow">
-            <!-- Modal header -->
-            <div class="flex justify-between items-start p-4 rounded-t border-b">
-                <h3 class="text-xl font-semibold text-gray-800 ">
-                    Kirim tautan verifikasi
-                </h3>
-                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" onclick="ModalClose()">
-                    <svg aria-hidden=" true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                    </svg>
-                </button>
-            </div>
-            <!-- Modal body -->
-            <form class="px-10 py-5 text-grey-800">
-                <div class="flex flex-col mb-5">
-                    <label for="judul" class="text-gray-700">Judul Laporan*</label>
-                    <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="judul" aria-describedby="judul" name="judul" placeholder="Ketikkan Judul Laporan" readonly>
-                </div>
-                <div class="flex flex-col mb-5">
-                    <label for="deskripsi" class="text-gray-700">Deskripsikan Laporan*</label>
-                    <textarea class="mt-3 border border-gray-400 py-3 px-2 rounded" name="deskripsi" id="deskripsi" placeholder="Deskripsikan Laporan Anda" rows="3" readonly></textarea>
-                </div>
-                <div class="grid grid-rows-2">
-                    <div class="flex flex-col mb-5">
-                        <label for="kategori" class="text-gray-700">Kategori</label>
-                        <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="kategori" aria-describedby="kategori" name="kategori" readonly>
-                    </div>
-                    <div class="flex flex-col mb-5">
-                        <label for="divisi-tujuan" class="text-gray-700">Divisi Tujuan</label>
-                        <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="divisi" aria-describedby="divisi" name="divisi" readonly>
-                    </div>
-                </div>
-                <div class="flex flex-col <?= !isset($_SESSION["user"]) ? "mb-5" : "mb-10" ?>">
-                    <label for="input-file" class="text-gray-700">Lampiran</label>
-
-                </div>
-                <div class="flex flex-col mb-5">
-                    <label for="divisi-tujuan" class="text-gray-700">Status</label>
-                    <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="status" aria-describedby="status" name="status" readonly>
-                </div>
-                <div class="flex flex-col mb-5">
-                    <label for="divisi-tujuan" class="text-gray-700">Terakhir Diperbarui</label>
-                    <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="updated_at" aria-describedby="updated_at" name="updated_at" readonly>
-                </div>
-                <!-- Modal footer -->
-                <div class="flex justify-end items-center pt-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
-                    <button type="button" class="text-white bg-blue-800 hover:bg-blue-900 hover:drop-shadow-md font-medium rounded-lg text-sm px-5 py-2.5 text-cente" onclick="ModalClose()">Oke</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 <!-- Modal Logout -->
 <div id="modal-keluar" class="modal hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center bg-black bg-opacity-50">
     <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">

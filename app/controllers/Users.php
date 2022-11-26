@@ -19,6 +19,54 @@ class Users extends Controller
         $this->view("users/index", $data);
     }
 
+    public function pengaduan($id = "")
+    {
+        if (!empty($id)) {
+            UserIsTrue();
+            $data = [
+                "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - User Area",
+                "klasifikasi" => "Pengaduan",
+                "laporan" => $this->model("pengaduan_model")->get($id),
+            ];
+
+            $this->view("users/klasifikasi", $data);
+        } else {
+            header("Location: " . BaseURL() . "/users");
+        }
+    }
+
+    public function aspirasi($id = "")
+    {
+        if (!empty($id)) {
+            UserIsTrue();
+            $data = [
+                "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - User Area",
+                "klasifikasi" => "Pengaduan",
+                "laporan" => $this->model("aspirasi_model")->get($id),
+            ];
+
+            $this->view("users/klasifikasi", $data);
+        } else {
+            header("Location: " . BaseURL() . "/users");
+        }
+    }
+
+    public function informasi($id = "")
+    {
+        if (!empty($id)) {
+            UserIsTrue();
+            $data = [
+                "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - User Area",
+                "klasifikasi" => "Pengaduan",
+                "laporan" => $this->model("informasi_model")->get($id),
+            ];
+
+            $this->view("users/klasifikasi", $data);
+        } else {
+            header("Location: " . BaseURL() . "/users");
+        }
+    }
+
     public function profil()
     {
         if (isset($_POST["submit"])) {
