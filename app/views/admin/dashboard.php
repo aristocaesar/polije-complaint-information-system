@@ -71,7 +71,7 @@
                 </div>
             </div>
             <!-- Statistik Data Pengaduan, Aspirasi dan Informasi & Aktiftas Terbaru -->
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-lg-8">
                     <div class="card">
                         <div class="card-header">
@@ -161,7 +161,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </section>
 </div>

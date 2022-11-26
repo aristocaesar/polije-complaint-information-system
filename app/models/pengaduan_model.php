@@ -1,13 +1,17 @@
 <?php
 
+require_once("app/models/dashboard_model.php");
+
 class Pengaduan_Model
 {
     private $db;
+    private $dashboard;
     private $table = "pengaduan";
 
     public function __construct()
     {
         $this->db = new Database;
+        $this->dashboard = new Dashboard_Model;
     }
 
     public function getAll()
@@ -32,11 +36,11 @@ class Pengaduan_Model
     {
         switch ($status) {
             case 'belum_ditanggapi':
-                $this->db->query("SELECT * FROM " . $this->table . " WHERE status=:status ORDER BY created_at ASC");
+                $this->db->query("SELECT * FROM " . $this->table . " WHERE status=:status ORDER BY bobot DESC");
                 $this->db->bind("status", "belum_ditanggapi");
                 break;
             case 'proses':
-                $this->db->query("SELECT * FROM " . $this->table . " WHERE status=:status ORDER BY created_at ASC");
+                $this->db->query("SELECT * FROM " . $this->table . " WHERE status=:status ORDER BY bobot DESC");
                 $this->db->bind("status", "proses");
                 break;
             case 'selesai':
@@ -49,6 +53,13 @@ class Pengaduan_Model
                 break;
         }
 
+        return $this->db->resultSet();
+    }
+
+    public function getByPengguna($id)
+    {
+        $this->db->query("SELECT * FROM " . $this->table . " WHERE pengirim=:pengirim ORDER BY created_at DESC");
+        $this->db->bind("pengirim", $id);
         return $this->db->resultSet();
     }
 
@@ -103,6 +114,100 @@ class Pengaduan_Model
             return true;
         } else {
             throw new Exception("Error Processing Request Change To Complate");
+        }
+    }
+
+    public function generateBobot(String $judul, String $deskripsi, int $lampiran): int
+    {
+        $bobot = 0;
+
+        // cek bobot for judul
+        $lenJudul = strlen($judul);
+        if ($lenJudul > 40) {
+            $bobot += 25;
+        } elseif ($lenJudul > 20) {
+            $bobot += 15;
+        } elseif ($lenJudul > 10) {
+            $bobot += 8;
+        } else {
+            $bobot += 3;
+        }
+
+        // cek bobot for deskripsi
+        $lenDeskripsi = strlen($deskripsi);
+        if ($lenDeskripsi > 180) {
+            $bobot += 50;
+        } elseif ($lenDeskripsi > 128) {
+            $bobot += 25;
+        } elseif ($lenDeskripsi > 64) {
+            $bobot += 15;
+        } else {
+            $bobot += 5;
+        }
+
+        // cek lampiran
+        if ($lampiran == 0) {
+            $bobot += 25;
+        }
+
+        return $bobot;
+    }
+
+    public function generateID()
+    {
+        return "ADU" . time();
+    }
+
+    public function sendPengaduan()
+    {
+
+        if (isset($_POST["submit"])) {
+
+            $bobot = $this->generateBobot($_POST["judul"], $_POST["deskripsi"], $_FILES["foto"]["error"]);
+
+            $id = $this->generateID();
+            $date = date("Y-m-d H:i:s");
+            $this->db->query("INSERT INTO " . $this->table . " (id, judul, deskripsi, kategori, pengirim, lokasi, status, divisi, bobot, lampiran_pengirim, user_agent, created_at, updated_at) VALUES (:id, :judul, :deskripsi, :kategori, :pengirim, :lokasi, :status, :divisi, :bobot, :lampiran_pengirim, :user_agent, :created_at, :updated_at)");
+            $this->db->bind("id", $id);
+            $this->db->bind("judul", $_POST["judul"]);
+            $this->db->bind("deskripsi", $_POST["deskripsi"]);
+            $this->db->bind("kategori", $_POST["kategori"]);
+            if (isset($_POST["pelapor"])) {
+                $this->db->bind("pengirim", null);
+                // set sessionn for generate pdf document
+                $_SESSION["p_rahasia"] = [
+                    "id" => $id,
+                    "date" => $date
+                ];
+            } else {
+                $this->db->bind("pengirim", $_SESSION["user"]["id"]);
+            }
+            if ($_POST["lokasi"] == "Akses tidak diberikan") {
+                $this->db->bind("lokasi", "Akses tidak diberikan");
+            } else {
+                $this->db->bind("lokasi", $_POST["lokasi"]);
+            }
+            $this->db->bind("status", "belum_ditanggapi");
+            $this->db->bind("divisi", $_POST["divisi"]);
+            $this->db->bind("bobot", $bobot);
+            if ($_FILES["foto"]["error"] != 4) {
+                $file = explode(".", $_FILES["foto"]["name"]);
+                $extension = end($file);
+                // Upload File ( 2MB 2097152 )
+                UploadFile($_FILES, "L-USER-" . $id, 2097152, ["image/jpeg", "image/jpg", "image/png"], "document/pengaduan");
+                $this->db->bind("lampiran_pengirim", "L-USER-" . $id . "." . $extension);
+            } else {
+                $this->db->bind("lampiran_pengirim", null);
+            }
+            $this->db->bind("user_agent", $_SERVER["HTTP_USER_AGENT"]);
+            $this->db->bind("created_at", $date);
+            $this->db->bind("updated_at", $date);
+            $this->db->execute();
+            // add count pengaduan
+            $this->dashboard->addPengaduan();
+            return true;
+        } else {
+            header("Location: " . BaseURL());
         }
     }
 }

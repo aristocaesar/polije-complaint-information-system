@@ -13,12 +13,16 @@
         <li>
             <a class="text-gray-800 hover:text-gray-500 drop-shadow-sm" href="<?= BaseURL(); ?>/tentang">Tentang</a>
         </li>
-        <?php if (isset($_SESSION["users"])) : ?>
+        <?php if (!isset($_SESSION["user"])) : ?>
             <li>
                 <a href="<?= BaseURL() ?>/auth" class="text-gray-800 hover:text-gray-500 drop-shadow-sm">Masuk</a>
             </li>
             <li>
                 <a href="<?= BaseURL() ?>/auth/daftar" class="text-white bg-blue-800 hover:drop-shadow-lg py-2 px-5 rounded">Daftar</a>
+            </li>
+        <?php else : ?>
+            <li>
+                <a href="<?= BaseURL() ?>/users" class="text-gray-800 hover:text-gray-500 drop-shadow-sm">Hallo, <?= $_SESSION["user"]["nama"] ?></a>
             </li>
         <?php endif; ?>
     </ul>
@@ -33,9 +37,9 @@
                 <li>
                     <a class="nav-items-horizontal text-white hover:text-gray-200" href="<?= BaseURL(); ?>">Home</a>
                 </li>
-                <li>
+                <!-- <li>
                     <a class="nav-items-horizontal text-white hover:text-gray-200" href="<?= BaseURL(); ?>/laporan">Laporan</a>
-                </li>
+                </li> -->
                 <li>
                     <a class="nav-items-horizontal text-white hover:text-gray-200" href="<?= BaseURL(); ?>/tentang">Tentang</a>
                 </li>

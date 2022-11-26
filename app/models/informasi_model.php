@@ -1,13 +1,16 @@
 <?php
+require_once("app/models/dashboard_model.php");
 
 class Informasi_Model
 {
     private $db;
+    private $dashboard;
     private $table = "informasi";
 
     public function __construct()
     {
         $this->db = new Database;
+        $this->dashboard = new Dashboard_Model;
     }
 
     public function getAll()
@@ -26,6 +29,14 @@ class Informasi_Model
             return [];
         }
         return $result;
+    }
+
+    public function getByPengguna($id)
+    {
+        $nama = str_replace("-", " ", $id);
+        $this->db->query("SELECT * FROM " . $this->table . " WHERE pengirim=:pengirim ORDER BY created_at DESC");
+        $this->db->bind("pengirim", $id);
+        return $this->db->resultSet();
     }
 
     public function getByStatus($status = "")
@@ -103,6 +114,50 @@ class Informasi_Model
             return true;
         } else {
             throw new Exception("Error Processing Request Change To Complate");
+        }
+    }
+
+    public function generateID()
+    {
+        return "INFO" . time();
+    }
+
+    public function sendInformasi()
+    {
+        if (isset($_POST["submit"])) {
+            $id = $this->generateID();
+            $date = date("Y-m-d H:i:s");
+            $this->db->query("INSERT INTO " . $this->table . " (id, judul, deskripsi, kategori, pengirim, lokasi, status, divisi, lampiran_pengirim, user_agent, created_at, updated_at) VALUES (:id, :judul, :deskripsi, :kategori, :pengirim, :lokasi, :status, :divisi, :lampiran_pengirim, :user_agent, :created_at, :updated_at)");
+            $this->db->bind("id", $id);
+            $this->db->bind("judul", $_POST["judul"]);
+            $this->db->bind("deskripsi", $_POST["deskripsi"]);
+            $this->db->bind("kategori", $_POST["kategori"]);
+            $this->db->bind("pengirim", $_SESSION["user"]["id"]);
+            if ($_POST["lokasi"] == "Akses tidak diberikan") {
+                $this->db->bind("lokasi", "Akses tidak diberikan");
+            } else {
+                $this->db->bind("lokasi", $_POST["lokasi"]);
+            }
+            $this->db->bind("status", "belum_ditanggapi");
+            $this->db->bind("divisi", $_POST["divisi"]);
+            if ($_FILES["foto"]["error"] != 4) {
+                $file = explode(".", $_FILES["foto"]["name"]);
+                $extension = end($file);
+                // Upload File ( 2MB 2097152 )
+                UploadFile($_FILES, "L-USER-" . $id, 2097152, ["image/jpeg", "image/jpg", "image/png"], "document/informasi");
+                $this->db->bind("lampiran_pengirim", "L-USER-" . $id . "." . $extension);
+            } else {
+                $this->db->bind("lampiran_pengirim", null);
+            }
+            $this->db->bind("user_agent", $_SERVER["HTTP_USER_AGENT"]);
+            $this->db->bind("created_at", $date);
+            $this->db->bind("updated_at", $date);
+            $this->db->execute();
+            // add count informasi
+            $this->dashboard->addInformasi();
+            return true;
+        } else {
+            throw new Exception("Error Processing Send Information");
         }
     }
 }

@@ -25,9 +25,6 @@
     <!-- Datatables -->
     <link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
 
-    <!-- Moment.js -->
-    <script type="text/javascript" src="<?= BaseURL(); ?>/public/vendor/momentjs/moment.js"></script>
-
     <!-- Jquery -->
     <script type="text/javascript" src="<?= BaseURL(); ?>/public/js/jquery.js"></script>
 </head>

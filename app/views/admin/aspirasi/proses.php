@@ -78,6 +78,13 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="form-group col-12">
+                                <label>Lampiran</label>
+                                <div class="input-group">
+                                    <p id="lampiran_pengirim_none">Tidak Ada Lampiran</p>
+                                    <a href="#" target="_blank" rel="noopener noreferrer" id="lampiran_pengirim_link"></a>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-tanggapan">
                             <div class="card card-primary">
@@ -210,7 +217,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer bg-whitesmoke">
+                    <div class="modal-footer modal-footer-info-user bg-whitesmoke">
                         <button type="submit" class="btn btn-primary" onclick="closeDetailInfo()">OK</button>
                     </div>
                 </div>
@@ -411,6 +418,18 @@
             }
             // Divisi
             $("#divisi").val(result.divisi);
+            // lampiran
+            if (result.lampiran_pengirim != null) {
+                $("#lampiran_pengirim_none").hide();
+                $("#lampiran_pengirim_link").show();
+                $("#lampiran_pengirim_link").text(result.lampiran_pengirim);
+                $("#lampiran_pengirim_link").attr("href", `<?= BaseURL() ?>/public/upload/assets/document/aspirasi/${result.lampiran_pengirim}`);
+            } else {
+                $("#lampiran_pengirim_none").show();
+                $("#lampiran_pengirim_link").hide();
+                $("#lampiran_pengirim_link").text("");
+                $("#lampiran_pengirim_link").attr("href", "");
+            }
         };
     }
 
@@ -444,6 +463,7 @@
         $("#aspirasi").modal("hide");
         setTimeout(() => {
             $("#detail-aspirasi").modal("show");
+            $(".modal-footer-info-user").show();
             // content detail aspirasi
             $("#konfirmasi-tangguhkan").hide();
             $("#info-user").show();
