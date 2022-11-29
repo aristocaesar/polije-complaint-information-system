@@ -41,7 +41,7 @@ class Users extends Controller
             UserIsTrue();
             $data = [
                 "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - User Area",
-                "klasifikasi" => "Pengaduan",
+                "klasifikasi" => "Aspirasi",
                 "laporan" => $this->model("aspirasi_model")->get($id),
             ];
 
@@ -57,7 +57,7 @@ class Users extends Controller
             UserIsTrue();
             $data = [
                 "title" => "Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember - User Area",
-                "klasifikasi" => "Pengaduan",
+                "klasifikasi" => "Informasi",
                 "laporan" => $this->model("informasi_model")->get($id),
             ];
 

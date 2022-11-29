@@ -63,6 +63,24 @@ class Pengaduan_Model
         return $this->db->resultSet();
     }
 
+    public function getPengaduan($id = "")
+    {
+        if (!empty($id)) {
+            $data = null;
+            $type = preg_replace("/[0-9]/", "", $id);
+            if ($type == "ADU") {
+                $data = $this->get($id);
+            } else if ($type == "USR") {
+                $data = $this->getByPengguna($id);
+            } else {
+                throw new Exception("Error Processing Pengaduan Request");
+            }
+            return $data;
+        } else {
+            throw new Exception("Error Processing Pengaduan Request");
+        }
+    }
+
     public function tangguhkan($data = [])
     {
         if (!empty($data)) {
@@ -160,15 +178,15 @@ class Pengaduan_Model
 
     public function sendPengaduan()
     {
-
-        if (isset($_POST["submit"])) {
-
-            $bobot = $this->generateBobot($_POST["judul"], $_POST["deskripsi"], $_FILES["foto"]["error"]);
+        if (isset($_POST)) {
+            $foto = isset($_FILES["foto"]["error"]) ? $_FILES["foto"]["error"] : 4;
+            $bobot = $this->generateBobot($_POST["judul"], $_POST["deskripsi"], $foto);
 
             $id = $this->generateID();
             $date = date("Y-m-d H:i:s");
             $this->db->query("INSERT INTO " . $this->table . " (id, judul, deskripsi, kategori, pengirim, lokasi, status, divisi, bobot, lampiran_pengirim, user_agent, created_at, updated_at) VALUES (:id, :judul, :deskripsi, :kategori, :pengirim, :lokasi, :status, :divisi, :bobot, :lampiran_pengirim, :user_agent, :created_at, :updated_at)");
             $this->db->bind("id", $id);
+
             $this->db->bind("judul", $_POST["judul"]);
             $this->db->bind("deskripsi", $_POST["deskripsi"]);
             $this->db->bind("kategori", $_POST["kategori"]);
@@ -180,7 +198,11 @@ class Pengaduan_Model
                     "date" => $date
                 ];
             } else {
-                $this->db->bind("pengirim", $_SESSION["user"]["id"]);
+                if (!isset($_POST["id_user_mobile"])) {
+                    $this->db->bind("pengirim", $_SESSION["user"]["id"]);
+                } else {
+                    $this->db->bind("pengirim", $_POST["id_user_mobile"]);
+                }
             }
             if ($_POST["lokasi"] == "Akses tidak diberikan") {
                 $this->db->bind("lokasi", "Akses tidak diberikan");
@@ -205,7 +227,7 @@ class Pengaduan_Model
             $this->db->execute();
             // add count pengaduan
             $this->dashboard->addPengaduan();
-            return true;
+            return $_POST;
         } else {
             header("Location: " . BaseURL());
         }

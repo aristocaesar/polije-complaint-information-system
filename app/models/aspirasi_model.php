@@ -64,6 +64,24 @@ class Aspirasi_Model
         return $this->db->resultSet();
     }
 
+    public function getAspirasi($id = "")
+    {
+        if (!empty($id)) {
+            $data = null;
+            $type = preg_replace("/[0-9]/", "", $id);
+            if ($type == "ASPI") {
+                $data = $this->get($id);
+            } else if ($type == "USR") {
+                $data = $this->getByPengguna($id);
+            } else {
+                throw new Exception("Error Processing Aspirasi Request");
+            }
+            return $data;
+        } else {
+            throw new Exception("Error Processing Aspirasi Request");
+        }
+    }
+
     public function tangguhkan($data = [])
     {
         if (!empty($data)) {
@@ -125,7 +143,7 @@ class Aspirasi_Model
 
     public function sendAspirasi()
     {
-        if (isset($_POST["submit"])) {
+        if (isset($_POST)) {
             $id = $this->generateID();
             $date = date("Y-m-d H:i:s");
             $this->db->query("INSERT INTO " . $this->table . " (id, judul, deskripsi, kategori, pengirim, lokasi, status, divisi, lampiran_pengirim, user_agent, created_at, updated_at) VALUES (:id, :judul, :deskripsi, :kategori, :pengirim, :lokasi, :status, :divisi, :lampiran_pengirim, :user_agent, :created_at, :updated_at)");
@@ -133,7 +151,11 @@ class Aspirasi_Model
             $this->db->bind("judul", $_POST["judul"]);
             $this->db->bind("deskripsi", $_POST["deskripsi"]);
             $this->db->bind("kategori", $_POST["kategori"]);
-            $this->db->bind("pengirim", $_SESSION["user"]["id"]);
+            if (!isset($_POST["id_user_mobile"])) {
+                $this->db->bind("pengirim", $_SESSION["user"]["id"]);
+            } else {
+                $this->db->bind("pengirim", $_POST["id_user_mobile"]);
+            }
             if ($_POST["lokasi"] == "Akses tidak diberikan") {
                 $this->db->bind("lokasi", "Akses tidak diberikan");
             } else {
@@ -156,7 +178,7 @@ class Aspirasi_Model
             $this->db->execute();
             // add count aspirasi
             $this->dashboard->addAspirasi();
-            return true;
+            return $_POST;
         } else {
             throw new Exception("Error Processing Send Aspirasi");
         }
