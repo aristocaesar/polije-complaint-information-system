@@ -331,12 +331,14 @@ class Pengguna_Model
                     if ($pengguna["verifikasi_daftar"] == "terverifikasi") {
                         if ($pengguna["akses"] == "aktif") {
                             $this->updateLastLogin($pengguna["id"]);
-                            setSession("user", [
-                                "id" => $pengguna["id"],
-                                "nama" => $pengguna["nama"],
-                                "email" => $pengguna["email"],
-                                "foto" => $pengguna["foto"],
-                            ]);
+                            if (!isset($data["mobile"])) {
+                                setSession("user", [
+                                    "id" => $pengguna["id"],
+                                    "nama" => $pengguna["nama"],
+                                    "email" => $pengguna["email"],
+                                    "foto" => $pengguna["foto"],
+                                ]);
+                            }
                             return $pengguna;
                         } else {
                             throw new Exception("Akun sedang ditangguhkan!");
@@ -428,7 +430,7 @@ class Pengguna_Model
                         PHPmail($user["email"], "E-LAPOR | RECOVERY PASSWORD", PHPmailRecovery($user["nama"], BaseURL() . "/auth/recovery/" . $token));
                     }
                 }
-                return true;
+                return $user;
             } else {
                 throw new Exception("Email tidak terdaftar");
             }
@@ -557,5 +559,25 @@ class Pengguna_Model
         } else {
             return true;
         }
+    }
+
+    public function updateFoto()
+    {
+        // if (isset($_POST["email"]) && isset($_FILES["foto"])) {
+        //     if (!empty($_POST["email"]) && !empty($_FILES["foto"])) {
+        //         // update foto
+        //         $file = explode(".", $_FILES["foto"]["name"]);
+        //         $extension = end($file);
+        //         // hapus foto lama
+        //         RemoveFileUpload("/images/" . $data["foto_lama"]);
+        //         // Upload File ( 2MB 2097152 )
+        //         UploadFile($foto, $data["id"], 2097152, ["image/jpeg", "image/jpg", "image/png"], "images");
+        //         $this->db->bind("foto", $data["id"] . "." . $extension);
+        //     } else {
+        //         throw new Exception("Error Processing Request Change Photo Profile");
+        //     }
+        // } else {
+        //     throw new Exception("Error Processing Request Change Photo Profile");
+        // }
     }
 }

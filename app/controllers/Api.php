@@ -8,7 +8,87 @@ class API extends CoreApi
     public function __construct()
     {
         parent::__construct();
-        // Cek Auth
+    }
+
+    public function index()
+    {
+        header("Location: " . BaseURL());
+    }
+
+    public function login()
+    {
+        try {
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                if (!empty($_POST["email"]) && !empty($_POST["password"])) {
+                    $this->Response(200, "OK", $this->model("pengguna_model")->login([
+                        "email" => $_POST["email"],
+                        "password" => $_POST["password"],
+                        "mobile" => true
+                    ]));
+                } else {
+                    throw new Exception("Error Processing Login Request");
+                }
+            }
+        } catch (Exception $error) {
+            $this->Response(200, "ERR", [
+                "message" => $error->getMessage()
+            ]);
+        }
+    }
+
+    public function register()
+    {
+        try {
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                if (!empty($_POST)) {
+                    $this->Response(200, "OK", $this->model("pengguna_model")->register($_POST));
+                } else {
+                    throw new Exception("Error Processing Register Request");
+                }
+            }
+        } catch (Exception $error) {
+            $message = $error->getMessage();
+            if ($error->getCode() == 23000) {
+                $message = "Email ini sudah digunakan!";
+            }
+            $this->Response(200, "ERR", [
+                "message" => $message
+            ]);
+        }
+    }
+
+    public function recovery()
+    {
+        try {
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                if (!empty($_POST["email"])) {
+                    $this->Response(200, "OK", $this->model("pengguna_model")->recoveryPassword($_POST["email"]));
+                } else {
+                    throw new Exception("Error Processing Recovery Password Request");
+                }
+            }
+        } catch (Exception $error) {
+            $this->Response(200, "ERR", [
+                "message" => $error->getMessage()
+            ]);
+        }
+    }
+
+    public function changefoto()
+    {
+        try {
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                if (!empty($_POST["email"]) && !empty($_FILES["foto"])) {
+                    $this->Response(200, "OK", $this->model("pengguna_model")->updateFoto());
+                } else {
+                    throw new Exception("Error Processing Change Photo Profile Request");
+                }
+            }
+        } catch (Exception $error) {
+            $this->Response(200, "ERR", [
+                "message" => $error->getMessage()
+            ]);
+        }
     }
 
     public function pengaduan($id = "")
@@ -110,19 +190,6 @@ class API extends CoreApi
                 } else {
                     $this->Response(200, "OK", $this->model("kategori_model")->get($nama));
                 }
-            } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                if (isset($_POST["add"])) {
-                    // ADD
-                    $this->Response(201, "Created", $this->model("kategori_model")->save($_POST));
-                } else if (isset($_POST["update"])) {
-                    // UPDATE
-                    $this->Response(200, "OK", $this->model("kategori_model")->update($_POST, $_POST["update"]));
-                } else if (isset($_POST["delete"])) {
-                    // DELETE
-                    $this->Response(200, "OK", $this->model("kategori_model")->delete($_POST["delete"]));
-                } else {
-                    throw new Exception("Error Method Request!");
-                }
             }
         } catch (Exception $error) {
             $this->Response(400, "ERR", [
@@ -139,19 +206,6 @@ class API extends CoreApi
                     $this->Response(200, "OK", $this->model("divisi_model")->getAll());
                 } else {
                     $this->Response(200, "OK", $this->model("divisi_model")->get($nama));
-                }
-            } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                if (isset($_POST["add"])) {
-                    // ADD
-                    $this->Response(201, "Created", $this->model("divisi_model")->save($_POST));
-                } else if (isset($_POST["update"])) {
-                    // UPDATE
-                    $this->Response(200, "OK", $this->model("divisi_model")->update($_POST, $_POST["update"]));
-                } else if (isset($_POST["delete"])) {
-                    // DELETE
-                    $this->Response(200, "OK", $this->model("divisi_model")->delete($_POST["delete"]));
-                } else {
-                    throw new Exception("Error Method Request!");
                 }
             }
         } catch (Exception $error) {
@@ -170,19 +224,6 @@ class API extends CoreApi
                 } else {
                     $this->Response(200, "OK", $this->model("pengguna_model")->get($id));
                 }
-            } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                if (isset($_POST["add"])) {
-                    // ADD
-                    $this->Response(201, "Created", $this->model("pengguna_model")->save($_POST));
-                } else if (isset($_POST["update"])) {
-                    // UPDATE
-                    $this->Response(200, "OK", $this->model("pengguna_model")->update($_POST, $_POST["update"]));
-                } else if (isset($_POST["delete"])) {
-                    // DELETE
-                    $this->Response(200, "OK", $this->model("pengguna_model")->delete($_POST["delete"]));
-                } else {
-                    throw new Exception("Error Method Request!");
-                }
             }
         } catch (Exception $error) {
             $this->Response(400, "ERR", [
@@ -199,19 +240,6 @@ class API extends CoreApi
                     $this->Response(200, "OK", $this->model("petugas_model")->getAll());
                 } else {
                     $this->Response(200, "OK", $this->model("petugas_model")->get($id));
-                }
-            } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                if (isset($_POST["add"])) {
-                    // ADD
-                    $this->Response(201, "Created", $this->model("petugas_model")->save($_POST));
-                } else if (isset($_POST["update"])) {
-                    // UPDATE
-                    $this->Response(200, "OK", $this->model("petugas_model")->update($_POST, $_POST["update"]));
-                } else if (isset($_POST["delete"])) {
-                    // DELETE
-                    $this->Response(200, "OK", $this->model("petugas_model")->delete($_POST["delete"]));
-                } else {
-                    throw new Exception("Error Method Request!");
                 }
             }
         } catch (Exception $error) {
