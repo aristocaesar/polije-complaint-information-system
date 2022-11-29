@@ -561,6 +561,48 @@ class Pengguna_Model
         }
     }
 
+    public function saveMobile()
+    {
+        if (isset($_POST)) {
+            $this->db->query("UPDATE " . $this->table . " SET nama=:nama, tgl_lahir=:tgl_lahir, jenis_kelamin=:jenis_kelamin, alamat=:alamat, kontak=:kontak, status=:status, updated_at=:updated_at WHERE id=:id");
+            $this->db->bind("nama", $_POST["nama"]);
+            $this->db->bind("tgl_lahir", $_POST["tgl_lahir"]);
+            $this->db->bind("jenis_kelamin", $_POST["jenis_kelamin"]);
+            $this->db->bind("alamat", $_POST["alamat"]);
+            $this->db->bind("kontak", $_POST["kontak"]);
+            $this->db->bind("status", $_POST["status"]);
+            $this->db->bind("updated_at", date("Y-m-d H:i:s"));
+            $this->db->bind("id", $_POST["id_user_mobile"]);
+            $this->db->execute();
+            return $_POST;
+        }
+    }
+
+    public function updatePasswordMobile()
+    {
+        if (isset($_POST) && !empty($_POST)) {
+            if ($_POST["password"] == $_POST["password2"]) {
+                $user = $this->get($_POST["id_user_mobile"]);
+                if (password_verify($_POST["old_password"], $user["password"])) {
+                    $this->db->query("UPDATE " . $this->table . " SET password=:password, updated_at=:updated_at WHERE id=:id");
+                    $this->db->bind("password", password_hash($_POST["password"], PASSWORD_DEFAULT));
+                    $this->db->bind("updated_at", date("Y-m-d H:i:s"));
+                    $this->db->bind("id", $user["id"]);
+                    $this->db->execute();
+                    return [
+                        "message" => "Password berhasil diperbarui!"
+                    ];
+                } else {
+                    throw new Exception("Password lama salah!");
+                }
+            } else {
+                throw new Exception("Password tidak sama!");
+            }
+        } else {
+            throw new Exception("Error Processing Request Change Password");
+        }
+    }
+
     public function updateFoto()
     {
         // if (isset($_POST["email"]) && isset($_FILES["foto"])) {

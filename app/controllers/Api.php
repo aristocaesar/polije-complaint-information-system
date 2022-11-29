@@ -203,6 +203,16 @@ class API extends CoreApi
                 } else {
                     $this->Response(200, "OK", $this->model("pengguna_model")->get($id));
                 }
+            } elseif ($_SERVER["REQUEST_METHOD"] == "POST") {
+                if ($id == "changeemail") {
+                    # code...
+                } elseif ($id == "changepassword") {
+                    $this->Response(200, "OK", $this->model("pengguna_model")->updatePasswordMobile());
+                } elseif ($id == "changefoto") {
+                    # code...
+                } else {
+                    $this->Response(200, "OK", $this->model("pengguna_model")->saveMobile());
+                }
             }
         } catch (Exception $error) {
             $this->Response(400, "ERR", [
