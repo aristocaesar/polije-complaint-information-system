@@ -91,96 +91,6 @@ class API extends CoreApi
         }
     }
 
-    public function pengaduan($id = "")
-    {
-        try {
-            if ($_SERVER["REQUEST_METHOD"] == "GET") {
-                if ($id == "") {
-                    $this->Response(200, "OK", $this->model("pengaduan_model")->getAll());
-                } else {
-                    $this->Response(200, "OK", $this->model("pengaduan_model")->get($id));
-                }
-            } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                if (isset($_POST["add"])) {
-                    // ADD
-                    $this->Response(201, "Created", $this->model("pengaduan_model")->save($_POST));
-                } else if (isset($_POST["update"])) {
-                    // UPDATE
-                    $this->Response(200, "OK", $this->model("pengaduan_model")->update($_POST, $_POST["update"]));
-                } else if (isset($_POST["delete"])) {
-                    // DELETE
-                    $this->Response(200, "OK", $this->model("pengaduan_model")->delete($_POST["delete"]));
-                } else {
-                    throw new Exception("Error Method Request!");
-                }
-            }
-        } catch (Exception $error) {
-            $this->Response(400, "ERR", [
-                "message" => $error->getMessage()
-            ]);
-        }
-    }
-
-    public function aspirasi($id = "")
-    {
-        try {
-            if ($_SERVER["REQUEST_METHOD"] == "GET") {
-                if ($id == "") {
-                    $this->Response(200, "OK", $this->model("aspirasi_model")->getAll());
-                } else {
-                    $this->Response(200, "OK", $this->model("aspirasi_model")->get($id));
-                }
-            } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                if (isset($_POST["add"])) {
-                    // ADD
-                    $this->Response(201, "Created", $this->model("aspirasi_model")->save($_POST));
-                } else if (isset($_POST["update"])) {
-                    // UPDATE
-                    $this->Response(200, "OK", $this->model("aspirasi_model")->update($_POST, $_POST["update"]));
-                } else if (isset($_POST["delete"])) {
-                    // DELETE
-                    $this->Response(200, "OK", $this->model("aspirasi_model")->delete($_POST["delete"]));
-                } else {
-                    throw new Exception("Error Method Request!");
-                }
-            }
-        } catch (Exception $error) {
-            $this->Response(400, "ERR", [
-                "message" => $error->getMessage()
-            ]);
-        }
-    }
-
-    public function informasi($id = "")
-    {
-        try {
-            if ($_SERVER["REQUEST_METHOD"] == "GET") {
-                if ($id == "") {
-                    $this->Response(200, "OK", $this->model("informasi_model")->getAll());
-                } else {
-                    $this->Response(200, "OK", $this->model("informasi_model")->get($id));
-                }
-            } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                if (isset($_POST["add"])) {
-                    // ADD
-                    $this->Response(201, "Created", $this->model("informasi_model")->save($_POST));
-                } else if (isset($_POST["update"])) {
-                    // UPDATE
-                    $this->Response(200, "OK", $this->model("informasi_model")->update($_POST, $_POST["update"]));
-                } else if (isset($_POST["delete"])) {
-                    // DELETE
-                    $this->Response(200, "OK", $this->model("informasi_model")->delete($_POST["delete"]));
-                } else {
-                    throw new Exception("Error Method Request!");
-                }
-            }
-        } catch (Exception $error) {
-            $this->Response(400, "ERR", [
-                "message" => $error->getMessage()
-            ]);
-        }
-    }
-
     public function kategori($nama = "")
     {
         try {
@@ -206,6 +116,75 @@ class API extends CoreApi
                     $this->Response(200, "OK", $this->model("divisi_model")->getAll());
                 } else {
                     $this->Response(200, "OK", $this->model("divisi_model")->get($nama));
+                }
+            }
+        } catch (Exception $error) {
+            $this->Response(400, "ERR", [
+                "message" => $error->getMessage()
+            ]);
+        }
+    }
+
+    public function pengaduan($id = "")
+    {
+        try {
+            if ($_SERVER["REQUEST_METHOD"] == "GET") {
+                if ($id != "") {
+                    $this->Response(200, "OK", $this->model("pengaduan_model")->getPengaduan($id));
+                } else {
+                    throw new Exception("Error Processing Pengaduan Request");
+                }
+            } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                if (isset($_POST)) {
+                    $this->Response(201, "Created", $this->model("pengaduan_model")->sendPengaduan($_POST));
+                } else {
+                    throw new Exception("Error Processing Pengaduan Request");
+                }
+            }
+        } catch (Exception $error) {
+            $this->Response(400, "ERR", [
+                "message" => $error->getMessage()
+            ]);
+        }
+    }
+
+    public function aspirasi($id = "")
+    {
+        try {
+            if ($_SERVER["REQUEST_METHOD"] == "GET") {
+                if ($id != "") {
+                    $this->Response(200, "OK", $this->model("aspirasi_model")->getAspirasi($id));
+                } else {
+                    throw new Exception("Error Processing Aspirasi Request");
+                }
+            } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                if (isset($_POST)) {
+                    $this->Response(201, "Created", $this->model("aspirasi_model")->sendAspirasi($_POST));
+                } else {
+                    throw new Exception("Error Processing Aspirasi Request");
+                }
+            }
+        } catch (Exception $error) {
+            $this->Response(400, "ERR", [
+                "message" => $error->getMessage()
+            ]);
+        }
+    }
+
+    public function informasi($id = "")
+    {
+        try {
+            if ($_SERVER["REQUEST_METHOD"] == "GET") {
+                if ($id != "") {
+                    $this->Response(200, "OK", $this->model("informasi_model")->getInformasi($id));
+                } else {
+                    throw new Exception("Error Processing Informasi Request");
+                }
+            } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                if (isset($_POST)) {
+                    $this->Response(201, "Created", $this->model("informasi_model")->sendInformasi($_POST));
+                } else {
+                    throw new Exception("Error Processing Informasi Request");
                 }
             }
         } catch (Exception $error) {
