@@ -205,13 +205,19 @@ class API extends CoreApi
                 }
             } elseif ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if ($id == "changeemail") {
-                    # code...
+                    if ($_POST["email"] == $_POST["email2"]) {
+                        $this->Response(200, "OK", $this->model("pengguna_model")->changeEmail());
+                    } else {
+                        throw new Exception("Email tidak sama!");
+                    }
                 } elseif ($id == "changepassword") {
                     $this->Response(200, "OK", $this->model("pengguna_model")->updatePasswordMobile());
                 } elseif ($id == "changefoto") {
-                    # code...
-                } else {
+                    $this->Response(200, "OK", $this->model("pengguna_model")->updateFotoMobile());
+                } elseif ($id == "update") {
                     $this->Response(200, "OK", $this->model("pengguna_model")->saveMobile());
+                } else {
+                    throw new Exception("Error Processing Change Password Request");
                 }
             }
         } catch (Exception $error) {

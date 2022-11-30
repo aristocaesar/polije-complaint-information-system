@@ -516,15 +516,32 @@ class Pengguna_Model
     public function changeEmail()
     {
         // update email
+        $id = "";
+        $nama = "";
+
+        if (isset($_POST["id_user_mobile"])) {
+            $id = $_POST["id_user_mobile"];
+            $user = $this->get($id);
+            $nama = $user["nama"];
+            if (!password_verify($_POST["password"], $user["password"])) {
+                throw new Exception("Password salah");
+            }
+        } else {
+            $id = $_SESSION["user"]["id"];
+            $nama = $_SESSION["user"]["nama"];
+        }
+
         $this->db->query("UPDATE " . $this->table . " SET email=:email, verifikasi_email=:verifikasi, created_at=:created_at WHERE id=:id");
         $this->db->bind("email", $_POST["email"]);
         $this->db->bind("verifikasi", "belum_terverifikasi");
         $this->db->bind("created_at", date("Y-m-d H:i:s"));
-        $this->db->bind("id", $_SESSION["user"]["id"]);
+        $this->db->bind("id", $id);
         $this->db->execute();
         if ($this->db->rowCount() != 0) {
             // update session email
-            $_SESSION["user"]["email"] = $_POST["email"];
+            if (!isset($_POST["id_user_mobile"])) {
+                $_SESSION["user"]["email"] = $_POST["email"];
+            }
             // check email on verifikasi
             // if user verifkasi as true (update token) and false (create token)
             $token = "";
@@ -532,18 +549,19 @@ class Pengguna_Model
             if (!$emailVerifikasiAvaible) {
                 // create token on db 
                 $token = $this->generateVerifikasi($_POST["email"]);
-                $this->sendEmail($_POST["email"], $_SESSION["user"]["nama"], $token);
-                return true;
+                $this->sendEmail($_POST["email"], $nama, $token);
             } else {
                 // update token on db
                 if ($emailVerifikasiAvaible["time_limit"] <= time()) {
                     $newToken = $this->generateVerifikasi($_POST["email"], 5, "update");
-                    $this->sendEmail($_POST["email"], $_SESSION["user"]["nama"], $newToken);
+                    $this->sendEmail($_POST["email"], $nama, $newToken);
                 }
-                return true;
             }
+            return [
+                "message" => "Berhasil memperbarui email, silakan check email untuk konfirmasi"
+            ];
         } else {
-            throw new Exception("Gagal melakukan ganti email");
+            throw new Exception("Gagal memperbarui email");
         }
     }
 
@@ -603,23 +621,32 @@ class Pengguna_Model
         }
     }
 
-    public function updateFoto()
+    public function updateFotoMobile()
     {
-        // if (isset($_POST["email"]) && isset($_FILES["foto"])) {
-        //     if (!empty($_POST["email"]) && !empty($_FILES["foto"])) {
-        //         // update foto
-        //         $file = explode(".", $_FILES["foto"]["name"]);
-        //         $extension = end($file);
-        //         // hapus foto lama
-        //         RemoveFileUpload("/images/" . $data["foto_lama"]);
-        //         // Upload File ( 2MB 2097152 )
-        //         UploadFile($foto, $data["id"], 2097152, ["image/jpeg", "image/jpg", "image/png"], "images");
-        //         $this->db->bind("foto", $data["id"] . "." . $extension);
-        //     } else {
-        //         throw new Exception("Error Processing Request Change Photo Profile");
-        //     }
-        // } else {
-        //     throw new Exception("Error Processing Request Change Photo Profile");
-        // }
+        if (isset($_FILES["foto"]) == true && isset($_POST["id_user_mobile"]) == true) {
+            $user = $this->get($_POST["id_user_mobile"]);
+            if ($user) {
+                if ($_FILES["foto"]["error"] != 4) {
+                    $this->db->query("UPDATE " . $this->table . " SET foto=:foto, updated_at=:updated_at WHERE id=:id");
+                    $file = explode(".", $_FILES["foto"]["name"]);
+                    $extension = end($file);
+                    // hapus foto lama
+                    RemoveFileUpload("/images/" . $user["foto"]);
+                    // Upload File ( 2MB 2097152 )
+                    UploadFile($_FILES, $user["id"], 2097152, ["image/jpeg", "image/jpg", "image/png"], "images");
+                    $this->db->bind("foto", $user["id"] . "." . $extension);
+                    $this->db->bind("updated_at", date("Y-m-d H:i:s"));
+                    $this->db->bind("id", $user["id"]);
+                    $this->db->execute();
+                    return $user;
+                } else {
+                    throw new Exception("Error Processing Change Photo Request");
+                }
+            } else {
+                throw new Exception("Error Processing Change Photo Request");
+            }
+        } else {
+            throw new Exception("Error Processing Change Photo Request");
+        }
     }
 }
