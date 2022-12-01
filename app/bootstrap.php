@@ -6,6 +6,10 @@ if (!session_id()) session_start();
 //Load Composer's autoloader
 require 'vendor/autoload.php';
 
+// dotenv
+$dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
+$dotenv->load();
+
 // APP
 require_once("core/App.php");
 // DATABASE

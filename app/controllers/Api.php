@@ -188,7 +188,7 @@ class API extends CoreApi
                 }
             }
         } catch (Exception $error) {
-            $this->Response(400, "ERR", [
+            $this->Response(200, "ERR", [
                 "message" => $error->getMessage()
             ]);
         }

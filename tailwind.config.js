@@ -1,7 +1,5 @@
 /** @type {import('tailwindcss').Config} */
 
-const BaseUrl = "http://localhost/polije-complaint";
-
 module.exports = {
   content: ["./app/**/*.{html,js,php}", "./node_modules/flowbite/**/*.js"],
   theme: {
@@ -16,9 +14,6 @@ module.exports = {
       },
     },
     extend: {
-      backgroundImage: {
-        polije: `url('${BaseUrl}/public/images/politeknik-negeri-jember.png')`,
-      },
       colors: {
         blue: {
           50: "#f1f8fe",
