@@ -64,24 +64,6 @@ class Aspirasi_Model
         return $this->db->resultSet();
     }
 
-    public function getAspirasi($id = "")
-    {
-        if (!empty($id)) {
-            $data = null;
-            $type = preg_replace("/[0-9]/", "", $id);
-            if ($type == "ASPI") {
-                $data = $this->get($id);
-            } else if ($type == "USR") {
-                $data = $this->getByPengguna($id);
-            } else {
-                throw new Exception("Error Processing Aspirasi Request");
-            }
-            return $data;
-        } else {
-            throw new Exception("Error Processing Aspirasi Request");
-        }
-    }
-
     public function tangguhkan($data = [])
     {
         if (!empty($data)) {

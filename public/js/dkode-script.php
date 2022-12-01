@@ -107,40 +107,47 @@
   async function trackingLaporan(id) {
     if (id != "") {
       const idLaporan = id.replaceAll(/[0-9]/g, "");
-      let klasifikasi = "informasi";
+      let klasifikasi = null;
       if (idLaporan == "ADU") {
         klasifikasi = "pengaduan";
       } else if (idLaporan == "ASPI") {
         klasifikasi = "aspirasi";
+      } else if (idLaporan == "INFO") {
+        klasifikasi = "informasi";
       }
-      const laporan = await fetch(`<?= $_ENV["BASE_URL"]; ?>/api/${klasifikasi}/${id}`);
-      const response = await laporan.json();
-      const result = response.data;
-      console.log(result);
-      if (result != []) {
-        $(".state-not-found").hide();
-        $(".form-tracking").show();
-        $("#id-tracking-laporan").text(result.id);
-        $("#tgl-tracking-laporan").text(moment(result.created_at).format("LLLL"));
-        if (result.pengirim != "" || result.pengirim != null) {
-          $("#nama-pelapor-tracking-laporan").text("Dirahasiakan");
+
+      if (klasifikasi != null) {
+        const laporan = await fetch(`<?= $_ENV["BASE_URL"]; ?>/api/${klasifikasi}/${id}`);
+        const response = await laporan.json();
+        const result = response.data;
+        if (result.length == undefined) {
+          $(".state-not-found").hide();
+          $(".form-tracking").show();
+          $("#id-tracking-laporan").text(result.id);
+          $("#tgl-tracking-laporan").text(moment(result.created_at).format("LLLL"));
+          if (result.pengirim != "" || result.pengirim != null) {
+            $("#nama-pelapor-tracking-laporan").text("Dirahasiakan");
+          } else {
+            $("#nama-pelapor-tracking-laporan").text(result.pengirim);
+          }
+          $("#judul-tracking-laporan").text(result.judul);
+          $("#deskripsi-tracking-laporan").text(result.deskripsi);
+          $("#kategori-tracking-laporan").text(result.kategori);
+          $("#divisi-tracking-laporan").text(result.divisi);
+          $("#status-tracking-laporan").text(result.status.replaceAll(/_/g, " "));
+          if (result.lampiran == "" || result.lampiran == null) {
+            $("#hasil-tracking-laporan").text("-");
+          } else {
+            $("#hasil-tracking-laporan").text(result.lampiran);
+          }
+          $("#hasil-tracking-laporan").attr(
+            "href",
+            `<?= $_ENV["BASE_URL"]; ?>/public/upload/assets/document/${klasifikasi}/${result.lampiran}`
+          );
         } else {
-          $("#nama-pelapor-tracking-laporan").text(result.pengirim);
+          $(".state-not-found").show();
+          $(".form-tracking").hide();
         }
-        $("#judul-tracking-laporan").text(result.judul);
-        $("#deskripsi-tracking-laporan").text(result.deskripsi);
-        $("#kategori-tracking-laporan").text(result.kategori);
-        $("#divisi-tracking-laporan").text(result.divisi);
-        $("#status-tracking-laporan").text(result.status.replaceAll(/_/g, " "));
-        if (result.lampiran == "" || result.lampiran == null) {
-          $("#hasil-tracking-laporan").text("-");
-        } else {
-          $("#hasil-tracking-laporan").text(result.lampiran);
-        }
-        $("#hasil-tracking-laporan").attr(
-          "href",
-          `<?= $_ENV["BASE_URL"]; ?>/public/upload/assets/document/${klasifikasi}/${result.lampiran}`
-        );
       } else {
         $(".state-not-found").show();
         $(".form-tracking").hide();
