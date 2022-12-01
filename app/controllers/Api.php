@@ -128,18 +128,17 @@ class API extends CoreApi
     public function pengaduan($id = "")
     {
         try {
-            if ($_SERVER["REQUEST_METHOD"] == "GET") {
-                if ($id != "") {
-                    $this->Response(200, "OK", $this->model("pengaduan_model")->getPengaduan($id));
+            if ($id != "") {
+                $type = preg_replace("/[0-9]/", "", $id);
+                if ($type == "adu" || $type == "ADU") {
+                    $this->Response(200, "OK", $this->model("pengaduan_model")->get(strtoupper($id)));
+                } else if ($type == "usr" || $type == "USR") {
+                    $this->Response(200, "OK", $this->model("pengaduan_model")->getByPengguna(strtoupper($id)));
                 } else {
-                    throw new Exception("Error Processing Pengaduan Request");
+                    $this->Response(200, "OK", []);
                 }
-            } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                if (isset($_POST)) {
-                    $this->Response(201, "Created", $this->model("pengaduan_model")->sendPengaduan($_POST));
-                } else {
-                    throw new Exception("Error Processing Pengaduan Request");
-                }
+            } else {
+                throw new Exception("Error Processing Informasi Request");
             }
         } catch (Exception $error) {
             $this->Response(400, "ERR", [
@@ -151,18 +150,17 @@ class API extends CoreApi
     public function aspirasi($id = "")
     {
         try {
-            if ($_SERVER["REQUEST_METHOD"] == "GET") {
-                if ($id != "") {
-                    $this->Response(200, "OK", $this->model("aspirasi_model")->getAspirasi($id));
+            if ($id != "") {
+                $type = preg_replace("/[0-9]/", "", $id);
+                if ($type == "aspi" || $type == "ASPI") {
+                    $this->Response(200, "OK", $this->model("aspirasi_model")->get(strtoupper($id)));
+                } else if ($type == "usr" || $type == "USR") {
+                    $this->Response(200, "OK", $this->model("aspirasi_model")->getByPengguna(strtoupper($id)));
                 } else {
-                    throw new Exception("Error Processing Aspirasi Request");
+                    $this->Response(200, "OK", []);
                 }
-            } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                if (isset($_POST)) {
-                    $this->Response(201, "Created", $this->model("aspirasi_model")->sendAspirasi($_POST));
-                } else {
-                    throw new Exception("Error Processing Aspirasi Request");
-                }
+            } else {
+                throw new Exception("Error Processing Informasi Request");
             }
         } catch (Exception $error) {
             $this->Response(400, "ERR", [
@@ -176,7 +174,14 @@ class API extends CoreApi
         try {
             if ($_SERVER["REQUEST_METHOD"] == "GET") {
                 if ($id != "") {
-                    $this->Response(200, "OK", $this->model("informasi_model")->getInformasi($id));
+                    $type = preg_replace("/[0-9]/", "", $id);
+                    if ($type == "info" || $type == "INFO") {
+                        $this->Response(200, "OK", $this->model("informasi_model")->get(strtoupper($id)));
+                    } else if ($type == "usr" || $type == "USR") {
+                        $this->Response(200, "OK", $this->model("informasi_model")->getByPengguna(strtoupper($id)));
+                    } else {
+                        $this->Response(200, "OK", []);
+                    }
                 } else {
                     throw new Exception("Error Processing Informasi Request");
                 }
@@ -188,7 +193,7 @@ class API extends CoreApi
                 }
             }
         } catch (Exception $error) {
-            $this->Response(400, "ERR", [
+            $this->Response(200, "ERR", [
                 "message" => $error->getMessage()
             ]);
         }

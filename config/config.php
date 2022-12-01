@@ -3,20 +3,20 @@
 // BASEURL
 function BaseURL()
 {
-    return "http://localhost/polije-complaint";
+    return $_ENV["BASE_URL"];
 }
 
 // DATABASE
-define("DB_HOST", "localhost");
-define("DB_USER", "aristocaesar");
-define("DB_PASS", "aristo0407");
-define("DB_NAME", "polije_complaint");
+define("DB_HOST", $_ENV["DB_HOST"]);
+define("DB_USER", $_ENV["DB_USER"]);
+define("DB_PASS", $_ENV["DB_PASS"]);
+define("DB_NAME", $_ENV["DB_NAME"]);
 
 // EMAIL
-define("EMAIL_HOST", "smtp.gmail.com");
-define("EMAIL_NAME", "POLITEKNIK NEGERI JEMBER");
-define("EMAIL_USERNAME", "e41211739@student.polije.ac.id");
-define("EMAIL_PASSWORD", "Aristo020704.");
+define("EMAIL_HOST", $_ENV["EMAIL_HOST"]);
+define("EMAIL_NAME", str_replace("_", " ", $_ENV["EMAIL_HOST"]));
+define("EMAIL_USERNAME", $_ENV["EMAIL_USER"]);
+define("EMAIL_PASSWORD", $_ENV["EMAIL_PASS"]);
 
 // COMPONENTS
 function getNavbarHome()

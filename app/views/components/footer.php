@@ -15,7 +15,7 @@
 <?php if (isset($_SESSION)) Flasher::Flash() ?>
 
 <!-- Custom Script -->
-<script type="text/javascript" src="<?= BaseURL() ?>/public/js/dkode-script.js"></script>
+<?php require_once("public/js/dkode-script.php"); ?>
 
 </body>
 

@@ -4,3 +4,4 @@ test_api.json
 test/
 vendor/
 public/upload/
+.env

@@ -59,5 +59,5 @@
     </div>
 </nav>
 <!-- Hero -->
-<section class="xl:h-[100vh] h-[700px] bg-polije bg-no-repeat bg-center bg-cover flex flex-row items-center">
+<section class="xl:h-[100vh] h-[700px] bg-no-repeat bg-center bg-cover flex flex-row items-center" style="background-image: url('<?= BaseURL(); ?>/public/images/politeknik-negeri-jember.png');">
 </section>
