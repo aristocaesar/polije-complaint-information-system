@@ -14,7 +14,7 @@ define("DB_NAME", $_ENV["DB_NAME"]);
 
 // EMAIL
 define("EMAIL_HOST", $_ENV["EMAIL_HOST"]);
-define("EMAIL_NAME", str_replace("_", " ", $_ENV["EMAIL_HOST"]));
+define("EMAIL_NAME", str_replace("_", " ", $_ENV["EMAIL_NAME"]));
 define("EMAIL_USERNAME", $_ENV["EMAIL_USER"]);
 define("EMAIL_PASSWORD", $_ENV["EMAIL_PASS"]);
 
