@@ -227,10 +227,10 @@ class Pengguna_Model
             if ($foto["foto"]["error"] != 4) {
                 $file = explode(".", $foto["foto"]["name"]);
                 $extension = end($file);
-                // hapus foto lama
-                RemoveFileUpload("/images/" . $data["foto_lama"]);
                 // Upload File ( 2MB 2097152 )
                 UploadFile($foto, $data["id"], 2097152, ["image/jpeg", "image/jpg", "image/png"], "images");
+                // hapus foto lama
+                RemoveFileUpload("/images/" . $data["foto_lama"]);
                 $this->db->bind("foto", $data["id"] . "." . $extension);
                 $_SESSION["user"]["foto"] = $data["id"] . "." . $extension;
             } else {

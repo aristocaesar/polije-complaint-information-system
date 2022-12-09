@@ -1307,6 +1307,14 @@ input:checked + .toggle-bg {
   height: 1rem;
 }
 
+.h-28 {
+  height: 7rem;
+}
+
+.max-h-28 {
+  max-height: 7rem;
+}
+
 .w-\[200px\] {
   width: 200px;
 }
@@ -1738,6 +1746,10 @@ input:checked + .toggle-bg {
 
 .bg-cover {
   background-size: cover;
+}
+
+.bg-contain {
+  background-size: contain;
 }
 
 .bg-center {

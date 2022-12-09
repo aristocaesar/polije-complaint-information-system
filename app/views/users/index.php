@@ -233,7 +233,7 @@
                                 </div>
                                 <div>
                                     <h5 class="text-blue-800 font-bold text-2xl mb-2">Foto</h5>
-                                    <img src="<?= BaseURL() ?>/public/upload/assets/images/<?= $_SESSION["user"]["foto"] ?>" alt="<?= $_SESSION["user"]["foto"] ?>" class="w-28 rounded-full my-5" id="foto-profil">
+                                    <img src="<?= BaseURL() ?>/public/upload/assets/images/<?= $_SESSION["user"]["foto"] ?>" alt="<?= $_SESSION["user"]["foto"] ?>" class="w-28 max-h-28 bg-contain rounded-full my-5" id="foto-profil">
                                     <div class="flex flex-col mb-10">
                                         <div class="mt-3 border border-gray-400 py-3 px-2 rounded">
                                             <div class="flex">
@@ -245,7 +245,7 @@
                                 </div>
                                 <div>
                                     <h5 class="text-blue-800 font-bold text-2xl mb-2">Aktifitas Terakhir</h5>
-                                    <p class="text-dark" id="aktifitas-terakhir"><?= $data["user"]["updated_at"] ?></p>
+                                    <p class="text-dark" id="aktifitas-terakhir"><?= $data["user"]["last_login"] ?></p>
                                 </div>
                             </div>
                             <div class="flex justify-center md:mt-0 mt-10">
