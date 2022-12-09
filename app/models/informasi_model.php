@@ -127,9 +127,8 @@ class Informasi_Model
         if (isset($_POST)) {
             $id = $this->generateID();
             $date = date("Y-m-d H:i:s");
-            $this->db->query("INSERT INTO " . $this->table . " (id, judul, deskripsi, kategori, pengirim, lokasi, status, divisi, lampiran_pengirim, user_agent, created_at, updated_at) VALUES (:id, :judul, :deskripsi, :kategori, :pengirim, :lokasi, :status, :divisi, :lampiran_pengirim, :user_agent, :created_at, :updated_at)");
+            $this->db->query("INSERT INTO " . $this->table . " (id, deskripsi, kategori, pengirim, lokasi, status, divisi, lampiran_pengirim, user_agent, created_at, updated_at) VALUES (:id, :deskripsi, :kategori, :pengirim, :lokasi, :status, :divisi, :lampiran_pengirim, :user_agent, :created_at, :updated_at)");
             $this->db->bind("id", $id);
-            $this->db->bind("judul", $_POST["judul"]);
             $this->db->bind("deskripsi", $_POST["deskripsi"]);
             $this->db->bind("kategori", $_POST["kategori"]);
             if (!isset($_POST["id_user_mobile"])) {

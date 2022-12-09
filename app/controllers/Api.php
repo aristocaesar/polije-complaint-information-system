@@ -128,17 +128,25 @@ class API extends CoreApi
     public function pengaduan($id = "")
     {
         try {
-            if ($id != "") {
-                $type = preg_replace("/[0-9]/", "", $id);
-                if ($type == "adu" || $type == "ADU") {
-                    $this->Response(200, "OK", $this->model("pengaduan_model")->get(strtoupper($id)));
-                } else if ($type == "usr" || $type == "USR") {
-                    $this->Response(200, "OK", $this->model("pengaduan_model")->getByPengguna(strtoupper($id)));
+            if ($_SERVER["REQUEST_METHOD"] == "GET") {
+                if ($id != "") {
+                    $type = preg_replace("/[0-9]/", "", $id);
+                    if ($type == "adu" || $type == "ADU") {
+                        $this->Response(200, "OK", $this->model("pengaduan_model")->get(strtoupper($id)));
+                    } else if ($type == "usr" || $type == "USR") {
+                        $this->Response(200, "OK", $this->model("pengaduan_model")->getByPengguna(strtoupper($id)));
+                    } else {
+                        $this->Response(200, "OK", []);
+                    }
                 } else {
-                    $this->Response(200, "OK", []);
+                    throw new Exception("Error Processing Informasi Request");
                 }
-            } else {
-                throw new Exception("Error Processing Informasi Request");
+            } elseif ($_SERVER["REQUEST_METHOD"] == "POST") {
+                if (isset($_POST)) {
+                    $this->Response(201, "Created", $this->model("pengaduan_model")->sendPengaduan());
+                } else {
+                    throw new Exception("Error Processing Informasi Request");
+                }
             }
         } catch (Exception $error) {
             $this->Response(400, "ERR", [
@@ -150,17 +158,25 @@ class API extends CoreApi
     public function aspirasi($id = "")
     {
         try {
-            if ($id != "") {
-                $type = preg_replace("/[0-9]/", "", $id);
-                if ($type == "aspi" || $type == "ASPI") {
-                    $this->Response(200, "OK", $this->model("aspirasi_model")->get(strtoupper($id)));
-                } else if ($type == "usr" || $type == "USR") {
-                    $this->Response(200, "OK", $this->model("aspirasi_model")->getByPengguna(strtoupper($id)));
+            if ($_SERVER["REQUEST_METHOD"] == "GET") {
+                if ($id != "") {
+                    $type = preg_replace("/[0-9]/", "", $id);
+                    if ($type == "aspi" || $type == "ASPI") {
+                        $this->Response(200, "OK", $this->model("aspirasi_model")->get(strtoupper($id)));
+                    } else if ($type == "usr" || $type == "USR") {
+                        $this->Response(200, "OK", $this->model("aspirasi_model")->getByPengguna(strtoupper($id)));
+                    } else {
+                        $this->Response(200, "OK", []);
+                    }
                 } else {
-                    $this->Response(200, "OK", []);
+                    throw new Exception("Error Processing Informasi Request");
                 }
-            } else {
-                throw new Exception("Error Processing Informasi Request");
+            } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                if (isset($_POST)) {
+                    $this->Response(201, "Created", $this->model("aspirasi_model")->sendAspirasi());
+                } else {
+                    throw new Exception("Error Processing Informasi Request");
+                }
             }
         } catch (Exception $error) {
             $this->Response(400, "ERR", [
@@ -187,7 +203,7 @@ class API extends CoreApi
                 }
             } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if (isset($_POST)) {
-                    $this->Response(201, "Created", $this->model("informasi_model")->sendInformasi($_POST));
+                    $this->Response(201, "Created", $this->model("informasi_model")->sendInformasi());
                 } else {
                     throw new Exception("Error Processing Informasi Request");
                 }

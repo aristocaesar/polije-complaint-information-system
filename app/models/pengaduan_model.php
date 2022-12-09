@@ -117,20 +117,13 @@ class Pengaduan_Model
         }
     }
 
-    public function generateBobot(String $judul, String $deskripsi, int $lampiran): int
+    public function generateBobot(bool $loginned, String $deskripsi, int $lampiran): int
     {
         $bobot = 0;
 
-        // cek bobot for judul
-        $lenJudul = strlen($judul);
-        if ($lenJudul > 40) {
+        // cek bobot where loginned
+        if ($loginned) {
             $bobot += 25;
-        } elseif ($lenJudul > 20) {
-            $bobot += 15;
-        } elseif ($lenJudul > 10) {
-            $bobot += 8;
-        } else {
-            $bobot += 3;
         }
 
         // cek bobot for deskripsi
@@ -162,14 +155,14 @@ class Pengaduan_Model
     {
         if (isset($_POST)) {
             $foto = isset($_FILES["foto"]["error"]) ? $_FILES["foto"]["error"] : 4;
-            $bobot = $this->generateBobot($_POST["judul"], $_POST["deskripsi"], $foto);
+            $loginned = isset($_SESSION["user"]) || isset($_POST["id_user_mobile"]);
+            $bobot = $this->generateBobot($loginned, $_POST["deskripsi"], $foto);
 
             $id = $this->generateID();
             $date = date("Y-m-d H:i:s");
-            $this->db->query("INSERT INTO " . $this->table . " (id, judul, deskripsi, kategori, pengirim, lokasi, status, divisi, bobot, lampiran_pengirim, user_agent, created_at, updated_at) VALUES (:id, :judul, :deskripsi, :kategori, :pengirim, :lokasi, :status, :divisi, :bobot, :lampiran_pengirim, :user_agent, :created_at, :updated_at)");
+            $this->db->query("INSERT INTO " . $this->table . " (id, deskripsi, kategori, pengirim, lokasi, status, divisi, bobot, lampiran_pengirim, user_agent, created_at, updated_at) VALUES (:id,:deskripsi, :kategori, :pengirim, :lokasi, :status, :divisi, :bobot, :lampiran_pengirim, :user_agent, :created_at, :updated_at)");
             $this->db->bind("id", $id);
 
-            $this->db->bind("judul", $_POST["judul"]);
             $this->db->bind("deskripsi", $_POST["deskripsi"]);
             $this->db->bind("kategori", $_POST["kategori"]);
             if (isset($_POST["pelapor"])) {
