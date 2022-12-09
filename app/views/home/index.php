@@ -37,13 +37,9 @@
                     <!-- <div class="text-center mb-10">
                         <small id="panduan-pengaduan" class="font-light text-gray-700 hover:cursor-pointer hover:underline" onclick="Panduan(this.id)">Perhatikan Cara Menyampaikan Pengaduan Yang Baik dan Benar</small>
                     </div> -->
-                    <div class="flex flex-col mb-5">
+                    <div class="flex-col mb-5 hidden">
                         <label for="judul" class="text-gray-700">Judul Laporan*</label>
-                        <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="judul" aria-describedby="judul" name="judul" placeholder="Ketikkan Judul Laporan" required>
-                    </div>
-                    <div class="flex flex-col mb-5">
-                        <label for="deskripsi" class="text-gray-700">Deskripsikan Laporan*</label>
-                        <textarea class="mt-3 border border-gray-400 py-3 px-2 rounded" name="deskripsi" id="deskripsi" placeholder="Deskripsikan Laporan Anda" rows="3" required></textarea>
+                        <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="judul" aria-describedby="judul" name="judul" placeholder="Ketikkan Judul Laporan">
                     </div>
                     <div class="flex flex-col mb-5">
                         <label for="kategori" class="text-gray-700">Kategori</label>
@@ -60,6 +56,10 @@
                                 <option value="<?= $divisi_pengaduan["nama"] ?>"><?= $divisi_pengaduan["nama"] ?></option>
                             <?php endforeach; ?>
                         </select>
+                    </div>
+                    <div class="flex flex-col mb-5">
+                        <label for="deskripsi" class="text-gray-700">Deskripsikan Laporan*</label>
+                        <textarea class="mt-3 border border-gray-400 py-3 px-2 rounded" name="deskripsi" id="deskripsi" placeholder="Deskripsikan Laporan" rows="3" required maxlength="1024"></textarea>
                     </div>
                     <div class="flex flex-col <?= !isset($_SESSION["user"]) ? "mb-5" : "mb-10" ?>">
                         <label for="input-file" class="text-gray-700">Lampiran</label>
@@ -83,14 +83,10 @@
                     <?php if (isset($_SESSION["user"])) : ?>
                         <!-- <div class="text-center mb-10">
                         <small id="panduan-aspirasi" class="font-light text-gray-700 hover:cursor-pointer hover:underline" onclick="Panduan(this.id)">Perhatikan Cara Menyampaikan Aspirasi Yang Baik dan Benar</small>
-                    </div> -->
-                        <div class="flex flex-col mb-5">
+                        </div> -->
+                        <div class="hidden flex-col mb-5">
                             <label for="judul" class="text-gray-700">Judul Aspirasi Anda*</label>
-                            <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="judul" aria-describedby="judul" name="judul" placeholder="Ketikkan Judul Aspirasi" required>
-                        </div>
-                        <div class="flex flex-col mb-5">
-                            <label for="deskripsi" class="text-gray-700">Deskripsikan Aspirasi Anda*</label>
-                            <textarea class="mt-3 border border-gray-400 py-3 px-2 rounded" name="deskripsi" id="deskripsi" placeholder="Deskripsikan Aspirasi Anda" rows="3" required></textarea>
+                            <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="judul" aria-describedby="judul" name="judul" placeholder="Ketikkan Judul Aspirasi">
                         </div>
                         <div class="flex flex-col mb-5">
                             <label for="kategori" class="text-gray-700">Kategori</label>
@@ -109,6 +105,10 @@
                             </select>
                         </div>
                         <div class="flex flex-col mb-5">
+                            <label for="deskripsi" class="text-gray-700">Deskripsikan Aspirasi*</label>
+                            <textarea class="mt-3 border border-gray-400 py-3 px-2 rounded" name="deskripsi" id="deskripsi" placeholder="Deskripsikan Aspirasi" rows="3" required maxlength="1024"></textarea>
+                        </div>
+                        <div class="flex flex-col <?= !isset($_SESSION["user"]) ? "mb-5" : "mb-10" ?>">
                             <label for="input-file" class="text-gray-700">Lampiran</label>
                             <div class="mt-3 border border-gray-400 py-3 px-2 rounded">
                                 <div class="flex">
@@ -131,13 +131,9 @@
                         <!-- <div class="text-center mb-10">
                         <small id="panduan-aspirasi" class="font-light text-gray-700 hover:cursor-pointer hover:underline" onclick="Panduan(this.id)">Perhatikan Cara Menyampaikan Aspirasi Yang Baik dan Benar</small>
                     </div> -->
-                        <div class="flex flex-col mb-5">
+                        <div class="hidden flex-col mb-5">
                             <label for="judul" class="text-gray-700">Judul Informasi*</label>
-                            <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="judul" aria-describedby="judul" name="judul" placeholder="Ketikkan Judul Informasi" required>
-                        </div>
-                        <div class="flex flex-col mb-5">
-                            <label for="deskripsi" class="text-gray-700">Deskripsikan Informasi*</label>
-                            <textarea class="mt-3 border border-gray-400 py-3 px-2 rounded" name="deskripsi" id="deskripsi" placeholder="Ketikkan Deskripsikan Informasi" rows="3" required></textarea>
+                            <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="judul" aria-describedby="judul" name="judul" placeholder="Ketikkan Judul Informasi">
                         </div>
                         <div class="flex flex-col mb-5">
                             <label for="kategori" class="text-gray-700">Kategori</label>
@@ -155,7 +151,11 @@
                                 <?php endforeach; ?>
                             </select>
                         </div>
-                        <div class="flex flex-col mb-5">
+                        <div class="flex flex-col <?= !isset($_SESSION["user"]) ? "mb-5" : "mb-10" ?>">
+                            <label for="deskripsi" class="text-gray-700">Deskripsikan Informasi*</label>
+                            <textarea class="mt-3 border border-gray-400 py-3 px-2 rounded" name="deskripsi" id="deskripsi" placeholder="Deskripsikan Informasi" rows="3" required maxlength="1024"></textarea>
+                        </div>
+                        <div class="flex flex-col mb-10">
                             <label for="input-file" class="text-gray-700">Lampiran</label>
                             <div class="mt-3 border border-gray-400 py-3 px-2 rounded">
                                 <div class="flex">
