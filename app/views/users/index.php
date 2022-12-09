@@ -46,14 +46,13 @@
                             <h5 class="text-blue-800 font-bold text-xl mb-8">Pengaduan</h5>
                             <?php if (!empty($data["pengaduan"])) : ?>
                                 <?php foreach ($data["pengaduan"] as $pengaduan) : ?>
-                                    <div class="flex flex-col md:flex-row border py-5 px-5 items-center justify-between mb-5">
-                                        <div>
-                                            <h6 class="font-bold text-gray-800 mb-3"><?= $pengaduan["judul"] ?></h6>
+                                    <div class=" flex flex-col md:flex-row border py-5 px-5 items-center justify-between mb-5">
+                                        <div class="w-10/12">
                                             <?php
-                                            $deskripsi_adu = strlen($pengaduan["deskripsi"]) > 100 ? substr($pengaduan["deskripsi"], 0, 150) . "..." : $pengaduan["deskripsi"];
+                                            $deskripsi_adu = strlen($pengaduan["deskripsi"]) > 50 ? substr($pengaduan["deskripsi"], 0, 120) : $pengaduan["deskripsi"];
                                             ?>
-                                            <h6 class="text-gray-500 font-light"><?= $deskripsi_adu; ?></h6>
-                                            <div>
+                                            <textarea class="w-full border-none resize-none border-transparent focus:border-transparent focus:ring-0 overflow-hidden" readonly><?= $deskripsi_adu; ?></textarea>
+                                            <div class="mt-5 px-[12px]">
                                                 <small class="text-gray-800"><?= $pengaduan["created_at"] ?></small>
                                                 <?php
                                                 $status = "";
@@ -71,10 +70,12 @@
                                                 <small class="<?= $status ?>"><?= ucwords(str_replace("_", " ", $pengaduan["status"])); ?></small>
                                             </div>
                                         </div>
-                                        <a href="<?= BaseURL() ?>/users/pengaduan/<?= $pengaduan['id'] ?>" class="m-5" rel="noopener noreferrer">
-                                            <i data-feather="more-vertical" class="cursor-pointer hidden md:block" style="width:35px;height: 35px;left: 140px;top: 17px;"></i>
-                                            <i data-feather="more-horizontal" class="cursor-pointer block md:hidden" style="width:35px;height: 35px;left: 140px;top: 17px;"></i>
-                                        </a>
+                                        <div class="w-2/12 flex justify-center">
+                                            <a href="<?= BaseURL() ?>/users/pengaduan/<?= $pengaduan['id'] ?>" class="m-5" rel="noopener noreferrer">
+                                                <i data-feather="more-vertical" class="cursor-pointer hidden md:block" style="width:35px;height: 35px;left: 140px;top: 17px;"></i>
+                                                <i data-feather="more-horizontal" class="cursor-pointer block md:hidden" style="width:35px;height: 35px;left: 140px;top: 17px;"></i>
+                                            </a>
+                                        </div>
                                     </div>
                                 <?php endforeach; ?>
                             <?php else : ?>
@@ -91,13 +92,13 @@
                             <?php if (!empty($data["aspirasi"])) : ?>
                                 <?php foreach ($data["aspirasi"] as $aspirasi) : ?>
                                     <div class="flex flex-col md:flex-row border py-5 px-5 items-center justify-between mb-5">
-                                        <div>
-                                            <h6 class="font-bold text-gray-800 mb-3"><?= $aspirasi["judul"] ?></h6>
+                                        <div class="w-10/12">
                                             <?php
-                                            $deskripsi_aspi = strlen($aspirasi["deskripsi"]) > 100 ? substr($aspirasi["deskripsi"], 0, 150) . "..." : $aspirasi["deskripsi"];
+                                            // deskripsi aspirasi
+                                            $aspirasi_adu = strlen($aspirasi["deskripsi"]) > 50 ? substr($aspirasi["deskripsi"], 0, 120) : $aspirasi["deskripsi"];
                                             ?>
-                                            <h6 class="text-gray-500 font-light"><?= $deskripsi_aspi; ?></h6>
-                                            <div>
+                                            <textarea class="w-full border-none resize-none border-transparent focus:border-transparent focus:ring-0 overflow-hidden" readonly><?= $aspirasi_adu; ?></textarea>
+                                            <div class="mt-5 px-[12px]">
                                                 <small class="text-gray-800"><?= $aspirasi["created_at"] ?></small>
                                                 <?php
                                                 $status_aspi = "";
@@ -115,16 +116,18 @@
                                                 <small class="<?= $status_aspi ?>"><?= ucwords(str_replace("_", " ", $aspirasi["status"])); ?></small>
                                             </div>
                                         </div>
-                                        <a href="<?= BaseURL() ?>/users/aspirasi/<?= $aspirasi['id'] ?>" class="m-5" rel="noopener noreferrer">
-                                            <i data-feather="more-vertical" class="cursor-pointer hidden md:block" style="width:35px;height: 35px;left: 140px;top: 17px;"></i>
-                                            <i data-feather="more-horizontal" class="cursor-pointer block md:hidden" style="width:35px;height: 35px;left: 140px;top: 17px;"></i>
-                                        </a>
+                                        <div class="w-2/12 flex justify-center">
+                                            <a href="<?= BaseURL() ?>/users/aspirasi/<?= $aspirasi['id'] ?>" class="m-5" rel="noopener noreferrer">
+                                                <i data-feather="more-vertical" class="cursor-pointer hidden md:block" style="width:35px;height: 35px;left: 140px;top: 17px;"></i>
+                                                <i data-feather="more-horizontal" class="cursor-pointer block md:hidden" style="width:35px;height: 35px;left: 140px;top: 17px;"></i>
+                                            </a>
+                                        </div>
                                     </div>
                                 <?php endforeach; ?>
                             <?php else : ?>
                                 <div class="flex flex-col md:flex-row border py-5 px-5 items-center">
                                     <div>
-                                        <h6 class="text-gray-800">Tidak Ada Aspirasi</h6>
+                                        <h6 class="text-gray-800">Tidak Ada Informasi</h6>
                                     </div>
                                 </div>
                             <?php endif ?>
@@ -135,13 +138,13 @@
                             <?php if (!empty($data["informasi"])) : ?>
                                 <?php foreach ($data["informasi"] as $informasi) : ?>
                                     <div class="flex flex-col md:flex-row border py-5 px-5 items-center justify-between mb-5">
-                                        <div>
-                                            <h6 class="font-bold text-gray-800 mb-3"><?= $informasi["judul"] ?></h6>
+                                        <div class="w-10/12">
                                             <?php
-                                            $deskripsi_info = strlen($informasi["deskripsi"]) > 100 ? substr($informasi["deskripsi"], 0, 150) . "..." : $informasi["deskripsi"];
+                                            // deskripsi informasi
+                                            $informasi_deskripsi = strlen($informasi["deskripsi"]) > 50 ? substr($informasi["deskripsi"], 0, 120) : $informasi["deskripsi"];
                                             ?>
-                                            <h6 class="text-gray-500 font-light"><?= $deskripsi_info; ?></h6>
-                                            <div>
+                                            <textarea class="w-full border-none resize-none border-transparent focus:border-transparent focus:ring-0 overflow-hidden" readonly><?= $informasi_deskripsi; ?></textarea>
+                                            <div class="mt-5 px-[12px]">
                                                 <small class="text-gray-800"><?= $informasi["created_at"] ?></small>
                                                 <?php
                                                 $status_info = "";
@@ -159,10 +162,12 @@
                                                 <small class="<?= $status_info ?>"><?= ucwords(str_replace("_", " ", $informasi["status"])); ?></small>
                                             </div>
                                         </div>
-                                        <a href="<?= BaseURL() ?>/users/informasi/<?= $informasi['id'] ?>" class="m-5" rel="noopener noreferrer">
-                                            <i data-feather="more-vertical" class="cursor-pointer hidden md:block" style="width:35px;height: 35px;left: 140px;top: 17px;"></i>
-                                            <i data-feather="more-horizontal" class="cursor-pointer block md:hidden" style="width:35px;height: 35px;left: 140px;top: 17px;"></i>
-                                        </a>
+                                        <div class="w-2/12 flex justify-center">
+                                            <a href="<?= BaseURL() ?>/users/informasi/<?= $informasi['id'] ?>" class="m-5" rel="noopener noreferrer">
+                                                <i data-feather="more-vertical" class="cursor-pointer hidden md:block" style="width:35px;height: 35px;left: 140px;top: 17px;"></i>
+                                                <i data-feather="more-horizontal" class="cursor-pointer block md:hidden" style="width:35px;height: 35px;left: 140px;top: 17px;"></i>
+                                            </a>
+                                        </div>
                                     </div>
                                 <?php endforeach; ?>
                             <?php else : ?>
@@ -251,7 +256,6 @@
                 </div>
             </div>
         </div>
-    </div>
 </section>
 
 <!-- Modal Logout -->

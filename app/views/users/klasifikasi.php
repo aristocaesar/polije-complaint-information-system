@@ -21,20 +21,20 @@
                 <div id="user-form-content">
                     <h5 class="font-bold mb-5 text-gray-800">Detail <?= $data["klasifikasi"] ?></h5>
                     <div class="flex flex-col mb-5">
-                        <label for="judul" class="text-gray-700">Judul <?= $data["klasifikasi"] ?></label>
-                        <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" value="<?= $data["laporan"]["judul"]; ?>" readonly>
-                    </div>
-                    <div class="flex flex-col mb-5">
-                        <label for="deskripsi" class="text-gray-700">Deskripsi <?= $data["klasifikasi"] ?></label>
-                        <textarea class="mt-3 border border-gray-400 py-3 px-2 rounded" rows="3" readonly><?= $data["laporan"]["deskripsi"] ?></textarea>
-                    </div>
-                    <div class="flex flex-col mb-5">
                         <label for="kategori" class="text-gray-700">Kategori</label>
                         <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" value="<?= $data["laporan"]["kategori"]; ?>" readonly>
                     </div>
                     <div class="flex flex-col mb-5">
                         <label for="divisi-tujuan" class="text-gray-700">Divisi Tujuan</label>
                         <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" value="<?= $data["laporan"]["divisi"]; ?>" readonly>
+                    </div>
+                    <!-- <div class="flex flex-col mb-5">
+                            <label for="judul" class="text-gray-700">Judul <?= $data["klasifikasi"] ?></label>
+                            <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" value="<?= $data["laporan"]["judul"]; ?>" readonly>
+                        </div> -->
+                    <div class="flex flex-col mb-5">
+                        <label for="deskripsi" class="text-gray-700">Deskripsi</label>
+                        <textarea class="mt-3 border border-gray-400 py-3 px-2 rounded" rows="3" readonly><?= $data["laporan"]["deskripsi"] ?></textarea>
                     </div>
                     <div class="flex flex-col mb-5">
                         <label for="input-file" class="text-gray-700">Lampiran</label>
