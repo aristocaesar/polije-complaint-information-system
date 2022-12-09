@@ -20,10 +20,6 @@
                                 <input type="text" class="form-control" id="id_antrian" placeholder="Nomor Antrian" required="" readonly>
                             </div>
                             <div class="form-group col-12">
-                                <label>Judul</label>
-                                <input type="text" class="form-control" id="judul" placeholder="Judul Aspirasi" required="" readonly>
-                            </div>
-                            <div class="form-group col-12">
                                 <label>Deskripsi</label>
                                 <textarea class="form-control" id="deskripsi" rows="6" placeholder="Ketikkan Deskripsi" readonly></textarea>
                             </div>
@@ -227,7 +223,7 @@
                                     <th class="text-center">
                                         No
                                     </th>
-                                    <th>Judul</th>
+                                    <th>Deskripsi</th>
                                     <th>Kategori</th>
                                     <th>Tanggal Diterima</th>
                                     <th>Status</th>
@@ -242,7 +238,10 @@
                                         <td>
                                             <?= $i++; ?>
                                         </td>
-                                        <td><?= $aspirasi["judul"] ?></td>
+                                        <?php
+                                        $aspirasi_deskripsi = strlen($aspirasi["deskripsi"]) > 50 ? substr($aspirasi["deskripsi"], 0, 30) . " ..." : $aspirasi["deskripsi"];
+                                        ?>
+                                        <td><?= $aspirasi_deskripsi ?></td>
                                         <td><?= $aspirasi["kategori"] ?></td>
                                         <td><?= date("d-m-Y s:m:h", strtotime($aspirasi["created_at"])) ?></td>
                                         <td>
@@ -311,7 +310,6 @@
         } else {
             $("#aspirasi").modal("show");
             $("#id_antrian").val(result.id);
-            $("#judul").val(result.judul);
             $("#deskripsi").val(result.deskripsi);
             $("#kategori").val(result.kategori);
             $("#tanggal_terkirim").val(result.created_at);

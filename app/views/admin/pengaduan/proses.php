@@ -20,10 +20,6 @@
                                 <input type="text" class="form-control" id="id_antrian" name="id" placeholder="Nomor Antrian" required="" readonly>
                             </div>
                             <div class="form-group col-12">
-                                <label>Judul</label>
-                                <input type="text" class="form-control" id="judul" placeholder="Judul pengaduan" required="" readonly>
-                            </div>
-                            <div class="form-group col-12">
                                 <label>Deskripsi</label>
                                 <textarea class="form-control" id="deskripsi" rows="6" placeholder="Ketikkan Deskripsi" readonly></textarea>
                             </div>
@@ -226,10 +222,6 @@
                         <div class="row">
                             <input type="text" class="d-none" name="id-divisi-tindak-lanjut" id="id-divisi-tindak-lanjut">
                             <div class="form-group col-12">
-                                <label>Judul</label>
-                                <input type="text" class="form-control tindak-lanjut-judul" placeholder="Judul pengaduan" required="" readonly>
-                            </div>
-                            <div class="form-group col-12">
                                 <label>Deskripsi</label>
                                 <textarea class="form-control tindak-lanjut-deskripsi" rows="6" placeholder="Ketikkan Deskripsi" readonly></textarea>
                             </div>
@@ -295,7 +287,7 @@
                                     <th class="text-center">
                                         No
                                     </th>
-                                    <th>Judul</th>
+                                    <th>Deskripsi</th>
                                     <th>Kategori</th>
                                     <th>Bobot Masalah</th>
                                     <th>Tanggal Diterima</th>
@@ -311,7 +303,10 @@
                                         <td>
                                             <?= $i++; ?>
                                         </td>
-                                        <td><?= $pengaduan["judul"] ?></td>
+                                        <?php
+                                        $pengaduan_deskripsi = strlen($pengaduan["deskripsi"]) > 50 ? substr($pengaduan["deskripsi"], 0, 30) . " ..." : $pengaduan["deskripsi"];
+                                        ?>
+                                        <td><?= $pengaduan_deskripsi ?></td>
                                         <td><?= $pengaduan["kategori"] ?></td>
                                         <td><?= $pengaduan["bobot"] ?></td>
                                         <td><?= date("d-m-Y s:m:h", strtotime($pengaduan["created_at"])) ?></td>
@@ -386,7 +381,6 @@
         } else {
             $("#pengaduan").modal("show");
             $("#id_antrian").val(result.id);
-            $("#judul").val(result.judul);
             $("#deskripsi").val(result.deskripsi);
             $("#kategori").val(result.kategori);
             $("#tanggal_terkirim").val(result.created_at);

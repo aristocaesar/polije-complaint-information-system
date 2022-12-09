@@ -61,9 +61,6 @@ class generatePDF
             <label >ID Laporan</label>
             <input type="text" value=' . $id . '>
 
-            <label >Judul</label>
-            <input type="text" value=' . $judul . '>
-
             <label for="subject">Deskrispi</label>
             <textarea style="height:200px">' . $deskripsi . '</textarea>
             

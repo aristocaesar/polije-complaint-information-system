@@ -20,10 +20,6 @@
                                 <input type="text" class="form-control" id="id_antrian" placeholder="Nomor Antrian" required="" readonly>
                             </div>
                             <div class="form-group col-12">
-                                <label>Judul</label>
-                                <input type="text" class="form-control" id="judul" placeholder="Judul Informasi" required="" readonly>
-                            </div>
-                            <div class="form-group col-12">
                                 <label>Deskripsi</label>
                                 <textarea class="form-control" id="deskripsi" rows="6" placeholder="Ketikkan Deskripsi" readonly></textarea>
                             </div>
@@ -227,10 +223,6 @@
                             <div class="row">
                                 <input type="text" class="d-none" name="id-informasi-tindak-lanjut" id="id-informasi-tindak-lanjut">
                                 <div class="form-group col-12">
-                                    <label>Judul</label>
-                                    <input type="text" class="form-control" id="tindak-lanjut-judul" placeholder="Judul Informasi" required="" readonly>
-                                </div>
-                                <div class="form-group col-12">
                                     <label>Deskripsi</label>
                                     <textarea class="form-control" id="tindak-lanjut-deskripsi" rows="6" placeholder="Ketikkan Deskripsi" readonly></textarea>
                                 </div>
@@ -305,7 +297,7 @@
                                     <th class="text-center">
                                         No
                                     </th>
-                                    <th>Judul</th>
+                                    <th>Deskripsi</th>
                                     <th>Kategori</th>
                                     <th>Tanggal Diterima</th>
                                     <th>Status</th>
@@ -320,7 +312,10 @@
                                         <td>
                                             <?= $i++; ?>
                                         </td>
-                                        <td><?= $informasi["judul"] ?></td>
+                                        <?php
+                                        $informasi_deskripsi = strlen($informasi["deskripsi"]) > 50 ? substr($informasi["deskripsi"], 0, 30) . " ..." : $informasi["deskripsi"];
+                                        ?>
+                                        <td><?= $informasi_deskripsi ?></td>
                                         <td><?= $informasi["kategori"] ?></td>
                                         <td><?= date("d-m-Y s:m:h", strtotime($informasi["created_at"])) ?></td>
                                         <td>
@@ -388,7 +383,6 @@
         } else {
             $("#informasi").modal("show");
             $("#id_antrian").val(result.id);
-            $("#judul").val(result.judul);
             $("#deskripsi").val(result.deskripsi);
             $("#kategori").val(result.kategori);
             $("#tanggal_terkirim").val(result.created_at);

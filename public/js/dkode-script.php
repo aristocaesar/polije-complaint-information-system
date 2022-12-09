@@ -130,7 +130,6 @@
           } else {
             $("#nama-pelapor-tracking-laporan").text(result.pengirim);
           }
-          $("#judul-tracking-laporan").text(result.judul);
           $("#deskripsi-tracking-laporan").text(result.deskripsi);
           $("#kategori-tracking-laporan").text(result.kategori);
           $("#divisi-tracking-laporan").text(result.divisi);

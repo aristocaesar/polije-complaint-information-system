@@ -53,6 +53,8 @@ cd E-Lapor_Polije
 
 composer install
 
+yarn install
+
 cp .env.example .env
 ```
 

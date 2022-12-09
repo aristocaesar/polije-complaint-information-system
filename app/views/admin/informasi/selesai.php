@@ -20,10 +20,6 @@
                                 <input type="text" class="form-control" id="id_antrian" placeholder="Nomor Antrian" required="" readonly>
                             </div>
                             <div class="form-group col-12">
-                                <label>Judul</label>
-                                <input type="text" class="form-control" id="judul" placeholder="Judul Informasi" required="" readonly>
-                            </div>
-                            <div class="form-group col-12">
                                 <label>Deskripsi</label>
                                 <textarea class="form-control" id="deskripsi" rows="6" placeholder="Ketikkan Deskripsi" readonly></textarea>
                             </div>
@@ -157,7 +153,6 @@
                                     <input type="email" class="form-control" id="email-pengirim" placeholder="Ketikkan Email" disabled>
                                 </div>
                             </div>
-
                             <div class="col-12 col-lg-6">
                                 <div class="form-group">
                                     <label for="tanggal_lahir">Tanggal Lahir</label>
@@ -207,70 +202,6 @@
                         <button type="submit" class="btn btn-primary" onclick="closeDetailInfo()">OK</button>
                     </div>
                 </div>
-                <div id="konfirmasi-tindak-lanjut">
-                    <form action="<?= BaseURL() ?>/admin/informasi/toproses" method="post">
-                        <div class="modal-body">
-                            <div class="row">
-                                <input type="text" class="d-none" name="id-divisi-tindak-lanjut" id="id-divisi-tindak-lanjut">
-                                <div class="form-group col-12">
-                                    <label>Judul</label>
-                                    <input type="text" class="form-control" id="tindak-lanjut-judul" placeholder="Judul Informasi" required="" readonly>
-                                </div>
-                                <div class="form-group col-12">
-                                    <label>Deskripsi</label>
-                                    <textarea class="form-control" id="tindak-lanjut-deskripsi" rows="6" placeholder="Ketikkan Deskripsi" readonly></textarea>
-                                </div>
-                                <div class="form-group col-12">
-                                    <label>Divisi</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" id="tindak-lanjut-divisi" placeholder="Divisi" readonly>
-                                    </div>
-                                </div>
-                                <div class="form-group col-12">
-                                    <label>Kontak Divisi</label>
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <div class="card card-large-icons">
-                                                <div class="card-icon bg-primary text-white">
-                                                    <i class="fas fa-envelope"></i>
-                                                </div>
-                                                <div class="card-body">
-                                                    <p class="font-weight-bold text-dark">Email</p>
-                                                    <p id="kontak-divisi-email">hi@aristoc.space</p>
-                                                    <button type="button" class="btn btn-link p-0 card-cta" onclick="contactDivisiEmail()">Hubungi</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="card card-large-icons">
-                                                <div class="card-icon bg-primary text-white">
-                                                    <i class="fas fa-phone"></i>
-                                                </div>
-                                                <div class="card-body">
-                                                    <p class="font-weight-bold text-dark">No Telp / Whatappas</p>
-                                                    <p id="kontak-divisi-notelp">085235119101</p>
-                                                    <button type="button" class="btn btn-link p-0 card-cta" data-toggle="modal" onclick="contactDivisiWA()">Hubungi</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group col-12">
-                                    <div class="form-check">
-                                        <input class="form-check-input" id="check-penyampain-divisi" type="checkbox">
-                                        <label class="form-check-label">
-                                            Saya sudah menyampaikan informasi kepada divisi yang berwenang
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer bg-whitesmoke footer-konfirmasi-tindak-lanjut">
-                            <button type="button" class="btn btn-secondary btn-batal" data-dismiss="modal">Batal</button>
-                            <button type="submit" name="ubah-status-tindak-lanjut" class="btn btn-primary">Ubah status ke Tindak Lanjut</button>
-                        </div>
-                    </form>
-                </div>
             </div>
         </div>
     </div>
@@ -291,7 +222,7 @@
                                     <th class="text-center">
                                         No
                                     </th>
-                                    <th>Judul</th>
+                                    <th>Deskripsi</th>
                                     <th>Kategori</th>
                                     <th>Status</th>
                                     <th>Terkonfirmasi</th>
@@ -306,6 +237,10 @@
                                         <td>
                                             <?= $i++; ?>
                                         </td>
+                                        <?php
+                                        $informasi_deskripsi = strlen($informasi["deskripsi"]) > 50 ? substr($informasi["deskripsi"], 0, 30) . " ..." : $informasi["deskripsi"];
+                                        ?>
+                                        <td><?= $informasi_deskripsi ?></td>
                                         <td><?= $informasi["judul"] ?></td>
                                         <td><?= $informasi["kategori"] ?></td>
                                         <td>
@@ -375,7 +310,6 @@
         } else {
             $("#informasi").modal("show");
             $("#id_antrian").val(result.id);
-            $("#judul").val(result.judul);
             $("#deskripsi").val(result.deskripsi);
             $("#kategori").val(result.kategori);
             $("#tanggal_terkirim").val(result.created_at);
