@@ -151,11 +151,11 @@
                                 <?php endforeach; ?>
                             </select>
                         </div>
-                        <div class="flex flex-col <?= !isset($_SESSION["user"]) ? "mb-5" : "mb-10" ?>">
-                            <label for="deskripsi" class="text-gray-700">Deskripsikan Informasi*</label>
-                            <textarea class="mt-3 border border-gray-400 py-3 px-2 rounded" name="deskripsi" id="deskripsi" placeholder="Deskripsikan Informasi" rows="3" required maxlength="1024"></textarea>
+                        <div class="flex flex-col">
+                            <label for="deskripsi" class="text-gray-700">Tanyakan Informasi*</label>
+                            <textarea class="mt-3 border border-gray-400 py-3 px-2 rounded" name="deskripsi" id="deskripsi" placeholder="Deskripsikan Pertanyaan" rows="3" required maxlength="1024"></textarea>
                         </div>
-                        <div class="flex flex-col mb-10">
+                        <div class="flex flex-col  <?= !isset($_SESSION["user"]) ? "mb-5" : "mb-10" ?>">
                             <label for="input-file" class="text-gray-700">Lampiran</label>
                             <div class="mt-3 border border-gray-400 py-3 px-2 rounded">
                                 <div class="flex">

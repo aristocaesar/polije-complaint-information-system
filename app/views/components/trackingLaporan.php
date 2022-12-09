@@ -24,20 +24,16 @@
                         <p id="nama-pelapor-tracking-laporan">Aristo Caesar Pratama</p>
                     </div>
                     <div class="tracking-item">
-                        <h6 class="font-bold mb-2">Judul</h6>
-                        <p id="judul-tracking-laporan">Id id sit irure anim. Ad mollit excepteur et anim consectetur consequat</p>
-                    </div>
-                    <div class="tracking-item">
-                        <h6 class="font-bold mb-2">Deskripsi</h6>
-                        <p id="deskripsi-tracking-laporan">elit excepteur eu tempor. Fugiat velit non incididunt in reprehenderit duis veniam id occaecat amet. Voluptate irure consectetur irure ullamco tempor. Quis occaecat duis adipisicing ex. Cupidatat sit consequat ea ullamco sint do ut sint incididunt consectetur fugiat cillum consequat. Incididunt elit in irure proident irure duis id.</p>
-                    </div>
-                    <div class="tracking-item">
                         <h6 class="font-bold mb-2">Kategori</h6>
                         <p id="kategori-tracking-laporan">Beasiswa</p>
                     </div>
                     <div class="tracking-item">
                         <h6 class="font-bold mb-2">Divisi</h6>
                         <p id="divisi-tracking-laporan">Kampus</p>
+                    </div>
+                    <div class="tracking-item">
+                        <h6 class="font-bold mb-2">Deskripsi</h6>
+                        <textarea rows="10" class="p-0 w-full border-none resize-none border-transparent focus:border-transparent focus:ring-0" id="deskripsi-tracking-laporan">elit excepteur eu tempor. Fugiat velit non incididunt in reprehenderit duis veniam id occaecat amet. Voluptate irure consectetur irure ullamco tempor. Quis occaecat duis adipisicing ex. Cupidatat sit consequat ea ullamco sint do ut sint incididunt consectetur fugiat cillum consequat. Incididunt elit in irure proident irure duis id.</textarea>
                     </div>
                     <div class="tracking-item">
                         <h6 class="font-bold mb-2">Status</h6>
