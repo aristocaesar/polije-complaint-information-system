@@ -90,6 +90,9 @@ class Users extends Controller
     {
         try {
             if (isset($_POST["submit"])) {
+                if (strlen($_POST["email"]) >= 45 || strlen($_POST["email2"]) >= 45 || strlen($_POST["password"]) >= 64) {
+                    throw new Exception("Email salah!");
+                }
                 // check match emails
                 if ($_POST["email"] == $_POST["email2"]) {
                     // check email is not equals with email user logined
