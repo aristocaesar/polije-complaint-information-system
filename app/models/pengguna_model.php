@@ -170,6 +170,16 @@ class Pengguna_Model
     public function register($data = [])
     {
         if (!empty($data)) {
+            // check length
+            if (
+                strlen($data["nama_lengkap"]) >= 64 ||
+                strlen($data["email"]) >= 45 ||
+                strlen($data["password"]) >= 64 ||
+                strlen($data["password2"]) >= 64 ||
+                strlen($data["kontak"]) >= 18
+            ) {
+                throw new Exception("Informasi pengguna tidak sesuai!");
+            }
             // check uniq email
             $this->checkUniqEmail($data["email"]);
             // Current Time Stamp
@@ -187,7 +197,11 @@ class Pengguna_Model
             // hash password
             $password = password_hash($data["password"], PASSWORD_DEFAULT);
             $this->db->bind("password", $password);
-            $this->db->bind("tgl_lahir", $data["tgl_lahir"]);
+            $tglLahir = $data["tgl_lahir"];
+            if (empty($tglLahir)) {
+                $tglLahir = date("m/d/Y", strtotime(time()));
+            }
+            $this->db->bind("tgl_lahir", $tglLahir);
             $this->db->bind("jenis_kelamin", $data["jenis_kelamin"]);
             $this->db->bind("alamat", "");
             $this->db->bind("kontak", $data["kontak"]);
@@ -218,10 +232,19 @@ class Pengguna_Model
         if (!empty($data)) {
             $this->db->query("UPDATE " . $this->table . " SET nama=:nama, tgl_lahir=:tgl_lahir, jenis_kelamin=:jenis_kelamin, alamat=:alamat, kontak=:kontak, status=:status, foto=:foto, updated_at=:updated_at WHERE id=:id");
             $this->db->bind("nama", ucwords($data["nama"]));
+            if (strlen($data["nama"]) >= 64) {
+                throw new Exception("Nama terlalu panjang!");
+            }
             $_SESSION["user"]["nama"] = $data["nama"];
             $this->db->bind("tgl_lahir", $data["tgl_lahir"]);
             $this->db->bind("jenis_kelamin", $data["jenis_kelamin"]);
+            if (strlen($data["alamat"]) >= 128) {
+                throw new Exception("Alamat terlalu panjang!");
+            }
             $this->db->bind("alamat", $data["alamat"]);
+            if (strlen($data["kontak"]) >= 18) {
+                throw new Exception("Kontak terlalu panjang!");
+            }
             $this->db->bind("kontak", $data["kontak"]);
             $this->db->bind("status", $data["status"]);
             if ($foto["foto"]["error"] != 4) {
@@ -252,14 +275,21 @@ class Pengguna_Model
     {
         try {
             if ($data["password1"] === $data["password2"]) {
+                if (strlen($data["password"]) >= 64 || strlen($data["password1"]) >= 64 || strlen($data["password1"]) >= 64) {
+                    throw new Exception("Password tidak sama!");
+                }
                 $user = $this->get($_SESSION["user"]["id"]);
                 if (password_verify($data["password"], $user["password"])) {
-                    $this->db->query("UPDATE " . $this->table . " SET password=:password, updated_at=:updated_at WHERE id=:id");
-                    $this->db->bind("password", password_hash($data["password1"], PASSWORD_DEFAULT));
-                    $this->db->bind("updated_at", date("Y-m-d H:i:s"));
-                    $this->db->bind("id", $_SESSION["user"]["id"]);
-                    $this->db->execute();
-                    return true;
+                    if ($data["password1"] != $data["password"]) {
+                        $this->db->query("UPDATE " . $this->table . " SET password=:password, updated_at=:updated_at WHERE id=:id");
+                        $this->db->bind("password", password_hash($data["password1"], PASSWORD_DEFAULT));
+                        $this->db->bind("updated_at", date("Y-m-d H:i:s"));
+                        $this->db->bind("id", $_SESSION["user"]["id"]);
+                        $this->db->execute();
+                        return true;
+                    } else {
+                        throw new Exception("Password ini sedang anda gunakan!");
+                    }
                 } else {
                     throw new Exception("Password yang anda masukkan salah!");
                 }
@@ -325,6 +355,9 @@ class Pengguna_Model
     public function login($data = [])
     {
         if (!empty($data)) {
+            if (strlen($data["email"]) >= 45 || strlen($data["password"]) >= 64) {
+                throw new Exception("Email atau Password salah!");
+            }
             $pengguna = $this->getByEmail($data["email"]);
             if ($pengguna) {
                 if (password_verify($data["password"], $pengguna["password"])) {

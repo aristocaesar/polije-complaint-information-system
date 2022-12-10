@@ -3,7 +3,7 @@
     <div class="container">
         <div class="text-center flex flex-col m-auto max-w-2xl">
             <h5 class="text-3xl font-bold tracking-wide mb-10 text-white">Tracking Laporan</h5>
-            <input type="text" class="py-3 px-4 rounded border-none w-full focus:drop-shadow-lg" placeholder="Ketikkan ID Laporan" oninput="trackingLaporan(this.value)">
+            <input type="text" class="py-3 px-4 rounded border-none w-full focus:drop-shadow-lg" placeholder="Ketikkan ID Laporan" maxlength="40" oninput="trackingLaporan(this.value)">
         </div>
         <div class="state-not-found flex justify-center my-10">
             <p class="text-white">ID Laporan tersebut tidak tersedia.</p>

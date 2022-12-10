@@ -18,13 +18,13 @@
             <form action="<?= BaseURL() ?>/auth/daftar" method="POST">
                 <div class="flex flex-col mb-5">
                     <label for="nama_lengkap" class="text-gray-700">Nama Lengkap</label>
-                    <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="nama_lengkap" aria-describedby="nama_lengkap" name="nama_lengkap" placeholder="Ketikkan Nama Lengkap" required>
+                    <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="nama_lengkap" aria-describedby="nama_lengkap" name="nama_lengkap" placeholder="Ketikkan Nama Lengkap" maxlength="64" required>
                 </div>
-                <div class="flex flex-col mb-10">
+                <div class="flex flex-col mb-5">
                     <label for="status" class="text-gray-700">Tanggal Lahir</label>
-                    <input type="date" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="tgl_lahir" aria-describedby="tgl_lahir" name="tgl_lahir">
+                    <input type="date" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="tgl_lahir" aria-describedby="tgl_lahir" value="<?= date("Y-m-d") ?>" name="tgl_lahir">
                 </div>
-                <div class="flex flex-col mb-10">
+                <div class="flex flex-col mb-5">
                     <label for="status" class="text-gray-700">Jenis Kelamin</label>
                     <select class="mt-3 border border-gray-400 py-3 px-2 rounded" name="jenis_kelamin" id="jenis-kelamin">
                         <option value="laki-laki">Laki - Laki</option>
@@ -33,19 +33,19 @@
                 </div>
                 <div class="flex flex-col mb-5">
                     <label for="email" class="text-gray-700">Email</label>
-                    <input type="email" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="email" aria-describedby="email" name="email" placeholder="Ketikkan Email" required>
+                    <input type="email" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="email" aria-describedby="email" name="email" placeholder="Ketikkan Email" maxlength="45" required>
                 </div>
                 <div class="flex flex-col mb-5">
                     <label for="password" class="text-gray-700">Password</label>
-                    <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password" aria-describedby="password" name="password" placeholder="Ketikkan Password" required>
+                    <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password" aria-describedby="password" name="password" placeholder="Ketikkan Password" maxlength="64" required>
                 </div>
                 <div class="flex flex-col mb-5">
                     <label for="password2" class="text-gray-700">Konfirmasi Password</label>
-                    <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password2" aria-describedby="password2" name="password2" placeholder="Ketikkan Konfirmasi Password" required>
+                    <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password2" aria-describedby="password2" name="password2" placeholder="Ketikkan Konfirmasi Password" maxlength="64" required>
                 </div>
                 <div class="flex flex-col mb-5">
                     <label for="notelp" class="text-gray-700">No Telp / Whatapps</label>
-                    <input type="number" class="mt-3 border border-gray-400 py-3 px-2 rounded" maxlength="13" minlength="10" id="notelp" aria-describedby="notelp" name="kontak" placeholder="Ketikkan No Telp / Whatapps" required>
+                    <input type="number" class="mt-3 border border-gray-400 py-3 px-2 rounded" maxlength="13" minlength="10" id="notelp" aria-describedby="notelp" name="kontak" placeholder="Ketikkan No Telp / Whatapps" maxlength="18" required>
                 </div>
                 <div class="flex flex-col mb-10">
                     <label for="status" class="text-gray-700">Status</label>

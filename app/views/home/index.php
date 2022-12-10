@@ -68,6 +68,7 @@
                                 <input type="file" name="foto">
                             </div>
                         </div>
+                        <small class="py-3 ml-2"><i>Maksimal ukuran lampiran 10 MB</i></small>
                     </div>
                     <?php if (!isset($_SESSION["user"])) : ?>
                         <div class="flex flex-col mb-10">
@@ -115,6 +116,7 @@
                                     <input type="file" name="foto">
                                 </div>
                             </div>
+                            <small class="py-3 ml-2"><i>Maksimal ukuran lampiran 10 MB</i></small>
                         </div>
                         <input type="text" class="hidden lokasi" value="Akses tidak diberikan" name="lokasi">
                         <button type="submit" name="submit" class="text-xl text-white w-full rounded bg-blue-800 py-4 font-bold tracking-wide hover:bg-blue-900 hover:drop-shadow-lg">KIRIM ASPIRASI</button>
@@ -162,6 +164,7 @@
                                     <input type="file" name="foto">
                                 </div>
                             </div>
+                            <small class="py-3 ml-2"><i>Maksimal ukuran lampiran 10 MB</i></small>
                         </div>
                         <input type="text" class="hidden lokasi" value="Akses tidak diberikan" name="lokasi">
                         <button type="submit" name="submit" class="text-xl text-white w-full rounded bg-blue-800 py-4 font-bold tracking-wide hover:bg-blue-900 hover:drop-shadow-lg">MINTA INFORMASI</button>

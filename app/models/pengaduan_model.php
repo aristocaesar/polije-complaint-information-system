@@ -162,7 +162,9 @@ class Pengaduan_Model
             $date = date("Y-m-d H:i:s");
             $this->db->query("INSERT INTO " . $this->table . " (id, deskripsi, kategori, pengirim, lokasi, status, divisi, bobot, lampiran_pengirim, user_agent, created_at, updated_at) VALUES (:id,:deskripsi, :kategori, :pengirim, :lokasi, :status, :divisi, :bobot, :lampiran_pengirim, :user_agent, :created_at, :updated_at)");
             $this->db->bind("id", $id);
-
+            if (strlen($_POST["deskripsi"]) >= 1024) {
+                throw new Exception("Deskripsi pengaduan terlalu panjang");
+            }
             $this->db->bind("deskripsi", $_POST["deskripsi"]);
             $this->db->bind("kategori", $_POST["kategori"]);
             if (isset($_POST["pelapor"])) {
@@ -190,8 +192,8 @@ class Pengaduan_Model
             if ($_FILES["foto"]["error"] != 4) {
                 $file = explode(".", $_FILES["foto"]["name"]);
                 $extension = end($file);
-                // Upload File ( 2MB 2097152 )
-                UploadFile($_FILES, "L-USER-" . $id, 2097152, ["image/jpeg", "image/jpg", "image/png"], "document/pengaduan");
+                // Upload File ( 10MB )
+                UploadFile($_FILES, "L-USER-" . $id, 10485760, [], "document/pengaduan");
                 $this->db->bind("lampiran_pengirim", "L-USER-" . $id . "." . $extension);
             } else {
                 $this->db->bind("lampiran_pengirim", null);

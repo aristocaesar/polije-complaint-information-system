@@ -130,6 +130,9 @@ class Aspirasi_Model
             $date = date("Y-m-d H:i:s");
             $this->db->query("INSERT INTO " . $this->table . " (id, deskripsi, kategori, pengirim, lokasi, status, divisi, lampiran_pengirim, user_agent, created_at, updated_at) VALUES (:id, :deskripsi, :kategori, :pengirim, :lokasi, :status, :divisi, :lampiran_pengirim, :user_agent, :created_at, :updated_at)");
             $this->db->bind("id", $id);
+            if (strlen($_POST["deskripsi"]) >= 1024) {
+                throw new Exception("Deskripsi aspirasi terlalu panjang");
+            }
             $this->db->bind("deskripsi", $_POST["deskripsi"]);
             $this->db->bind("kategori", $_POST["kategori"]);
             if (!isset($_POST["id_user_mobile"])) {
@@ -147,8 +150,8 @@ class Aspirasi_Model
             if ($_FILES["foto"]["error"] != 4) {
                 $file = explode(".", $_FILES["foto"]["name"]);
                 $extension = end($file);
-                // Upload File ( 2MB 2097152 )
-                UploadFile($_FILES, "L-USER-" . $id, 2097152, ["image/jpeg", "image/jpg", "image/png"], "document/aspirasi");
+                // Upload File ( 10MB 10485760 )
+                UploadFile($_FILES, "L-USER-" . $id, 10485760, [], "document/aspirasi");
                 $this->db->bind("lampiran_pengirim", "L-USER-" . $id . "." . $extension);
             } else {
                 $this->db->bind("lampiran_pengirim", null);

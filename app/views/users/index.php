@@ -186,7 +186,7 @@
                                 <input type="text" class="hidden" name="id" value="<?= $data["user"]["id"] ?>">
                                 <div>
                                     <h5 class="text-blue-800 font-bold text-xl mb-2">Nama Lengkap</h5>
-                                    <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded w-full" id="nama_lengkap" name="nama" placeholder="Ketikkan Nama Lengkap" value="<?= $data["user"]["nama"] ?>" required>
+                                    <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded w-full" id="nama_lengkap" name="nama" placeholder="Ketikkan Nama Lengkap" value="<?= $data["user"]["nama"] ?>" maxlength="64" required>
                                 </div>
                                 <div>
                                     <h5 class="text-blue-800 font-bold text-xl mb-2">Tanggal Lahir</h5>
@@ -201,11 +201,11 @@
                                 </div>
                                 <div>
                                     <h5 class="text-blue-800 font-bold text-xl mb-2">Alamat</h5>
-                                    <input type="text" class="mt-3 border border-gray-400 w-full py-3 px-2 rounded" id="alamat" name="alamat" placeholder="Ketikkan Alamat" value="<?= $data["user"]["alamat"] ?>">
+                                    <input type="text" class="mt-3 border border-gray-400 w-full py-3 px-2 rounded" id="alamat" name="alamat" placeholder="Ketikkan Alamat" value="<?= $data["user"]["alamat"] ?>" maxlength="128">
                                 </div>
                                 <div class="flex flex-col mb-5">
                                     <h5 class="text-blue-800 font-bold text-xl mb-2">Kontak</h5>
-                                    <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" name="kontak" id="kontak" value="<?= $data["user"]["kontak"] ?>" placeholder="Ketikkan No Telp / Whatapps / Email" required>
+                                    <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" name="kontak" id="kontak" value="<?= $data["user"]["kontak"] ?>" placeholder="Ketikkan No Telp / Whatapps / Email" maxlength="18" required>
                                 </div>
                                 <div class="flex flex-col mb-5">
                                     <h5 class="text-blue-800 font-bold text-xl mb-2">Status</h5>
@@ -238,9 +238,10 @@
                                         <div class="mt-3 border border-gray-400 py-3 px-2 rounded">
                                             <div class="flex">
                                                 <input type="text" class="hidden" name="foto_lama" value="<?= $data["user"]["foto"] ?>">
-                                                <input type="file" name="foto" onchange="changeFotoProfil(this)">
+                                                <input type="file" name="foto" onchange="changeFotoProfil(this)" />
                                             </div>
                                         </div>
+                                        <small class="py-3 ml-2"><i>.PNG .JPG dan .JPEG , Maksimal 2 MB</i></small>
                                     </div>
                                 </div>
                                 <div>
@@ -308,15 +309,15 @@
             <form action="<?= BaseURL() ?>/users/changeemail" method="POST" class="px-10 py-5 text-grey-800">
                 <div class="flex flex-col mb-5">
                     <label for="email" class="text-gray-700">Email</label>
-                    <input type="email" class="mt-3 border border-gray-400 py-3 px-2 rounded" name="email" placeholder="Ketikkan Email" required>
+                    <input type="email" class="mt-3 border border-gray-400 py-3 px-2 rounded" name="email" placeholder="Ketikkan Email" maxlength="45" required>
                 </div>
                 <div class="flex flex-col mb-5">
                     <label for="email" class="text-gray-700">Konfirmasi Email</label>
-                    <input type="email" class="mt-3 border border-gray-400 py-3 px-2 rounded" name="email2" placeholder="Ketikkan Email" required>
+                    <input type="email" class="mt-3 border border-gray-400 py-3 px-2 rounded" name="email2" placeholder="Ketikkan Email" maxlength="45" required>
                 </div>
                 <div class="flex flex-col mb-5">
                     <label for="password" class="text-gray-700">Password</label>
-                    <input type="password" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password" name="password" placeholder="Ketikkan Password" required>
+                    <input type="password" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password" name="password" placeholder="Ketikkan Password" maxlength="64" required>
                 </div>
                 <p class="font-bold mb-4">Perhatikan</p>
                 <ul class="pl-5 list-disc font-light mb-5">
@@ -384,15 +385,15 @@
             <form action="<?= BaseURL() ?>/users/changepassword" method="post" class="px-10 py-5 text-grey-800">
                 <div class="flex flex-col mb-5">
                     <label for="password" class="text-gray-700">Password Sekarang</label>
-                    <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password" name="password" placeholder="Ketikkan Password" required>
+                    <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password" name="password" placeholder="Ketikkan Password" maxlength="64" required>
                 </div>
                 <div class="flex flex-col mb-5">
                     <label for="password" class="text-gray-700">Password Baru</label>
-                    <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password1" name="password1" placeholder="Ketikkan Password" required>
+                    <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password1" name="password1" placeholder="Ketikkan Password" maxlength="64" required>
                 </div>
                 <div class="flex flex-col mb-5">
                     <label for="password" class="text-gray-700">Konfirmasi Password Baru</label>
-                    <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password2" name="password2" placeholder="Ketikkan Password" required>
+                    <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password2" name="password2" placeholder="Ketikkan Password" maxlength="64" required>
                 </div>
                 <p class="font-bold mb-4">Perhatikan</p>
                 <ul class="pl-5 list-disc font-light mb-5">
