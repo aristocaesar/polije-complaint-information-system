@@ -20,11 +20,11 @@
                     <label for="nama_lengkap" class="text-gray-700">Nama Lengkap</label>
                     <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="nama_lengkap" aria-describedby="nama_lengkap" name="nama_lengkap" placeholder="Ketikkan Nama Lengkap" required>
                 </div>
-                <div class="flex flex-col mb-10">
+                <div class="flex flex-col mb-5">
                     <label for="status" class="text-gray-700">Tanggal Lahir</label>
                     <input type="date" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="tgl_lahir" aria-describedby="tgl_lahir" name="tgl_lahir">
                 </div>
-                <div class="flex flex-col mb-10">
+                <div class="flex flex-col mb-5">
                     <label for="status" class="text-gray-700">Jenis Kelamin</label>
                     <select class="mt-3 border border-gray-400 py-3 px-2 rounded" name="jenis_kelamin" id="jenis-kelamin">
                         <option value="laki-laki">Laki - Laki</option>
