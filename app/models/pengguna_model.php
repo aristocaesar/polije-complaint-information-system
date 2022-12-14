@@ -559,6 +559,9 @@ class Pengguna_Model
             if (!password_verify($_POST["password"], $user["password"])) {
                 throw new Exception("Password salah");
             }
+            if ($_POST["email"] == $user["email"]) {
+                throw new Exception("Email tersebut sedang anda gunakan");
+            }
         } else {
             $id = $_SESSION["user"]["id"];
             $nama = $_SESSION["user"]["nama"];
@@ -600,12 +603,21 @@ class Pengguna_Model
 
     public function newVerifikasi()
     {
+        $nama = "";
+        $email = "";
+        if (isset($_SESSION["user"]["email"])) {
+            $nama = $_SESSION["user"]["nama"];
+            $email = $_SESSION["user"]["email"];
+        } else {
+            $nama = $_POST["nama_lengkap"];
+            $email = $_POST["email"];
+        }
         $this->db->query("SELECT * FROM users_verifikasi WHERE email=:email");
-        $this->db->bind("email", $_SESSION["user"]["email"]);
+        $this->db->bind("email", $email);
         $userVerifikasi = $this->db->single();
         if ($userVerifikasi["time_limit"] <= time()) {
-            $token = $this->generateVerifikasi($_SESSION["user"]["email"], 5, "update");
-            $this->sendEmail($_SESSION['user']["email"], $_SESSION["user"]["nama"], $token);
+            $token = $this->generateVerifikasi($nama, 5, "update");
+            $this->sendEmail($email, $nama, $token);
             return true;
         } else {
             return true;
@@ -635,14 +647,18 @@ class Pengguna_Model
             if ($_POST["password"] == $_POST["password2"]) {
                 $user = $this->get($_POST["id_user_mobile"]);
                 if (password_verify($_POST["old_password"], $user["password"])) {
-                    $this->db->query("UPDATE " . $this->table . " SET password=:password, updated_at=:updated_at WHERE id=:id");
-                    $this->db->bind("password", password_hash($_POST["password"], PASSWORD_DEFAULT));
-                    $this->db->bind("updated_at", date("Y-m-d H:i:s"));
-                    $this->db->bind("id", $user["id"]);
-                    $this->db->execute();
-                    return [
-                        "message" => "Password berhasil diperbarui!"
-                    ];
+                    if ($_POST["password"] != $_POST["old_password"]) {
+                        $this->db->query("UPDATE " . $this->table . " SET password=:password, updated_at=:updated_at WHERE id=:id");
+                        $this->db->bind("password", password_hash($_POST["password"], PASSWORD_DEFAULT));
+                        $this->db->bind("updated_at", date("Y-m-d H:i:s"));
+                        $this->db->bind("id", $user["id"]);
+                        $this->db->execute();
+                        return [
+                            "message" => "Password berhasil diperbarui!"
+                        ];
+                    } else {
+                        throw new Exception("Password ini sedang anda gunakans");
+                    }
                 } else {
                     throw new Exception("Password lama salah!");
                 }

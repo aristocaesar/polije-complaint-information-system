@@ -226,11 +226,9 @@ class API extends CoreApi
                 }
             } elseif ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if ($id == "changeemail") {
-                    if ($_POST["email"] == $_POST["email2"]) {
-                        $this->Response(200, "OK", $this->model("pengguna_model")->changeEmail());
-                    } else {
-                        throw new Exception("Email tidak sama!");
-                    }
+                    $this->Response(200, "OK", $this->model("pengguna_model")->changeEmail());
+                } elseif ($id == "sendnewverifikasi") {
+                    $this->Response(200, "OK", $this->model("pengguna_model")->newVerifikasi());
                 } elseif ($id == "changepassword") {
                     $this->Response(200, "OK", $this->model("pengguna_model")->updatePasswordMobile());
                 } elseif ($id == "changefoto") {
@@ -242,8 +240,12 @@ class API extends CoreApi
                 }
             }
         } catch (Exception $error) {
+            $errorMsg = $error->getMessage();
+            if ($error->getCode() == 23000) {
+                $errorMsg = "Email tersebut sudah digunakan!";
+            }
             $this->Response(400, "ERR", [
-                "message" => $error->getMessage()
+                "message" => $errorMsg
             ]);
         }
     }

@@ -39,7 +39,11 @@ class Auth extends Controller
             ];
             $this->view("auth/daftar", $data);
         } catch (Exception $error) {
-            Flasher::setMessage("Terjadi Kesalahan!", $error->getMessage(), "error");
+            if ($error->getCode() == 23000) {
+                Flasher::setMessage("Terjadi Kesalahan!", "Email sudah digunakan!", "error");
+            } else {
+                Flasher::setMessage("Terjadi Kesalahan!", $error->getMessage(), "error");
+            }
             header("Location: " . BaseURL() . "/auth/daftar");
             exit;
         }
