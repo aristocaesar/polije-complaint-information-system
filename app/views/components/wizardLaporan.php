@@ -1,6 +1,6 @@
 <!-- Wizard Process Pelaporan -->
 <section id="wizard-prosess" class="container my-28">
-    <div class="grid lg:grid-cols-4 grid-cols-2 gap-10">
+    <div class="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-10">
         <div class="flex flex-col items-center">
             <div class="rounded-circle text-white mb-5"><i data-feather="edit-3" class="bg-blue-800 text-white rounded-full p-3" style="width:60px;height: 60px;left: 140px;top: 17px;"></i></div>
             <h5 class="font-bold text-dark-700 mb-3">Tulis Laporan</h5>

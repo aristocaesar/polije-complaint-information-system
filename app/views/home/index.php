@@ -16,7 +16,7 @@
                 <label class="text-gray-700">Pilih Klafisikasi Laporan</label>
                 <div class="block lg:hidden">
                     <div class="flex flex-col mb-5">
-                        <select class="mt-3 bg-blue-800 text-white  py-4 px-2 rounded" name="pelapor" id="pelapor">
+                        <select class="mt-3 bg-blue-800 text-white py-4 px-2 rounded select-klasifikasi" id="klasifikasi" onchange="setLaporanMobile(this)">
                             <option value="pengaduan">Pengaduan</option>
                             <option value="aspirasi">Aspirasi</option>
                             <option value="informasi">Informasi</option>
@@ -236,6 +236,7 @@
     function Klasifikasi(e) {
         const btn = $("#btn-select-klasifikasi");
         const btnAll = btn.children();
+        const optionsAll = $(".select-klasifikasi")[0];
         const form = $("#form-pai").children();
         for (let i = 0; i < form.length; i++) {
             if (btnAll[i].id == e.id) {
@@ -243,12 +244,22 @@
             } else {
                 btnAll[i].children[0].checked = false;
             }
+
+            if (optionsAll.options[i].value == e.id) {
+                $(".select-klasifikasi")[0].value = e.id;
+            }
+
             if (form[i].id.includes(e.id)) {
                 $(`#${form[i].id}`).show();
             } else {
                 $(`#${form[i].id}`).hide();
             }
         }
+    }
+
+    function setLaporanMobile(e) {
+        e.id = e.value;
+        Klasifikasi(e);
     }
 </script>
 <!-- Footer -->
