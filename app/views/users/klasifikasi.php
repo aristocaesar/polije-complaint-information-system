@@ -1,3 +1,10 @@
+<?php
+
+if (empty($data["laporan"])) {
+    header("Location: " . BaseURL() . "/users");
+}
+
+?>
 <!-- Hero -->
 <section class="hero">
     <?php getNavbarHome(); ?>
