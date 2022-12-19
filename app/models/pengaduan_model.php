@@ -189,12 +189,14 @@ class Pengaduan_Model
             $this->db->bind("status", "belum_ditanggapi");
             $this->db->bind("divisi", $_POST["divisi"]);
             $this->db->bind("bobot", $bobot);
-            if ($_FILES["foto"]["error"] != 4) {
-                $file = explode(".", $_FILES["foto"]["name"]);
-                $extension = end($file);
-                // Upload File ( 10MB )
-                UploadFile($_FILES, "L-USER-" . $id, 10485760, [], "document/pengaduan");
-                $this->db->bind("lampiran_pengirim", "L-USER-" . $id . "." . $extension);
+            if (isset($_FILES["foto"]["error"])) {
+                if ($_FILES["foto"]["error"] != 4) {
+                    $file = explode(".", $_FILES["foto"]["name"]);
+                    $extension = end($file);
+                    // Upload File ( 10MB )
+                    UploadFile($_FILES, "L-USER-" . $id, 10485760, [], "document/pengaduan");
+                    $this->db->bind("lampiran_pengirim", "L-USER-" . $id . "." . $extension);
+                }
             } else {
                 $this->db->bind("lampiran_pengirim", null);
             }

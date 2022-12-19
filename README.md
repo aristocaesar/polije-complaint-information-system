@@ -1,6 +1,6 @@
 <h1>Sistem Layanan Aspirasi dan Pengaduan Online Politeknik Negeri Jember</h1>
 
-![Banner](https://raw.githubusercontent.com/aristocaesar/polije-complaint-information-system/debug/public/images/readmd.png)
+![Banner](https://raw.githubusercontent.com/aristocaesar/polije-complaint-information-system/main/public/images/readmd.png)
 
 ## Apa itu Sistem Layanan Aspirasi dan Pengaduan?
 
