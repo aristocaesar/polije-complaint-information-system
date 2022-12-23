@@ -256,7 +256,12 @@ class Pengguna_Model
                 // Upload File ( 2MB 2097152 )
                 UploadFile($foto, $data["id"], 2097152, ["image/jpeg", "image/jpg", "image/png"], "images");
                 // hapus foto lama
-                RemoveFileUpload("/images/" . $data["foto_lama"]);
+                // -> cek apakah extention sama ?
+                $oldFile = explode(".", $data["foto_lama"]);
+                $oldExtension = end($oldFile);
+                if ($extension != $oldExtension) {
+                    RemoveFileUpload("/images/" . $data["foto_lama"]);
+                }
                 $this->db->bind("foto", $data["id"] . "." . $extension);
                 $_SESSION["user"]["foto"] = $data["id"] . "." . $extension;
             } else {
@@ -685,12 +690,19 @@ class Pengguna_Model
                     // Upload File ( 2MB 2097152 )
                     UploadFile($_FILES, $user["id"], 2097152, ["image/jpeg", "image/jpg", "image/png"], "images");
                     // hapus foto lama
-                    RemoveFileUpload("/images/" . $user["foto"]);
+                    // -> cek apakah extention sama ?
+                    $oldFile = explode(".", $user["foto"]);
+                    $oldExtension = end($oldFile);
+                    if ($extension != $oldExtension) {
+                        RemoveFileUpload("/images/" . $user["foto"]);
+                    }
                     $this->db->bind("foto", $user["id"] . "." . $extension);
                     $this->db->bind("updated_at", date("Y-m-d H:i:s"));
                     $this->db->bind("id", $user["id"]);
                     $this->db->execute();
-                    return $user;
+                    return [
+                        "new_foto" => $user["id"] . "." . $extension
+                    ];
                 } else {
                     throw new Exception("Error Processing Change Photo Request");
                 }
