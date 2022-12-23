@@ -126,6 +126,9 @@ class Aspirasi_Model
     public function sendAspirasi()
     {
         if (isset($_POST)) {
+            if (empty($_POST["deskripsi"])) {
+                throw new Exception("Harap melengkapi data yang tersedia");
+            }
             $id = $this->generateID();
             $date = date("Y-m-d H:i:s");
             $this->db->query("INSERT INTO " . $this->table . " (id, deskripsi, kategori, pengirim, lokasi, status, divisi, lampiran_pengirim, user_agent, created_at, updated_at) VALUES (:id, :deskripsi, :kategori, :pengirim, :lokasi, :status, :divisi, :lampiran_pengirim, :user_agent, :created_at, :updated_at)");

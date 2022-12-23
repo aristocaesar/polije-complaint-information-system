@@ -230,6 +230,9 @@ class Pengguna_Model
     public function userUpdate($data, $foto)
     {
         if (!empty($data)) {
+            if (empty($data["nama"]) || empty($data["alamat"]) || empty($data["kontak"])) {
+                throw new Exception("Harap melengkapi data yang tersedia");
+            }
             $this->db->query("UPDATE " . $this->table . " SET nama=:nama, tgl_lahir=:tgl_lahir, jenis_kelamin=:jenis_kelamin, alamat=:alamat, kontak=:kontak, status=:status, foto=:foto, updated_at=:updated_at WHERE id=:id");
             $this->db->bind("nama", ucwords($data["nama"]));
             if (strlen($data["nama"]) >= 64) {

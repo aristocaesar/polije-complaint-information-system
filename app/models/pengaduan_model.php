@@ -154,6 +154,9 @@ class Pengaduan_Model
     public function sendPengaduan()
     {
         if (isset($_POST)) {
+            if (empty($_POST["deskripsi"])) {
+                throw new Exception("Harap melengkapi data yang tersedia");
+            }
             $foto = isset($_FILES["foto"]["error"]) ? $_FILES["foto"]["error"] : 4;
             $loginned = isset($_SESSION["user"]) || isset($_POST["id_user_mobile"]);
             $bobot = $this->generateBobot($loginned, $_POST["deskripsi"], $foto);
