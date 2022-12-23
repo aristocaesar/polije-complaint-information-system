@@ -688,7 +688,7 @@ class Pengguna_Model
                     $file = explode(".", $_FILES["foto"]["name"]);
                     $extension = end($file);
                     // Upload File ( 2MB 2097152 )
-                    UploadFile($_FILES, $user["id"], 2097152, ["image/jpeg", "image/jpg", "image/png"], "images");
+                    UploadFile($_FILES, $user["id"], 2097152, ["application/octet-stream"], "images");
                     // hapus foto lama
                     // -> cek apakah extention sama ?
                     $oldFile = explode(".", $user["foto"]);
