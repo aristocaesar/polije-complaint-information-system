@@ -366,9 +366,9 @@ class Pengguna_Model
             if (strlen($data["email"]) >= 45 || strlen($data["password"]) >= 64) {
                 throw new Exception("Email atau Password salah!");
             }
-            $pengguna = $this->getByEmail($data["email"]);
+            $pengguna = $this->getByEmail(trim($data["email"]));
             if ($pengguna) {
-                if (password_verify($data["password"], $pengguna["password"])) {
+                if (password_verify(trim($data["password"]), $pengguna["password"])) {
                     if ($pengguna["verifikasi_daftar"] == "terverifikasi") {
                         if ($pengguna["akses"] == "aktif") {
                             $this->updateLastLogin($pengguna["id"]);
@@ -564,10 +564,10 @@ class Pengguna_Model
             $id = $_POST["id_user_mobile"];
             $user = $this->get($id);
             $nama = $user["nama"];
-            if (!password_verify($_POST["password"], $user["password"])) {
+            if (!password_verify(trim($_POST["password"]), $user["password"])) {
                 throw new Exception("Password salah");
             }
-            if ($_POST["email"] == $user["email"]) {
+            if (trim($_POST["email"]) == trim($user["email"])) {
                 throw new Exception("Email tersebut sedang anda gunakan");
             }
         } else {
@@ -575,8 +575,11 @@ class Pengguna_Model
             $nama = $_SESSION["user"]["nama"];
         }
 
+        //check email on petugas
+        $this->checkUniqEmail($_POST["email"]);
+
         $this->db->query("UPDATE " . $this->table . " SET email=:email, verifikasi_email=:verifikasi, created_at=:created_at WHERE id=:id");
-        $this->db->bind("email", $_POST["email"]);
+        $this->db->bind("email", trim($_POST["email"]));
         $this->db->bind("verifikasi", "belum_terverifikasi");
         $this->db->bind("created_at", date("Y-m-d H:i:s"));
         $this->db->bind("id", $id);
@@ -636,11 +639,11 @@ class Pengguna_Model
     {
         if (isset($_POST)) {
             $this->db->query("UPDATE " . $this->table . " SET nama=:nama, tgl_lahir=:tgl_lahir, jenis_kelamin=:jenis_kelamin, alamat=:alamat, kontak=:kontak, status=:status, updated_at=:updated_at WHERE id=:id");
-            $this->db->bind("nama", $_POST["nama"]);
+            $this->db->bind("nama", trim($_POST["nama"]));
             $this->db->bind("tgl_lahir", $_POST["tgl_lahir"]);
             $this->db->bind("jenis_kelamin", $_POST["jenis_kelamin"]);
-            $this->db->bind("alamat", $_POST["alamat"]);
-            $this->db->bind("kontak", $_POST["kontak"]);
+            $this->db->bind("alamat", trim($_POST["alamat"]));
+            $this->db->bind("kontak", trim($_POST["kontak"]));
             $this->db->bind("status", $_POST["status"]);
             $this->db->bind("updated_at", date("Y-m-d H:i:s"));
             $this->db->bind("id", $_POST["id_user_mobile"]);
@@ -652,12 +655,12 @@ class Pengguna_Model
     public function updatePasswordMobile()
     {
         if (isset($_POST) && !empty($_POST)) {
-            if ($_POST["password"] == $_POST["password2"]) {
+            if (trim($_POST["password"]) == trim($_POST["password2"])) {
                 $user = $this->get($_POST["id_user_mobile"]);
-                if (password_verify($_POST["old_password"], $user["password"])) {
-                    if ($_POST["password"] != $_POST["old_password"]) {
+                if (password_verify(trim($_POST["old_password"]), $user["password"])) {
+                    if (trim($_POST["password"]) != trim($_POST["old_password"])) {
                         $this->db->query("UPDATE " . $this->table . " SET password=:password, updated_at=:updated_at WHERE id=:id");
-                        $this->db->bind("password", password_hash($_POST["password"], PASSWORD_DEFAULT));
+                        $this->db->bind("password", password_hash(trim($_POST["password"]), PASSWORD_DEFAULT));
                         $this->db->bind("updated_at", date("Y-m-d H:i:s"));
                         $this->db->bind("id", $user["id"]);
                         $this->db->execute();
