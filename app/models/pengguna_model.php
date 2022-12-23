@@ -660,7 +660,7 @@ class Pengguna_Model
                             "message" => "Password berhasil diperbarui!"
                         ];
                     } else {
-                        throw new Exception("Password ini sedang anda gunakans");
+                        throw new Exception("Password ini sedang anda gunakan");
                     }
                 } else {
                     throw new Exception("Password lama salah!");
@@ -682,10 +682,10 @@ class Pengguna_Model
                     $this->db->query("UPDATE " . $this->table . " SET foto=:foto, updated_at=:updated_at WHERE id=:id");
                     $file = explode(".", $_FILES["foto"]["name"]);
                     $extension = end($file);
-                    // hapus foto lama
-                    RemoveFileUpload("/images/" . $user["foto"]);
                     // Upload File ( 2MB 2097152 )
                     UploadFile($_FILES, $user["id"], 2097152, ["image/jpeg", "image/jpg", "image/png"], "images");
+                    // hapus foto lama
+                    RemoveFileUpload("/images/" . $user["foto"]);
                     $this->db->bind("foto", $user["id"] . "." . $extension);
                     $this->db->bind("updated_at", date("Y-m-d H:i:s"));
                     $this->db->bind("id", $user["id"]);
