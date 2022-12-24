@@ -159,7 +159,6 @@ class Pengaduan_Model
                 !isset($_POST["kategori"])
                 || !isset($_POST["divisi"])
                 || !isset($_POST["deskripsi"])
-                || !isset($_FILES["foto"])
                 || !isset($_POST["lokasi"])
             ) {
                 throw new Exception("Harap melengkapi data yang tersedia");
@@ -185,7 +184,7 @@ class Pengaduan_Model
             }
             // cek hitung bobot
             // -> cek apakah ada lampiran
-            $foto = isset($_FILES["foto"]["error"]) ? $_FILES["foto"]["error"] : 4;
+            $foto = isset($_FILES["foto"]) ? $_FILES["foto"]["error"] : 4;
             // -> cek apakah login
             $loginned = isset($_SESSION["user"]) || isset($_POST["id_user_mobile"]);
             // -> generate bobot dari beberapa data yang diinputkan
@@ -236,12 +235,14 @@ class Pengaduan_Model
             // masukkan status
             $this->db->bind("status", "belum_ditanggapi");
             // masukkan lampiran
-            if ($_FILES["foto"]["error"] != 4) {
-                $file = explode(".", $_FILES["foto"]["name"]);
-                $extension = end($file);
-                // Upload File ( 10MB )
-                UploadFile($_FILES, "L-USER-" . $id, 10485760, [], "document/pengaduan");
-                $this->db->bind("lampiran_pengirim", "L-USER-" . $id . "." . $extension);
+            if (isset($_FILES["foto"])) {
+                if ($_FILES["foto"]["error"] != 4) {
+                    $file = explode(".", $_FILES["foto"]["name"]);
+                    $extension = end($file);
+                    // Upload File ( 10MB )
+                    UploadFile($_FILES, "L-USER-" . $id, 10485760, [], "document/pengaduan");
+                    $this->db->bind("lampiran_pengirim", "L-USER-" . $id . "." . $extension);
+                }
             } else {
                 $this->db->bind("lampiran_pengirim", null);
             }

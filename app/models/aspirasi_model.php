@@ -131,7 +131,6 @@ class Aspirasi_Model
                 !isset($_POST["kategori"])
                 || !isset($_POST["divisi"])
                 || !isset($_POST["deskripsi"])
-                || !isset($_FILES["foto"])
                 || !isset($_POST["lokasi"])
             ) {
                 throw new Exception("Harap melengkapi data yang tersedia");
@@ -181,12 +180,14 @@ class Aspirasi_Model
             // masukkan status
             $this->db->bind("status", "belum_ditanggapi");
             // masukkan lampiran
-            if ($_FILES["foto"]["error"] != 4) {
-                $file = explode(".", $_FILES["foto"]["name"]);
-                $extension = end($file);
-                // Upload File ( 10MB )
-                UploadFile($_FILES, "L-USER-" . $id, 10485760, [], "document/aspirasi");
-                $this->db->bind("lampiran_pengirim", "L-USER-" . $id . "." . $extension);
+            if (isset($_FILES["foto"])) {
+                if ($_FILES["foto"]["error"] != 4) {
+                    $file = explode(".", $_FILES["foto"]["name"]);
+                    $extension = end($file);
+                    // Upload File ( 10MB )
+                    UploadFile($_FILES, "L-USER-" . $id, 10485760, [], "document/aspirasi");
+                    $this->db->bind("lampiran_pengirim", "L-USER-" . $id . "." . $extension);
+                }
             } else {
                 $this->db->bind("lampiran_pengirim", null);
             }

@@ -149,9 +149,15 @@ class API extends CoreApi
                 }
             }
         } catch (Exception $error) {
-            $this->Response(400, "ERR", [
-                "message" => $error->getMessage()
-            ]);
+            if ($error->getCode() == 23000) {
+                $this->Response(400, "ERR", [
+                    "message" => "Data yang anda masukkan tidak valid"
+                ]);
+            } else {
+                $this->Response(400, "ERR", [
+                    "message" => $error->getMessage()
+                ]);
+            }
         }
     }
 
@@ -179,9 +185,15 @@ class API extends CoreApi
                 }
             }
         } catch (Exception $error) {
-            $this->Response(400, "ERR", [
-                "message" => $error->getMessage()
-            ]);
+            if ($error->getCode() == 23000) {
+                $this->Response(400, "ERR", [
+                    "message" => "Data yang anda masukkan tidak valid"
+                ]);
+            } else {
+                $this->Response(400, "ERR", [
+                    "message" => $error->getMessage()
+                ]);
+            }
         }
     }
 
@@ -209,9 +221,15 @@ class API extends CoreApi
                 }
             }
         } catch (Exception $error) {
-            $this->Response(200, "ERR", [
-                "message" => $error->getMessage()
-            ]);
+            if ($error->getCode() == 23000) {
+                $this->Response(400, "ERR", [
+                    "message" => "Data yang anda masukkan tidak valid"
+                ]);
+            } else {
+                $this->Response(400, "ERR", [
+                    "message" => $error->getMessage()
+                ]);
+            }
         }
     }
 
