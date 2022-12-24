@@ -7,7 +7,7 @@ use Dompdf\Dompdf;
 
 class generatePDF
 {
-    public static function Klasifikasi(String $id, String $judul, String $deskripsi, String $created_at): void
+    public static function Klasifikasi(String $id, String $deskripsi, String $created_at): void
     {
         // remove session pengguna rahasia
         if (isset($_SESSION["p_rahasia"])) {

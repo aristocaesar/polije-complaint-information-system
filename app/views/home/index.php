@@ -34,13 +34,6 @@
             <div id="form-pai">
                 <!-- FORM PENGADUAN -->
                 <form id="form-pengaduan" class="mt-11 mb-5" action="<?= BaseURL() ?>/home/pengaduan" method="POST" enctype="multipart/form-data">
-                    <!-- <div class="text-center mb-10">
-                        <small id="panduan-pengaduan" class="font-light text-gray-700 hover:cursor-pointer hover:underline" onclick="Panduan(this.id)">Perhatikan Cara Menyampaikan Pengaduan Yang Baik dan Benar</small>
-                    </div> -->
-                    <div class="flex-col mb-5 hidden">
-                        <label for="judul" class="text-gray-700">Judul Laporan*</label>
-                        <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="judul" aria-describedby="judul" name="judul" placeholder="Ketikkan Judul Laporan">
-                    </div>
                     <div class="flex flex-col mb-5">
                         <label for="kategori" class="text-gray-700">Kategori</label>
                         <select class="mt-3 border border-gray-400 py-3 px-2 rounded" name="kategori" id="kategori">
@@ -82,13 +75,6 @@
                 <!-- FORM ASPIRASI -->
                 <form id="form-aspirasi" class="mt-11 mb-5" action="<?= BaseURL() ?>/home/aspirasi" method="POST" enctype="multipart/form-data">
                     <?php if (isset($_SESSION["user"])) : ?>
-                        <!-- <div class="text-center mb-10">
-                        <small id="panduan-aspirasi" class="font-light text-gray-700 hover:cursor-pointer hover:underline" onclick="Panduan(this.id)">Perhatikan Cara Menyampaikan Aspirasi Yang Baik dan Benar</small>
-                        </div> -->
-                        <div class="hidden flex-col mb-5">
-                            <label for="judul" class="text-gray-700">Judul Aspirasi Anda*</label>
-                            <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="judul" aria-describedby="judul" name="judul" placeholder="Ketikkan Judul Aspirasi">
-                        </div>
                         <div class="flex flex-col mb-5">
                             <label for="kategori" class="text-gray-700">Kategori</label>
                             <select class="mt-3 border border-gray-400 py-3 px-2 rounded" name="kategori" id="kategori">
@@ -130,13 +116,6 @@
                 <!-- FORM INFORMASI -->
                 <form id="form-informasi" class="mt-11 mb-5" action="<?= BaseURL() ?>/home/informasi" method="POST" enctype="multipart/form-data">
                     <?php if (isset($_SESSION["user"])) : ?>
-                        <!-- <div class="text-center mb-10">
-                        <small id="panduan-aspirasi" class="font-light text-gray-700 hover:cursor-pointer hover:underline" onclick="Panduan(this.id)">Perhatikan Cara Menyampaikan Aspirasi Yang Baik dan Benar</small>
-                    </div> -->
-                        <div class="hidden flex-col mb-5">
-                            <label for="judul" class="text-gray-700">Judul Informasi*</label>
-                            <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="judul" aria-describedby="judul" name="judul" placeholder="Ketikkan Judul Informasi">
-                        </div>
                         <div class="flex flex-col mb-5">
                             <label for="kategori" class="text-gray-700">Kategori</label>
                             <select class="mt-3 border border-gray-400 py-3 px-2 rounded" name="kategori" id="kategori">
@@ -215,21 +194,6 @@
     </div>
 </div>
 <script>
-    // Modal Panduan
-    // function Panduan(id) {
-    //     Modal("panduan");
-    //     const panduan = $("#modal-panduan-content")[0].children;
-    //     for (let i = 0; i < panduan.length; i++) {
-    //         if (panduan[i].id == id) {
-    //             panduan[i].classList.add("block");
-    //             panduan[i].classList.remove("hidden");
-    //         } else {
-    //             panduan[i].classList.add("hidden");
-    //             panduan[i].classList.remove("block");
-    //         }
-    //     }
-    // }
-
     // KLASIFIKASI MENU
     Klasifikasi($("#btn-select-klasifikasi")[0].children[0]);
 
