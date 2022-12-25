@@ -614,25 +614,43 @@ class Pengguna_Model
 
     public function newVerifikasi()
     {
-        $nama = "";
         $email = "";
         if (isset($_SESSION["user"]["email"])) {
-            $nama = $_SESSION["user"]["nama"];
             $email = $_SESSION["user"]["email"];
         } else {
-            $nama = $_POST["nama_lengkap"];
-            $email = $_POST["email"];
+            if (isset($_POST["email"])) {
+                $email = $_POST["email"];
+            } else {
+                throw new Exception("Error Processing Request New Verifikasi");
+            }
         }
+        // cek user email
+        $user = $this->getByEmail($email);
+        if (!$user) {
+            throw new Exception("User tidak tersedia");
+        }
+        //get time verifikasi
         $this->db->query("SELECT * FROM users_verifikasi WHERE email=:email");
         $this->db->bind("email", $email);
         $userVerifikasi = $this->db->single();
-        if ($userVerifikasi["time_limit"] <= time()) {
-            $token = $this->generateVerifikasi($nama, 5, "update");
-            $this->sendEmail($email, $nama, $token);
-            return true;
-        } else {
-            return true;
+        // cek time verifikasi > time now
+        // -> jika waktu verifikasi > time maka = sudah dikirim ulang
+        // -> jika waktu verifikasi < time maka = kirim ulang
+        if ($userVerifikasi["time_limit"] > time()) {
+            return [
+                "nama" => $user['nama'],
+                "email" => $email,
+                "pesan_verifikasi" => "Sudah dikirim ulang"
+            ];
         }
+        // send email
+        $token = $this->generateVerifikasi($user["email"], 5, "update");
+        $this->sendEmail($email, $user['nama'], $token);
+        return [
+            "nama" => $user['nama'],
+            "email" => $email,
+            "pesan_verifikasi" => "Dikirim ulang",
+        ];
     }
 
     public function saveMobile()
