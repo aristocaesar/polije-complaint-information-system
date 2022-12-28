@@ -27,22 +27,6 @@ class Dashboard_Model
         return $this->db->single();
     }
 
-    public function actionPengguna($action = "")
-    {
-        $date = date("Y-m-d H:i:s");
-        if (!empty($action)) {
-            if ($action == "add") {
-                $this->db->query("UPDATE statistic_main SET jumlah=1+(SELECT jumlah FROM statistic_main WHERE label='Pengguna'), updated_at=:updated_at WHERE label='Pengguna'");
-            } else if ("less") {
-                $this->db->query("UPDATE statistic_main SET jumlah=(SELECT jumlah FROM statistic_main WHERE label='Pengguna')-1, updated_at=:updated_at WHERE label='Pengguna'");
-            } else {
-                throw new Exception("Error Processing Action Pengguna");
-            }
-            $this->db->bind("updated_at", $date);
-            $this->db->execute();
-        }
-    }
-
     public function addPengaduan()
     {
         $this->db->query("UPDATE statistic_main SET jumlah=1+(SELECT jumlah FROM statistic_main WHERE label='Pengaduan'), updated_at=:updated_at WHERE label='Pengaduan'");

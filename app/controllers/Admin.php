@@ -303,7 +303,11 @@ class Admin extends Controller
                 "penggunas" => $this->model("pengguna_model")->getAll()
             ]);
         } catch (Exception $error) {
-            Flasher::setMessage("Terjadi Kesalahan!", $error->getMessage(), "error");
+            $errorMsg = $error->getMessage();
+            if (str_contains($errorMsg, "1062")) {
+                $errorMsg = "Email yang anda masukkan sudah terdaftar";
+            }
+            Flasher::setMessage("Terjadi Kesalahan!", $errorMsg, "error");
             header("Location: " . BaseURL() . "/admin/pengguna");
             exit;
         }

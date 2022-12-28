@@ -80,7 +80,6 @@ class Pengguna_Model
         if ($this->db->rowCount() == 0) {
             throw new Exception("Gagal menambahkan pengguna");
         }
-        $this->dashboard->actionPengguna("add");
         return $data;
     }
 
@@ -116,10 +115,13 @@ class Pengguna_Model
         if (empty($id)) {
             throw new Exception("Gagal menghapus pengguna.");
         }
+        // hapus foto pengguna
+        $user = $this->get($id);
+        RemoveFileUpload("/images/" . $user["foto"]);
+        // hapus pengguna
         $this->db->query('DELETE FROM ' . $this->table . ' WHERE id=:id');
         $this->db->bind("id", $id);
         $this->db->execute();
-        $this->dashboard->actionPengguna("less");
         return [];
     }
 
@@ -220,7 +222,6 @@ class Pengguna_Model
             if (!PHPmail($data["email"], "E-LAPOR | VERIFIKASI EMAIL", PHPmailVerifikasi(ucwords(strtolower($data["nama_lengkap"])), BaseURL() . "/users/verifikasi/" . $idVerifikasi))) {
                 throw new Exception("Gagal melakukan pengiriman tautan verifikasi!");
             }
-            $this->dashboard->actionPengguna("add");
             return $data;
         } else {
             throw new Exception("Gagal melakukan registarsi!");
@@ -389,7 +390,15 @@ class Pengguna_Model
                         $this->db->query("SELECT * FROM users_verifikasi WHERE email=:email");
                         $this->db->bind("email", $pengguna["email"]);
                         $verifikasi = $this->db->single();
-                        if ($verifikasi["time_limit"] <= time()) {
+                        // jika belum membuat email verifikasi
+                        if (!$verifikasi) {
+                            // set idverifikasi
+                            $idVerifikasi = $this->generateVerifikasi($pengguna["email"], 5, "create");
+                            // Send Mail
+                            if (!PHPmail($pengguna["email"], "E-LAPOR | VERIFIKASI EMAIL", PHPmailVerifikasi($pengguna["nama"], BaseURL() . "/users/verifikasi/" . $idVerifikasi))) {
+                                throw new Exception("Gagal melakukan pengiriman tautan verifikasi!");
+                            }
+                        } else if ($verifikasi["time_limit"] <= time()) {
                             // set idverifikasi
                             $idVerifikasi = $this->generateVerifikasi($pengguna["email"], 5, "update");
                             // Send Mail
