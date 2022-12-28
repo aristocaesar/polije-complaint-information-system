@@ -179,7 +179,7 @@ class Pengaduan_Model
             $lenDeskripsi = strlen($_POST["deskripsi"]);
             if ($lenDeskripsi > 1024) {
                 throw new Exception("Deskripsi pengaduan terlalu panjang");
-            } else if ($lenDeskripsi < 8) {
+            } else if ($lenDeskripsi < 18) {
                 throw new Exception("Harap masukkan deskripsi yang lebih lengkap");
             }
             // cek hitung bobot
@@ -242,6 +242,8 @@ class Pengaduan_Model
                     // Upload File ( 10MB )
                     UploadFile($_FILES, "L-USER-" . $id, 10485760, [], "document/pengaduan");
                     $this->db->bind("lampiran_pengirim", "L-USER-" . $id . "." . $extension);
+                } else {
+                    $this->db->bind("lampiran_pengirim", null);
                 }
             } else {
                 $this->db->bind("lampiran_pengirim", null);
