@@ -230,7 +230,11 @@ class Admin extends Controller
                 "kategori" => $this->model("kategori_model")->getAll()
             ]);
         } catch (Exception $error) {
-            Flasher::setMessage("Terjadi Kesalahan!", $error->getMessage(), "error");
+            $errorMsg = $error->getMessage();
+            if (str_contains($errorMsg, "1062")) {
+                $errorMsg = "Kategori yang anda masukkan sudah terdaftar";
+            }
+            Flasher::setMessage("Terjadi Kesalahan!", $errorMsg, "error");
             header("Location: " . BaseURL() . "/admin/kategori");
             exit;
         }
@@ -263,7 +267,11 @@ class Admin extends Controller
                 "divisi" => $this->model("divisi_model")->getAll()
             ]);
         } catch (Exception $error) {
-            Flasher::setMessage("Terjadi Kesalahan!", $error->getMessage(), "error");
+            $errorMsg = $error->getMessage();
+            if (str_contains($errorMsg, "1062")) {
+                $errorMsg = "Divisi yang anda masukkan sudah terdaftar";
+            }
+            Flasher::setMessage("Terjadi Kesalahan!", $errorMsg, "error");
             header("Location: " . BaseURL() . "/admin/divisi");
             exit;
         }
