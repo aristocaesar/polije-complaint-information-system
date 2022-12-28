@@ -255,8 +255,6 @@ class Pengaduan_Model
             $this->db->bind("updated_at", $date);
             // jalankan query
             $this->db->execute();
-            // add count pengaduan
-            $this->dashboard->addPengaduan();
             // kembalikan hasil
             return $_POST;
         } else {

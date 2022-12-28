@@ -5,13 +5,11 @@ require_once("app/models/dashboard_model.php");
 class Pengguna_Model
 {
     private $db;
-    private $dashboard;
     private $table = "pengguna";
 
     public function __construct()
     {
         $this->db = new Database;
-        $this->dashboard = new Dashboard_Model;
     }
 
     private function generateID(string $set)
