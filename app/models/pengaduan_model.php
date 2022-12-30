@@ -154,19 +154,62 @@ class Pengaduan_Model
     public function sendPengaduan()
     {
         if (isset($_POST)) {
-            $foto = isset($_FILES["foto"]["error"]) ? $_FILES["foto"]["error"] : 4;
+            // cek data yang dikirimkan
+            if (
+                !isset($_POST["kategori"])
+                || !isset($_POST["divisi"])
+                || !isset($_POST["deskripsi"])
+                || !isset($_POST["lokasi"])
+            ) {
+                throw new Exception("Harap melengkapi data yang tersedia");
+            }
+            // cek data yang dikirimkan pengguna rahasia
+            if (!isset($_SESSION["user"]["id"])) {
+                if (!isset($_POST["id_user_mobile"])) {
+                    if (!isset($_POST["pelapor"])) {
+                        throw new Exception("Harap melengkapi data yang tersedia");
+                    }
+                }
+            }
+            // cek deskripsi tidak boleh kosong
+            if (empty($_POST["deskripsi"])) {
+                throw new Exception("Harap melengkapi data yang tersedia");
+            }
+            // cek panjang deskripsi
+            $lenDeskripsi = strlen($_POST["deskripsi"]);
+            if ($lenDeskripsi > 1024) {
+                throw new Exception("Deskripsi pengaduan terlalu panjang");
+            } else if ($lenDeskripsi < 18) {
+                throw new Exception("Harap masukkan deskripsi yang lebih lengkap");
+            }
+            // cek hitung bobot
+            // -> cek apakah ada lampiran
+            $foto = isset($_FILES["foto"]) ? $_FILES["foto"]["error"] : 4;
+            // -> cek apakah login
             $loginned = isset($_SESSION["user"]) || isset($_POST["id_user_mobile"]);
+            // -> generate bobot dari beberapa data yang diinputkan
             $bobot = $this->generateBobot($loginned, $_POST["deskripsi"], $foto);
 
+            // init ID pengaduan
             $id = $this->generateID();
+            // init tanggal sekarang
             $date = date("Y-m-d H:i:s");
-            $this->db->query("INSERT INTO " . $this->table . " (id, deskripsi, kategori, pengirim, lokasi, status, divisi, bobot, lampiran_pengirim, user_agent, created_at, updated_at) VALUES (:id,:deskripsi, :kategori, :pengirim, :lokasi, :status, :divisi, :bobot, :lampiran_pengirim, :user_agent, :created_at, :updated_at)");
+
+            // query insert ke database pengaduan
+            $this->db->query("INSERT INTO " . $this->table . " (id, deskripsi, kategori, pengirim, lokasi, status, divisi, bobot, lampiran_pengirim, user_agent, created_at, updated_at) VALUES (:id, :deskripsi, :kategori, :pengirim, :lokasi, :status, :divisi, :bobot, :lampiran_pengirim, :user_agent, :created_at, :updated_at)");
+
+            // masukkan data ID
             $this->db->bind("id", $id);
-            if (strlen($_POST["deskripsi"]) >= 1024) {
-                throw new Exception("Deskripsi pengaduan terlalu panjang");
-            }
-            $this->db->bind("deskripsi", $_POST["deskripsi"]);
-            $this->db->bind("kategori", $_POST["kategori"]);
+            // masukkan deskripsi
+            $this->db->bind("deskripsi", htmlspecialchars(trim($_POST["deskripsi"])));
+            // masukkan kategori
+            $this->db->bind("kategori", trim($_POST["kategori"]));
+            // masukkan divisi
+            $this->db->bind("divisi", trim($_POST["divisi"]));
+            // masukkan bobot
+            $this->db->bind("bobot", $bobot);
+            // masukkan pelapor
+            // -> jika pelapor rahasia
             if (isset($_POST["pelapor"])) {
                 $this->db->bind("pengirim", null);
                 // set sessionn for generate pdf document
@@ -175,40 +218,47 @@ class Pengaduan_Model
                     "date" => $date
                 ];
             } else {
+                // jika pelapor ada dan login diwebsite
                 if (!isset($_POST["id_user_mobile"])) {
                     $this->db->bind("pengirim", $_SESSION["user"]["id"]);
                 } else {
+                    // jika pelapot ada dan login dimobile
                     $this->db->bind("pengirim", $_POST["id_user_mobile"]);
                 }
             }
+            // masukkan lokasi
             if ($_POST["lokasi"] == "Akses tidak diberikan") {
                 $this->db->bind("lokasi", "Akses tidak diberikan");
             } else {
-                $this->db->bind("lokasi", $_POST["lokasi"]);
+                $this->db->bind("lokasi", htmlspecialchars(trim($_POST["lokasi"])));
             }
+            // masukkan status
             $this->db->bind("status", "belum_ditanggapi");
-            $this->db->bind("divisi", $_POST["divisi"]);
-            $this->db->bind("bobot", $bobot);
-            if (isset($_FILES["foto"]["error"])) {
+            // masukkan lampiran
+            if (isset($_FILES["foto"])) {
                 if ($_FILES["foto"]["error"] != 4) {
                     $file = explode(".", $_FILES["foto"]["name"]);
                     $extension = end($file);
                     // Upload File ( 10MB )
                     UploadFile($_FILES, "L-USER-" . $id, 10485760, [], "document/pengaduan");
                     $this->db->bind("lampiran_pengirim", "L-USER-" . $id . "." . $extension);
+                } else {
+                    $this->db->bind("lampiran_pengirim", null);
                 }
             } else {
                 $this->db->bind("lampiran_pengirim", null);
             }
+            // masukkan user agent
             $this->db->bind("user_agent", $_SERVER["HTTP_USER_AGENT"]);
+            // masukkan tgl sekarang
             $this->db->bind("created_at", $date);
             $this->db->bind("updated_at", $date);
+            // jalankan query
             $this->db->execute();
-            // add count pengaduan
-            $this->dashboard->addPengaduan();
+            // kembalikan hasil
             return $_POST;
         } else {
-            header("Location: " . BaseURL());
+            throw new Exception("Informasi pengiriman pengaduan tidak valid");
         }
     }
 }

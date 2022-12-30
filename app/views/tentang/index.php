@@ -17,7 +17,7 @@
                     Pengelolaan pengaduan pelayanan publik di Politeknik Negeri Jember belum terkelola secara efektif dan terintegrasi. Masing-masing penyelenggara mengelola pengaduan secara parsial dan tidak terkoordinir dengan baik. Akibatnya terjadi duplikasi penanganan pengaduan, atau bahkan bisa terjadi suatu pengaduan tidak ditangani oleh satupun penyelenggara, dengan alasan pengaduan bukan kewenangannya. Oleh karena itu, untuk mencapai visi dalam good governance maka perlu untuk mengintegrasikan sistem pengelolaan pengaduan pelayanan publik dalam satu pintu. Tujuannya, Politeknik Negeri Jember memiliki satu saluran pengaduan yang baik dan tertata.
                 </p>
                 <p class="text-dark-50">
-                    Untuk itu Politeknik Negeri Jember membentuk Sistem Pengelolaan Pengaduan Pelayanan Kampus - Layanan Aspirasi dan Pengaduan Online adalah layanan penyampaian semua aspirasi dan pengaduan masyrakat Politeknik Negeri Jember melalui beberapa kanal pengaduan yaitu website <?= BaseURL(); ?> serta aplikasi mobile (Android).
+                    Untuk itu Politeknik Negeri Jember membentuk Sistem Pengelolaan Pengaduan Pelayanan Kampus - Layanan Aspirasi dan Pengaduan Online adalah layanan penyampaian semua aspirasi dan pengaduan masyrakat Politeknik Negeri Jember melalui beberapa kanal pengaduan yaitu website <?= BaseURL(); ?> serta <a href="http://sip-polije.wstif3e.id/app/E-Lapor%20Polije.apk" class="hover:underline">aplikasi mobile (Android)</a>.
                 </p>
             </div>
         </div>

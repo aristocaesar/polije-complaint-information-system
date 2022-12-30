@@ -5,13 +5,11 @@ require_once("app/models/dashboard_model.php");
 class Pengguna_Model
 {
     private $db;
-    private $dashboard;
     private $table = "pengguna";
 
     public function __construct()
     {
         $this->db = new Database;
-        $this->dashboard = new Dashboard_Model;
     }
 
     private function generateID(string $set)
@@ -80,7 +78,6 @@ class Pengguna_Model
         if ($this->db->rowCount() == 0) {
             throw new Exception("Gagal menambahkan pengguna");
         }
-        $this->dashboard->actionPengguna("add");
         return $data;
     }
 
@@ -116,10 +113,13 @@ class Pengguna_Model
         if (empty($id)) {
             throw new Exception("Gagal menghapus pengguna.");
         }
+        // hapus foto pengguna
+        $user = $this->get($id);
+        RemoveFileUpload("/images/" . $user["foto"]);
+        // hapus pengguna
         $this->db->query('DELETE FROM ' . $this->table . ' WHERE id=:id');
         $this->db->bind("id", $id);
         $this->db->execute();
-        $this->dashboard->actionPengguna("less");
         return [];
     }
 
@@ -220,7 +220,6 @@ class Pengguna_Model
             if (!PHPmail($data["email"], "E-LAPOR | VERIFIKASI EMAIL", PHPmailVerifikasi(ucwords(strtolower($data["nama_lengkap"])), BaseURL() . "/users/verifikasi/" . $idVerifikasi))) {
                 throw new Exception("Gagal melakukan pengiriman tautan verifikasi!");
             }
-            $this->dashboard->actionPengguna("add");
             return $data;
         } else {
             throw new Exception("Gagal melakukan registarsi!");
@@ -230,6 +229,9 @@ class Pengguna_Model
     public function userUpdate($data, $foto)
     {
         if (!empty($data)) {
+            if (empty($data["nama"]) || empty($data["alamat"]) || empty($data["kontak"])) {
+                throw new Exception("Harap melengkapi data yang tersedia");
+            }
             $this->db->query("UPDATE " . $this->table . " SET nama=:nama, tgl_lahir=:tgl_lahir, jenis_kelamin=:jenis_kelamin, alamat=:alamat, kontak=:kontak, status=:status, foto=:foto, updated_at=:updated_at WHERE id=:id");
             $this->db->bind("nama", ucwords($data["nama"]));
             if (strlen($data["nama"]) >= 64) {
@@ -253,7 +255,12 @@ class Pengguna_Model
                 // Upload File ( 2MB 2097152 )
                 UploadFile($foto, $data["id"], 2097152, ["image/jpeg", "image/jpg", "image/png"], "images");
                 // hapus foto lama
-                RemoveFileUpload("/images/" . $data["foto_lama"]);
+                // -> cek apakah extention sama ?
+                $oldFile = explode(".", $data["foto_lama"]);
+                $oldExtension = end($oldFile);
+                if ($extension != $oldExtension) {
+                    RemoveFileUpload("/images/" . $data["foto_lama"]);
+                }
                 $this->db->bind("foto", $data["id"] . "." . $extension);
                 $_SESSION["user"]["foto"] = $data["id"] . "." . $extension;
             } else {
@@ -358,9 +365,9 @@ class Pengguna_Model
             if (strlen($data["email"]) >= 45 || strlen($data["password"]) >= 64) {
                 throw new Exception("Email atau Password salah!");
             }
-            $pengguna = $this->getByEmail($data["email"]);
+            $pengguna = $this->getByEmail(trim($data["email"]));
             if ($pengguna) {
-                if (password_verify($data["password"], $pengguna["password"])) {
+                if (password_verify(trim($data["password"]), $pengguna["password"])) {
                     if ($pengguna["verifikasi_daftar"] == "terverifikasi") {
                         if ($pengguna["akses"] == "aktif") {
                             $this->updateLastLogin($pengguna["id"]);
@@ -381,7 +388,15 @@ class Pengguna_Model
                         $this->db->query("SELECT * FROM users_verifikasi WHERE email=:email");
                         $this->db->bind("email", $pengguna["email"]);
                         $verifikasi = $this->db->single();
-                        if ($verifikasi["time_limit"] <= time()) {
+                        // jika belum membuat email verifikasi
+                        if (!$verifikasi) {
+                            // set idverifikasi
+                            $idVerifikasi = $this->generateVerifikasi($pengguna["email"], 5, "create");
+                            // Send Mail
+                            if (!PHPmail($pengguna["email"], "E-LAPOR | VERIFIKASI EMAIL", PHPmailVerifikasi($pengguna["nama"], BaseURL() . "/users/verifikasi/" . $idVerifikasi))) {
+                                throw new Exception("Gagal melakukan pengiriman tautan verifikasi!");
+                            }
+                        } else if ($verifikasi["time_limit"] <= time()) {
                             // set idverifikasi
                             $idVerifikasi = $this->generateVerifikasi($pengguna["email"], 5, "update");
                             // Send Mail
@@ -556,10 +571,10 @@ class Pengguna_Model
             $id = $_POST["id_user_mobile"];
             $user = $this->get($id);
             $nama = $user["nama"];
-            if (!password_verify($_POST["password"], $user["password"])) {
+            if (!password_verify(trim($_POST["password"]), $user["password"])) {
                 throw new Exception("Password salah");
             }
-            if ($_POST["email"] == $user["email"]) {
+            if (trim($_POST["email"]) == trim($user["email"])) {
                 throw new Exception("Email tersebut sedang anda gunakan");
             }
         } else {
@@ -567,8 +582,11 @@ class Pengguna_Model
             $nama = $_SESSION["user"]["nama"];
         }
 
+        //check email on petugas
+        $this->checkUniqEmail($_POST["email"]);
+
         $this->db->query("UPDATE " . $this->table . " SET email=:email, verifikasi_email=:verifikasi, created_at=:created_at WHERE id=:id");
-        $this->db->bind("email", $_POST["email"]);
+        $this->db->bind("email", trim($_POST["email"]));
         $this->db->bind("verifikasi", "belum_terverifikasi");
         $this->db->bind("created_at", date("Y-m-d H:i:s"));
         $this->db->bind("id", $id);
@@ -603,36 +621,54 @@ class Pengguna_Model
 
     public function newVerifikasi()
     {
-        $nama = "";
         $email = "";
         if (isset($_SESSION["user"]["email"])) {
-            $nama = $_SESSION["user"]["nama"];
             $email = $_SESSION["user"]["email"];
         } else {
-            $nama = $_POST["nama_lengkap"];
-            $email = $_POST["email"];
+            if (isset($_POST["email"])) {
+                $email = $_POST["email"];
+            } else {
+                throw new Exception("Error Processing Request New Verifikasi");
+            }
         }
+        // cek user email
+        $user = $this->getByEmail($email);
+        if (!$user) {
+            throw new Exception("User tidak tersedia");
+        }
+        //get time verifikasi
         $this->db->query("SELECT * FROM users_verifikasi WHERE email=:email");
         $this->db->bind("email", $email);
         $userVerifikasi = $this->db->single();
-        if ($userVerifikasi["time_limit"] <= time()) {
-            $token = $this->generateVerifikasi($nama, 5, "update");
-            $this->sendEmail($email, $nama, $token);
-            return true;
-        } else {
-            return true;
+        // cek time verifikasi > time now
+        // -> jika waktu verifikasi > time maka = sudah dikirim ulang
+        // -> jika waktu verifikasi < time maka = kirim ulang
+        if ($userVerifikasi["time_limit"] > time()) {
+            return [
+                "nama" => $user['nama'],
+                "email" => $email,
+                "pesan_verifikasi" => "Sudah dikirim ulang"
+            ];
         }
+        // send email
+        $token = $this->generateVerifikasi($user["email"], 5, "update");
+        $this->sendEmail($email, $user['nama'], $token);
+        return [
+            "nama" => $user['nama'],
+            "email" => $email,
+            "pesan_verifikasi" => "Dikirim ulang",
+        ];
     }
 
     public function saveMobile()
     {
         if (isset($_POST)) {
             $this->db->query("UPDATE " . $this->table . " SET nama=:nama, tgl_lahir=:tgl_lahir, jenis_kelamin=:jenis_kelamin, alamat=:alamat, kontak=:kontak, status=:status, updated_at=:updated_at WHERE id=:id");
-            $this->db->bind("nama", $_POST["nama"]);
+            $this->db->bind("nama", trim($_POST["nama"]));
             $this->db->bind("tgl_lahir", $_POST["tgl_lahir"]);
             $this->db->bind("jenis_kelamin", $_POST["jenis_kelamin"]);
-            $this->db->bind("alamat", $_POST["alamat"]);
-            $this->db->bind("kontak", $_POST["kontak"]);
+            $this->db->bind("alamat", trim($_POST["alamat"]));
+            $this->db->bind("kontak", trim($_POST["kontak"]));
             $this->db->bind("status", $_POST["status"]);
             $this->db->bind("updated_at", date("Y-m-d H:i:s"));
             $this->db->bind("id", $_POST["id_user_mobile"]);
@@ -644,12 +680,12 @@ class Pengguna_Model
     public function updatePasswordMobile()
     {
         if (isset($_POST) && !empty($_POST)) {
-            if ($_POST["password"] == $_POST["password2"]) {
+            if (trim($_POST["password"]) == trim($_POST["password2"])) {
                 $user = $this->get($_POST["id_user_mobile"]);
-                if (password_verify($_POST["old_password"], $user["password"])) {
-                    if ($_POST["password"] != $_POST["old_password"]) {
+                if (password_verify(trim($_POST["old_password"]), $user["password"])) {
+                    if (trim($_POST["password"]) != trim($_POST["old_password"])) {
                         $this->db->query("UPDATE " . $this->table . " SET password=:password, updated_at=:updated_at WHERE id=:id");
-                        $this->db->bind("password", password_hash($_POST["password"], PASSWORD_DEFAULT));
+                        $this->db->bind("password", password_hash(trim($_POST["password"]), PASSWORD_DEFAULT));
                         $this->db->bind("updated_at", date("Y-m-d H:i:s"));
                         $this->db->bind("id", $user["id"]);
                         $this->db->execute();
@@ -657,7 +693,7 @@ class Pengguna_Model
                             "message" => "Password berhasil diperbarui!"
                         ];
                     } else {
-                        throw new Exception("Password ini sedang anda gunakans");
+                        throw new Exception("Password ini sedang anda gunakan");
                     }
                 } else {
                     throw new Exception("Password lama salah!");
@@ -679,15 +715,22 @@ class Pengguna_Model
                     $this->db->query("UPDATE " . $this->table . " SET foto=:foto, updated_at=:updated_at WHERE id=:id");
                     $file = explode(".", $_FILES["foto"]["name"]);
                     $extension = end($file);
-                    // hapus foto lama
-                    RemoveFileUpload("/images/" . $user["foto"]);
                     // Upload File ( 2MB 2097152 )
-                    UploadFile($_FILES, $user["id"], 2097152, ["image/jpeg", "image/jpg", "image/png"], "images");
+                    UploadFile($_FILES, $user["id"], 2097152, ["application/octet-stream"], "images");
+                    // hapus foto lama
+                    // -> cek apakah extention sama ?
+                    $oldFile = explode(".", $user["foto"]);
+                    $oldExtension = end($oldFile);
+                    if ($extension != $oldExtension) {
+                        RemoveFileUpload("/images/" . $user["foto"]);
+                    }
                     $this->db->bind("foto", $user["id"] . "." . $extension);
                     $this->db->bind("updated_at", date("Y-m-d H:i:s"));
                     $this->db->bind("id", $user["id"]);
                     $this->db->execute();
-                    return $user;
+                    return [
+                        "new_foto" => $user["id"] . "." . $extension
+                    ];
                 } else {
                     throw new Exception("Error Processing Change Photo Request");
                 }

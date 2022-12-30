@@ -35,7 +35,7 @@ class Home extends Controller
             if (!empty($_POST)) {
                 $this->model("pengaduan_model")->sendPengaduan();
                 if (isset($_SESSION["p_rahasia"])) {
-                    generatePDF::Klasifikasi($_SESSION["p_rahasia"]["id"], $_POST["judul"], $_POST["deskripsi"], $_SESSION["p_rahasia"]["date"]);
+                    generatePDF::Klasifikasi($_SESSION["p_rahasia"]["id"], $_POST["deskripsi"], $_SESSION["p_rahasia"]["date"]);
                 } else {
                     Flasher::setMessage("Berhasil", "Berhasil mengirim pengaduan", "success");
                     header("Location: " . BaseURL());
@@ -47,7 +47,11 @@ class Home extends Controller
                 exit;
             }
         } catch (Exception $error) {
-            Flasher::setMessage("Terjadi Kesalahan!", $error->getMessage(), "error");
+            if ($error->getCode() == 23000) {
+                Flasher::setMessage("Terjadi Kesalahan!", "Data yang anda masukkan tidak valid", "error");
+            } else {
+                Flasher::setMessage("Terjadi Kesalahan!", $error->getMessage(), "error");
+            }
             header("Location: " . BaseURL());
             exit;
         }

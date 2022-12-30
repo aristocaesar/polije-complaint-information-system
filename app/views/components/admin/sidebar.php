@@ -1,10 +1,10 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="#"><img src="<?= BaseUrl() ?>/public/images/logo-horizontal-politeknik-negeri-jember.png" width="130" alt="logo politeknik negeri jember" /></a>
+            <a href="#"><img src="<?= BaseUrl() ?>/public/images/logo-horizontal-politeknik-negeri-jember.webp" width="130" alt="logo politeknik negeri jember" /></a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
-            <a href="#"><img src="<?= BaseUrl() ?>/public/images/logo-politeknik-negeri-jember.png" width="30" alt="logo politeknik negeri jember" /></a>
+            <a href="#"><img src="<?= BaseUrl() ?>/public/images/logo-politeknik-negeri-jember.webp" width="30" alt="logo politeknik negeri jember" /></a>
         </div>
         <ul class="sidebar-menu">
             <li class="menu-header">Dashboard</li>

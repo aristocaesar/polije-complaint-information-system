@@ -53,12 +53,12 @@ if (empty($data["laporan"])) {
                             <?php endif ?>
                         </div>
                     </div>
-                    <div class="grid md:grid-cols-2 gap-x-5 mb-5">
-                        <div class="flex flex-col md:mb-0 mb-5">
+                    <div class="flex md:flex-row flex-col justify-between md:gap-x-10">
+                        <div class="flex flex-col md:mb-0 mb-5 md:w-9/12 w-full">
                             <label for="status" class="text-gray-700">Status</label>
                             <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" value="<?= ucwords(str_replace("_", " ", $data["laporan"]["status"])); ?>" readonly>
                         </div>
-                        <div class="flex flex-col">
+                        <div class="flex flex-col md:w-9/12 w-full">
                             <label for="status" class="text-gray-700">Terakhir Diperbarui</label>
                             <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" value="<?= $data["laporan"]["updated_at"] ?>" readonly>
                         </div>
