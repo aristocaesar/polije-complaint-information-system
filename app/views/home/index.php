@@ -52,7 +52,7 @@
                     </div>
                     <div class="flex flex-col mb-5">
                         <label for="deskripsi" class="text-gray-700">Deskripsikan Laporan*</label>
-                        <textarea class="mt-3 border border-gray-400 py-3 px-2 rounded" name="deskripsi" id="deskripsi" placeholder="Deskripsikan Laporan" rows="3" required maxlength="1024"></textarea>
+                        <textarea class="mt-3 border border-gray-400 py-3 px-2 rounded" name="deskripsi" id="deskripsi" placeholder="Deskripsikan Laporan" rows="3" required minlength="18" maxlength="1024"></textarea>
                     </div>
                     <div class="flex flex-col <?= !isset($_SESSION["user"]) ? "mb-5" : "mb-10" ?>">
                         <label for="input-file" class="text-gray-700">Lampiran</label>
@@ -93,7 +93,7 @@
                         </div>
                         <div class="flex flex-col mb-5">
                             <label for="deskripsi" class="text-gray-700">Deskripsikan Aspirasi*</label>
-                            <textarea class="mt-3 border border-gray-400 py-3 px-2 rounded" name="deskripsi" id="deskripsi" placeholder="Deskripsikan Aspirasi" rows="3" required maxlength="1024"></textarea>
+                            <textarea class="mt-3 border border-gray-400 py-3 px-2 rounded" name="deskripsi" id="deskripsi" placeholder="Deskripsikan Aspirasi" rows="3" required minlength="18" maxlength="1024"></textarea>
                         </div>
                         <div class="flex flex-col <?= !isset($_SESSION["user"]) ? "mb-5" : "mb-10" ?>">
                             <label for="input-file" class="text-gray-700">Lampiran</label>
@@ -134,7 +134,7 @@
                         </div>
                         <div class="flex flex-col mb-5">
                             <label for="deskripsi" class="text-gray-700">Tanyakan Informasi*</label>
-                            <textarea class="mt-3 border border-gray-400 py-3 px-2 rounded" name="deskripsi" id="deskripsi" placeholder="Deskripsikan Pertanyaan" rows="3" required maxlength="1024"></textarea>
+                            <textarea class="mt-3 border border-gray-400 py-3 px-2 rounded" name="deskripsi" id="deskripsi" placeholder="Deskripsikan Pertanyaan" rows="3" required minlength="18" maxlength="1024"></textarea>
                         </div>
                         <div class="flex flex-col  <?= !isset($_SESSION["user"]) ? "mb-5" : "mb-10" ?>">
                             <label for="input-file" class="text-gray-700">Lampiran</label>
@@ -205,8 +205,12 @@
         for (let i = 0; i < form.length; i++) {
             if (btnAll[i].id == e.id) {
                 btnAll[i].children[0].checked = true;
+                btnAll[i].classList.add("text-white", "bg-blue-800", "hover:bg-blue-900");
+                btnAll[i].classList.remove("text-gray-400", "border", "border-gray-300", "bg-white", "hover:bg-blue-900", "hover:text-white");
             } else {
                 btnAll[i].children[0].checked = false;
+                btnAll[i].classList.remove("text-white", "bg-blue-800", "hover:bg-blue-900");
+                btnAll[i].classList.add("text-gray-400", "border", "border-gray-300", "bg-white", "hover:bg-blue-900", "hover:text-white");
             }
 
             if (optionsAll.options[i].value == e.id) {
