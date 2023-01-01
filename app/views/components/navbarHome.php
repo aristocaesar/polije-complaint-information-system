@@ -8,9 +8,6 @@
             <a class="text-gray-800 hover:text-gray-500 drop-shadow-sm " href="<?= BaseURL(); ?>">Home</a>
         </li>
         <li>
-            <a class="text-gray-800 hover:text-gray-500 drop-shadow-sm" href="<?= BaseURL(); ?>/laporan">Laporan</a>
-        </li>
-        <li>
             <a class="text-gray-800 hover:text-gray-500 drop-shadow-sm" href="<?= BaseURL(); ?>/tentang">Tentang</a>
         </li>
         <?php if (!isset($_SESSION["user"])) : ?>
@@ -37,9 +34,6 @@
                 <li>
                     <a class="nav-items-horizontal text-white hover:text-gray-200" href="<?= BaseURL(); ?>">Home</a>
                 </li>
-                <!-- <li>
-                    <a class="nav-items-horizontal text-white hover:text-gray-200" href="<?= BaseURL(); ?>/laporan">Laporan</a>
-                </li> -->
                 <li>
                     <a class="nav-items-horizontal text-white hover:text-gray-200" href="<?= BaseURL(); ?>/tentang">Tentang</a>
                 </li>
