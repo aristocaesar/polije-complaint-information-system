@@ -20,11 +20,11 @@
                 <input type="text" class="hidden" name="email" value="<?= $data["email"] ?>">
                 <div class="flex flex-col mb-5">
                     <label for="Password" class="text-gray-700">Password Baru</label>
-                    <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password" aria-describedby="password" name="password" placeholder="Masukkan Password" required>
+                    <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password" aria-describedby="password" name="password" placeholder="Masukkan Password" minlength="6" maxlength="64" required>
                 </div>
                 <div class="flex flex-col mb-5">
                     <label for="password2" class="text-gray-700">Konfirmasi Password Baru</label>
-                    <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password2" aria-describedby="password2" name="password2" placeholder="Masukkan Password" required>
+                    <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password2" aria-describedby="password2" name="password2" placeholder="Masukkan Password" minlength="6" maxlength="64" required>
                 </div>
                 <button type="submit" name="submit" class="text-xl text-white w-full rounded bg-blue-800 py-4 font-bold tracking-wide hover:bg-blue-900 hover:drop-shadow-lg">GANTI PASSWORD</button>
             </form>

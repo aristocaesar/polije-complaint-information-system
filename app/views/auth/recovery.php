@@ -18,7 +18,7 @@
             <form action="<?= BaseURL() ?>/auth/recovery" method="POST">
                 <div class="flex flex-col mb-5">
                     <label for="email" class="text-gray-700">Email</label>
-                    <input type="email" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="email" aria-describedby="email" name="email" placeholder="Masukkan Email" required>
+                    <input type="email" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="email" aria-describedby="email" name="email" placeholder="Masukkan Email" minlength="6" maxlength="45" required>
                 </div>
                 <button type="submit" name="submit" class="text-xl text-white w-full rounded bg-blue-800 py-4 font-bold tracking-wide hover:bg-blue-900 hover:drop-shadow-lg">KIRIM</button>
                 <div class="flex justify-center space-x-3 mt-5">
