@@ -18,7 +18,7 @@
             <form action="<?= BaseURL() ?>/auth/daftar" method="POST">
                 <div class="flex flex-col mb-5">
                     <label for="nama_lengkap" class="text-gray-700">Nama Lengkap</label>
-                    <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="nama_lengkap" aria-describedby="nama_lengkap" name="nama_lengkap" placeholder="Ketikkan Nama Lengkap" maxlength="64" required>
+                    <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="nama_lengkap" aria-describedby="nama_lengkap" name="nama_lengkap" placeholder="Ketikkan Nama Lengkap" minlength="3" maxlength="64" required>
                 </div>
                 <div class="flex flex-col mb-5">
                     <label for="status" class="text-gray-700">Tanggal Lahir</label>
@@ -33,15 +33,15 @@
                 </div>
                 <div class="flex flex-col mb-5">
                     <label for="email" class="text-gray-700">Email</label>
-                    <input type="email" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="email" aria-describedby="email" name="email" placeholder="Ketikkan Email" maxlength="45" required>
+                    <input type="email" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="email" aria-describedby="email" name="email" placeholder="Ketikkan Email" minlength="6" maxlength="45" required>
                 </div>
                 <div class="flex flex-col mb-5">
                     <label for="password" class="text-gray-700">Password</label>
-                    <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password" aria-describedby="password" name="password" placeholder="Ketikkan Password" maxlength="64" required>
+                    <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password" aria-describedby="password" name="password" minlength="6" maxlength="64" placeholder="Ketikkan Password" required>
                 </div>
                 <div class="flex flex-col mb-5">
                     <label for="password2" class="text-gray-700">Konfirmasi Password</label>
-                    <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password2" aria-describedby="password2" name="password2" placeholder="Ketikkan Konfirmasi Password" maxlength="64" required>
+                    <input type="text" class="mt-3 border border-gray-400 py-3 px-2 rounded" id="password2" aria-describedby="password2" name="password2" placeholder="Ketikkan Konfirmasi Password" minlength="6" maxlength="64" required>
                 </div>
                 <div class="flex flex-col mb-5">
                     <label for="notelp" class="text-gray-700">No Telp / Whatapps</label>
