@@ -447,7 +447,11 @@
             $("#kategori").val(result.kategori);
             $("#tanggal_terkirim").val(result.created_at);
             $(".info-user")[0].dataset.user = result.pengirim;
-            $("#pengirim").val(result.pengirim);
+            if (result.pengirim != null) {
+                $("#pengirim").val(result.pengirim);
+            } else {
+                $("#pengirim").val("Dirahasiakan");
+            }
             $(".location")[0].dataset.location = result.lokasi;
             $("#lokasi").val(result.lokasi);
             // Status Informasi
@@ -539,30 +543,32 @@
     // SHOW USER
     $(".info-user").click(async (e) => {
         const id = e.currentTarget.dataset.user;
-        const users = await fetch(`http://localhost:3000/users?id=${id}`);
-        const response = await users.json();
-        const result = response[0];
-        $("#informasi").modal("hide");
-        setTimeout(() => {
-            $("#detail-informasi").modal("show");
-            $(".modal-footer-info-user").show();
-            // content detail informasi
-            $("#konfirmasi-tangguhkan").hide();
-            $("#informasi-user").show();
-            $("#konfirmasi-tindak-lanjut").hide();
-            $("#konfirmasi-penyampaian-ulang").hide();
+        if (id != "null") {
+            const users = await fetch(`http://localhost:3000/users?id=${id}`);
+            const response = await users.json();
+            const result = response[0];
+            $("#informasi").modal("hide");
+            setTimeout(() => {
+                $("#detail-informasi").modal("show");
+                $(".modal-footer-info-user").show();
+                // content detail informasi
+                $("#konfirmasi-tangguhkan").hide();
+                $("#informasi-user").show();
+                $("#konfirmasi-tindak-lanjut").hide();
+                $("#konfirmasi-penyampaian-ulang").hide();
 
-            // set value
-            $(".modal-title-detail-informasi").text("Informasi Pengirim");
-            $("#id-pengirim").val(result.id);
-            $("#nama-pengirim").val(result.nama);
-            $("#email-pengirim").val(result.email);
-            $("#tanggal-lahir-pengirim").val(result.tgl_lahir);
-            $("#alamat-pengirim").val(result.alamat);
-            $("#kontak-pengirim").val(result.kontak);
-            $("#status-pengirim").val(result.status);
-            $("#foto-user").attr("src", "<?= BaseURL(); ?>/" + result.foto);
-        }, 500);
+                // set value
+                $(".modal-title-detail-informasi").text("Informasi Pengirim");
+                $("#id-pengirim").val(result.id);
+                $("#nama-pengirim").val(result.nama);
+                $("#email-pengirim").val(result.email);
+                $("#tanggal-lahir-pengirim").val(result.tgl_lahir);
+                $("#alamat-pengirim").val(result.alamat);
+                $("#kontak-pengirim").val(result.kontak);
+                $("#status-pengirim").val(result.status);
+                $("#foto-user").attr("src", "<?= BaseURL(); ?>/" + result.foto);
+            }, 500);
+        }
     });
 
     // TANGGUHKAN INFORMASI
