@@ -3,6 +3,15 @@ require_once "app/core/Controller.php";
 
 class Users extends Controller
 {
+    public function __construct()
+    {
+        if (isset($_SESSION["user"])) {
+            $user = $this->model("pengguna_model")->get($_SESSION["user"]["id"]);
+            if (empty($user) || $user["akses"] == "blokir") {
+                header("Location: " . BaseURL() . "/auth/logout");
+            }
+        }
+    }
 
     public function index()
     {
